@@ -121,4 +121,5 @@ Please visit [hardware](/hardware/) section for board schematics and PCB designs
 
 ## Where to buy
 
-TBD
+You may support our work by ordering this product at [Tindie](https://www.tindie.com/products/sonocotta/esparagus-hifi-medialink/)
+
