@@ -1,15 +1,13 @@
-# Esparagus HiFi MediaLink
+# Esparagus Media Center
 
 ![Open Source Hardware](/images/open-source-hardware-logo.png)
 ![Open Source Software](/images/open-source-software-logo.png)
 
-Esparagus HiFi MediaLink is a handy low cost media device, that will upgrade your legacy audio system with cutting-edge internet streaming capabilities and enhance your audio experience.
-
-![DSC_0702](https://github.com/sonocotta/esparagus-hifi-medialink/assets/98712315/3ef311c6-2fbc-4969-aa99-4fed7e1e1dd5)
+Esparagus Media Center is a series of ESP32 based media center devices. They all run [Squeezelite-ESP32](https://github.com/sle118/squeezelite-esp32) software and have similar media capabilities, but aimed at different use cases. They share a similar look, and compared to my earlier designs, they have a great looking aluminum case.
 
 ## Why Esparagus
 
-ChatGPT made me call it that way. I only asked if there is a fruit or vegetable that is phonetically close to ESP32, which is a heart of this device.
+ChatGPT made me call it that way. I only asked if there is a fruit or vegetable that is phonetically close to ESP32, which is the heart of this device.
 
 ## Motivation
 
@@ -17,24 +15,41 @@ I did few audio projects in the past, some using [ESP32](https://hackaday.io/pro
 
 What I like about ESP32 is how lightweight it is. It barely draws power, so you may not care to turn it off at all. It boots in seconds and is ready for use in a snap. Still it is capable and works at par with Linux SBC solutions for audio applications, while costing a fraction of their price. Combined with proper Hi-Fi DAC you would not tell a difference to commercial devices standing side by side and costing much more.
 
-Over last few years I see few amazing software products created to deliver audio on the ESP32, like [squeezelite-esp32](https://github.com/sle118/squeezelite-esp32) or  [euphonium](https://github.com/muvox-io/euphonium). Esparagus HiFi MediaLink is designed specifically to run these great pieces of software and bring a new life into aging audio equipment that most of us have at home, but do not use that much these days, since it is not working with Spotify and the family.
+Over last few years I see few amazing software products created to deliver audio on the ESP32, like [squeezelite-esp32](https://github.com/sle118/squeezelite-esp32) or  [euphonium](https://github.com/muvox-io/euphonium). Esparagus media center devices are designed specifically to run these great pieces of software and bring a new life into aging audio equipment that most of us have at home, but do not use that much these days, since it is not working with Spotify and the family.
+
+## Esparagus HiFi MediaLink
+
+Esparagus HiFi MediaLink is a handy low cost media device that will upgrade your legacy audio system with cutting-edge internet streaming capabilities and enhance your audio experience. It exposes line level output that you can plug into a stereo amplifier. It uses the legendary PCM51 series DAC with supreme audio quality.
+
+![DSC_0702](https://github.com/sonocotta/esparagus-hifi-medialink/assets/98712315/3ef311c6-2fbc-4969-aa99-4fed7e1e1dd5)
+
+## Loud Esparagus
+
+Loud Esparagus is aimed to be paired with small-to-medium sized speakers in a small room. It uses a dual MAX98357 Hi-Fi DAC that will output 3W per speaker. Admittedly not much, but well enough for a kid's room or work place. Due to the D-class amp, it barely uses power and can be paired with a standard USB wall charger.   
+
+![DSC_0689](https://github.com/sonocotta/esparagus-hifi-medialink/assets/5459747/7635cb2a-6ef1-43e8-8396-c27ef5387a25)
+
+## Louder Esparagus
+
+Louder Esparagus is a top-of-the-range model that uses modern highly capable TAS5805M DAC and is aimed to be paired with medium-to-large speaker systems. With 25W per channel stereo output it packs a punch and can easily enlive living quarters or dorm rooms. It is highly efficient, but much more demanding for power when cranked, therefore it uses USB-C Power Delivery to pull up to 65W from the wall power adapter. It can be used both with Wi-Fi and Ethernet (to make sure bad Wi-Fi would not interrupt the stream)
+
+![DSC_0725](https://github.com/sonocotta/esparagus-hifi-medialink/assets/5459747/beb44179-2d79-4506-b867-493c66191c21)
 
 ## Features
 
-|             | Hifi ESP                    | Esparagus HiFi MediaLink
-|-------------|-----------------------------------------------------|---------------------------------------------------|
-| Image       | ![image](https://user-images.githubusercontent.com/5459747/225272052-c36d5b87-1b9a-439c-be69-94077135e72a.png)                      | ![DSC_0709](https://github.com/sonocotta/esparagus-hifi-medialink/assets/98712315/ea45f1d2-32b5-4f12-a63c-a8e403cb22db)
-| Docks with  | ESP32 Mini Module           | ESP32-WROVER Module Onboard                                    |
-| DAC         | [PCM5100A](https://www.ti.com/product/PCM5100A) 32bit Stereo DAC | [PCM5100A](https://www.ti.com/product/PCM5100A) 32bit Stereo DAC <br/> -100 dB typical noise level
-| Power | 3x [LP5907](https://www.ti.com/lit/ds/symlink/lp5907.pdf) 3.3 V Ultra-Low-Noise LDO | 3x [LP5907](https://www.ti.com/lit/ds/symlink/lp5907.pdf) 3.3 V Ultra-Low-Noise LDO
-| Output      | 2.1 VRMS Line-level stereo output 3.5mm jack | 2.1 VRMS Line-level stereo output 3.5mm jack 
-| PSRAM       | 8MB PSRAM (4MB usable)      | 8MB PSRAM (4MB usable) Onboard <br/>
-| Peripheral        |  |  External WiFi Antenna <br/> WS2812B RGB Led <br/> SSD1306 128x64 OLED screen |
-| Size | | 80 x 50 x 20mm |
+|             | [Hifi ESP](https://github.com/sonocotta/esp32-audio-dock) | Esparagus HiFi MediaLink | [Loud ESP](https://github.com/sonocotta/loud-esp)  | Loud Esparagus | [Louder ESP](https://github.com/sonocotta/esp32-audio-dock)  | Louder Esparagus
+|-------------|------------------------|-----------------------|------------------------|-----------------------|------------------------|-----------------------|
+| Image       | ![image](https://user-images.githubusercontent.com/5459747/225272052-c36d5b87-1b9a-439c-be69-94077135e72a.png)  | ![DSC_0709](https://github.com/sonocotta/esparagus-hifi-medialink/assets/98712315/ea45f1d2-32b5-4f12-a63c-a8e403cb22db) | ![image](https://github.com/sonocotta/esparagus-hifi-medialink/assets/5459747/b9182b50-9d52-430b-878c-d82052e43e84) | ![DSC_0706](https://github.com/sonocotta/esparagus-hifi-medialink/assets/5459747/2556b8ff-1827-4e03-8e28-31e40199943c) | ![image](https://github.com/sonocotta/esparagus-hifi-medialink/assets/5459747/60da6a3f-422d-4fea-b6ff-7a0423c12543) | ![DSC_0713](https://github.com/sonocotta/esparagus-hifi-medialink/assets/5459747/03ec824a-1eab-4d85-92e9-a0aed5a66ce9) | Docks with  | ESP32 Mini Module           | ESP32-WROVER Module Onboard  | ESP32 Mini Module           | ESP32-WROVER Module Onboard  | ESP32 Mini Module           | ESP32-WROVER Module Onboard  |
+| DAC         | [PCM5100A](https://www.ti.com/product/PCM5100A) 32bit Stereo DAC | [PCM5100A](https://www.ti.com/product/PCM5100A) 32bit Stereo DAC <br/> -100 dB typical noise level | Dual I2S DAC ([MAX98357](https://www.analog.com/en/products/max98357a.html)) with built in D-Class amp |Dual I2S DAC ([MAX98357](https://www.analog.com/en/products/max98357a.html)) with built in D-Class amp | Stereo I2S DAC ([TAS5805M](https://www.ti.com/product/TAS5805M)) with   built in D-Class amp | Stereo I2S DAC ([TAS5805M](https://www.ti.com/product/TAS5805M)) with   built in D-Class amp |
+| Power | 3x [LP5907](https://www.ti.com/lit/ds/symlink/lp5907.pdf) 3.3 V Ultra-Low-Noise LDO | 3x [LP5907](https://www.ti.com/lit/ds/symlink/lp5907.pdf) 3.3 V Ultra-Low-Noise LDO | 5V from Mini-USB | 5V from USB-C | Up to 26V from external PSU | Up to 20V from USB-C PD 
+| Output      | 2.1 VRMS Line-level stereo output 3.5mm jack | 2.1 VRMS Line-level stereo output 3.5mm jack | 2x 3W  | 2x 3W  | 2x 23W at 22V Vin  | 2x 22W at 20V over USB-PD
+| PSRAM       | 8MB PSRAM (4MB usable)      | 8MB PSRAM (4MB usable) Onboard <br/> | 8MB PSRAM (4MB usable)      | 8MB PSRAM (4MB usable) Onboard <br/> | 8MB PSRAM (4MB usable)      | 8MB PSRAM (4MB usable) Onboard <br/>
+| Peripheral        |  |  External WiFi Antenna <br/> WS2812B RGB Led <br/> SSD1306 128x64 OLED screen (optional) | |  External WiFi Antenna <br/> WS2812B RGB Led <br/> SSD1306 128x64 OLED screen (optional) |  |  External WiFi Antenna <br/> WS2812B RGB Led <br/> SSD1306 128x64 OLED screen (optional), IR receiver, W5500 SPI LAN |
+| Size | | 80 x 50 x 20mm  | | 80 x 50 x 20mm | | 100 x 80 x 38mm |
 
 ### Onboard PSRAM
 
-Audio streaming require proper buffering to work, even with ESP32 500K of RAM it is a challenging task. Esparagus HiFi MediaLink is based on WROVER module that has onboard PSRAM chip.
+Audio streaming requires proper buffering to work, even with ESP32 500K of RAM it is a challenging task. All Esparagus boards are based on WROVER modules that have an onboard PSRAM chip.
 
 ## Board Pinout
 
@@ -75,7 +90,7 @@ And LMS itself
 - LMS can be extended by numerous plugins and can be controlled using a Web browser or dedicated applications (iPhone, Android).
 - It can also send audio to UPnP, Sonos, ChromeCast and AirPlay speakers/devices.
 
-All Esparagus HiFi MediaLink boards are tested with [Squeezelite-ESP32](https://github.com/sle118/squeezelite-esp32) software. It can be flashed using nothing but web-browser. You can use [Squeezelite-ESP32 installer](https://sle118.github.io/squeezelite-esp32-installer/) for that purpose.
+All Esparagus boards are tested with [Squeezelite-ESP32](https://github.com/sle118/squeezelite-esp32) software. It can be flashed using nothing but web-browser. You can use [Squeezelite-ESP32 installer](https://sle118.github.io/squeezelite-esp32-installer/) for that purpose.
 
 ### How to flash and configure
 
@@ -102,11 +117,13 @@ You can use it now
 
 ## Hardware
 
-![DSC_0711](https://github.com/sonocotta/esparagus-hifi-medialink/assets/98712315/66f565f3-7342-42aa-95e4-bad0437aa887)
+| Esparagus HiFi MediaLink  | Loud Esparagus  | Louder Esparagus |
+|---|---|---|
+| ![DSC_0711](https://github.com/sonocotta/esparagus-hifi-medialink/assets/98712315/66f565f3-7342-42aa-95e4-bad0437aa887) | ![DSC_0702](https://github.com/sonocotta/esparagus-hifi-medialink/assets/5459747/00d540a8-6dce-48dd-9d11-d70992451068) | ![DSC_0710](https://github.com/sonocotta/esparagus-hifi-medialink/assets/5459747/dce0c088-fa0c-4637-a719-b067daeff998)
 
 Please visit [hardware](/hardware/) section for board schematics and PCB designs. Note that PCB are shared as multi-layer PDFs as well as Gerber archives.
 
-### Boxed
+### Boxed Esparagus HiFi MediaLink
 
 | Image  | Legend  |
 |---|---|
@@ -118,8 +135,16 @@ Please visit [hardware](/hardware/) section for board schematics and PCB designs
 |---|---|
 | ![image](https://github.com/sonocotta/esparagus-hifi-medialink/assets/98712315/9d87a132-f07a-4b0d-bc4d-5636d0274278) | ![image](https://github.com/sonocotta/esparagus-hifi-medialink/assets/98712315/a034a017-8c00-4523-8105-9a15d8da158e)  - ESP32-WROVER module <br/> ![image](https://github.com/sonocotta/esparagus-hifi-medialink/assets/98712315/da5364da-9175-4509-9bf8-c3d4014181fe) - SSD1306 128x64 px OLED Screen  <br/> ![image](https://github.com/sonocotta/esparagus-hifi-medialink/assets/98712315/f84b6744-6d4e-4cd1-a66b-98c0f21103b4) - WS2812B RGB LED <br/> ![image](https://github.com/sonocotta/esparagus-hifi-medialink/assets/98712315/6afb2b55-563c-4f41-abad-bfe9684dc16b) - [PCM5100A](https://www.ti.com/product/PCM5100A) 32bit Stereo DAC with triple Ultra-Low-Noise LDOs for DAC power lines <br/> ![image](https://github.com/sonocotta/esparagus-hifi-medialink/assets/98712315/25afd8c3-3297-488d-8fd2-53b420b4242a) - CH340 USB-Serial bridge and USB-C port
 
+### Boxed Loud Esparagus
+
+| Image  | Legend  |
+|---|---|
+
+### Boxed Louder Esparagus
+
+| Image  | Legend  |
+|---|---|
 
 ## Where to buy
 
 You may support our work by ordering this product at [Tindie](https://www.tindie.com/products/sonocotta/esparagus-hifi-medialink/)
-
