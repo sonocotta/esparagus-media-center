@@ -53,14 +53,36 @@ Audio streaming requires proper buffering to work, even with ESP32 500K of RAM i
 
 ## Board Pinout
 
+### Common to every board
+
 |       | I2S CLK | I2S DATA | I2S WS | PSRAM CE | PSRAM CLK |
 |-------|---------|----------|--------|----------|-----------|
 | ESP32 | 26      | 22       | 25     | 16       | 17        |
 
-|       |SPI HOST | SPI CLK | SPI MOSI | SPI MISO | OLED DC | OLED CS | OLED RST | WS2812 RGB LED 
-|-------|---------|----------|--------|----------|-----------|-----------|-----------|-----------|
-| ESP32 |    2    |  18      |  23    |   19     |   4       | 5         | 32        |  33
+### Peripheral (Loud Esparagus & Esparagus HiFi MediaLink )
 
+|       | SPI HOST| SPI CLK  |SPI MOSI| SPI MISO | OLED DC   | OLED CS   | OLED RST  |  WS2812 RGB LED |  RELAY EN |
+|-------|---------|----------|--------|----------|-----------|-----------|-----------|---------|----------|
+| ESP32 |    2    |  18      |  23    |   19     |   4       | 5         | 32        |     33  |  21      |
+
+
+### TAS5805M DAC (Louder Esparagus)
+
+|       | I2C CLK | I2C DATA |  PWDN  |  FAULT   |
+|-------|---------|----------|--------|----------|
+| ESP32 |    27    |  21     |  33    |  34
+
+### Peripheral - OLED Screen and W5500 Ethernet (Louder Esparagus)
+
+|       | SPI HOST| SPI CLK  |SPI MOSI| SPI MISO | LAN RES   | LAN CS    | LAN INT   | OLED DC   | OLED CS   | OLED RST  |
+|-------|---------|----------|--------|----------|-----------|-----------|-----------|-----------|-----------|-----------|
+| ESP32 |    2    |  18      |  23    |   19     |  14       |  5        |  35       |    4      |   15      |    32     |
+
+### Other Peripheral (Louder Esparagus)
+
+|       | USB-PD EN | USB-PD POWER GOOD | IR INPUT |   WS2812 RGB LED
+|-------|---------|----------|--------|----------|
+| ESP32 |    13   |   36     |    39  | 12       | 
 
 ## Software samples
 
