@@ -145,27 +145,21 @@ You can use it now
 
 Please visit [hardware](/hardware/) section for board schematics and PCB designs. Note that PCB are shared as multi-layer PDFs as well as Gerber archives.
 
-### Boxed Esparagus HiFi MediaLink
+### Boxed
 
-| Image  | Legend  |
-|---|---|
-| ![image](https://github.com/sonocotta/esparagus-hifi-medialink/assets/98712315/d9ba4403-a7a1-4e7c-8653-dd42831bd0da) | ![image](https://github.com/sonocotta/esparagus-hifi-medialink/assets/98712315/6afb2b55-563c-4f41-abad-bfe9684dc16b) - USB-C connectore for power, flashing and debugging <br/> ![image](https://github.com/sonocotta/esparagus-hifi-medialink/assets/98712315/7da50b7d-25eb-44c2-9e21-8f0dd7174a1a) - WiFi Antenna SMA Connector <br/> ![image](https://github.com/sonocotta/esparagus-hifi-medialink/assets/98712315/0f30876e-a121-4b65-abfc-670bf2358cc6) - Line Out 3.5mm Jack <br/> ![image](https://github.com/sonocotta/esparagus-hifi-medialink/assets/98712315/da5364da-9175-4509-9bf8-c3d4014181fe) - External 5V Relay driver 
+
+| Esparagus HiFi MediaLink  | Loud Esparagus  | Louder Esparagus |
+|---|---|---|
+| ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/c4765189-de0e-44bd-8163-b19ddd6f68d1) | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/8e2819a1-d496-456d-a180-b554787e6a0f) | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/439e5afb-a89d-408f-a5a4-f48b1f3c4630)
 
 ### PCB
 
-| Image  | Legend  |
-|---|---|
-| ![image](https://github.com/sonocotta/esparagus-hifi-medialink/assets/98712315/9d87a132-f07a-4b0d-bc4d-5636d0274278) | ![image](https://github.com/sonocotta/esparagus-hifi-medialink/assets/98712315/a034a017-8c00-4523-8105-9a15d8da158e)  - ESP32-WROVER module <br/> ![image](https://github.com/sonocotta/esparagus-hifi-medialink/assets/98712315/da5364da-9175-4509-9bf8-c3d4014181fe) - SSD1306 128x64 px OLED Screen  <br/> ![image](https://github.com/sonocotta/esparagus-hifi-medialink/assets/98712315/f84b6744-6d4e-4cd1-a66b-98c0f21103b4) - WS2812B RGB LED <br/> ![image](https://github.com/sonocotta/esparagus-hifi-medialink/assets/98712315/6afb2b55-563c-4f41-abad-bfe9684dc16b) - [PCM5100A](https://www.ti.com/product/PCM5100A) 32bit Stereo DAC with triple Ultra-Low-Noise LDOs for DAC power lines <br/> ![image](https://github.com/sonocotta/esparagus-hifi-medialink/assets/98712315/25afd8c3-3297-488d-8fd2-53b420b4242a) - CH340 USB-Serial bridge and USB-C port
+| Esparagus HiFi MediaLink  | Loud Esparagus  | Louder Esparagus |
+|---|---|---|
+| ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/d56ff3b7-633c-4f67-a82f-5084cfeb4144) | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/f355598b-bf33-43a8-87a1-130de3d1e3b2) | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/71fb67ab-6dd2-435c-b3ed-669ae3ed3f2c)
 
-### Boxed Loud Esparagus
 
-| Image  | Legend  |
-|---|---|
 
-### Boxed Louder Esparagus
-
-| Image  | Legend  |
-|---|---|
 
 ## Where to buy
 
