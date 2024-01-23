@@ -165,4 +165,7 @@ Please visit [hardware](/hardware/) section for board schematics and PCB designs
 
 ## Where to buy
 
-You may support our work by ordering this product at [Tindie](https://www.tindie.com/products/sonocotta/esparagus-hifi-medialink/)
+You may support our work by ordering this product at Tindie
+- [Esparagus HiFi MediaLink](https://www.tindie.com/products/sonocotta/esparagus-hifi-medialink/)
+- [Loud Esparagus](https://www.tindie.com/products/sonocotta/loud-esparagus-media-center/)
+- Louder Esparagus (coming soon)
