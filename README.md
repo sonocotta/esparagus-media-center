@@ -5,6 +5,8 @@
 
 Esparagus Media Center is a series of ESP32 based media center devices. They all run [Squeezelite-ESP32](https://github.com/sle118/squeezelite-esp32) software and have similar media capabilities, but aimed at different use cases. They share a similar look, and compared to my earlier designs, they have a great looking aluminum case.
 
+Our [Crowd Supply campaign](https://www.crowdsupply.com/sonocotta/esparagus-media-center) for backing the manufacturing of Esparagus series boards is currently underway. If you have any interest, please consider subscribing to receive updates on the campaign.
+
 ## Why Esparagus
 
 ChatGPT made me call it that way. I only asked if there is a fruit or vegetable that is phonetically close to ESP32, which is the heart of this device.
