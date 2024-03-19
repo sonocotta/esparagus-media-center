@@ -3,6 +3,8 @@
 ![Open Source Hardware](/images/open-source-hardware-logo.png)
 ![Open Source Software](/images/open-source-software-logo.png)
 
+![DSC_0724](https://github.com/sonocotta/esparagus-media-center/assets/5459747/a4294682-0a17-4e0d-a833-5988d88172b6)
+
 Esparagus Media Center is a series of ESP32 based media center devices. They all run [Squeezelite-ESP32](https://github.com/sle118/squeezelite-esp32) software and have similar media capabilities, but aimed at different use cases. They share a similar look, and compared to my earlier designs, they have a great looking aluminum case.
 
 Our [Crowd Supply campaign](https://www.crowdsupply.com/sonocotta/esparagus-media-center) for backing the manufacturing of Esparagus series boards is currently underway. If you have any interest, please consider subscribing to receive updates on the campaign.
@@ -35,13 +37,14 @@ Loud Esparagus is aimed to be paired with small-to-medium sized speakers in a sm
 
 Louder Esparagus is a top-of-the-range model that uses modern highly capable TAS5805M DAC and is aimed to be paired with medium-to-large speaker systems. With 25W per channel stereo output it packs a punch and can easily enlive living quarters or dorm rooms. It is highly efficient, but much more demanding for power when cranked, therefore it uses USB-C Power Delivery to pull up to 65W from the wall power adapter. It can be used both with Wi-Fi and Ethernet (to make sure bad Wi-Fi would not interrupt the stream)
 
-![DSC_0725](https://github.com/sonocotta/esparagus-hifi-medialink/assets/5459747/beb44179-2d79-4506-b867-493c66191c21)
+![DSC_0719](https://github.com/sonocotta/esparagus-media-center/assets/5459747/acca2da1-a52f-4d44-b1a7-9d6dc896c549)
 
 ## Features
 
 |             | [Hifi ESP](https://github.com/sonocotta/esp32-audio-dock) | Esparagus HiFi MediaLink | [Loud ESP](https://github.com/sonocotta/loud-esp)  | Loud Esparagus | [Louder ESP](https://github.com/sonocotta/esp32-audio-dock)  | Louder Esparagus
 |-------------|------------------------|-----------------------|------------------------|-----------------------|------------------------|-----------------------|
-| Image       | ![image](https://user-images.githubusercontent.com/5459747/225272052-c36d5b87-1b9a-439c-be69-94077135e72a.png)  | ![DSC_0709](https://github.com/sonocotta/esparagus-hifi-medialink/assets/98712315/ea45f1d2-32b5-4f12-a63c-a8e403cb22db) | ![image](https://github.com/sonocotta/esparagus-hifi-medialink/assets/5459747/b9182b50-9d52-430b-878c-d82052e43e84) | ![DSC_0706](https://github.com/sonocotta/esparagus-hifi-medialink/assets/5459747/2556b8ff-1827-4e03-8e28-31e40199943c) | ![image](https://github.com/sonocotta/esparagus-hifi-medialink/assets/5459747/60da6a3f-422d-4fea-b6ff-7a0423c12543) | ![DSC_0713](https://github.com/sonocotta/esparagus-hifi-medialink/assets/5459747/03ec824a-1eab-4d85-92e9-a0aed5a66ce9) | Docks with  | ESP32 Mini Module           | ESP32-WROVER Module Onboard  | ESP32 Mini Module           | ESP32-WROVER Module Onboard  | ESP32 Mini Module           | ESP32-WROVER Module Onboard  |
+| Image       | ![image](https://user-images.githubusercontent.com/5459747/225272052-c36d5b87-1b9a-439c-be69-94077135e72a.png)  | ![DSC_0709](https://github.com/sonocotta/esparagus-hifi-medialink/assets/98712315/ea45f1d2-32b5-4f12-a63c-a8e403cb22db) | ![image](https://github.com/sonocotta/esparagus-hifi-medialink/assets/5459747/b9182b50-9d52-430b-878c-d82052e43e84) | ![DSC_0706](https://github.com/sonocotta/esparagus-hifi-medialink/assets/5459747/2556b8ff-1827-4e03-8e28-31e40199943c) | ![image](https://github.com/sonocotta/esparagus-hifi-medialink/assets/5459747/60da6a3f-422d-4fea-b6ff-7a0423c12543) | ![DSC_0713](https://github.com/sonocotta/esparagus-media-center/assets/5459747/14d54647-2b7e-4b1a-9a8e-135a1598eb02)
+| Docks with  | ESP32 Mini Module           | ESP32-WROVER Module Onboard  | ESP32 Mini Module           | ESP32-WROVER Module Onboard  | ESP32 Mini Module           | ESP32-WROVER Module Onboard  |
 | DAC         | [PCM5100A](https://www.ti.com/product/PCM5100A) 32bit Stereo DAC | [PCM5100A](https://www.ti.com/product/PCM5100A) 32bit Stereo DAC <br/> -100 dB typical noise level | Dual I2S DAC ([MAX98357](https://www.analog.com/en/products/max98357a.html)) with built in D-Class amp |Dual I2S DAC ([MAX98357](https://www.analog.com/en/products/max98357a.html)) with built in D-Class amp | Stereo I2S DAC ([TAS5805M](https://www.ti.com/product/TAS5805M)) with   built in D-Class amp | Stereo I2S DAC ([TAS5805M](https://www.ti.com/product/TAS5805M)) with   built in D-Class amp |
 | Power | 3x [LP5907](https://www.ti.com/lit/ds/symlink/lp5907.pdf) 3.3 V Ultra-Low-Noise LDO | 3x [LP5907](https://www.ti.com/lit/ds/symlink/lp5907.pdf) 3.3 V Ultra-Low-Noise LDO | 5V from Mini-USB | 5V from USB-C | Up to 26V from external PSU | Up to 20V from USB-C PD 
 | Output      | 2.1 VRMS Line-level stereo output 3.5mm jack | 2.1 VRMS Line-level stereo output 3.5mm jack | 2x 3W  | 2x 3W  | 2x 23W at 22V Vin  | 2x 22W at 20V over USB-PD
