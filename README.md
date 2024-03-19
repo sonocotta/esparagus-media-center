@@ -157,15 +157,14 @@ Please visit [hardware](/hardware/) section for board schematics and PCB designs
 
 | Esparagus HiFi MediaLink  | Loud Esparagus  | Louder Esparagus |
 |---|---|---|
-| ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/c4765189-de0e-44bd-8163-b19ddd6f68d1) | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/8e2819a1-d496-456d-a180-b554787e6a0f) | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/439e5afb-a89d-408f-a5a4-f48b1f3c4630)
+| ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/c4765189-de0e-44bd-8163-b19ddd6f68d1) | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/8e2819a1-d496-456d-a180-b554787e6a0f) | ![DSC_0717 (copy 1) JPG-mh](https://github.com/sonocotta/esparagus-media-center/assets/5459747/905a0712-e43a-4fb9-b585-d95334cd98b3)
+
 
 ### PCB
 
 | Esparagus HiFi MediaLink  | Loud Esparagus  | Louder Esparagus |
 |---|---|---|
-| ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/d56ff3b7-633c-4f67-a82f-5084cfeb4144) | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/f355598b-bf33-43a8-87a1-130de3d1e3b2) | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/71fb67ab-6dd2-435c-b3ed-669ae3ed3f2c)
-
-
+| ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/d56ff3b7-633c-4f67-a82f-5084cfeb4144) | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/f355598b-bf33-43a8-87a1-130de3d1e3b2) | ![DSC_0712 (copy 1) JPG-mh](https://github.com/sonocotta/esparagus-media-center/assets/5459747/424a39f2-5241-4cbf-97e7-3536255d5531)
 
 
 ## Where to buy
