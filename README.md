@@ -154,11 +154,9 @@ Please visit [hardware](/hardware/) section for board schematics and PCB designs
 
 ### Boxed
 
-
 | Esparagus HiFi MediaLink  | Loud Esparagus  | Louder Esparagus |
 |---|---|---|
 | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/c4765189-de0e-44bd-8163-b19ddd6f68d1) | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/8e2819a1-d496-456d-a180-b554787e6a0f) | ![DSC_0717 (copy 1) JPG-mh](https://github.com/sonocotta/esparagus-media-center/assets/5459747/905a0712-e43a-4fb9-b585-d95334cd98b3)
-
 
 ### PCB
 
@@ -166,6 +164,19 @@ Please visit [hardware](/hardware/) section for board schematics and PCB designs
 |---|---|---|
 | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/d56ff3b7-633c-4f67-a82f-5084cfeb4144) | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/f355598b-bf33-43a8-87a1-130de3d1e3b2) | ![DSC_0712 (copy 1) JPG-mh (1)](https://github.com/sonocotta/esparagus-media-center/assets/5459747/a14e9af8-f835-4d23-9772-84217a39a5ec)
 
+### Relay Driver
+
+Some boards of the Esparagus series has internal driver for external relay. It has back-facing diode to shunt any coil-inducted currents. Driver is an open-drain output with the following states
+
+| Driver Pin State (IO21)  | Output state  | Relay connected between OUT and +5V |
+|---|---|---|
+| Floating (pulled low with 100K resistor) or <br/> LOW | High impedance | INACTIVE (switched OFF)
+| HIGH | Pulled to GND | ACTIVE (switched ON)
+
+Schematics:
+![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/4f2aa313-a15f-4b43-957d-2c32ad6c8755)
+
+External relay can be connected directly between OUT and +5V pins (1st and 3rd pins, mid pin being GND)
 
 ## Where to buy
 
