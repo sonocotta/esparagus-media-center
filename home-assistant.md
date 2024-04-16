@@ -41,7 +41,18 @@ When you have squeezelite-esp32 installed on your Esparagus device (either stock
 
 The power of this method is that you can use all four ways outside of HA, for example using your smartphone and Spotify app, and still have it integrated into HA at the same time.
 
-When you perform the last step on the above instruction, you should find your device as both Slimproto device and Airplay device. It is up to you which protocol to use, generally they both work perfectly well.
+#### Native HA integration
+
+Make sure your MA Slimproto provider is disabled, it will conflict with native HA integration 
+
+| Step | Screenshot |
+|------|------------|
+| **Add SlimProto Integration** <br/> <br/> Navigate to HA Settings > Devices & services > Integrations. Click the big + ADD INTEGRATION button, look for  SlimProto and install it. | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/67c0efec-6774-404b-b63d-e13151025147)
+| **Add HA MediaPlayers provider to MA** | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/f652a565-05a1-4143-9e78-60ba3830ba5c)
+
+#### Integrate into Music Assistant directly 
+
+Disable SlimProto integration in the HA if you want to go MA way. If you enabled SlimProto and AirPlay providers in the MA, you should find your device as both Slimproto device and Airplay device. It is up to you which protocol to use, generally they both work perfectly well.
 
 ### ESPHome way
 
@@ -50,7 +61,207 @@ When you perform the last step on the above instruction, you should find your de
 | Step | Screenshot |
 |------|------------|
 | **Add ESPHome Addon** <br/> <br/> Navigate to HA Settings > Addons > Add Addon <br/> Search for SSH and install it.  <br/> Enable `Show in sidebar` switch while you there | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/9d9d0a44-ba2a-491f-bff8-e1c08b8754e0)
-| **Flash basic ESPHome setup into Esparagus** <br/> <br/> Use [Web Flasher](https://web.esphome.io/?dashboard_wizard) to flash stock ESPHome into device | 
+| **Prepare Esparagus for ESPHome onboarding** <br/> <br/> Use [Web Flasher](https://web.esphome.io/?dashboard_wizard) to flash stock ESPHome into device | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/8ad222e8-d992-4a75-9a93-596d67ac8cb0)
+| **Onboard Esparagus ESPHome device into HA** <br/> <br/> Go to HA ESPHome page and you should be able to find new device. You need to onboard it with the below config (feel free to change names) <br/> This will take a moment or two | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/32b0c26a-3be1-4e15-b749-1176d46ff011)
+| **Validate device in the ESPHome** | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/92df6029-c777-47ce-8ff9-debec70f7e05)
+| **Add ESPHome Integration** <br /> <br/> Navigate to HA Settings > Devices & services > Integrations. Click the big + ADD INTEGRATION button, look for ESPHome and click to add it. <br/> It should discover and add ESPHome media devices based on the previous step | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/c5d3bb12-8b07-4c49-a9e9-cdf2e6cad8ba)
+| **Use your media device in the HA** | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/40067959-04ad-498c-a64d-4353e3f96228)
+| **Use your media device in the MA** <br/> <br/> Add Music Assistant HA MediaPlayers provider to discover new Media device | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/6d19a972-83cf-4997-868c-1af0e4175c9b)
+
+#### Esparagus HiFi and Loud Esparagus ESPHome config
+
+```yaml
+substitutions:
+  name: esphome-web-e002d0
+  friendly_name: loud-esparagus
+  long_devicename: "Loud Esparagus"
+
+esphome:
+  name: "${friendly_name}"
+  name_add_mac_suffix: false
+  comment: "${long_devicename}"
+  on_boot:
+    priority: 800
+    then:
+    - media_player.volume_set:
+        id: loudesp32
+        volume: 10%
+
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+# Allow Over-The-Air updates
+ota:
+
+wifi:
+  ssid: !secret esphome_wifi_ssid
+  password: !secret esphome_wifi_password
+  ap:
+    ssid: "$name"
+    password: password
+
+captive_portal:
+
+psram:
+  mode: octal
+  speed: 80MHz
+
+i2s_audio:
+  i2s_lrclk_pin: GPIO25
+  i2s_bclk_pin: GPIO26
+
+media_player:
+  - platform: i2s_audio
+    name: $long_devicename
+    id: loudesp32
+    dac_type: external
+    i2s_dout_pin: GPIO22
+    mode: stereo
+```
+
+#### Louder Esparagus ESPHome config
+
+```yaml
+substitutions:
+  name: esphome-web-e002d0
+  friendly_name: louder-esparagus
+  long_devicename: "Louder Esparagus"
+
+esphome:
+  name: "${devicename}"
+  name_add_mac_suffix: false
+  comment: "${long_devicename}"
+  includes:
+    - louderesp32.h
+  platformio_options:
+    lib_deps: "Wire"
+  on_boot:
+    priority: 800
+    then:
+    ## Set a volume limit just to be safe...
+    - media_player.volume_set:
+        id: louderesp32
+        volume: 10%
+
+esp32:
+  board: mhetesp32minikit
+
+wifi:
+  ssid: !secret esphome_wifi_ssid
+  password: !secret esphome_wifi_password
+  ap:
+    ssid: "$devicename Fallback Hotspot"
+    password: !secret esphome_ap_password
+
+captive_portal:
+### Optional if you want ethernet (then remove all wifi config) ###
+#ethernet:
+#  type: W5500
+#  clk_pin: GPIO18
+#  mosi_pin: GPIO23
+#  miso_pin: GPIO19
+#  cs_pin: GPIO05
+#  interrupt_pin: GPIO35
+#  reset_pin: GPIO14
+
+logger:
+  level: DEBUG
+
+api:
+  encryption:
+    key: !secret esphome_api_key
+
+ota:
+  password: !secret esphome_ota_password
+
+psram:
+  mode: octal
+  speed: 80MHz
+
+switch:
+  - platform: custom
+    lambda: |-
+      auto tas5805 = new TAS5805();
+      App.register_component(tas5805);
+      return {tas5805};
+    switches:
+      name: "Enable Amp"
+
+i2c:
+  sda: GPIO21
+  scl: GPIO27
+  scan: True
+  id: i2c_component
+
+i2s_audio:
+  i2s_lrclk_pin: GPIO25
+  i2s_bclk_pin: GPIO26
+
+media_player:
+  - platform: i2s_audio
+    name: $long_devicename
+    id: louderesp32
+    dac_type: external
+    i2s_dout_pin: GPIO22
+    mode: stereo
+```
+
+For the last one to work you also need to place this file under `/config/esphome/louderesp32.h`
+
+```C
+//###########################################################################
+//## ESPHome custom component for the Louder ESP32                         ##
+//## Get it here: https://www.tindie.com/products/sonocotta/louder-esp32/  ##
+//## Check the blog article on https://www.espthings.io/louder-esp32       ##
+//###########################################################################
+#include "esphome.h"
+#include <Wire.h>
+#define DEVICE_CTRL_2_REGISTER 0x03
+#define PWDN_PIN 33
+#define I2C_ADDR 0x2D
+class TAS5805 : public Component, public Switch  {
+  public:
+    void setup() override {
+      pinMode(PWDN_PIN, OUTPUT);
+      digitalWrite(PWDN_PIN, LOW);
+      delay(200);
+      digitalWrite(PWDN_PIN, HIGH);
+      Wire.begin();
+      Wire.beginTransmission(I2C_ADDR);
+      if (Wire.endTransmission() != 0) {
+        ESP_LOGE("TAS5805", "TAS5805 not found at address 0x2D");
+        return;
+      }
+      Wire.beginTransmission(I2C_ADDR);
+      Wire.write(DEVICE_CTRL_2_REGISTER);
+      Wire.write(0x02);
+      Wire.endTransmission();
+      delay(50);
+      Wire.beginTransmission(I2C_ADDR);
+      Wire.write(DEVICE_CTRL_2_REGISTER);
+      Wire.write(0x03);
+      Wire.endTransmission();
+      ESP_LOGI("TAS5805", "TAS5805 initialized.");
+    }
+ 
+    void write_state(bool state) override {
+      uint8_t value = state ? 0x03 : 0x00;
+      Wire.beginTransmission(I2C_ADDR);
+      Wire.write(DEVICE_CTRL_2_REGISTER);
+      Wire.write(value);
+      Wire.endTransmission();
+      publish_state(state);
+    }
+};
+```
 
 ### Snapcast way
 
