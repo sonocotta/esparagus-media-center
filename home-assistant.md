@@ -32,13 +32,25 @@ Generally you need to have supported HA (native) installation and follow [these 
 
 [gh://sle118/squeezelite-esp32](https://github.com/sle118/squeezelite-esp32)
 
-TODO
+When you have squeezelite-esp32 installed on your Esparagus device (either stock, or manually going through [steps](https://github.com/sonocotta/esparagus-media-center?tab=readme-ov-file#squeezelite-esp32)), it will announce itself by multiple protocols in the network:
+
+- Bluetooth
+- LMS or slimproto - autodiscovered by HA
+- Apple Airplay - autodiscovered by HA
+- Spotify Connect
+
+The power of this method is that you can use all four ways outside of HA, for example using your smartphone and Spotify app, and still have it integrated into HA at the same time.
+
+When you perform the last step on the above instruction, you should find your device as both Slimproto device and Airplay device. It is up to you which protocol to use, generally they both work perfectly well.
 
 ### ESPHome way
 
 [Louder-ESP32 running ESPHome](https://www.espthings.io/index.php/2024/04/07/louder-esp32-a-hi-fi-class-d-audio-amplifier-running-esphome/)
 
-TODO
+| Step | Screenshot |
+|------|------------|
+| **Add ESPHome Addon** <br/> <br/> Navigate to HA Settings > Addons > Add Addon <br/> Search for SSH and install it.  <br/> Enable `Show in sidebar` switch while you there | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/9d9d0a44-ba2a-491f-bff8-e1c08b8754e0)
+| **Flash basic ESPHome setup into Esparagus** <br/> <br/> Use [Web Flasher](https://web.esphome.io/?dashboard_wizard) to flash stock ESPHome into device | 
 
 ### Snapcast way
 
