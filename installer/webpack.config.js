@@ -15,7 +15,7 @@ export default {
   // Define the destination directory and filenames of compiled resources
   output: {
     filename: "js/[name].js",
-    path: path.resolve(process.cwd(), "./docs"),
+    path: path.resolve(process.cwd(), "../docs"),
   },
 
   // Define development options
@@ -112,7 +112,7 @@ export default {
   // Configure the "webpack-dev-server" plugin
   devServer: {
     static: {
-      directory: path.resolve(process.cwd(), "docs")
+      directory: path.resolve(process.cwd(), "../docs")
     },
     watchFiles: [
       path.resolve(process.cwd(), "index.html")
