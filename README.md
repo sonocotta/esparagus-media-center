@@ -115,9 +115,9 @@ Squeezelite-ESP32 is a multimedia software suite, that started as a renderer (or
 And LMS itself
 - Streams your local music and connects to all major online music providers (Spotify, Deezer, Tidal, Qobuz) using Logitech Media Server - a.k.a LMS with **multi-room** audio synchronization.
 - LMS can be extended by numerous plugins and can be controlled using a Web browser or dedicated applications (iPhone, Android).
-- It can also send audio to UPnP, Sonos, Chromecast and AirPlay speakers/devices.
+- It can also send audio to UPnP, Sonos, Chromecast, and AirPlay speakers/devices.
 
-All Esparagus boards are tested with [Squeezelite-ESP32](https://github.com/sle118/squeezelite-esp32) software. It can be flashed using nothing but web browser. You can use [Squeezelite-ESP32 installer](https://sle118.github.io/squeezelite-esp32-installer/) for that purpose.
+All Esparagus boards are tested with [Squeezelite-ESP32](https://github.com/sle118/squeezelite-esp32) software. It can be flashed using nothing but a web browser. You can use [Squeezelite-ESP32 installer](https://sle118.github.io/squeezelite-esp32-installer/) for that purpose.
 
 ### How to flash and configure
 
@@ -147,7 +147,7 @@ You can use it now
 |---|---|---|
 | ![DSC_0711](https://github.com/sonocotta/esparagus-hifi-medialink/assets/98712315/66f565f3-7342-42aa-95e4-bad0437aa887) | ![DSC_0702](https://github.com/sonocotta/esparagus-hifi-medialink/assets/5459747/00d540a8-6dce-48dd-9d11-d70992451068) | ![DSC_0710](https://github.com/sonocotta/esparagus-hifi-medialink/assets/5459747/dce0c088-fa0c-4637-a719-b067daeff998)
 
-Please visit [hardware](/hardware/) section for board schematics and PCB designs. Note that PCB are shared as multi-layer PDFs as well as Gerber archives.
+Please visit [hardware](/hardware/) section for board schematics and PCB designs. Note that PCBs are shared as multi-layer PDFs as well as Gerber archives.
 
 ### Boxed
 
@@ -163,7 +163,7 @@ Please visit [hardware](/hardware/) section for board schematics and PCB designs
 
 ### Relay Driver
 
-Some boards of the Esparagus series has internal driver for external relay. It has back-facing diode to shunt any coil-inducted currents. Driver is an open-drain output with the following states
+Some boards of the Esparagus series have internal drivers for external relays. It has a back-facing diode to shunt any coil-inducted currents. Driver is an open-drain output with the following states
 
 | Driver Pin State (IO21)  | Output state  | Relay connected between OUT and +5V |
 |---|---|---|
