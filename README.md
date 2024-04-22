@@ -5,7 +5,7 @@
 
 ![DSC_0724](https://github.com/sonocotta/esparagus-media-center/assets/5459747/a4294682-0a17-4e0d-a833-5988d88172b6)
 
-Esparagus Media Center is a series of ESP32 based media center devices. They all run [Squeezelite-ESP32](https://github.com/sle118/squeezelite-esp32) software and have similar media capabilities, but aimed at different use cases. They share a similar look, and compared to my earlier designs, they have a great looking aluminum case.
+Esparagus Media Center is a series of ESP32-based media center devices. They all run [Squeezelite-ESP32](https://github.com/sle118/squeezelite-esp32) software and have similar media capabilities, but are aimed at different use cases. They share a similar look, and compared to my earlier designs, they have a great-looking aluminum case.
 
 Our [Crowd Supply campaign](https://www.crowdsupply.com/sonocotta/esparagus-media-center) for backing the manufacturing of Esparagus series boards is currently underway. If you have any interest, please consider subscribing to receive updates on the campaign.
 
@@ -15,27 +15,27 @@ ChatGPT made me call it that way. I only asked if there is a fruit or vegetable 
 
 ## Motivation
 
-I did few audio projects in the past, some using [ESP32](https://hackaday.io/project/173620-loud-esp), some using larger [Orange Pi](https://hackaday.io/project/191936-orange-pi-home-media-center) and [Raspberry Pi](https://hackaday.io/project/162373-orangepi-zero-pulse-music-server-using-i2s-dac) devices. Each has its pros and cons, and each iteration I'm trying to focus on the details that were working best for me, while actually using them. 
+I did few audio projects in the past, some using [ESP32](https://hackaday.io/project/173620-loud-esp), some using larger [Orange Pi](https://hackaday.io/project/191936-orange-pi-home-media-center) and [Raspberry Pi](https://hackaday.io/project/162373-orangepi-zero-pulse-music-server-using-i2s-dac) devices. Each has its pros and cons, and with each iteration, I'm trying to focus on the details that were working best for me, while actually using them. 
 
-What I like about ESP32 is how lightweight it is. It barely draws power, so you may not care to turn it off at all. It boots in seconds and is ready for use in a snap. Still it is capable and works at par with Linux SBC solutions for audio applications, while costing a fraction of their price. Combined with proper Hi-Fi DAC you would not tell a difference to commercial devices standing side by side and costing much more.
+What I like about ESP32 is how lightweight it is. It barely draws power, so you may not care to turn it off at all. It boots in seconds and is ready for use in a snap. Still, it is capable and works at par with Linux SBC solutions for audio applications, while costing a fraction of their price. Combined with a proper Hi-Fi DAC you would not tell a difference to commercial devices standing side by side and costing much more.
 
-Over last few years I see few amazing software products created to deliver audio on the ESP32, like [squeezelite-esp32](https://github.com/sle118/squeezelite-esp32) or  [euphonium](https://github.com/muvox-io/euphonium). Esparagus media center devices are designed specifically to run these great pieces of software and bring a new life into aging audio equipment that most of us have at home, but do not use that much these days, since it is not working with Spotify and the family.
+Over the last few years, I have seen a few amazing software products created to deliver audio on the ESP32, like [squeezelite-esp32](https://github.com/sle118/squeezelite-esp32) or  [euphonium](https://github.com/muvox-io/euphonium). Esparagus media center devices are designed specifically to run these great pieces of software and bring a new life into aging audio equipment that most of us have at home but do not use that much these days, since it is not working with Spotify and the family.
 
 ## Esparagus HiFi MediaLink
 
-Esparagus HiFi MediaLink is a handy low cost media device that will upgrade your legacy audio system with cutting-edge internet streaming capabilities and enhance your audio experience. It exposes line level output that you can plug into a stereo amplifier. It uses the legendary PCM51 series DAC with supreme audio quality.
+Esparagus HiFi MediaLink is a handy low-cost media device that will upgrade your legacy audio system with cutting-edge internet streaming capabilities and enhance your audio experience. It exposes line-level output that you can plug into a stereo amplifier. It uses the legendary PCM51 series DAC with supreme audio quality.
 
 ![DSC_0702](https://github.com/sonocotta/esparagus-hifi-medialink/assets/98712315/3ef311c6-2fbc-4969-aa99-4fed7e1e1dd5)
 
 ## Loud Esparagus
 
-Loud Esparagus is aimed to be paired with small-to-medium sized speakers in a small room. It uses a dual MAX98357 Hi-Fi DAC that will output 3W per speaker. Admittedly not much, but well enough for a kid's room or work place. Due to the D-class amp, it barely uses power and can be paired with a standard USB wall charger.   
+Loud Esparagus is aimed to be paired with small-to-medium-sized speakers in a small room. It uses a dual MAX98357 Hi-Fi DAC that will output 3W per speaker. Admittedly not much, but well enough for a kid's room or workplace. Due to the D-class amp, it barely uses power and can be paired with a standard USB wall charger.   
 
 ![DSC_0689](https://github.com/sonocotta/esparagus-hifi-medialink/assets/5459747/7635cb2a-6ef1-43e8-8396-c27ef5387a25)
 
 ## Louder Esparagus
 
-Louder Esparagus is a top-of-the-range model that uses modern highly capable TAS5805M DAC and is aimed to be paired with medium-to-large speaker systems. With 25W per channel stereo output it packs a punch and can easily enlive living quarters or dorm rooms. It is highly efficient, but much more demanding for power when cranked, therefore it uses USB-C Power Delivery to pull up to 65W from the wall power adapter. It can be used both with Wi-Fi and Ethernet (to make sure bad Wi-Fi would not interrupt the stream)
+Louder Esparagus is a top-of-the-range model that uses modern highly capable TAS5805M DAC and is aimed to be paired with medium-to-large speaker systems. With 25W per channel stereo output, it packs a punch and can easily enlive living quarters or dorm rooms. It is highly efficient, but much more demanding for power when cranked, therefore it uses USB-C Power Delivery to pull up to 65W from the wall power adapter. It can be used both with Wi-Fi and Ethernet (to make sure bad Wi-Fi would not interrupt the stream)
 
 ![DSC_0719](https://github.com/sonocotta/esparagus-media-center/assets/5459747/acca2da1-a52f-4d44-b1a7-9d6dc896c549)
 
@@ -91,15 +91,15 @@ Audio streaming requires proper buffering to work, even with ESP32 500K of RAM i
 
 ## Software samples
 
-In the [software](/firmware) section two firmware examples provided.
+In the [software](/firmware) section two firmware examples are provided.
 
 - [esp32-i2s-bare](/firmware/esp32-i2s-bare/) is base I2S implementation based on ESP-IDF implementation directly.
 - [esp32-i2s-esp8266audio](/firmware/esp32-i2s-esp8266audio/) is based on excellent [ESP8266Audio](https://github.com/earlephilhower/ESP8266Audio) library (it works with the whole ESP range, don't get fooled by the name), providing minimum code implementation. 
-- [esp32-i2s-web-radio](/firmware/esp32-i2s-web-radio/) is based on the [same library](https://github.com/earlephilhower/ESP8266Audio), providing minimum web-readio stream player. It expects playlist as an input in 'data' folder. 
+- [esp32-i2s-web-radio](/firmware/esp32-i2s-web-radio/) is based on the [same library](https://github.com/earlephilhower/ESP8266Audio), providing minimum web-readio stream player. It expects a playlist as an input in the 'data' folder. 
 
 ### Platformio IDE
  
-All samples are provided as [Plarformio IDE](https://platformio.org/platformio-ide) projects. After installing it, open sample project. Select proper environment based on your dock. Run `Build` and `Upload` commands to install necessary tools and libraries, build and upload prject to the board. Communication and proper upload method selection will be handled by IDE automatically. 
+All samples are provided as [Plarformio IDE](https://platformio.org/platformio-ide) projects. After installing it, open the sample project. Select the proper environment based on your dock. Run the `Build` and `Upload` commands to install necessary tools and libraries, and build and upload the project to the board. Communication and proper upload method selection will be handled by IDE automatically. 
 
 ## Arduino IDE
 
@@ -107,36 +107,33 @@ Follow the [ESP8266Audio](https://github.com/earlephilhower/ESP8266Audio) librar
 
 ## Squeezelite-ESP32
 
-Squeezelite-ESP32 is a multimedia software suite, that started as renderer (or player) of LMS (Logitech Media Server). Now it is extended with 
+Squeezelite-ESP32 is a multimedia software suite, that started as a renderer (or player) of LMS (Logitech Media Server). Now it is extended with 
 - **Spotify** over-the-air player using SpotifyConnect (thanks to cspot)
 - **AirPlay** controller (iPhone, iTunes ...) and enjoy synchronization multiroom as well (although it's AirPlay 1 only)
 - Traditional **Bluetooth** device (iPhone, Android)
 
 And LMS itself
-- Streams your local music and connect to all major on-line music providers (Spotify, Deezer, Tidal, Qobuz) using Logitech Media Server - a.k.a LMS with **multi-room** audio synchronization.
+- Streams your local music and connects to all major online music providers (Spotify, Deezer, Tidal, Qobuz) using Logitech Media Server - a.k.a LMS with **multi-room** audio synchronization.
 - LMS can be extended by numerous plugins and can be controlled using a Web browser or dedicated applications (iPhone, Android).
-- It can also send audio to UPnP, Sonos, ChromeCast and AirPlay speakers/devices.
+- It can also send audio to UPnP, Sonos, Chromecast and AirPlay speakers/devices.
 
-All Esparagus boards are tested with [Squeezelite-ESP32](https://github.com/sle118/squeezelite-esp32) software. It can be flashed using nothing but web-browser. You can use [Squeezelite-ESP32 installer](https://sle118.github.io/squeezelite-esp32-installer/) for that purpose.
+All Esparagus boards are tested with [Squeezelite-ESP32](https://github.com/sle118/squeezelite-esp32) software. It can be flashed using nothing but web browser. You can use [Squeezelite-ESP32 installer](https://sle118.github.io/squeezelite-esp32-installer/) for that purpose.
 
 ### How to flash and configure
 
-Use [Squeezelite-ESP32 installer](https://sle118.github.io/squeezelite-esp32-installer/) to flash firmware first. 
+Use [Esparagus Squeezelite-ESP32 installer](https://sonocotta.github.io/esparagus-media-center/) to flash the firmware. It has been preconfigured to work with Esparagus boards and will configure all hardware automatically. 
 
 |   |   |
 |---|---|
-| Use `Generic/I2S` profile | ![image](https://github.com/sonocotta/esp32-audio-dock/assets/5459747/134eea60-149b-48d6-90cb-e68b421b61b2) |  
-| Connect device to USB port and select if from the list | ![image](https://github.com/sonocotta/esp32-audio-dock/assets/5459747/5cb87b71-ff9c-4aa6-acdc-602b9c918e67) ![image](https://github.com/sonocotta/esp32-audio-dock/assets/5459747/38a313c6-5b38-4b63-9e4b-209ffd960c6b)| 
-| Press `Flash` and wait around 2 minutes  | ![image](https://github.com/sonocotta/esp32-audio-dock/assets/5459747/e93f2106-b6e2-4625-92d1-a906c8375fd7) | 
-| (Optional) You may enter serial console to get more information | ![image](https://github.com/sonocotta/esp32-audio-dock/assets/5459747/2d9c3b58-f4bf-49a5-8c6b-fc12c8cc8d10) |
+| Select correct device first | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/d5543eed-e6d6-4cb3-a1ca-c1de495bab6c)
+| Connect the device to USB port and select it from the list | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/dc508db5-0530-4d54-b078-a267aafc6698) ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/2e67cc5a-640d-4820-8dde-ca1c81f33e34)
+| Press `Flash` and wait around 2 minutes  | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/04773ec8-f4b6-4186-9f9b-f0d6c52d4eaf)
+| (Optional) You may enter the serial console to get more information, like device IP and boot logs | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/e74d3d5f-5c17-4d12-873a-058c3a753477)
 | Device is in recovery mode. Connect to `squeezelite-299fac` wifi network with `squeezelite` password (your network name suffix will be different) | ![image](https://github.com/sonocotta/esp32-audio-dock/assets/5459747/2763663c-dbc9-4c71-af12-0a6fb9c2d94d) |
-| When redirected to captive portal let device scan wifi network and provide valid credentials | <img src="https://github.com/sonocotta/esp32-audio-dock/assets/5459747/d2540ffb-d1d1-4441-a2b1-bbd6b8ad608f" width="30%" /> <img src="https://github.com/sonocotta/esp32-audio-dock/assets/5459747/b21f30e6-8899-46bc-b047-23281cae52b8" width="30%" /> <img src="https://github.com/sonocotta/esp32-audio-dock/assets/5459747/5dd1a1f6-0c6d-4045-b135-1d8cdd077161" width="30%" /> |
+| When redirected to the captive portal let the device scan wifi network and provide valid credentials | <img src="https://github.com/sonocotta/esp32-audio-dock/assets/5459747/d2540ffb-d1d1-4441-a2b1-bbd6b8ad608f" width="30%" /> <img src="https://github.com/sonocotta/esp32-audio-dock/assets/5459747/b21f30e6-8899-46bc-b047-23281cae52b8" width="30%" /> <img src="https://github.com/sonocotta/esp32-audio-dock/assets/5459747/5dd1a1f6-0c6d-4045-b135-1d8cdd077161" width="30%" /> |
 | You can use provided IP address (http://192.168.1.99/ on the screenshot) to access settings page |  ![image](https://github.com/sonocotta/esp32-audio-dock/assets/5459747/e3bbf910-1a5c-4c58-bd4e-c348ef0a91e5)
-| _HiFi and Loud_ <br/> Navigate to **NVS Editor** section and provide following updates <br /><br /> `dac_config`: `model=I2S,bck=26,ws=25,do=22` <br /> `display_config`: `SPI,width=128,height=64,cs=5,reset=32,driver=SSD1306,HFlip,VFlip` <br /> `led_vu_config`: `type=WS2812,length=1,gpio=33` <br /> `spi_config`: `mosi=23,clk=18,host=2,miso=19,dc=4` <br/><br /> Press `Commit` button |  ![image](https://github.com/sonocotta/esparagus-hifi-medialink/assets/98712315/ac53c365-7434-4042-86f9-ad74134a1cb5)
-| _Louder ESP_ <br />  Navigate to **NVS Editor** section and provide following updates <br /><br /> dac_config: `model=I2S,bck=26,ws=25,do=22,sda=21,scl=27,i2c=45` <br /> (STEREO, [BTL mode](#btl-and-pbtl-mode)) dac_controlset: `{"init":[{"reg":3,"val":2},{"reg":3,"val":3}],"poweron":[{"reg":3,"val":3}],"poweroff":[{"reg":3,"val":0}]}` <br /> (MONO, [PBTL mode](#btl-and-pbtl-mode)) dac_controlset: `{"init":[{"reg":3,"val":2},{"reg":3,"val":3},{"reg":2,"val":4}],"poweron":[{"reg":3,"val":3}],"poweroff":[{"reg":3,"val":0}]}` <br /> i2c_config: `scl=27,sda=21,speed=400000,port=1` <br /> set_GPIO: `33=vcc` <br/><br /> Press `Commit` button |  ![image](https://github.com/sonocotta/esp32-audio-dock/assets/5459747/cac2a1cc-7216-47c9-97b2-6a72c6559165)
-| _Louder ESP, Rev E_  <br /><br /> Update Ethernet configuration, if you're planning to use Ethernet module <br /> eth_config: `model=w5500,cs=5,speed=20000000,intr=35,rst=14` <br/> spi_config: `mosi=23,clk=18,host=2,miso=19` <br/> <br /> Press `Commit` button |  ![image](https://github.com/sonocotta/esp32-audio-dock/assets/5459747/f52e3a05-abe6-40d7-98ac-212bff6c431f)
-| (Optional) You may change device names to something close to you heart| ![image](https://github.com/sonocotta/esp32-audio-dock/assets/5459747/adc1fff1-8572-4fe5-9d88-943d86a3fb11)
-| Exit recovery | ![image](https://github.com/sonocotta/esp32-audio-dock/assets/5459747/c54b18fa-c995-4e67-bced-820f8bce5fe6)
+| (Optional) You may change device names to something close to your heart| ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/f3756d7e-7979-4347-a7af-3ca6320a3b83)
+| Exit recovery | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/4b2b4a01-1bbf-4397-91f9-56f8192e7cba)
   
 You can use it now
 | Bluetooth  | Spotify Connect  | AirPlay | LMS Renderer  |
