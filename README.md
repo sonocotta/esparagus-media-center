@@ -9,6 +9,34 @@ Esparagus Media Center is a series of ESP32-based media center devices. They all
 
 Our [Crowd Supply campaign](https://www.crowdsupply.com/sonocotta/esparagus-media-center) for backing the manufacturing of Esparagus series boards is currently underway. If you have any interest, please consider subscribing to receive updates on the campaign.
 
+## Table of Contents
+
+- [Esparagus Media Center](#esparagus-media-center)
+  - [Why Esparagus](#why-esparagus)
+  - [Motivation](#motivation)
+  - [Esparagus HiFi MediaLink](#esparagus-hifi-medialink)
+  - [Loud Esparagus](#loud-esparagus)
+  - [Louder Esparagus](#louder-esparagus)
+  - [Features](#features)
+    - [Onboard PSRAM](#onboard-psram)
+  - [Board Pinout](#board-pinout)
+    - [Common to every board](#common-to-every-board)
+    - [Peripheral (Loud Esparagus \& Esparagus HiFi MediaLink )](#peripheral-loud-esparagus--esparagus-hifi-medialink-)
+    - [TAS5805M DAC (Louder Esparagus)](#tas5805m-dac-louder-esparagus)
+    - [Peripheral - OLED Screen and W5500 Ethernet (Louder Esparagus)](#peripheral---oled-screen-and-w5500-ethernet-louder-esparagus)
+    - [Other Peripheral (Louder Esparagus)](#other-peripheral-louder-esparagus)
+  - [Software samples](#software-samples)
+    - [Platformio IDE](#platformio-ide)
+  - [Arduino IDE](#arduino-ide)
+  - [Squeezelite-ESP32](#squeezelite-esp32)
+    - [How to flash and configure](#how-to-flash-and-configure)
+  - [Hardware](#hardware)
+    - [Boxed](#boxed)
+    - [PCB](#pcb)
+    - [Relay Driver](#relay-driver)
+  - [Where to buy](#where-to-buy)
+
+
 ## Why Esparagus
 
 ChatGPT made me call it that way. I only asked if there is a fruit or vegetable that is phonetically close to ESP32, which is the heart of this device.
