@@ -41,7 +41,6 @@ Our [Crowd Supply campaign](https://www.crowdsupply.com/sonocotta/esparagus-medi
       - [Esparagus HiFi and Loud Esparagus ESPHome config](#esparagus-hifi-and-loud-esparagus-esphome-config)
       - [Louder Esparagus ESPHome config](#louder-esparagus-esphome-config)
     - [Snapcast way](#snapcast-way)
-      - [To Do](#to-do)
   - [Squeezelite-ESP32](#squeezelite-esp32)
     - [How to flash and configure](#how-to-flash-and-configure)
   - [Hardware](#hardware)
@@ -413,19 +412,14 @@ class TAS5805 : public Component, public Switch  {
 
 ### Snapcast way
 
-[gh://CarlosDerSeher/snapclient/](https://github.com/CarlosDerSeher/snapclient/)
+Snapcast is a multi-room audio player that synchronizes playback across multiple devices, ensuring that audio streams play simultaneously in perfect sync. It consists of a server, which distributes audio streams, and clients, which receive and play the audio. There is a [snapcast](https://github.com/sonocotta/esparagus-snapclient) fork that was created to implement Esparagus specific configuration on top of the ESP32 Snapcast client. This allows us to build flexible and extendable setups connected to various sources, like Mopidy, MPD or Home Assistant. 
 
 | Step | Screenshot |
 |------|------------|
-| **[Flash Snapcast to the Esparagus board](https://github.com/DerPicknicker/snapclient/blob/TAS5805M/doc/docker_build.md)** <br/> <br /> Don't try to build it yourself, there are too many pitfalls. The docker build process is fairly straightforward. Before flashing you need to change the wifi and audio hardware config via `idf.py menuconfig`. when done flashing your Esparagus board will reboot and look for Snapserver in the network |  ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/47600e5e-16bf-4f4e-b4a5-e5ea531b64fb)
+| **[Flash Snapcast to the Esparagus board](https://sonocotta.github.io/esparagus-snapclient/)** using web-flashing tool <br/> |  ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/47600e5e-16bf-4f4e-b4a5-e5ea531b64fb)
 | **Enable Snapcast in the MA** <br/> <br /> Got to the Ma and enable Snapcast provider. Your speaker will be discovered automatically, as long as it is running | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/ef87f8cf-3318-47c9-98b1-1a88ef4647b0)
 | **Use your media device in the MA** <br/> <br/> Play your audio into new device | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/9bc81bee-c412-4e00-a8dd-f63f4a412bf0)
-| **Use group of speakers for multi-room setup** <br/><br/> In the MA settings > Players create a new group player and add as many Eparagus players as you need. Use that group speaker to get a synced audio | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/b371fb08-c900-451f-a1c9-35e25c8ae73b)
- 
-
-#### To Do
-
-- Create web flasher tool with hardcoded configuration for Esparagus devices.
+| **Use a group of speakers for multi-room setup** <br/><br/> In the MA settings > Players create a new group player and add as many Eparagus players as you need. Use that group speaker to get a synced audio | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/b371fb08-c900-451f-a1c9-35e25c8ae73b)
 
 
 ## Squeezelite-ESP32
