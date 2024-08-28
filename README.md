@@ -498,4 +498,4 @@ External relay can be connected directly between OUT and +5V pins (1st and 3rd p
 You may support our work by ordering this product at Tindie
 - [Esparagus HiFi MediaLink](https://www.tindie.com/products/sonocotta/esparagus-hifi-medialink/)
 - [Loud Esparagus](https://www.tindie.com/products/sonocotta/loud-esparagus-media-center/)
-- [Louder Esparagus](https://www.crowdsupply.com/sonocotta/esparagus-media-center) (coming soon)
+- [Louder Esparagus](https://www.tindie.com/products/sonocotta/louder-esparagus-media-center/)
