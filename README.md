@@ -43,6 +43,7 @@ Our [Crowd Supply campaign](https://www.crowdsupply.com/sonocotta/esparagus-medi
     - [Snapcast way](#snapcast-way)
   - [Squeezelite-ESP32](#squeezelite-esp32)
     - [How to flash and configure](#how-to-flash-and-configure)
+    - [Squeezelite Bug causing boot loop](#squeezelite-bug-causing-boot-loop)
   - [Hardware](#hardware)
     - [Boxed](#boxed)
     - [PCB](#pcb)
@@ -457,7 +458,9 @@ You can use it now
 |---|---|---|---|
 | ![image](https://github.com/sonocotta/esp32-audio-dock/assets/5459747/cd0e7cb2-4a15-48fc-b308-0281e414619e)| ![image](https://github.com/sonocotta/esp32-audio-dock/assets/5459747/edcb5a3b-bead-44d8-b51d-4c36ed19b7da)| ![image](https://github.com/sonocotta/esp32-audio-dock/assets/5459747/20586bb4-bc51-4cfb-802a-c6072987c1da)| ![image](https://github.com/sonocotta/esp32-audio-dock/assets/5459747/dfdb89dd-755b-42fe-a381-a92011f9c681)
 
+### Squeezelite Bug causing boot loop
 
+Before version 1681 squeezelite-esp32 had a [bug](https://github.com/sle118/squeezelite-esp32/issues/414) that caused a boot loop with certain LMS servers when RGB LED was used for visualizations. It seems to be fixed in 1681, but the quick workaround is to clear `led_vu_config` NVS setting.
 
 ## Hardware
 
