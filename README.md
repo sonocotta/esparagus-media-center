@@ -47,7 +47,15 @@ Our [Crowd Supply campaign](https://www.crowdsupply.com/sonocotta/esparagus-medi
   - [Hardware](#hardware)
     - [Boxed](#boxed)
     - [PCB](#pcb)
+    - [Louder Esparagus power considerations](#louder-esparagus-power-considerations)
+      - [Louder Esparagus NOPD](#louder-esparagus-nopd)
+      - [External voltage selection](#external-voltage-selection)
     - [Relay Driver](#relay-driver)
+    - [Errata](#errata)
+      - [CH340C 5V level issue](#ch340c-5v-level-issue)
+        - [Detailed Description](#detailed-description)
+        - [Workaround/Temporary Solution](#workaroundtemporary-solution)
+        - [Resolution/Corrective Action](#resolutioncorrective-action)
   - [Where to buy](#where-to-buy)
 
 ## Why Esparagus
