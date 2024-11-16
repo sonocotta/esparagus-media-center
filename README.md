@@ -88,7 +88,9 @@ Louder Esparagus is a top-of-the-range model that uses modern highly capable TAS
 
 The latest update allows a direct power through barrel jack as an alternative to the USB-PD to provide an alternative and allow more precise control over the power source for your audio 
 
-![DSC_0719](https://github.com/sonocotta/esparagus-media-center/assets/5459747/acca2da1-a52f-4d44-b1a7-9d6dc896c549)
+| USB-PD  |  NOPD |
+|---|---|
+| ![DSC_0719](https://github.com/sonocotta/esparagus-media-center/assets/5459747/acca2da1-a52f-4d44-b1a7-9d6dc896c549) | ![DSC_0085](https://github.com/user-attachments/assets/810453ac-9bb5-41eb-ac3b-7868260e7631)
 
 ## Features
 
