@@ -545,14 +545,15 @@ Important point, this will send only one channel to the output, that’s just ho
 | Descriotion | Bridge Tied Load, Stereo | Parallel Bridge Tied Load, Mono |
 | Rated Power | 2×23W (8-Ω, 21 V, THD+N=1%) | 45W (4-Ω, 21 V, THD+N=1%) |
 | Schematics | ![image](https://github.com/sonocotta/esp32-audio-dock/assets/5459747/e7ada8c0-c906-4c08-ae99-be9dfe907574) | ![image](https://github.com/sonocotta/esp32-audio-dock/assets/5459747/55f5315a-03eb-47c8-9aea-51e3eb3757fe)
-| Speaker Connection |  | 
+| Speaker Connection | ![image](https://github.com/user-attachments/assets/6f6542c6-8e7f-4cc1-b306-1ffdd5f6a90c) | ![image](https://github.com/user-attachments/assets/476fdd80-be47-419d-931b-49d33ecc3abe)
+
 
 Starting from Rev E, an additional header is exposed to allow datasheet-specced connectivity
 
 | Image  | Legend  |
 |---|---|
-| Stereo Mode - leave open |  |
-| Mono (PBTL) Mode, close horisontally | 
+| Stereo Mode - leave open | ![image](https://github.com/user-attachments/assets/c99137a1-c04b-46c3-bc47-9b269bd905ca) |
+| Mono (PBTL) Mode, close horisontally | ![image](https://github.com/user-attachments/assets/0b724400-877e-4faa-be5b-610cc5df055b)
 
 ### TAS5805M DSP capabilities
 
