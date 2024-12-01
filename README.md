@@ -52,6 +52,9 @@ Our [Crowd Supply campaign](https://www.crowdsupply.com/sonocotta/esparagus-medi
     - [Louder Esparagus power considerations](#louder-esparagus-power-considerations)
       - [Louder Esparagus NOPD](#louder-esparagus-nopd)
       - [External voltage selection](#external-voltage-selection)
+    - [OLED screen](#oled-screen)
+      - [OLED models](#oled-models)
+      - [Software side](#software-side)
     - [Relay Driver](#relay-driver)
     - [Errata](#errata)
       - [CH340C 5V level issue](#ch340c-5v-level-issue)
@@ -618,6 +621,41 @@ The power adapter specs depend on the speaker you're planning to use. DAC effici
 It is not recommended to go beyond the voltage your speakers can take, otherwise, the amp will blow your speakers in no time. 
 
 The absolute maximum voltage for the TAS5805M DAc is 30V, but it is not guaranteed to be thermally stable in this condition. 
+
+### OLED screen
+
+All boards has OLED screen header. Originally I had plans to have is as a feature (It is quite nice when using with squeezelite, since you can get quite a lot with existing plugins and settings). Later on I disregarded this as a generelly available feature, since it is quite time-consuming task to solder it in place, and I had no really good idea how to fix the screen in place. Despite that, header is present on every boards revision and it works. 
+
+At this moment one can solder the compatible OLED screen and use it with transpacent front panel as a bedside clock or to simply display the current track ( prefer smoked glass for the final look of it). It takes a few minutes for a skilled engineer to solder it in place and small strap of double-sided adheasive to fix it mechanically.
+
+The final result is nice and finished look
+
+image 
+
+
+#### OLED models
+
+Most of the 64x128 pixel OLED screen models that are very common among hobbyists will use compatible 30-pin ribbon connector with 0.7mm pin spacing, and they are really easy to desolder.
+
+image
+
+You can find also bare screens if you spend a minute. Below are the tested models, although there are plenty more out there.
+
+|  Model | Image |
+|---|---|
+| [0.96" OLED Display 128X64 SSD1306](https://www.aliexpress.com/item/1005001836449023.html) | 
+| [1.3" OLED Display 128X64 SH1106](https://www.aliexpress.com/item/1005001836449023.html) | 
+
+#### Software side
+
+Although you're free to use it your way using pinout above, I'd expect the most common case to be squeezelite, thus here are the steps you'd need to do
+
+| # | Description | Image |
+|---|---|---|
+| 1 | Update NVS settings in the Web UI (switch to recovery mode first) <br/> `display_config` = `SPI,width=128,height=64,cs=15,reset=32,driver=SH1106,HFlip,VFlip` <br/> `spi_config` = `mosi=23,clk=18,host=2,miso=19,dc=4` <br/> You may need to replace `SH1106` with `SSD1306` depending on your model. |
+| 2 | In the LMS settings install the `SqueezeESP32` plugin | 
+| 3 | Update each speakers settings in the LMS, navigate to `Display` settings | 
+
 
 ### Relay Driver
 
