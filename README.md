@@ -624,38 +624,40 @@ The absolute maximum voltage for the TAS5805M DAc is 30V, but it is not guarante
 
 ### OLED screen
 
-All boards has OLED screen header. Originally I had plans to have is as a feature (It is quite nice when using with squeezelite, since you can get quite a lot with existing plugins and settings). Later on I disregarded this as a generelly available feature, since it is quite time-consuming task to solder it in place, and I had no really good idea how to fix the screen in place. Despite that, header is present on every boards revision and it works. 
+All boards have an OLED screen header. Originally I had plans to have it as a feature (It is quite nice when using squeezelite since you can get quite a lot with existing plugins and settings). Later on, I disregarded this as a generally available feature, since it is quite a time-consuming task to solder it in place, and I had no really good idea how to fix the screen in place. Despite that, the header is present on every board revision and it works. 
 
-At this moment one can solder the compatible OLED screen and use it with transpacent front panel as a bedside clock or to simply display the current track ( prefer smoked glass for the final look of it). It takes a few minutes for a skilled engineer to solder it in place and small strap of double-sided adheasive to fix it mechanically.
+At this moment one can solder the compatible OLED screen and use it with the transparent front panel as a bedside clock or to display the current track (I prefer smoked glass for the final look of it). It takes a few minutes for a skilled engineer to solder it in place and a small strap of double-sided adhesive to fix it mechanically.
 
-The final result is nice and finished look
+| A | B | C |
+|---|---|---|
+| ![DSC_0107](https://github.com/user-attachments/assets/74b72617-f7c8-4e7c-8f39-96c83af6af6f) | ![DSC_0109](https://github.com/user-attachments/assets/cd55ecc0-f884-4a85-827e-e0dea42fe750) | ![DSC_0111](https://github.com/user-attachments/assets/697ca174-d1ab-4376-8fbc-f7fa966cfd18)
 
-image 
+The final result is a nice and finished look
 
+![DSC_0101](https://github.com/user-attachments/assets/1404f035-0554-4969-87dd-745ff6022150)
 
 #### OLED models
 
 Most of the 64x128 pixel OLED screen models that are very common among hobbyists will use compatible 30-pin ribbon connector with 0.7mm pin spacing, and they are really easy to desolder.
 
-image
+![image](https://github.com/user-attachments/assets/711c8085-8d32-48c6-a58e-6f68809e8b97)
 
-You can find also bare screens if you spend a minute. Below are the tested models, although there are plenty more out there.
+You can also find bare screens if you spend a minute. Below are the tested models, although there are plenty more out there.
 
 |  Model | Image |
 |---|---|
-| [0.96" OLED Display 128X64 SSD1306](https://www.aliexpress.com/item/1005001836449023.html) | 
-| [1.3" OLED Display 128X64 SH1106](https://www.aliexpress.com/item/1005001836449023.html) | 
+| [0.96" OLED Display 128X64 SSD1306](https://www.aliexpress.com/item/1005001836449023.html) |  ![image](https://github.com/user-attachments/assets/815ce45e-8413-4455-bb7f-8f6c2651a1e2)
+| [1.3" OLED Display 128X64 SH1106](https://www.aliexpress.com/item/1005001836449023.html) | ![image](https://github.com/user-attachments/assets/bb228e84-07ab-45b5-af5b-ecae94656be8)
 
 #### Software side
 
-Although you're free to use it your way using pinout above, I'd expect the most common case to be squeezelite, thus here are the steps you'd need to do
+Although you're free to use it your way using the pinout above, I'd expect the most common case to be squeezelite, thus here are the steps you'd need to do
 
 | # | Description | Image |
 |---|---|---|
-| 1 | Update NVS settings in the Web UI (switch to recovery mode first) <br/> `display_config` = `SPI,width=128,height=64,cs=15,reset=32,driver=SH1106,HFlip,VFlip` <br/> `spi_config` = `mosi=23,clk=18,host=2,miso=19,dc=4` <br/> You may need to replace `SH1106` with `SSD1306` depending on your model. |
-| 2 | In the LMS settings install the `SqueezeESP32` plugin | 
-| 3 | Update each speakers settings in the LMS, navigate to `Display` settings | 
-
+| 1 | Update NVS settings in the Web UI (switch to recovery mode first) <br/> `display_config` = `SPI,width=128,height=64,cs=15,reset=32,driver=SH1106,HFlip,VFlip` <br/> `spi_config` = `mosi=23,clk=18,host=2,miso=19,dc=4` <br/> You may need to replace `SH1106` with `SSD1306` depending on your model. | ![image](https://github.com/user-attachments/assets/f42af7a5-2fda-42b4-80b6-4ca025bac29b)
+| 2 | In the LMS settings install the `SqueezeESP32` plugin | ![image](https://github.com/user-attachments/assets/5e32f271-cb66-4ea4-8a94-aaf1d0a73c5e)
+| 3 | Update each speaker's settings in the LMS, and navigate to `Display` settings | ![image](https://github.com/user-attachments/assets/ac970067-8b98-4294-af9a-80d0274e0558)
 
 ### Relay Driver
 
