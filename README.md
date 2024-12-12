@@ -463,13 +463,13 @@ Snapcast is a multi-room audio player that synchronizes playback across multiple
 
 ## Squeezelite-ESP32
 
-Squeezelite-ESP32 is a multimedia software suite, that started as a renderer (or player) of LMS (Logitech Media Server). Now it is extended with 
+Squeezelite-ESP32 is a multimedia software suite, that started as a renderer (or player) of LMS (Lyrion Music Server, formerly Logitech Media Server). Now it is extended with 
 - **Spotify** over-the-air player using SpotifyConnect (thanks to cspot)
 - **AirPlay** controller (iPhone, iTunes ...) and enjoy synchronization multiroom as well (although it's AirPlay 1 only)
 - Traditional **Bluetooth** device (iPhone, Android)
 
 And LMS itself
-- Streams your local music and connects to all major online music providers (Spotify, Deezer, Tidal, Qobuz) using Logitech Media Server - a.k.a LMS with **multi-room** audio synchronization.
+- Streams your local music and connects to all major online music providers (Spotify, Deezer, Tidal, Qobuz) using Lyrion Music Server - a.k.a LMS with **multi-room** audio synchronization.
 - LMS can be extended by numerous plugins and can be controlled using a Web browser or dedicated applications (iPhone, Android).
 - It can also send audio to UPnP, Sonos, Chromecast, and AirPlay speakers/devices.
 
