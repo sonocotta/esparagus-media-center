@@ -31,7 +31,7 @@
                 new devices. </p>
             <hr class="my-4">
             <p>Plug the device to your computer using a USB cable, select the device you have and click on the connect button.</p>
-            <p>By default, the connect button allows setting up wifi credentials for devices already flashed with support for improv-wifi-serial</p>
+            <p>On Linux you may need to add your user to the <code>dialout</code> group or change the ownership of the target device (<code>/dev/ttyUSBX</code>), in order for browser to connect.</p>
             <p>It is highly recommended to use the 16 bits versions. See the <a href="https://github.com/sle118/squeezelite-esp32#performances">readme</a> for more details</p>
         </div>
 
@@ -59,7 +59,7 @@
                 <div class="card border-primary mb-3" style="max-width: 20rem;" role="button">
                     <h3 class="card-header bg-primary" role="button" id="hifi-esparagus_header" manifest="artifacts/manifest-hifi-esparagus-2.1672-16.json">
                         <input id="hifi-esparagus" type="radio" checked="">
-                        <label for="hifi-esparagus">HiFi Esparagus</label> 
+                        <label for="hifi-esparagus">HiFi Esparagus</label>
                     </h3>
                     <div class="card-body">
                         <p class="card-text text-muted">
@@ -72,7 +72,7 @@
                 <div class="card border-primary mb-3" style="max-width: 20rem;" role="button">
                     <h3 class="card-header" id="loud-esparagus_header" role="button" manifest="artifacts/manifest-loud-esparagus-2.1672-16.json">
                         <input id="loud-esparagus" type="radio">
-                        <label for="loud-esparagus">Loud Esparagus</label> 
+                        <label for="loud-esparagus">Loud Esparagus</label>
                     </h3>
                     <div class="card-body">
                         <p class="card-text text-muted">
@@ -85,7 +85,7 @@
                 <div class="card border-primary mb-3" style="max-width: 20rem;" role="button">
                     <h3 class="card-header" id="louder-esparagus_header" role="button" manifest="artifacts/manifest-louder-esparagus-2.1672-16.json">
                         <input id="louder-esparagus" type="radio">
-                        <label for="louder-esparagus">Louder Esparagus</label> 
+                        <label for="louder-esparagus">Louder Esparagus</label>
                     </h3>
                     <div class="card-body">
                         <p class="card-text text-muted">
