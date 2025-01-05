@@ -599,8 +599,18 @@ The interesting part was all the phone and laptop chargers I used for the test (
 |-------------------------------|---------------------------------|
 | [65W USB-C Lenovo ThinkPad Laptop Charger Replacement Power Adapter](https://www.aliexpress.com/item/1005005994445557.html)  | ![image](https://github.com/sonocotta/orange-pi-media-center/assets/5459747/27614db3-de35-4054-8450-9845a09f6381)
 | [65W 45W 20V 3.25A Type-C PD Laptop Charger](https://www.aliexpress.com/item/1005006086701848.html) | ![image](https://github.com/sonocotta/orange-pi-media-center/assets/5459747/266a9bed-dde5-4869-aa31-84176b0a6608)
+| [Belkin BoostCharge Pro 65W Dual USB-C GaN Wall Charger, Multi-Port Charger w/ 2X USB-C PD 3.0](https://www.amazon.com/Belkin-BoostCharge-Charger-Multi-Port-MacBook/dp/B0BQH9L44B/?th=1)<br/> (Reported by customer, not tested myself) | ![image](https://github.com/user-attachments/assets/674eb4f8-da6a-4649-83d6-c69bd6680571)
 | [120W Gan Type-C PD Charger](https://www.aliexpress.com/item/1005006806666186.html) | ![image](https://github.com/sonocotta/orange-pi-media-center/assets/5459747/f42d4c8c-879b-494c-ac18-dd18ace322e7)
 | [45W Type-C PD Mobile Phone Wall Adapter](https://www.aliexpress.com/item/1005006713008533.html) | ![image](https://github.com/sonocotta/orange-pi-media-center/assets/5459747/110bb6f9-7014-4dfc-8fd8-3bc99b269e9c)
+
+</details>
+
+<details>
+  <summary>Tested, but NOT wroking</summary>
+
+| Model   | Image   |
+|-------------------------------|---------------------------------|
+| [Amazon Basics 65W One-Port GaN USB-C Wall Charger with Power Delivery PD for Laptops, Tablets & Phones](https://www.amazon.com/AmazonBasics-One-Port-Charger-Laptops-Delivery/dp/B087MFLLCR?th=1)  | ![image](https://github.com/user-attachments/assets/6d2d5819-f933-4e27-9562-6728635fa788)
 
 </details>
 
