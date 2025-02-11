@@ -1,0 +1,80 @@
+substitutions:
+  name: esphome-web-e002d0
+  friendly_name: loud-esparagus
+  long_devicename: "Loud Esparagus"
+
+esphome:
+  name: "${friendly_name}"
+  name_add_mac_suffix: false
+  comment: "${long_devicename}"
+  on_boot:
+    priority: 800
+    then:
+    - media_player.volume_set:
+        id: loudesp32
+        volume: 50%
+
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+# Allow Over-The-Air updates
+ota:
+
+wifi:
+  ssid: !secret esphome_wifi_ssid
+  password: !secret esphome_wifi_password
+  ap:
+    ssid: "$name"
+    password: password
+
+captive_portal:
+
+switch:
+  - platform: gpio
+    id: speaker_switch
+    icon: "mdi:speaker"
+    pin:
+      number: GPIO8
+
+psram:
+  mode: octal
+  speed: 80MHz
+
+i2s_audio:
+  i2s_lrclk_pin: GPIO25
+  i2s_bclk_pin: GPIO26
+
+media_player:
+  - platform: i2s_audio
+    name: $long_devicename
+    id: loudesp32
+    dac_type: external
+    i2s_dout_pin: GPIO22
+    mode: stereo
+    on_announcement:
+      - logger.log: "Announcement started"
+      - switch.turn_on:
+          id: speaker_switch
+    on_play:
+      - logger.log: "Playback started"
+      - switch.turn_on:
+          id: speaker_switch 
+    on_pause:
+      - logger.log: "Playback paused"
+    on_idle:
+      - logger.log: "Playback ended"
+      - switch.turn_off:
+          id: speaker_switch
+
+button:
+  - platform: restart
+    id: restart_btn
+    name: "${friendly_name} REBOOT"
