@@ -42,7 +42,7 @@ switch:
     id: speaker_switch
     icon: "mdi:speaker"
     pin:
-      number: GPIO8
+      number: GPIO13
 
 psram:
   mode: octal
