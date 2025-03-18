@@ -10,7 +10,7 @@
 
 Esparagus Media Center is a series of ESP32-based media center devices. They all run [Squeezelite-ESP32](https://github.com/sle118/squeezelite-esp32) software and have similar media capabilities, but are aimed at different use cases. They share a similar look, and compared to my earlier designs, they have a great-looking aluminum case.
 
-Our [Crowd Supply campaign](https://www.crowdsupply.com/sonocotta/esparagus-media-center) for backing the manufacturing of Esparagus series boards recently has finished with success, and I'm eternally grateful to every backer for that support.
+![image](https://github.com/user-attachments/assets/5d884668-91a0-46bf-9253-0f609236fedd)
 
 ## Table of Contents
 
@@ -21,6 +21,7 @@ Our [Crowd Supply campaign](https://www.crowdsupply.com/sonocotta/esparagus-medi
   - [Esparagus HiFi MediaLink](#esparagus-hifi-medialink)
   - [Loud Esparagus](#loud-esparagus)
   - [Louder Esparagus](#louder-esparagus)
+  - [Amped Esparagus](#amped-esparagus)
   - [Features](#features)
     - [Onboard PSRAM](#onboard-psram)
   - [Board Pinout](#board-pinout)
@@ -47,8 +48,8 @@ Our [Crowd Supply campaign](https://www.crowdsupply.com/sonocotta/esparagus-medi
     - [PCB](#pcb)
     - [BTL and PBTL mode (TAS5805M DAC)](#btl-and-pbtl-mode-tas5805m-dac)
     - [TAS5805M DSP capabilities](#tas5805m-dsp-capabilities)
-    - [Louder Esparagus power considerations](#louder-esparagus-power-considerations)
-      - [Louder Esparagus NOPD](#louder-esparagus-nopd)
+    - [Louder and Amped Esparagus power considerations](#louder-and-amped-esparagus-power-considerations)
+      - [Louder and Amped Esparagus NOPD](#louder-and-amped-esparagus-nopd)
       - [External voltage selection](#external-voltage-selection)
     - [OLED screen](#oled-screen)
       - [OLED models](#oled-models)
@@ -95,21 +96,29 @@ The latest update allows a direct power through barrel jack as an alternative to
 |---|---|
 | ![DSC_0719](https://github.com/sonocotta/esparagus-media-center/assets/5459747/acca2da1-a52f-4d44-b1a7-9d6dc896c549) | ![DSC_0085](https://github.com/user-attachments/assets/810453ac-9bb5-41eb-ac3b-7868260e7631)
 
+## Amped Esparagus
+
+The latest addition to the family, Amped Esparagus is a device based on PCM5100 HiFi DAC (just like HiFi Esparagus) but adds a powerful and efficient D-class amp (TPA3110D2) so it can drive speakers directly. It has similar power capabilities to the Louder Esparagus, but it is much simpler to setup and use, since this DAC doesn't need any configuration steps to get going, just a valid I2S audio stream. Simplicity comes at a price, it doesn't have a DSP unit either. Since it has an analog stage, you can use it either with a built-in amp or with an external amp, if prefer so.
+
+![DSC_0022](https://github.com/user-attachments/assets/e9481545-e98d-4d6a-b0eb-a993ab151dc8)
+
+With the Amped Esparagus, I'm implementing and testing a new updated look with every board equipped with a semi-transparent front face as standard. Behind it, there is a front-facing IR reader and 8-LED RGB strip (that can be used for audio visualization or power state). Most noticeably, there is a rotary encoder with a push-button, that allows quick change of volume or play/pause action.  
+
 ## Features
 
-|                  | [HiFi-ESP32](https://www.tindie.com/products/sonocotta/esp-audio-dock/)                                               | [HiFi Esparagus](https://www.tindie.com/products/sonocotta/esparagus-hifi-medialink/)                                   | [Loud-ESP32](https://www.tindie.com/products/sonocotta/esp-audio-dock/)                                | [Loud Esparagus](https://www.tindie.com/products/sonocotta/loud-esparagus-media-center/)                               | [Louder-ESP32](https://www.tindie.com/products/sonocotta/louder-esp32/)                                        | Louder Esparagus                                                                                                     | Louder Esparagus NOPD                                                                        |
-|------------------|-----------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------|
-| Image            | ![DSC_0002](https://github.com/user-attachments/assets/d025ef42-daa3-4ad0-aeec-6ddf309c267b)                          | ![DSC_0709](https://github.com/sonocotta/esparagus-hifi-medialink/assets/98712315/ea45f1d2-32b5-4f12-a63c-a8e403cb22db) | ![DSC_0002](https://github.com/user-attachments/assets/7d351d02-7e7f-4974-9a12-ee353c239654)           | ![DSC_0706](https://github.com/sonocotta/esparagus-hifi-medialink/assets/5459747/2556b8ff-1827-4e03-8e28-31e40199943c) | ![DSC_0013](https://github.com/sonocotta/esp32-audio-dock/assets/5459747/46ea4f10-c363-4623-b5d6-29e1135e5983) | ![DSC_0713](https://github.com/sonocotta/esparagus-media-center/assets/5459747/14d54647-2b7e-4b1a-9a8e-135a1598eb02) | ![DSC_0087](https://github.com/user-attachments/assets/f0a66cde-e6f7-47cb-8a50-8f71ed9b2ac2) |
-| MCU              | ESP32-WROVER-N16R8                                                                                                    | ESP32-WROVER-N16R8                                                                                                      | ESP32-WROVER-N16R8                                                                                     | ESP32-WROVER-N16R8                                                                                                     | ESP32-WROVER-N16R8                                                                                             | ESP32-WROVER-N16R8                                                                                                   | ESP32-WROVER-N16R8                                                                           |
-| DAC              | PCM5100A 32bit Stereo DAC -100 dB typical noise level                                                                 | PCM5100A 32bit Stereo DAC -100 dB typical noise level                                                                   | Dual I2S DAC ([MAX98357](https://www.analog.com/en/products/max98357a.html)) with built in D-Class amp | Dual I2S DAC ([MAX98357](https://www.analog.com/en/products/max98357a.html)) with built in D-Class amp                 | Stereo I2S DAC ([TAS5805M](https://www.ti.com/product/TAS5805M)) with built in D-Class amp                     | Stereo I2S DAC ( [TAS5805M](https://www.ti.com/product/TAS5805M) ) with built in D-Class amp                         | Stereo I2S DAC ( [TAS5805M](https://www.ti.com/product/TAS5805M) ) with built in D-Class amp |
-| Power            | 5V over USB-C, 2x [LP5907](https://www.ti.com/lit/ds/symlink/lp5907.pdf) 3.3 V Ultra-Low-Noise LDO for analog section | 5V over USB-C, 2x [LP5907](https://www.ti.com/lit/ds/symlink/lp5907.pdf) 3.3 V Ultra-Low-Noise LDO for analog section   | 5V from USB-C                                                                                          | 5V from USB-C                                                                                                          | Up to 26V from external PSU                                                                                    | Up to 20V from USB-C PD                                                                                              | Up to 26V from external PSU                                                                  |
-| Output, 4Ω       | Non-amplified stereo output, 2.1V RMS                                                                                 | Non-amplified stereo output                                                                                             | 2x 3W                                                                                                  | 2x 3W                                                                                                                  | 2x 32W (4Ω, 1% THD+N)                                                                                          | 2x 32W (4Ω, 1% THD+N)                                                                                                | 2x 32W (4Ω, 1% THD+N)                                                                        |
-| Output, 8Ω       | -                                                                                                                     | -                                                                                                                       | 2x 5W                                                                                                  | 2x 5W                                                                                                                  | 2x 22W (8Ω, 1% THD+N)                                                                                          | 2x 22W (8Ω, 1% THD+N)                                                                                                | 2x 22W (8Ω, 1% THD+N)                                                                        |
-| PSRAM            | 8MB PSRAM (4MB usable)                                                                                                | 8MB PSRAM (4MB usable)                                                                                                  | 8MB PSRAM (4MB usable)                                                                                 | 8MB PSRAM (4MB usable)                                                                                                 | 8MB PSRAM (4MB usable)                                                                                         | 8MB PSRAM (4MB usable)                                                                                               | 8MB PSRAM (4MB usable)                                                                       |
-| Peripheral       | IR reader (optional) <br /> RGB strip (optional) <br /> SSD1306 128x64 OLED screen (optional)                         | WS2812B RGB Led <br/> SSD1306 128x64 OLED screen (optional)                                                             | IR reader (optional) <br /> RGB strip (optional) <br /> SSD1306 128x64 OLED screen (optional)          | WS2812B RGB Led <br/> SSD1306 128x64 OLED screen (optional)                                                            | IR reader (optional) <br /> RGB strip (optional) <br /> SSD1306 128x64 OLED screen (optional)                  | WS2812B RGB Led <br/> SSD1306 128x64 OLED screen (optional)                                                          | WS2812B RGB Led <br/> SSD1306 128x64 OLED screen (optional)                                  |
-| Connectivity     | WiFi <br/> BT4.2 </br> BLE <br/> Ethernet (optional module)                                                           | WiFi <br/> BT4.2 <br/> BLE                                                                                              | WiFi <br/> BT4.2 </br> BLE <br/> Ethernet (optional module)                                            | WiFi <br/> BT4.2 <br/> BLE                                                                                             | WiFi <br/> BT4.2 </br> BLE <br/> Ethernet (optional module)                                                    | WiFi <br/> BT4.2 </br> BLE <br/> Ethernet (optional module)                                                          | WiFi <br/> BT4.2 </br> BLE <br/> Ethernet (optional module)                                  |
-| Size             | 86 x 56 x 20mm                                                                                                        | 80 x 50 x 20mm                                                                                                          | 86 x 56 x 20mm                                                                                         | 80 x 50 x 20mm                                                                                                         | 86 x 56 x 20mm                                                                                                 | 100 x 80 x 38mm                                                                                                      | 100 x 80 x 38mm                                                                              |
-| Software support | Arduino samples, squeezelite-esp32, snapcast, ESPHome config                                                          | Arduino samples, squeezelite-esp32, snapcast, ESPhome config                                                            | Arduino samples, squeezelite-esp32, snapcast, ESPHome config                                           | Arduino samples, squeezelite-esp32, snapcast, ESPhome config                                                           | Arduino samples, squeezelite-esp32, snapcast, ESPHome config                                                   | Arduino samples, squeezelite-esp32, snapcast, ESPhome config                                                         | Arduino samples, squeezelite-esp32, snapcast, ESPhome config                                 |
+|  | [HiFi Esparagus](https://www.tindie.com/products/sonocotta/esparagus-hifi-medialink/) | [Loud Esparagus](https://www.tindie.com/products/sonocotta/loud-esparagus-media-center/) | [Louder Esparagus](https://www.tindie.com/products/sonocotta/louder-esparagus-media-center/) | [Amped Esparagus](https://www.tindie.com/products/sonocotta/amped-esparagus-media-center/) |
+|---|---|---|---|---|
+| Image | ![DSC_0709](https://github.com/sonocotta/esparagus-hifi-medialink/assets/98712315/ea45f1d2-32b5-4f12-a63c-a8e403cb22db) | ![DSC_0706](https://github.com/sonocotta/esparagus-hifi-medialink/assets/5459747/2556b8ff-1827-4e03-8e28-31e40199943c) | ![DSC_0713](https://github.com/sonocotta/esparagus-media-center/assets/5459747/14d54647-2b7e-4b1a-9a8e-135a1598eb02) | ![DSC_0022](https://github.com/user-attachments/assets/e9481545-e98d-4d6a-b0eb-a993ab151dc8) |
+| MCU | ESP32-WROVER-N8R8 | ESP32-WROVER-N8R8 | ESP32-WROVER-N16R8 | ESP32-WROVER-N16R8 |
+| DAC | PCM5100A 32bit Stereo DAC -100 dB typical noise level | Dual I2S DAC ([MAX98357](https://www.analog.com/en/products/max98357a.html)) with built in D-Class amp | Stereo I2S DAC ( [TAS5805M](https://www.ti.com/product/TAS5805M) ) with built in D-Class amp | [PCM5100A](https://www.ti.com/product/PCM5100A) 32bit Stereo DAC working with <br /> [TPA3110D2](https://www.ti.com/product/TPA3110D2) D-Class amp |
+| Power | 5V over USB-C, 2x [LP5907](https://www.ti.com/lit/ds/symlink/lp5907.pdf) 3.3 V Ultra-Low-Noise LDO for analog section | 5V from USB-C | Up to 20V from USB-C PD or up to 26V from generic power adapter | Up to 20V from USB-C PD or up to 26V from generic power adapter |
+| Output, 4Ω | Non-amplified stereo output | 2x 3W | 2x 32W (4Ω, 1% THD+N) | 2x 22W (4Ω, 1% THD+N) at 16V <br /> 1x 40W (4Ω, 1% THD+N) at 20V |
+| Output, 8Ω | - | 2x 5W | 2x 22W (8Ω, 1% THD+N) | 2x 25W (8Ω, 1% THD+N) at 22V |
+| PSRAM | 8MB PSRAM (4MB usable) | 8MB PSRAM (4MB usable) | 8MB PSRAM (4MB usable) | 8MB PSRAM (4MB usable) |
+| Peripheral | WS2812B RGB Led <br/> SSD1306 128x64 OLED screen (optional) | WS2812B RGB Led <br/> SSD1306 128x64 OLED screen (optional) | WS2812B RGB Led <br/> SSD1306 128x64 OLED screen (optional) | 8xWS2812B RGB Led <br/> SSD1306 128x64 OLED screen (optional) <br /> Rotary encoder with push button |
+| Connectivity | WiFi <br/> BT4.2 <br/> BLE | WiFi <br/> BT4.2 <br/> BLE | WiFi <br/> BT4.2 </br> BLE <br/> W5500 Ethernet | WiFi <br/> BT4.2 </br> BLE <br/> W5500 Ethernet |
+| Size | 80 x 50 x 20mm | 80 x 50 x 20mm | 100 x 80 x 38mm | 100 x 80 x 38mm |
+| Software support | Arduino samples, squeezelite-esp32, snapcast, ESPhome config | Arduino samples, squeezelite-esp32, snapcast, ESPhome config | Arduino samples, squeezelite-esp32, snapcast, ESPhome config | Arduino samples, squeezelite-esp32, snapcast, ESPhome config |
 
 ### Onboard PSRAM
 
@@ -166,7 +175,7 @@ Follow the [ESP8266Audio](https://github.com/earlephilhower/ESP8266Audio) librar
 
 ## Using Esparagus Media Center with the Home Assistant
 
-There is a number of ways Esprargus Media Center devices can be integrated into the Home Assistant setup. Each of them gives a unique feature, losing some other in return. As usual, there is no perfect solution for everyone, but perhaps there is one for you. 
+There are several ways Esprargus Media Center devices can be integrated into the Home Assistant setup. Each of them gives a unique feature, losing some other in return. As usual, there is no perfect solution for everyone, but perhaps there is one for you. 
 Below is the summary table of the methods known to me and tested by me.
 
 | Integration type                                                                                                          | Tested  | Description                                                                                                                      | Pros                                                                                                                   | Cons                                                                                                    |
@@ -313,25 +322,26 @@ Before version 1681 squeezelite-esp32 had a [bug](https://github.com/sle118/sque
 
 ## Hardware
 
-| Esparagus HiFi MediaLink  | Loud Esparagus  | Louder Esparagus | Louder Esparagus NOPD |
-|---|---|---|---|
-| ![DSC_0711](https://github.com/sonocotta/esparagus-hifi-medialink/assets/98712315/66f565f3-7342-42aa-95e4-bad0437aa887) | ![DSC_0702](https://github.com/sonocotta/esparagus-hifi-medialink/assets/5459747/00d540a8-6dce-48dd-9d11-d70992451068) | ![DSC_0712 (copy 1)](https://github.com/user-attachments/assets/a408fe3c-f9d4-4b33-b587-3e6bedaa225f) | ![image](https://github.com/user-attachments/assets/832d4c29-7e32-4073-b04d-3a0eea0355c1)
+|| Esparagus HiFi MediaLink  | Loud Esparagus  | Louder Esparagus | Amped Esparagus |
+|---|---|---|---|---|
+| Base variant | ![DSC_0711](https://github.com/sonocotta/esparagus-hifi-medialink/assets/98712315/66f565f3-7342-42aa-95e4-bad0437aa887) | ![DSC_0702](https://github.com/sonocotta/esparagus-hifi-medialink/assets/5459747/00d540a8-6dce-48dd-9d11-d70992451068) | ![DSC_0712 (copy 1)](https://github.com/user-attachments/assets/a408fe3c-f9d4-4b33-b587-3e6bedaa225f) | coming soon
+| NOPD variant | NA | NA | ![image](https://github.com/user-attachments/assets/832d4c29-7e32-4073-b04d-3a0eea0355c1) | ![DSC_0033](https://github.com/user-attachments/assets/aff9b364-57e8-4f42-b7f4-aeee7e7a90fc)
 
 
 Please visit [hardware](/hardware/) section for board schematics and PCB designs. Note that PCBs are shared as multi-layer PDFs as well as Gerber archives.
 
 ### Boxed
 
-| Esparagus HiFi MediaLink  | Loud Esparagus  | Louder Esparagus | Louder Esparagus NOPD |
-|---|---|---|---|
-| ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/c4765189-de0e-44bd-8163-b19ddd6f68d1) | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/8e2819a1-d496-456d-a180-b554787e6a0f) | ![DSC_0717 (copy 1) JPG-mh](https://github.com/sonocotta/esparagus-media-center/assets/5459747/905a0712-e43a-4fb9-b585-d95334cd98b3) | ![image](https://github.com/user-attachments/assets/cedf9854-5952-47f1-96fc-2826b6fd9815)
+| Esparagus HiFi MediaLink  | Loud Esparagus  | Louder Esparagus | Louder Esparagus NOPD | Amped Esapragus
+|---|---|---|---|---|
+| ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/c4765189-de0e-44bd-8163-b19ddd6f68d1) | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/8e2819a1-d496-456d-a180-b554787e6a0f) | ![DSC_0717 (copy 1) JPG-mh](https://github.com/sonocotta/esparagus-media-center/assets/5459747/905a0712-e43a-4fb9-b585-d95334cd98b3) | ![image](https://github.com/user-attachments/assets/cedf9854-5952-47f1-96fc-2826b6fd9815) | ![image](https://github.com/user-attachments/assets/b6994a4d-4d38-48c5-a6a8-65f735ad2659)
 
 
 ### PCB
 
-| Esparagus HiFi MediaLink  | Loud Esparagus  | Louder Esparagus |
-|---|---|---|
-| ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/d56ff3b7-633c-4f67-a82f-5084cfeb4144) | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/f355598b-bf33-43a8-87a1-130de3d1e3b2) | ![DSC_0712 (copy 1) JPG-mh (1)](https://github.com/sonocotta/esparagus-media-center/assets/5459747/a14e9af8-f835-4d23-9772-84217a39a5ec)
+| Esparagus HiFi MediaLink  | Loud Esparagus  | Louder Esparagus | Amped Esparagus
+|---|---|---|---|
+| ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/d56ff3b7-633c-4f67-a82f-5084cfeb4144) | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/f355598b-bf33-43a8-87a1-130de3d1e3b2) | ![DSC_0712 (copy 1) JPG-mh (1)](https://github.com/sonocotta/esparagus-media-center/assets/5459747/a14e9af8-f835-4d23-9772-84217a39a5ec) | ![image](https://github.com/user-attachments/assets/8d4b40c4-b86d-4fa6-834b-d453d9c81f94)
 
 ### BTL and PBTL mode (TAS5805M DAC)
 
@@ -366,7 +376,7 @@ Starting from Rev E, an additional header is exposed to allow datasheet-specced 
 
 ### TAS5805M DSP capabilities
 
-The TAS5805M DAC has a very powerful DSP, that allows doing lots of data processing on the silicon, that otherwise would take a considerable part of your CPU time. As of the moment of writing it is mostly an undiscovered part of the DAC, since unfortunately, TI is not making it very easy for developers. (A minute of complaint) To be more specific, you need to be (A) a proven hardware manufacturer to get access to the configuration software, namely PurePath. (B) you need to apply for a personal license and go through an approval process, and after a few weeks of waiting you get access to one DAC configuration you asked for. (C) You find out that it will work with TI's own evaluation board that will set you back $250 if you'd be able to find one. Otherwise, all you have is a list of I2C commands that you need to transfer to the device on your own cost. No wonder no one knows how to use it.
+The TAS5805M DAC has a very powerful DSP, that allows doing lots of data processing on the silicon, that otherwise would take a considerable part of your CPU time. As of the moment of writing it is mostly an undiscovered part of the DAC, since unfortunately, TI is not making it very easy for developers. (A minute of complaint) To be more specific, you need to be (A) a proven hardware manufacturer to get access to the configuration software, namely PurePath. (B) you need to apply for a personal license and go through an approval process, and after a few weeks of waiting you get access to one DAC configuration you asked for. (C) You find out that it will work with TI's own evaluation board that will set you back $250 if you are able to find one. Otherwise, all you have is a list of I2C commands that you need to transfer to the device at your own cost. No wonder no one knows how to use it.
 
 But moanings aside, what do you get after:
 
@@ -377,14 +387,14 @@ But moanings aside, what do you get after:
 - Soft clipper
 - and a few other things
 
-At this moment it is very experimental. In the perfect world, you should be able to adjust all of those settings to make your speaker-enclosure setup work the best it can, and even apply your room factors into the equation. But with above disclaimer I can only deliver limited set of configurations corresponding to the most common use cases:
+At this moment it is very experimental. In the perfect world, you should be able to adjust all of those settings to make your speaker-enclosure setup work the best it can, and even apply your room factors into the equation. But with the above disclaimer, I can only delivera  limited set of configurations corresponding to the most common use cases:
 
 - Stereo mode with enabled DRC (Loudness) and AGL settings
 - Full range Mono mode with DRC (Loudness) and AGL settings
 - Subwoofer Mono mode with few filter frequency options
 - Bi-Amp configuration with few crossover frequency options
 
-All of the above are available right now for experimentation. I'm keen to hear your feedback while I moving forward with porting this to other software options
+All of the above are available right now for experimentation. I'm keen to hear your feedback while I move forward with porting this to other software options
 
 - [X] - Bare [I2S TAS5805M library](https://github.com/sonocotta/esp32-tas5805m-dac)
 - [X] - [espragus-snapclient](https://sonocotta.github.io/esparagus-snapclient/) software (You may use Louder-ESP32 firmware for the Louder-Esparagus)
@@ -392,9 +402,9 @@ All of the above are available right now for experimentation. I'm keen to hear y
 - [ ] - flexible configurations with on-the-fly configuration changes
 
 
-### Louder Esparagus power considerations
+### Louder and Amped Esparagus power considerations
 
-The Louder Espragus can be quite a power-hungry device, simply using 5V over the USB-C is clearly not an option. The intention for using a PD-enabled power adapter to run the board is simplicity and ease of use for customers. Ideally, you should supply a 20V 3.25 Amp capable power source, which is common for modern laptops (Dell, HP, and Lenovo have all tested and work perfectly). However, pretty much any 9V/12V/20V PD-enabled power adapter will work, most typically phone chargers with a quick charge option. The smallest of the family is a 25W model, which is plenty enough for a living space.
+The Louder and Amped Espragus can be quite a power-hungry devices, simply using 5V over the USB-C is clearly not an option. The intention for using a PD-enabled power adapter to run the board is simplicity and ease of use for customers. Ideally, you should supply a 20V 3.25 Amp capable power source, which is common for modern laptops (Dell, HP, and Lenovo have all tested and work perfectly). However, pretty much any 9V/12V/20V PD-enabled power adapter will work, most typically phone chargers with a quick charge option. The smallest of the family is a 25W model, which is plenty enough for a living space.
 
 The interesting part was all the phone and laptop chargers I used for the test (around five different makes of each), sounded great, with no hissing, no popping. (Apart from the Apple ones, they didn’t work. Likely they have Apple-specific PD protocol). This is probably because modern devices have become so noise-sensitive that manufacturers have been forced to do good work on noise levels.
 
@@ -422,7 +432,7 @@ The interesting part was all the phone and laptop chargers I used for the test (
 
 Because USB-PD is a bit of a Wild West in terms of standards, sometimes not everything goes as designed. Some people have run into this with power adapters that aren’t fully PD-standard compliant. In most cases, the worst that happens is the PD chip doesn’t trigger the 20V mode, so the Esparagus runs at around 5W per channel (which you might not even notice). One person reported that an older adapter somehow triggered just 1V on the USB-C power line, shutting down the Esparagus shortly after plugging in. Thankfully, we’ve confirmed that it works correctly with newer laptop adapters.
 
-#### Louder Esparagus NOPD
+#### Louder and Amped Esparagus NOPD
 
 The “hammer-style” solution I came up with is a new NOPD version of the Louder Esparagus that lets you use a barrel power jack to supply raw voltage directly. The catch? Standard 2mm pins can’t handle high currents, so I’ve gone with a 2.5mm pin instead — it’s a bit unusual but still common enough in the laptop world.
 
@@ -524,7 +534,7 @@ Users may notice that the WiFi or Bluetooth perception is poor, causing audio to
 
 ##### Workaround/Temporary Solution
 
-You can use the unit with a serial monitor attached over the USB-C port. This causes low levels on the serial control lines, thus keeping the RST pin on the +3.3V level, equivalent to normal unit operation.
+You can use the unit with a serial monitor attached to the USB-C port. This causes low levels on the serial control lines, thus keeping the RST pin on the +3.3V level, equivalent to normal unit operation.
 
 ##### Resolution/Corrective Action
 
@@ -556,3 +566,4 @@ You may support our work by ordering this product at Tindie
 - [Esparagus HiFi MediaLink](https://www.tindie.com/products/sonocotta/esparagus-hifi-medialink/)
 - [Loud Esparagus](https://www.tindie.com/products/sonocotta/loud-esparagus-media-center/)
 - [Louder Esparagus](https://www.tindie.com/products/sonocotta/louder-esparagus-media-center/)
+- Amped Esparagus - coming soon 
