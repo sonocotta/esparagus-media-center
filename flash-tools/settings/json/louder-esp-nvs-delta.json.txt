@@ -1,0 +1,6 @@
+{
+  "dac_config": "model=I2S,bck=26,ws=25,do=22,sda=21,scl=27,i2c=45",
+  "dac_controlset": "{\"init\":[{\"reg\":3,\"val\":2},{\"reg\":3,\"val\":3}],\"poweron\":[{\"reg\":3,\"val\":3}],\"poweroff\":[{\"reg\":3,\"val\":0}]}",
+  "i2c_config": "scl=27,sda=21,speed=400000,port=1",
+  "set_GPIO": "33=vcc"
+}

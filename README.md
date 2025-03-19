@@ -27,6 +27,7 @@ Esparagus Media Center is a series of ESP32-based media center devices. They all
   - [Board Pinout](#board-pinout)
     - [Common to every board](#common-to-every-board)
     - [Peripheral (Loud Esparagus \& Esparagus HiFi MediaLink )](#peripheral-loud-esparagus--esparagus-hifi-medialink-)
+    - [Rotary encoder (Amped Esparagus)](#rotary-encoder-amped-esparagus)
     - [TAS5805M DAC (Louder Esparagus)](#tas5805m-dac-louder-esparagus)
     - [Peripheral - OLED Screen and W5500 Ethernet (Louder Esparagus)](#peripheral---oled-screen-and-w5500-ethernet-louder-esparagus)
     - [Other Peripheral (Louder Esparagus)](#other-peripheral-louder-esparagus)
@@ -137,6 +138,12 @@ Audio streaming requires proper buffering to work, even with ESP32 500K of RAM i
 |       | SPI HOST| SPI CLK  |SPI MOSI| SPI MISO | OLED DC   | OLED CS   | OLED RST  |  WS2812 RGB LED |  RELAY EN |
 |-------|---------|----------|--------|----------|-----------|-----------|-----------|---------|----------|
 | ESP32 |    2    |  18      |  23    |   19     |   4       | 5         | 32        |     33  |  21      |
+
+### Rotary encoder (Amped Esparagus)
+
+|       | A        | B       |  SW    |  
+|-------|----------|---------|--------|
+| ESP32 |    27    |  33     |  34    |
 
 
 ### TAS5805M DAC (Louder Esparagus)
