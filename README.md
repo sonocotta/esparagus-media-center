@@ -572,5 +572,5 @@ I apologize for any inconvenience caused by this issue. I am committed to fix th
 You may support our work by ordering this product at Tindie
 - HiFi Esparagus at [Tindie](https://www.tindie.com/products/sonocotta/esparagus-hifi-medialink/) and [Elecrow](https://www.elecrow.com/hifi-esparagus.html)
 - [Loud Esparagus](https://www.tindie.com/products/sonocotta/loud-esparagus-media-center/)
-  Louder Esparagus at [Tindie](https://www.tindie.com/products/sonocotta/louder-esparagus-media-center/) and [Elecrow](https://www.elecrow.com/louder-esparagus-media-center.html)
+- Louder Esparagus at [Tindie](https://www.tindie.com/products/sonocotta/louder-esparagus-media-center/) and [Elecrow](https://www.elecrow.com/louder-esparagus-media-center.html)
 - [Amped Esparagus](https://www.tindie.com/products/sonocotta/amped-esparagus-media-center/) 
