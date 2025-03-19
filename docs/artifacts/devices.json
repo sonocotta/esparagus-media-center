@@ -33,7 +33,7 @@
                 ],
                 "title": "Louder Esparagus",
                 "description": "Louder Esparagus is a top-of-the-range model that uses modern highly capable TAS5805M DAC and is aimed to be paired with medium-to-large speaker systems. With 25W per channel stereo output it packs a punch and can easily enliven living quarters or dorm rooms.  It can be used both with Wi-Fi and Ethernet (to make sure bad Wi-Fi would not interrupt the stream)",
-                "manifest": "artifacts/manifest-louder-esparagus-2.1681-16"
+                "manifest": "artifacts/manifest-louder-esparagus-2.1681-16.json"
             }
         ]
     }
