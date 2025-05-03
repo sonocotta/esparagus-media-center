@@ -1,10 +1,12 @@
 substitutions:
-  name: esphome-web-e002d0
-  friendly_name: loud-esparagus
+  name: esphome-web-d1d810
+  friendly_name: loud-esparagus-01
   long_devicename: "Loud Esparagus"
 
 esphome:
-  name: "${friendly_name}"
+  name: "${name}"
+  friendly_name: "${friendly_name}"
+  min_version: 2024.4.1
   name_add_mac_suffix: false
   comment: "${long_devicename}"
   on_boot:
@@ -27,6 +29,7 @@ api:
 
 # Allow Over-The-Air updates
 ota:
+  platform: esphome
 
 wifi:
   ssid: !secret esphome_wifi_ssid
@@ -45,7 +48,6 @@ switch:
       number: GPIO13
 
 psram:
-  mode: octal
   speed: 80MHz
 
 i2s_audio:
