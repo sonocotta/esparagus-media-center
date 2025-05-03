@@ -1,10 +1,12 @@
 substitutions:
-  name: esphome-web-e002d0
+  name: esphome-web-dc95a8
   friendly_name: hifi-esparagus
   long_devicename: "HiFi Esparagus"
 
 esphome:
-  name: "${friendly_name}"
+  name: "${name}"
+  friendly_name: "${friendly_name}"
+  min_version: 2025.4.1
   name_add_mac_suffix: false
   comment: "${long_devicename}"
   on_boot:
@@ -27,6 +29,7 @@ api:
 
 # Allow Over-The-Air updates
 ota:
+  platform: esphome
 
 wifi:
   ssid: !secret esphome_wifi_ssid
@@ -38,7 +41,6 @@ wifi:
 captive_portal:
 
 psram:
-  mode: octal
   speed: 80MHz
 
 i2s_audio:
