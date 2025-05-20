@@ -323,9 +323,23 @@ You can use it now
 
 </details>
 
-### Squeezelite Bug causing boot loop
+### Squeezelite-esp32 Bug causing boot loop
 
 Before version 1681 squeezelite-esp32 had a [bug](https://github.com/sle118/squeezelite-esp32/issues/414) that caused a boot loop with certain LMS servers when RGB LED was used for visualizations. It seems to be fixed in 1681, but the quick workaround is to clear `led_vu_config` NVS setting.
+
+### Squeezelite-esp32 reboots and connection drops
+
+The default configuration of the squeezelite-esp32 runs automatic discovery of the available LMS server nearby. In fact it depends on it so much that in case the LMS service is not found on the network, it will reboot automatically (every few minutes). 
+
+![image](https://github.com/user-attachments/assets/7b91f9ef-054e-42a1-81ab-693315fb3b88)
+
+In many cases, if you use squeezelite for Airplay and Spotify only and don't have LMS servier, you need to disable discovery altogether. Currently disabling Squeezelite in the GUI does not work correctly, it places too much spaces between the commands in the autoexec command. Following `autoexec1` NVS setting can be used to disable it:
+
+```
+squeezelite -o i2s -s -disable -b 500:2000 -C 30 -d all=sdebug
+```
+
+![image](https://github.com/user-attachments/assets/6b4096bd-0793-458b-a0fe-3282418f773f)
 
 ## Hardware
 
