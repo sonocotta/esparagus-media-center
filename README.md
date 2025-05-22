@@ -33,7 +33,7 @@ Esparagus Media Center is a series of ESP32-based media center devices. They all
     - [Other Peripheral (Louder Esparagus)](#other-peripheral-louder-esparagus)
   - [Software samples](#software-samples)
     - [Platformio IDE](#platformio-ide)
-  - [Arduino IDE](#arduino-ide)
+    - [Arduino IDE](#arduino-ide)
   - [Using Esparagus Media Center with the Home Assistant](#using-esparagus-media-center-with-the-home-assistant)
     - [Configuring Home Assistant](#configuring-home-assistant)
     - [LMS or Airplay](#lms-or-airplay)
@@ -177,7 +177,7 @@ In the [software](/firmware) section two firmware examples are provided.
  
 All samples are provided as [Plarformio IDE](https://platformio.org/platformio-ide) projects. After installing it, open the sample project. Select the proper environment based on your dock. Run the `Build` and `Upload` commands to install necessary tools and libraries, and build and upload the project to the board. Communication and proper upload method selection will be handled by IDE automatically. 
 
-## Arduino IDE
+### Arduino IDE
 
 Follow the [ESP8266Audio](https://github.com/earlephilhower/ESP8266Audio) library guide.
 
@@ -192,7 +192,7 @@ Below is the summary table of the methods known to me and tested by me.
 | [ESPHome way](https://www.espthings.io/index.php/2024/04/07/louder-esp32-a-hi-fi-class-d-audio-amplifier-running-esphome/) | Yes     | Connect as HA media device. Can be used with any HA integration, including Music Assistant, Text-to-Speach announcements, alarms, etc | More integrations with HA, more flexibility in use case                                                                | No longer works as Spotify, Airplay, etc.                                                                |
 | [Snapcast way](https://github.com/CarlosDerSeher/snapclient/issues/70#issuecomment-2034700037)                             | Yes | Connect to Music Assistant as snapcast protocol device. Can play your media library and internet radio.                          | Perfect for multiroom sync (Sonos-like, perhaps even better). Can be used with other Snapcast servers around the house | No longer works as Spotify, Airplay, etc. No native integration into HA only works with Music Assistant |
 
-Below are specific steps that you need to follow to spin up Esprargus Media Center in the Home Assistant
+Below are specific steps that you need to follow to spin up Esparagus Media Center in the Home Assistant
 
 ### Configuring Home Assistant
 
