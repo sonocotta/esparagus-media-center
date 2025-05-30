@@ -81,9 +81,7 @@ void Player::play(PlaylistEntry entry)
   // mp3->RegisterStatusCB(Player::statusCallback, (void *)"mp3");
   mp3->begin(buff, stubs[0]);
 
-#ifdef DAC_TAS5805M
-  Tas5805m->begin();
-#endif
+
   setState(STATE_PLAY);
 }
 

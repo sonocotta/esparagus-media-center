@@ -52,16 +52,15 @@ Esparagus Media Center is a series of ESP32-based media center devices. They all
     - [TAS5805M DSP capabilities](#tas5805m-dsp-capabilities)
     - [Louder and Amped Esparagus power considerations](#louder-and-amped-esparagus-power-considerations)
       - [Louder and Amped Esparagus NOPD](#louder-and-amped-esparagus-nopd)
+      - [Louder and Amped Esparagus DUAL](#louder-and-amped-esparagus-dual)
       - [External voltage selection](#external-voltage-selection)
-    - [OLED screen](#oled-screen)
+    - [OLED screen (soldered in)](#oled-screen-soldered-in)
       - [OLED models](#oled-models)
+    - [OLED screen (solder-less)](#oled-screen-solder-less)
+      - [OLED models](#oled-models-1)
       - [Software side](#software-side)
     - [Relay Driver](#relay-driver)
     - [Errata](#errata)
-      - [CH340C 5V level issue](#ch340c-5v-level-issue)
-        - [Detailed Description](#detailed-description)
-        - [Workaround/Temporary Solution](#workaroundtemporary-solution)
-        - [Resolution/Corrective Action](#resolutioncorrective-action)
   - [Where to buy](#where-to-buy)
 
 ## Why Esparagus
@@ -94,9 +93,7 @@ Louder Esparagus is a top-of-the-range model that uses modern highly capable TAS
 
 The latest update allows a direct power through barrel jack as an alternative to the USB-PD to provide an alternative and allow more precise control over the power source for your audio 
 
-| USB-PD  |  NOPD |
-|---|---|
-| ![DSC_0719](https://github.com/sonocotta/esparagus-media-center/assets/5459747/acca2da1-a52f-4d44-b1a7-9d6dc896c549) | ![DSC_0085](https://github.com/user-attachments/assets/810453ac-9bb5-41eb-ac3b-7868260e7631)
+![DSC_0009](https://github.com/user-attachments/assets/538e0165-d973-4222-81e7-64d4013869d6)
 
 ## Amped Esparagus
 
@@ -462,6 +459,16 @@ The “hammer-style” solution I came up with is a new NOPD version of the Loud
 
 With this setup, you can supply more than the 20V limit of PD, giving you a bit more power for the speakers. You probably won’t hear much difference (thanks to the way human hearing works), but it could help larger speakers that need a bit more to really “open up." Other than that, the NOPD version works just like the PD version — no software changes are needed.
 
+#### Louder and Amped Esparagus DUAL
+
+In May 2025, I came up with a power mux schematic that is designed to automatically switch between an external power source and a UCB-PD-enabled power source, depending on which one provides higher voltage. So you can either use an external power adapter over the barrel jack and use USB-C for programming-debugging, or simply use USB-C for both power and data. 
+
+![DSC_0003](https://github.com/user-attachments/assets/f891e126-1cba-4af1-99d2-2f299a820316)
+
+This eliminates the need for PD and NOPD revisions, so I will slowly replace all products with a single DUAL option.
+
+Because of the limited space on the back panel, I moved the IR reader and RGB LEDs (now eight of them) to the front panel, offering a semi-transparent optional panel, in case you're planning to use them.
+
 #### External voltage selection
 
 The power adapter specs depend on the speaker you're planning to use. DAC efficiency is close to 100%, so just take the power rating of your speaker (say 2x10w), and impedance (say 8 ohms) and you'd need  at least 9 volts rated at 1.2 amps per channel, round up to 3 total amps. 
@@ -470,11 +477,11 @@ It is not recommended to go beyond the voltage your speakers can take, otherwise
 
 The absolute maximum voltage for the TAS5805M DAc is 30V, but it is not guaranteed to be thermally stable in this condition. 
 
-### OLED screen
+### OLED screen (soldered in)
 
-All boards have an OLED screen header. Originally I had plans to have it as a feature (It is quite nice when using squeezelite since you can get quite a lot with existing plugins and settings). Later on, I disregarded this as a generally available feature, since it is quite a time-consuming task to solder it in place, and I had no really good idea how to fix the screen in place. Despite that, the header is present on every board revision and it works. 
+All boards have an OLED screen header. Originally, I had plans to have it as a feature (It is quite nice when using squeezelite since you can get quite a lot with existing plugins and settings). Later on, I disregarded this as a generally available feature, since it is quite a time-consuming task to solder it in place, and I had no really good idea how to fix the screen in place. Despite that, the header is present on every board revision, and it works. 
 
-At this moment one can solder the compatible OLED screen and use it with the transparent front panel as a bedside clock or to display the current track (I prefer smoked glass for the final look of it). It takes a few minutes for a skilled engineer to solder it in place and a small strap of double-sided adhesive to fix it mechanically.
+At this moment, one can solder the compatible OLED screen and use it with the transparent front panel as a bedside clock or to display the current track (I prefer smoked glass for the final look of it). It takes a few minutes for a skilled engineer to solder it in place and a small strap of double-sided adhesive to fix it mechanically.
 
 | A | B | C |
 |---|---|---|
@@ -486,7 +493,7 @@ The final result is a nice and finished look
 
 #### OLED models
 
-Most of the 64x128 pixel OLED screen models that are very common among hobbyists will use compatible 30-pin ribbon connector with 0.7mm pin spacing, and they are really easy to desolder.
+Most of the 64x128 pixel OLED screen models that are very common among hobbyists will use a compatible 30-pin ribbon connector with 0.7mm pin spacing, and they are really easy to desolder.
 
 ![image](https://github.com/user-attachments/assets/711c8085-8d32-48c6-a58e-6f68809e8b97)
 
@@ -496,6 +503,30 @@ You can also find bare screens if you spend a minute. Below are the tested model
 |---|---|
 | [0.96" OLED Display 128X64 SSD1306](https://www.aliexpress.com/item/1005001836449023.html) |  ![image](https://github.com/user-attachments/assets/815ce45e-8413-4455-bb7f-8f6c2651a1e2)
 | [1.3" OLED Display 128X64 SH1106](https://www.aliexpress.com/item/1005001836449023.html) | ![image](https://github.com/user-attachments/assets/bb228e84-07ab-45b5-af5b-ecae94656be8)
+
+### OLED screen (solder-less)
+
+Starting May 2025, all boards (starting from DUAL revision) will have an OLED screen with a solder-less connector. I managed to find the right model of the screen and corresponding connector for a reasonable price, and decided to equip every board with the connector as standard. 
+
+At this moment, one can simply throw in a compatible OLED screen and use a small strap of double-sided adhesive to fix it mechanically. The final result is a nice and finished look
+
+| A | B | C |
+|---|---|---|
+| ![DSC_0011](https://github.com/user-attachments/assets/8f3f9045-7118-4043-a2d6-95db5f193ad2) | ![DSC_0013](https://github.com/user-attachments/assets/037fd177-e650-485d-a47e-e9e37ad62bd9) | ![DSC_0014](https://github.com/user-attachments/assets/798fc8c8-d7bc-4c0b-86a4-35c69bc1ecc0)
+
+The final result is a nice and finished look
+
+![DSC_0009](https://github.com/user-attachments/assets/3584eecb-4c9e-44ab-9c3c-126e3abb49c2)
+
+I admit, mechanically it might be a challenge to secure it in place the right way, and I'm looking for a better solution.
+
+#### OLED models
+
+Most of the 64x128 pixel OLED screen models that are very common among hobbyists will use a compatible 30-pin ribbon connector with 0.5mm pin spacing, and they are really easy to find.
+
+|  Model | Image |
+|---|---|
+| [1.3" OLED Screen 128x64 SH1106 30Pin](https://www.aliexpress.com/item/1005003801387081.html) | ![image](https://github.com/user-attachments/assets/78b44c8d-484a-4c07-9f9f-fb1f86689fac)
 
 #### Software side
 
@@ -528,59 +559,7 @@ External relay can be connected directly between OUT and +5V pins (1st and 3rd p
 
 ### Errata
 
-#### CH340C 5V level issue
-
-**Description:**
-
-Some units suffer from bad wifi connectivity (low wifi RSSI, -10..-20Db compared to expected level) when the device has no Serial monitor attached. Connectivity is fine however when the Serial monitor is attached 
-
-**Impact:**
-
-Affected units will stutter and break audio streaming even in close proximity to the WiFi router. As soon as the Serial monitor is attached, connectivity is restored and the unit works as expected, making debugging very difficult.
-
-**Affected Products:**
-
-- HiFi-Esparagus, Rev D
-- HiFi-Esparagus, Rev E
-- Loud Esparaus, Rev D
-
-##### Detailed Description
-
-**Issue Details:**
-
-Due to a mistake in the schematics, the VCC pin on the CH340C USB-Serial bridge is connected to the +5V line. This causes it to generate 5V on the control lines RTS and DTR. This in turn causes +4.2V level on the RST and IO0 pins of the ESP32, which is way above the allowed pin voltage limit. Although many units are capable of working with no measurable impact on the operation, some suffer from bad radio connectivity. Based on the known cases no permanent damage is caused by high voltage, which allows applying permanent hardware fix.
-
-**Detection:**
-
-Users may notice that the WiFi or Bluetooth perception is poor, causing audio to break and stutter.
-
-##### Workaround/Temporary Solution
-
-You can use the unit with a serial monitor attached to the USB-C port. This causes low levels on the serial control lines, thus keeping the RST pin on the +3.3V level, equivalent to normal unit operation.
-
-##### Resolution/Corrective Action
-
-**Status:**
-
-The next revision of the board has a permanent schematics fix. Specifically fixed in
-
-- HiFi-Esparagus, Rev F
-- Loud-Esparagus, Rev E 
-
-**Permanent Solution:**
-
-Customers can apply a permanent fix by following the steps below. It will require moderate soldering skills and a piece of thin copper wire.
-
-| Step | Description | HiFi-Esparagus | Loud-Esparagus
-|---------------------|--------------------------|--------------------------|--------------------------|
-| 1 | Disconnect the VCC pin from the 5V line. Use a sharp tip with your soldering iron and a sharp tool. You lose the ability to flash the unit using the USB-C port at this time. | ![image](https://github.com/user-attachments/assets/8a99d21e-ae60-4a57-881c-a1101e91c4c0) | ![image](https://github.com/user-attachments/assets/3b6953f3-6c19-4707-95fe-f224e8a49273)
-| 2 | Connect the lifted pin to 3,3V line. The flashing capability is restored. | ![image](https://github.com/user-attachments/assets/31a27d97-a108-4922-8aa5-9d85e9d40cef) | ![image](https://github.com/user-attachments/assets/3ddcc4e0-c822-4675-b7b8-53646f3ec422)
-
-Optionally secure the wire in place with hot glue or Kapton tape. 
-
-**Additional Notes:**
-
-I apologize for any inconvenience caused by this issue. I am committed to fix this issue as soon as discovered and guiding those who need help fixing it themselves.
+- [CH340C 5V level issue](/errata/ch340c-5v-level-issus.md)
 
 ## Where to buy
 
