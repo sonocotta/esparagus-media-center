@@ -463,6 +463,8 @@ With this setup, you can supply more than the 20V limit of PD, giving you a bit 
 
 In May 2025, I came up with a power mux schematic that is designed to automatically switch between an external power source and a UCB-PD-enabled power source, depending on which one provides higher voltage. So you can either use an external power adapter over the barrel jack and use USB-C for programming-debugging, or simply use USB-C for both power and data. 
 
+![DSC_0003](https://github.com/user-attachments/assets/f891e126-1cba-4af1-99d2-2f299a820316)
+
 This eliminates the need for PD and NOPD revisions, so I will slowly replace all products with a single DUAL option.
 
 #### External voltage selection
@@ -475,9 +477,9 @@ The absolute maximum voltage for the TAS5805M DAc is 30V, but it is not guarante
 
 ### OLED screen (soldered in)
 
-All boards have an OLED screen header. Originally I had plans to have it as a feature (It is quite nice when using squeezelite since you can get quite a lot with existing plugins and settings). Later on, I disregarded this as a generally available feature, since it is quite a time-consuming task to solder it in place, and I had no really good idea how to fix the screen in place. Despite that, the header is present on every board revision and it works. 
+All boards have an OLED screen header. Originally, I had plans to have it as a feature (It is quite nice when using squeezelite since you can get quite a lot with existing plugins and settings). Later on, I disregarded this as a generally available feature, since it is quite a time-consuming task to solder it in place, and I had no really good idea how to fix the screen in place. Despite that, the header is present on every board revision, and it works. 
 
-At this moment one can solder the compatible OLED screen and use it with the transparent front panel as a bedside clock or to display the current track (I prefer smoked glass for the final look of it). It takes a few minutes for a skilled engineer to solder it in place and a small strap of double-sided adhesive to fix it mechanically.
+At this moment, one can solder the compatible OLED screen and use it with the transparent front panel as a bedside clock or to display the current track (I prefer smoked glass for the final look of it). It takes a few minutes for a skilled engineer to solder it in place and a small strap of double-sided adhesive to fix it mechanically.
 
 | A | B | C |
 |---|---|---|
