@@ -45,18 +45,17 @@ int seq = 0;
 #ifdef DAC_TAS5805M
 void ticker_callback()
 {
-  uint8_t h70 = 0, h71 = 0, h72 = 0;
-  ESP_ERROR_CHECK(Tas5805m.getFaultState(&h70, &h71, &h72));
-  log_i("Fault registers: h70 = %d, h71 = %d, h72 = %d", h70, h71, h72);
+  TAS5805M_FAULT faults;
+  ESP_ERROR_CHECK(Tas5805m.getFaultState(&faults));
 
-  if (h70 || h71 || h72)
+  if (faults.err0 || faults.err1 || faults.err2 || faults.ot_warn)
   {
-    log_i("Sending CLEAR FAULT");
+    Tas5805m.decodeFaults(faults);
     ESP_ERROR_CHECK(Tas5805m.clearFaultState());
   }
 
   uint8_t gain = 0, volume = 0;
-  ESP_ERROR_CHECK(Tas5805m.getGain(&gain));
+  ESP_ERROR_CHECK(Tas5805m.getAnalogGain(&gain));
   ESP_ERROR_CHECK(Tas5805m.getVolume(&volume));
   log_i("Current GAIN value = %d; VOLUME value = %d", gain, volume);
 }
@@ -93,8 +92,6 @@ void setup()
 #endif
 
 #ifdef DAC_TAS5805M
-  Tas5805m.begin();
-  // Tas5805m.begin(TAS5805M_MONO);
   ticker.attach_ms(1000, ticker_callback);
 
   uint8_t newVolume = 100;

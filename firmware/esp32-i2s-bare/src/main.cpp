@@ -49,10 +49,6 @@ void setup()
     while (1)
       ; // do nothing
   }
-
-#ifdef DAC_TAS5805M
-  Tas5805m.begin();
-#endif
 }
 
 void loop()
