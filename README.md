@@ -93,9 +93,7 @@ Louder Esparagus is a top-of-the-range model that uses modern highly capable TAS
 
 The latest update allows a direct power through barrel jack as an alternative to the USB-PD to provide an alternative and allow more precise control over the power source for your audio 
 
-| USB-PD  |  NOPD |
-|---|---|
-| ![DSC_0719](https://github.com/sonocotta/esparagus-media-center/assets/5459747/acca2da1-a52f-4d44-b1a7-9d6dc896c549) | ![DSC_0085](https://github.com/user-attachments/assets/810453ac-9bb5-41eb-ac3b-7868260e7631)
+![DSC_0009](https://github.com/user-attachments/assets/538e0165-d973-4222-81e7-64d4013869d6)
 
 ## Amped Esparagus
 
@@ -463,9 +461,9 @@ With this setup, you can supply more than the 20V limit of PD, giving you a bit 
 
 #### Louder and Amped Esparagus DUAL
 
-In may 2025 I came up with a power mux schematics that is designed to automtically switch between external power source and UCB-PD enabled power source, depending on which one provides higher voltage. So you can either use external power adapter over the bareel jack and use USB-C for programming-debugging, or simple use USB-C for both power and data. 
+In May 2025, I came up with a power mux schematic that is designed to automatically switch between an external power source and a UCB-PD-enabled power source, depending on which one provides higher voltage. So you can either use an external power adapter over the barrel jack and use USB-C for programming-debugging, or simply use USB-C for both power and data. 
 
-This eliminates the need for PD and NOPD revisions, so i will slowly replace all products with a single DUAL option.
+This eliminates the need for PD and NOPD revisions, so I will slowly replace all products with a single DUAL option.
 
 #### External voltage selection
 
@@ -491,7 +489,7 @@ The final result is a nice and finished look
 
 #### OLED models
 
-Most of the 64x128 pixel OLED screen models that are very common among hobbyists will use compatible 30-pin ribbon connector with 0.7mm pin spacing, and they are really easy to desolder.
+Most of the 64x128 pixel OLED screen models that are very common among hobbyists will use a compatible 30-pin ribbon connector with 0.7mm pin spacing, and they are really easy to desolder.
 
 ![image](https://github.com/user-attachments/assets/711c8085-8d32-48c6-a58e-6f68809e8b97)
 
@@ -504,23 +502,27 @@ You can also find bare screens if you spend a minute. Below are the tested model
 
 ### OLED screen (solder-less)
 
-Starting May 2025, all boards (starting deom DUAL revision) will have an OLED screen solder-less connector. I managed to find the right model of the screen and corresponding connector for a reasonable price, and decided to equip every board with the connector as standard. 
+Starting May 2025, all boards (starting from DUAL revision) will have an OLED screen with a solder-less connector. I managed to find the right model of the screen and corresponding connector for a reasonable price, and decided to equip every board with the connector as standard. 
 
 At this moment, one can simply throw in a compatible OLED screen and use a small strap of double-sided adhesive to fix it mechanically. The final result is a nice and finished look
 
-<image>
+| A | B | C |
+|---|---|---|
+| ![DSC_0011](https://github.com/user-attachments/assets/8f3f9045-7118-4043-a2d6-95db5f193ad2) | ![DSC_0013](https://github.com/user-attachments/assets/037fd177-e650-485d-a47e-e9e37ad62bd9) | ![DSC_0014](https://github.com/user-attachments/assets/798fc8c8-d7bc-4c0b-86a4-35c69bc1ecc0)
 
-Iadmit, mechanically it might be a challance to secure it in place the right way, and I'm looking for better solution.
+The final result is a nice and finished look
+
+![DSC_0009](https://github.com/user-attachments/assets/3584eecb-4c9e-44ab-9c3c-126e3abb49c2)
+
+I admit, mechanically it might be a challenge to secure it in place the right way, and I'm looking for a better solution.
 
 #### OLED models
 
-Most of the 64x128 pixel OLED screen models that are very common among hobbyists will use compatible 30-pin ribbon connector with 0.5mm pin spacing, and they are really easy to find.
+Most of the 64x128 pixel OLED screen models that are very common among hobbyists will use a compatible 30-pin ribbon connector with 0.5mm pin spacing, and they are really easy to find.
 
 |  Model | Image |
 |---|---|
 | [1.3" OLED Screen 128x64 SH1106 30Pin](https://www.aliexpress.com/item/1005003801387081.html) | ![image](https://github.com/user-attachments/assets/78b44c8d-484a-4c07-9f9f-fb1f86689fac)
-
-
 
 #### Software side
 
