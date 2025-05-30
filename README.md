@@ -467,6 +467,8 @@ In May 2025, I came up with a power mux schematic that is designed to automatica
 
 This eliminates the need for PD and NOPD revisions, so I will slowly replace all products with a single DUAL option.
 
+Because of the limited space on the back panel, I moved the IR reader and RGB LEDs (now eight of them) to the front panel, offering a semi-transparent optional panel, in case you're planning to use them.
+
 #### External voltage selection
 
 The power adapter specs depend on the speaker you're planning to use. DAC efficiency is close to 100%, so just take the power rating of your speaker (say 2x10w), and impedance (say 8 ohms) and you'd need  at least 9 volts rated at 1.2 amps per channel, round up to 3 total amps. 
