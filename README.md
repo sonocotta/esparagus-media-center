@@ -471,9 +471,9 @@ Because of the limited space on the back panel, I moved the IR reader and RGB LE
 
 #### External voltage selection
 
-The power adapter specs depend on the speaker you're planning to use. DAC efficiency is close to 100%, so just take the power rating of your speaker (say 2x10w), and impedance (say 8 ohms) and you'd need  at least 9 volts rated at 1.2 amps per channel, round up to 3 total amps. 
+The power adapter specs depend on the speaker you're planning to use. DAC efficiency is close to 100%, so just take the power rating of your speaker (say 2x10w), and impedance (say 8 ohms) and you'd need at least `sqrt(10W * 8Ω) ≈ 9V` rated at `9V / 8Ω ≈ 1.2A` per channel, round up to 3 total Amps. 
 
-It is not recommended to go beyond the voltage your speakers can take, otherwise, the amp will blow your speakers in no time. 
+It is not recommended to go beyond the voltage your speakers can take; otherwise, the amp will blow your speakers in no time. 
 
 The absolute maximum voltage for the TAS5805M DAc is 30V, but it is not guaranteed to be thermally stable in this condition. 
 
