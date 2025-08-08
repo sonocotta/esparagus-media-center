@@ -36,11 +36,11 @@ Esparagus Media Center is a series of ESP32-based media center devices. They all
     - [Arduino IDE](#arduino-ide)
   - [Using Esparagus Media Center with the Home Assistant](#using-esparagus-media-center-with-the-home-assistant)
     - [Configuring Home Assistant](#configuring-home-assistant)
-    - [LMS or Airplay](#lms-or-airplay)
+    - [Home Assistant: LMS or Airplay](#home-assistant-lms-or-airplay)
       - [Native HA integration](#native-ha-integration)
       - [Integrate into Music Assistant directly](#integrate-into-music-assistant-directly)
-    - [ESPHome way](#esphome-way)
-    - [Snapcast way](#snapcast-way)
+    - [Home Assistant: ESPHome](#home-assistant-esphome)
+    - [Home Assistant: Snapcast](#home-assistant-snapcast)
   - [Squeezelite-ESP32](#squeezelite-esp32)
     - [How to flash and configure](#how-to-flash-and-configure)
     - [Squeezelite-esp32 Bug causing boot loop](#squeezelite-esp32-bug-causing-boot-loop)
@@ -213,7 +213,7 @@ Generally, you need to have supported HA (native) installation and follow [these
 
 </details>
   
-### LMS or Airplay
+### Home Assistant: LMS or Airplay
 
 [gh://sle118/squeezelite-esp32](https://github.com/sle118/squeezelite-esp32)
 
@@ -244,7 +244,7 @@ Disable SlimProto integration in the HA if you want to go the MA way. If you ena
 
 </details>
 
-### ESPHome way
+### Home Assistant: ESPHome
 
 [Louder-ESP32 running ESPHome](https://www.espthings.io/index.php/2024/04/07/louder-esp32-a-hi-fi-class-d-audio-amplifier-running-esphome/)
 
@@ -270,7 +270,7 @@ Please find specific ESPHome configs in the [firmware](/firmware/esphome/) folde
 
 </details>
 
-### Snapcast way
+### Home Assistant: Snapcast
 
 Snapcast is a multi-room audio player that synchronizes playback across multiple devices, ensuring that audio streams play simultaneously in perfect sync. It consists of a server, which distributes audio streams, and clients, which receive and play the audio. There is a [snapcast](https://github.com/sonocotta/esparagus-snapclient) fork that was created to implement Esparagus specific configuration on top of the ESP32 Snapcast client. This allows us to build flexible and extendable setups connected to various sources, like Mopidy, MPD or Home Assistant. 
 
@@ -285,6 +285,8 @@ Snapcast is a multi-room audio player that synchronizes playback across multiple
 | **Use a group of speakers for multi-room setup** <br/><br/> In the MA settings > Players create a new group player and add as many Eparagus players as you need. Use that group speaker to get a synced audio | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/b371fb08-c900-451f-a1c9-35e25c8ae73b)
 
 </details>
+
+As of mid-2025 work is ongoing ([1](https://github.com/c-MM/esphome-snapclient/), [2](https://github.com/esphome/esphome/pull/8350)) to add snapcast component to ESPHome. This is based on the [original implementation](https://github.com/CarlosDerSeher/snapclient) done by CarlosDerSeher. This have a benefit of enabling all the DAC features implemented by ESPHome driver. As soon as it is ready I will add ESPHome configs that implement it.
 
 ## Squeezelite-ESP32
 
