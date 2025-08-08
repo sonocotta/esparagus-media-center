@@ -270,17 +270,20 @@ Please find specific ESPHome configs in the [firmware](/firmware/esphome/) folde
 
 </details>
 
-The latest changes in the ESPHome (deprecation of the custom components) triggered a work to implement an external [TAS5805M DAC ESPHome component](https://github.com/mrtoy-me/esphome-tas5805m). It took some time, but this driver implements a few very important features of the TAS5805M DAC that can not only be used in the device configuration, but also in various automations and complex logic. Worth to note:
+The latest changes in the ESPHome (deprecation of the custom components) triggered a work to implement an external [TAS5805M DAC ESPHome component](https://github.com/mrtoy-me/esphome-tas5805m). It took some time, but this driver implements a few very important features of the TAS5805M DAC that can not only be used in the device configuration, but also in various automations and complex logic. Worth noting:
 
 - Possibility to configure Analog Gain (depending on the power supply you have, more details [here](https://github.com/sonocotta/esp32-tas5805m-dac/#digital-volume-and-analog-gain)) | 
-- Advanced digital volume configuration (set minimum, maximium and step value) | <img width="252" height="324" alt="image" src="https://github.com/user-attachments/assets/ea81f985-ef8d-48c7-8a52-b3d22d1eea2b" />
+- Advanced digital volume configuration (set minimum, maximum, and step value)
+- <img width="252" height="324" alt="image" src="https://github.com/user-attachments/assets/ea81f985-ef8d-48c7-8a52-b3d22d1eea2b" />
 - Automatic powersave modes based on playback state
 - DAC mode: 2 channel, or 1 channel bridged mode (more details [here](https://github.com/sonocotta/esp32-tas5805m-dac/#setting-and-getting-dac-mode))
 - Mixer mode: MONO, STEREO, INVERTED, LEFT, RIGHT (more details [here](https://github.com/sonocotta/esp32-tas5805m-dac/#mixer-controls))
-- My favorite: 15 band equilizer with [-15 dB .. +15 dB] range, which is an absolute treat to configure your speakers to your audio taste | <img width="252" height="619" alt="image" src="https://github.com/user-attachments/assets/9400f057-3e42-441e-aa96-14f551bb9c3e" />
-- For the first time: read and reset fault states, no need to reboot device. Not only reports them back to HA, but also allows automatic correction (reduce volume on overheat, etc) | <img width="252" height="515" alt="image" src="https://github.com/user-attachments/assets/6863d353-dac2-40b3-8782-4747f04e729d" />
+- My favorite: 15 band equalizer with [-15 dB .. +15 dB] range, which is an absolute treat to configure your speakers to your audio taste
+- <img width="252" height="619" alt="image" src="https://github.com/user-attachments/assets/9400f057-3e42-441e-aa96-14f551bb9c3e" />
+- For the first time: read and reset fault states, no need to reboot the device. Not only reports them back to HA, but also allows automatic correction (reduce volume on overheat, etc)
+- <img width="252" height="515" alt="image" src="https://github.com/user-attachments/assets/6863d353-dac2-40b3-8782-4747f04e729d" />
 
-We have some plans for further development of the ESPHome dervier, implementing subwoofer and satellite porfiles (for 2.1 and bi-amp configs), enabling soft-clipping and perhaps even unleashing he power of all BQ-parameters (to enable speaker specific compensation of the DAC). Stay tuned!
+We have some plans for further development of the ESPHome driver, implementing subwoofer and satellite profiles (for 2.1 and bi-amp configs), enabling soft-clipping, and perhaps even unleashing the power of all BQ-parameters (to enable speaker-specific compensation of the DAC). Stay tuned!
 
 ### Home Assistant: Snapcast
 
