@@ -193,7 +193,7 @@ Below are specific steps that you need to follow to spin up Esparagus Media Cent
 
 ### Configuring Home Assistant
 
-I prefer to use HA with the Music Assistant. This way you can integrate both your media library and internet radio and have a nice UI/UX at the same time (including mobile).
+I prefer to use HA with the Music Assistant. This way you can integrate both your media library and internet radio and have a nice UI/UX at the same time (including mobile app).
 
 Generally, you need to have supported HA (native) installation and follow [these steps](https://music-assistant.io/integration/installation/). I will place here a short version to have a reminder for future myself
 
@@ -248,7 +248,12 @@ Disable SlimProto integration in the HA if you want to go the MA way. If you ena
 
 [Louder-ESP32 running ESPHome](https://www.espthings.io/index.php/2024/04/07/louder-esp32-a-hi-fi-class-d-audio-amplifier-running-esphome/)
 
-Please find specific ESPHome configs in the [firmware](/firmware/esphome/) folder
+Please find specific ESPHome configs in the [firmware](/firmware/esphome/) folder. Be noted that generally esp-idf based confugurations are preferred over the arduino counterparts, since they are lighter, faster and more stable, which is important for audio streaming. However many components simply do not work with esp-idf, this Arduino exmaples also provided. Due to the complexity of the TAS5805M driver, it only exists in the esp-idf variant.
+
+- [hifi-esparagus-arduino](/firmware/esphome/hifi-esparagus-arduino.yaml) and [hifi-esparagus-idf](/firmware/esphome/hifi-esparagus-idf.yaml) for HiFi-Esparagus
+- [loud-esparagus-arduino](/firmware/esphome/loud-esparagus-arduino.yaml) and [loud-esparagus-idf](/firmware/esphome/loud-esparagus-idf.yaml) for Loud-Esparagus
+- [](/firmware/esphome/amped-esparagus-idf.yaml) for Amped-Esparagus
+- [louder-esparagus-idf](/firmware/esphome/louder-esparagus-idf.yaml) for Louder-Esparagus
 
 <details>
   <summary>Install instructions</summary>
