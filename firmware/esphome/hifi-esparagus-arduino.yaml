@@ -1,7 +1,6 @@
 substitutions:
   name: esphome-web-xxxxxx
   friendly_name: Hifi-Esparagus
-  task_stack_in_psram: "false" # important to disable this for non-S3 model
 
 esphome:
   name: ${name}
@@ -40,10 +39,6 @@ api:
 
 psram:
   speed: 80MHz
-
-globals:
-  - id: current_volume
-    type: float
 
 i2s_audio:
   i2s_lrclk_pin: GPIO25
