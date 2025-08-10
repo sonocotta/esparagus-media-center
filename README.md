@@ -252,7 +252,7 @@ Please find specific ESPHome configs in the [firmware](/firmware/esphome/) folde
 
 - [hifi-esparagus-arduino](/firmware/esphome/hifi-esparagus-arduino.yaml) and [hifi-esparagus-idf](/firmware/esphome/hifi-esparagus-idf.yaml) for HiFi-Esparagus
 - [loud-esparagus-arduino](/firmware/esphome/loud-esparagus-arduino.yaml) and [loud-esparagus-idf](/firmware/esphome/loud-esparagus-idf.yaml) for Loud-Esparagus
-- [](/firmware/esphome/amped-esparagus-idf.yaml) for Amped-Esparagus
+- [amped-esparagus-arduino](/firmware/esphome/amped-esparagus-arduino.yaml) and [amped-esparagus-idf](/firmware/esphome/amped-esparagus-idf.yaml) for Amped-Esparagus
 - [louder-esparagus-idf](/firmware/esphome/louder-esparagus-idf.yaml) for Louder-Esparagus
 
 <details>

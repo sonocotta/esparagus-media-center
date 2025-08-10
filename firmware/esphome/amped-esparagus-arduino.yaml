@@ -1,0 +1,116 @@
+substitutions:
+  name: esphome-web-xxxxxx
+  friendly_name: Amped-Esparagus
+
+esphome:
+  name: ${name}
+  friendly_name: ${friendly_name}
+  min_version: 2025.7.0
+  name_add_mac_suffix: false
+  platformio_options:
+    board_build.flash_mode: dio
+
+esp32:
+  board: mhetesp32minikit
+  flash_size: 8MB
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+  level: DEBUG
+  
+wifi:
+  ssid: !secret esphome_wifi_ssid
+  password: !secret esphome_wifi_password
+  ap:
+    ssid: "$name Hotspot"
+    password: !secret esphome_ap_password
+
+captive_portal:
+
+# Allow Over-The-Air updates
+ota:
+  platform: esphome
+  password: !secret esphome_ota_password
+
+# Enable Home Assistant API
+api:
+
+psram:
+  speed: 80MHz
+
+i2s_audio:
+  i2s_lrclk_pin: GPIO25
+  i2s_bclk_pin: GPIO26
+
+media_player:
+  - platform: i2s_audio
+    name: Amped Mediaplayer
+    id: amped_mediaplayer
+    i2s_dout_pin: GPIO22
+
+    on_announcement:
+      - light.turn_on:
+          id: rgb_front_led
+          blue: 100%
+          red: 0%
+          green: 100%
+          brightness: 50%
+
+      - wait_until:
+          not:
+            media_player.is_announcing:
+
+      - light.turn_off:
+          id: rgb_front_led
+
+switch:
+  # Enable USB-PD trigger chip. Will request 19V from the power supply, but might be limited by the power supply capabilities
+  # When off, will use 5V from the USB port, which is enough to power the DAC and ESP32 with limited power
+  - platform: gpio
+    id: pd_enable
+    pin: GPIO13
+    restore_mode: ALWAYS_ON
+    inverted: true
+    name: "PD Power Enable"
+
+### RGB light config
+light:
+  - platform: esp32_rmt_led_strip
+    id: rgb_front_led
+    name: "${friendly_name} LED"
+    rgb_order: GRB
+    pin: GPIO33
+    num_leds: 8
+    chipset: ws2812
+    default_transition_length: 0s
+
+### IR reader config. Add your own IR codes as needed
+remote_receiver:
+  pin: 
+    number: GPIO39
+    inverted: true
+    mode:
+      input: true
+  dump: all
+
+button:
+  - platform: restart
+    id: restart_btn
+    name: "${friendly_name} REBOOT"
+
+  - platform: gpio
+    id: rotary_btn
+    name: "${friendly_name} Rotary button"
+    pin: GPIO34
+
+sensor:
+  - platform: rotary_encoder
+    name: "Rotary Encoder"
+    pin_a: GPIO27
+    pin_b: GPIO33
+    on_clockwise:
+      - logger.log: "Rotary Turned Clockwise"
+    on_anticlockwise:
+      - logger.log: "Rotary Turned Anticlockwise"
