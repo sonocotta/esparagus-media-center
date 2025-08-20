@@ -22,6 +22,7 @@ Esparagus Media Center is a series of ESP32-based media center devices. They all
   - [Loud Esparagus](#loud-esparagus)
   - [Louder Esparagus](#louder-esparagus)
   - [Amped Esparagus](#amped-esparagus)
+  - [Which device is right for me](#which-device-is-right-for-me)
   - [Features](#features)
     - [Onboard PSRAM](#onboard-psram)
   - [Board Pinout](#board-pinout)
@@ -31,6 +32,7 @@ Esparagus Media Center is a series of ESP32-based media center devices. They all
     - [TAS5805M DAC (Louder Esparagus)](#tas5805m-dac-louder-esparagus)
     - [Peripheral - OLED Screen and W5500 Ethernet (Louder Esparagus)](#peripheral---oled-screen-and-w5500-ethernet-louder-esparagus)
     - [Other Peripheral (Louder Esparagus)](#other-peripheral-louder-esparagus)
+  - [Which software is right for me](#which-software-is-right-for-me)
   - [Software samples](#software-samples)
     - [Platformio IDE](#platformio-ide)
     - [Arduino IDE](#arduino-ide)
@@ -103,6 +105,10 @@ The latest addition to the family, Amped Esparagus is a device based on PCM5100 
 
 With the Amped Esparagus, I'm implementing and testing a new updated look with every board equipped with a semi-transparent front face as standard. Behind it, there is a front-facing IR reader and 8-LED RGB strip (that can be used for audio visualization or power state). Most noticeably, there is a rotary encoder with a push-button, that allows quick change of volume or play/pause action.  
 
+## Which device is right for me
+
+<img width="1047" height="1112" alt="Esparagus Lineup-Device Select Map (ESP32) drawio (1)" src="https://github.com/user-attachments/assets/79e9bcd5-f621-416e-8a61-c49d2770f2e1" />
+
 ## Features
 
 |  | [HiFi Esparagus](https://www.tindie.com/products/sonocotta/esparagus-hifi-medialink/) | [Loud Esparagus](https://www.tindie.com/products/sonocotta/loud-esparagus-media-center/) | [Louder Esparagus](https://www.tindie.com/products/sonocotta/louder-esparagus-media-center/) | [Amped Esparagus](https://www.tindie.com/products/sonocotta/amped-esparagus-media-center/) |
@@ -161,6 +167,10 @@ Audio streaming requires proper buffering to work, even with ESP32 500K of RAM i
 |       | USB-PD EN | USB-PD POWER GOOD | IR INPUT |   WS2812 RGB LED
 |-------|---------|----------|--------|----------|
 | ESP32 |    13   |   36     |    39  | 12       | 
+
+## Which software is right for me
+
+<img width="1062" height="852" alt="image" src="https://github.com/user-attachments/assets/77612aca-5ca4-4052-b1b4-3467b012ad30" />
 
 ## Software samples
 
