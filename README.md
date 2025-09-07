@@ -265,6 +265,12 @@ Please find specific ESPHome configs in the [firmware](/firmware/esphome/) folde
 - [amped-esparagus-arduino](/firmware/esphome/amped-esparagus-arduino.yaml) and [amped-esparagus-idf](/firmware/esphome/amped-esparagus-idf.yaml) for Amped-Esparagus
 - [louder-esparagus-idf](/firmware/esphome/louder-esparagus-idf.yaml) for Louder-Esparagus
 
+Also, experimental snapclient configs
+
+- [hifi-esparagus-idf-snapclient](/firmware/esphome/hifi-esparagus-idf-snapclient.yaml)
+- [loud-esparagus-idf-snapclient](/firmware/esphome/loud-esparagus-idf-snapclient.yaml)
+- [louder-esparagus-idf-snapclient](/firmware/esphome/louder-esparagus-idf-snapclient.yaml)
+
 <details>
   <summary>Install instructions</summary>
 
@@ -311,7 +317,9 @@ Snapcast is a multi-room audio player that synchronizes playback across multiple
 
 </details>
 
-As of mid-2025 work is ongoing ([1](https://github.com/c-MM/esphome-snapclient/), [2](https://github.com/esphome/esphome/pull/8350)) to add snapcast component to ESPHome. This is based on the [original implementation](https://github.com/CarlosDerSeher/snapclient) done by CarlosDerSeher. This has the benefit of enabling all the DAC features implemented by the ESPHome driver. As soon as it is ready, I will add ESPHome configs that implement it.
+As of mid-2025 work is ongoing ([1](https://github.com/c-MM/esphome-snapclient/), [2](https://github.com/esphome/esphome/pull/8350)) to add snapcast component to ESPHome. This is based on the [original implementation](https://github.com/CarlosDerSeher/snapclient) done by CarlosDerSeher. This has the benefit of enabling all the DAC features implemented by the ESPHome driver. At the moment of writing there are quite a few issues to be solved in the code before it can be merged, but having tested this myself on a few S3 based boards as long as Louder-Esparagus and Louder-ESP32 boards, I can say it is stable and works really well. Also
+- This is the only implementation that works with ESP32-S3 (exciting!)
+- This implementation allows using advanced TAS5805M DAC features available in the esphome driver, like bridge mode and 15-band EQ. If you have Home Assistant already, that's no brainer
 
 ## Squeezelite-ESP32
 
