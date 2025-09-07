@@ -269,6 +269,7 @@ Also, experimental snapclient configs
 
 - [hifi-esparagus-idf-snapclient](/firmware/esphome/hifi-esparagus-idf-snapclient.yaml)
 - [loud-esparagus-idf-snapclient](/firmware/esphome/loud-esparagus-idf-snapclient.yaml)
+- [amped-esparagus-idf-snapclient](/firmware/esphome/amped-esparagus-idf-snapclient.yaml)
 - [louder-esparagus-idf-snapclient](/firmware/esphome/louder-esparagus-idf-snapclient.yaml)
 
 <details>
