@@ -71,11 +71,11 @@ ChatGPT made me call it that way. I only asked if there is a fruit or vegetable 
 
 ## Motivation
 
-I did few audio projects in the past, some using [ESP32](https://hackaday.io/project/173620-loud-esp), some using larger [Orange Pi](https://hackaday.io/project/191936-orange-pi-home-media-center) and [Raspberry Pi](https://hackaday.io/project/162373-orangepi-zero-pulse-music-server-using-i2s-dac) devices. Each has its pros and cons, and with each iteration, I'm trying to focus on the details that were working best for me, while actually using them. 
+I did a few audio projects in the past, some using [ESP32](https://hackaday.io/project/173620-loud-esp), some using larger [Orange Pi](https://hackaday.io/project/191936-orange-pi-home-media-center) and [Raspberry Pi](https://hackaday.io/project/162373-orangepi-zero-pulse-music-server-using-i2s-dac) devices. Each has its pros and cons, and with each iteration, I'm trying to focus on the details that were working best for me, while actually using them. 
 
-What I like about ESP32 is how lightweight it is. It barely draws power, so you may not care to turn it off at all. It boots in seconds and is ready for use in a snap. Still, it is capable and works at par with Linux SBC solutions for audio applications, while costing a fraction of their price. Combined with a proper Hi-Fi DAC you would not tell a difference to commercial devices standing side by side and costing much more.
+What I like about the ESP32 is how lightweight it is. It barely draws power, so you may not care to turn it off at all. It boots in seconds and is ready for use in a snap. Still, it is capable and works at par with Linux SBC solutions for audio applications, while costing a fraction of their price. Combined with a proper Hi-Fi DAC, you would not tell a difference between commercial devices standing side by side and costing much more.
 
-Over the last few years, I have seen a few amazing software products created to deliver audio on the ESP32, like [squeezelite-esp32](https://github.com/sle118/squeezelite-esp32) or  [euphonium](https://github.com/muvox-io/euphonium). Esparagus media center devices are designed specifically to run these great pieces of software and bring a new life into aging audio equipment that most of us have at home but do not use that much these days, since it is not working with Spotify and the family.
+Over the last few years, I have seen a few amazing software products created to deliver audio on the ESP32, like [squeezelite-esp32](https://github.com/sle118/squeezelite-esp32) or  [euphonium](https://github.com/muvox-io/euphonium). Esparagus media center devices are designed specifically to run these great pieces of software and bring new life into aging audio equipment that most of us have at home but do not use that much these days, since it is not working with Spotify and the family.
 
 ## Esparagus HiFi MediaLink
 
@@ -91,7 +91,7 @@ Loud Esparagus is aimed to be paired with small-to-medium-sized speakers in a sm
 
 ## Louder Esparagus
 
-Louder Esparagus is a top-of-the-range model that uses modern highly capable TAS5805M DAC and is aimed to be paired with medium-to-large speaker systems. With 25W per channel stereo output, it packs a punch and can easily enlive living quarters or dorm rooms. It is highly efficient, but much more demanding for power when cranked, therefore it uses USB-C Power Delivery to pull up to 65W from the wall power adapter. It can be used both with Wi-Fi and Ethernet (to make sure bad Wi-Fi would not interrupt the stream)
+Louder Esparagus is a top-of-the-range model that uses a modern, highly capable TAS5805M DAC and is aimed to be paired with medium-to-large speaker systems. With 25W per channel stereo output, it packs a punch and can easily enliven living quarters or dorm rooms. It is highly efficient, but much more demanding for power when cranked; therefore, it uses USB-C Power Delivery to pull up to 65W from the wall power adapter. It can be used both with Wi-Fi and Ethernet (to make sure bad Wi-Fi does not interrupt the stream)
 
 The latest update allows a direct power through barrel jack as an alternative to the USB-PD to provide an alternative and allow more precise control over the power source for your audio 
 
@@ -99,11 +99,11 @@ The latest update allows a direct power through barrel jack as an alternative to
 
 ## Amped Esparagus
 
-The latest addition to the family, Amped Esparagus is a device based on PCM5100 HiFi DAC (just like HiFi Esparagus) but adds a powerful and efficient D-class amp (TPA3110D2) so it can drive speakers directly. It has similar power capabilities to the Louder Esparagus, but it is much simpler to setup and use, since this DAC doesn't need any configuration steps to get going, just a valid I2S audio stream. Simplicity comes at a price, it doesn't have a DSP unit either. Since it has an analog stage, you can use it either with a built-in amp or with an external amp, if prefer so.
+The latest addition to the family, Amped Esparagus, is a device based on PCM5100 HiFi DAC (just like HiFi Esparagus) but adds a powerful and efficient D-class amp (TPA3110D2) so it can drive speakers directly. It has similar power capabilities to the Louder Esparagus, but it is much simpler to set up and use, since this DAC doesn't need any configuration steps to get going, just a valid I2S audio stream. Simplicity comes at a price, it doesn't have a DSP unit either. Since it has an analog stage, you can use it either with a built-in amp or with an external amp, if you prefer so.
 
 ![DSC_0022](https://github.com/user-attachments/assets/e9481545-e98d-4d6a-b0eb-a993ab151dc8)
 
-With the Amped Esparagus, I'm implementing and testing a new updated look with every board equipped with a semi-transparent front face as standard. Behind it, there is a front-facing IR reader and 8-LED RGB strip (that can be used for audio visualization or power state). Most noticeably, there is a rotary encoder with a push-button, that allows quick change of volume or play/pause action.  
+With the Amped Esparagus, I'm implementing and testing a new updated look with every board equipped with a semi-transparent front face as standard. Behind it, there is a front-facing IR reader and 8-LED RGB strip (that can be used for audio visualization or power state). Most noticeably, there is a rotary encoder with a push-button that allows quick change of volume or play/pause action.  
 
 ## Which device is right for me
 
@@ -127,7 +127,7 @@ With the Amped Esparagus, I'm implementing and testing a new updated look with e
 
 ### Onboard PSRAM
 
-Audio streaming requires proper buffering to work, even with ESP32 500K of RAM it is a challenging task. All Esparagus boards are based on WROVER modules that have an onboard PSRAM chip.
+Audio streaming requires proper buffering to work; even with the ESP32 500K of RAM, it is a challenging task. All Esparagus boards are based on WROVER modules that have an onboard PSRAM chip.
 
 ## Board Pinout
 
@@ -174,15 +174,15 @@ Audio streaming requires proper buffering to work, even with ESP32 500K of RAM i
 
 ## Software samples
 
-In the [software](/firmware) section two firmware examples are provided.
+In the [software](/firmware) section, two firmware examples are provided.
 
 - [esp32-i2s-bare](/firmware/esp32-i2s-bare/) is base I2S implementation based on ESP-IDF implementation directly.
 - [esp32-i2s-esp8266audio](/firmware/esp32-i2s-esp8266audio/) is based on excellent [ESP8266Audio](https://github.com/earlephilhower/ESP8266Audio) library (it works with the whole ESP range, don't get fooled by the name), providing minimum code implementation. 
-- [esp32-i2s-web-radio](/firmware/esp32-i2s-web-radio/) is based on the [same library](https://github.com/earlephilhower/ESP8266Audio), providing minimum web-readio stream player. It expects a playlist as an input in the 'data' folder. 
+- [esp32-i2s-web-radio](/firmware/esp32-i2s-web-radio/) is based on the [same library](https://github.com/earlephilhower/ESP8266Audio), providing minimum web-readio stream player. It expects a playlist as input in the 'data' folder. 
 
 ### Platformio IDE
  
-All samples are provided as [Plarformio IDE](https://platformio.org/platformio-ide) projects. After installing it, open the sample project. Select the proper environment based on your dock. Run the `Build` and `Upload` commands to install necessary tools and libraries, and build and upload the project to the board. Communication and proper upload method selection will be handled by IDE automatically. 
+All samples are provided as [Platformio IDE](https://platformio.org/platformio-ide) projects. After installing it, open the sample project. Select the proper environment based on your dock. Run the `Build` and `Upload` commands to install necessary tools and libraries, and build and upload the project to the board. Communication and proper upload method selection will be handled by the IDE automatically. 
 
 ### Arduino IDE
 
@@ -195,17 +195,17 @@ Below is the summary table of the methods known to me and tested by me.
 
 | Integration type                                                                                                          | Tested  | Description                                                                                                                      | Pros                                                                                                                   | Cons                                                                                                    |
 |---------------------------------------------------------------------------------------------------------------------------|---------|----------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
-| [LMS/Airplay](https://github.com/sle118/squeezelite-esp32)                                                                 | Yes     | Connect to Music Assistant as external protocol device. Can play your media library and internet radio                           | Still can use squeezelite, i.e. use Spotify Connect and Apple Airplay when HA is not using the device                  | No native integration into HA, only works with Music Assistant                                          |
-| [ESPHome way](https://www.espthings.io/index.php/2024/04/07/louder-esp32-a-hi-fi-class-d-audio-amplifier-running-esphome/) | Yes     | Connect as HA media device. Can be used with any HA integration, including Music Assistant, Text-to-Speach announcements, alarms, etc | More integrations with HA, more flexibility in use case                                                                | No longer works as Spotify, Airplay, etc.                                                                |
-| [Snapcast way](https://github.com/CarlosDerSeher/snapclient/issues/70#issuecomment-2034700037)                             | Yes | Connect to Music Assistant as snapcast protocol device. Can play your media library and internet radio.                          | Perfect for multiroom sync (Sonos-like, perhaps even better). Can be used with other Snapcast servers around the house | No longer works as Spotify, Airplay, etc. No native integration into HA only works with Music Assistant |
+| [LMS/Airplay](https://github.com/sle118/squeezelite-esp32)                                                                 | Yes     | Connect to Music Assistant as external protocol device. Can play your media library and internet radio                           | Still can use squeezelite, i.e., use Spotify Connect and Apple Airplay when HA is not using the device                  | No native integration into HA, only works with Music Assistant                                          |
+| [ESPHome way](https://www.espthings.io/index.php/2024/04/07/louder-esp32-a-hi-fi-class-d-audio-amplifier-running-esphome/) | Yes     | Connect as HA media device. Can be used with any HA integration, including Music Assistant, Text-to-Speech announcements, alarms, etc | More integrations with HA, more flexibility in use case                                                                | No longer works as Spotify, Airplay, etc.                                                                |
+| [Snapcast way](https://github.com/CarlosDerSeher/snapclient/issues/70#issuecomment-2034700037)                             | Yes | Connect to Music Assistant as snapcast protocol device. Can play your media library and internet radio.                          | Perfect for multiroom sync (Sonos-like, perhaps even better). Can be used with other Snapcast servers around the house | No longer works with Spotify, Airplay, etc. No native integration into HA only works with Music Assistant |
 
-Below are specific steps that you need to follow to spin up Esparagus Media Center in the Home Assistant
+Below are specific steps that you need to follow to spin up the Esparagus Media Center in Home Assistant
 
 ### Configuring Home Assistant
 
-I prefer to use HA with the Music Assistant. This way you can integrate both your media library and internet radio and have a nice UI/UX at the same time (including mobile app).
+I prefer to use HA with the Music Assistant. This way, you can integrate both your media library and internet radio and have a nice UI/UX at the same time (including a mobile app).
 
-Generally, you need to have supported HA (native) installation and follow [these steps](https://music-assistant.io/integration/installation/). I will place here a short version to have a reminder for future myself
+Generally, you need to have a supported HA (native) installation and follow [these steps](https://music-assistant.io/integration/installation/). I will place here a short version to have a reminder for future self
 
 <details>
   <summary>Install instructions</summary>
@@ -216,8 +216,8 @@ Generally, you need to have supported HA (native) installation and follow [these
 | **Start SSH Addon** <br/> <br/> SSH addon won't start until you add at least one SSH public key to it. So navigate to SSH Addon Settings and add a key (or password) to the config <br/> It should be able to start now | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/962e6a8d-7f7f-41ba-8545-ac747099940f)
 | **[Install Community Store](https://hacs.xyz/docs/setup/download/)** <br/> <br/> Run this command in the Terminal session <br> <code>wget -O - https://get.hacs.xyz &#124; bash -</code> <br/> You need to restart your HA after that | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/95eb9454-c7bf-43d2-b166-2a3dfd178479)
 | **[Add HACS](https://hacs.xyz/docs/configuration/basic)** <br/> <br/> Navigate to Settings > Devices as Services > Integrations > Add Integration, search for HACS, and add it to the HA </br> You'll need to authorize your extension to your GitHub account | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/5ac72cee-a2f8-413f-9e26-b77f269c172c)
-| **[Install Music Assistant via HACS](https://music-assistant.io/integration/installation/)** <br/> <br/> From the HACS menu search for Music Assistant and press the Download button <br/> You need to restart HA again <br/> In the Settings > Addons you should be able to see MA and enable sidebar navigation for it. | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/770c7087-fa02-4a08-9987-4b29eb8c06bd)
-| **Configure Music Assistant** <br/> <br/> Before you enable Integration (that will in turn add speaker devices) you need to enable MA providers <br/> Go to MA > Settings > Providers and enable both Music providers and Player providers that interests you. If not sure, enable all of them, you can disable them later on. | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/562a5619-4925-4daa-9af4-1eb766f93ea0)
+| **[Install Music Assistant via HACS](https://music-assistant.io/integration/installation/)** <br/> <br/> From the HACS menu, search for Music Assistant and press the Download button <br/> You need to restart HA again <br/> In the Settings > Addons, you should be able to see MA and enable sidebar navigation for it. | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/770c7087-fa02-4a08-9987-4b29eb8c06bd)
+| **Configure Music Assistant** <br/> <br/> Before you enable Integration (that will in turn add speaker devices), you need to enable MA providers <br/> Go to MA > Settings > Providers and enable both Music providers and Player providers that interests you. If not sure, enable all of them; you can disable them later on. | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/562a5619-4925-4daa-9af4-1eb766f93ea0)
 | **Add Music Assistant Integration** <br /> <br/> Navigate to HA Settings > Devices & services > Integrations. Click the big + ADD INTEGRATION button, look for Music Assistant, and click to add it. <br/> It should discover and add media devices based on the providers you're enabled in the previous step | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/3c2a0f95-5fdd-4513-b36d-3c662fc0f6fd)
 | **Add Music Devices discovered by MA** <br/> <br/> You should be able to add and use discovered devices. More details in below sections | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/bbf91ed0-3c91-4555-8119-fa9b45deb0af) 
 
@@ -231,17 +231,17 @@ When you have squeezelite-esp32 installed on your Esparagus device (either stock
 
 - Bluetooth
 - LMS or slimproto - auto-discovered by HA
-- Apple Airplay - auto-discovered by HA
+- Apple AirPlay - auto-discovered by HA
 - Spotify Connect
 
-The power of this method is that you can use all four ways outside of HA, for example using your smartphone and Spotify app, and still have it integrated into HA at the same time.
+The power of this method is that you can use all four ways outside of HA, for example, using your smartphone and the Spotify app, and still have it integrated into HA at the same time.
 
 <details>
   <summary>Install instructions</summary>
   
 #### Native HA integration
 
-Make sure your MA Slimproto provider is disabled, it will conflict with the native HA integration 
+Make sure your MA Slimproto provider is disabled; it will conflict with the native HA integration 
 
 | Step | Screenshot |
 |------|------------|
@@ -250,7 +250,7 @@ Make sure your MA Slimproto provider is disabled, it will conflict with the nati
 
 #### Integrate into Music Assistant directly 
 
-Disable SlimProto integration in the HA if you want to go the MA way. If you enabled SlimProto and AirPlay providers in the MA, you should find your device as both a Slimproto device and an Airplay device. It is up to you which protocol to use, generally, they both work perfectly well.
+Disable SlimProto integration in the HA if you want to go the MA way. If you enabled SlimProto and AirPlay providers in the MA, you should find your device as both a Slimproto device and an AirPlay device. It is up to you which protocol to use; generally, they both work perfectly well.
 
 </details>
 
@@ -278,7 +278,7 @@ Also, experimental snapclient configs
 |------|------------|
 | **Add ESPHome Addon** <br/> <br/> Navigate to HA Settings > Addons > Add Addon <br/> Search for SSH and install it.  <br/> Enable `Show in sidebar` switch while you there | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/9d9d0a44-ba2a-491f-bff8-e1c08b8754e0)
 | **Prepare Esparagus for ESPHome onboarding** <br/> <br/> Use [Web Flasher](https://web.esphome.io/?dashboard_wizard) to flash stock ESPHome into device | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/8ad222e8-d992-4a75-9a93-596d67ac8cb0)
-| **Onboard Esparagus ESPHome device into HA** <br/> <br/> Go to the HA ESPHome page and you should be able to find a new device. You need to onboard it with the below config (feel free to change names) <br/> This will take a moment or two | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/32b0c26a-3be1-4e15-b749-1176d46ff011)
+| **Onboard Esparagus ESPHome device into HA** <br/> <br/> Go to the HA ESPHome page, and you should be able to find a new device. You need to onboard it with the below config (feel free to change names) <br/> This will take a moment or two | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/32b0c26a-3be1-4e15-b749-1176d46ff011)
 | **Validate device in the ESPHome** | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/92df6029-c777-47ce-8ff9-debec70f7e05)
 | **Add ESPHome Integration** <br /> <br/> Navigate to HA Settings > Devices & services > Integrations. Click the big + ADD INTEGRATION button, look for ESPHome, and click to add it. <br/> It should discover and add ESPHome media devices based on the previous step | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/c5d3bb12-8b07-4c49-a9e9-cdf2e6cad8ba)
 | **Use your media device in the HA** | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/40067959-04ad-498c-a64d-4353e3f96228)
@@ -286,7 +286,7 @@ Also, experimental snapclient configs
 
 </details>
 
-The latest changes in the ESPHome (deprecation of the custom components) triggered a work to implement an external [TAS5805M DAC ESPHome component](https://github.com/mrtoy-me/esphome-tas5805m). It took some time, but this driver implements a few very important features of the TAS5805M DAC that can not only be used in the device configuration, but also in various automations and complex logic. Worth noting:
+The latest changes in the ESPHome (deprecation of the custom components) triggered a work to implement an external [TAS5805M DAC ESPHome component](https://github.com/mrtoy-me/esphome-tas5805m). It took some time, but this driver implements a few very important features of the TAS5805M DAC that can not only be used in the device configuration but also in various automations and complex logic. Worth noting:
 
 - Possibility to configure Analog Gain (depending on the power supply you have, more details [here](https://github.com/sonocotta/esp32-tas5805m-dac/#digital-volume-and-analog-gain)) | 
 - Advanced digital volume configuration (set minimum, maximum, and step value)
@@ -317,13 +317,13 @@ Snapcast is a multi-room audio player that synchronizes playback across multiple
 
 </details>
 
-As of mid-2025 work is ongoing ([1](https://github.com/c-MM/esphome-snapclient/), [2](https://github.com/esphome/esphome/pull/8350)) to add snapcast component to ESPHome. This is based on the [original implementation](https://github.com/CarlosDerSeher/snapclient) done by CarlosDerSeher. This has the benefit of enabling all the DAC features implemented by the ESPHome driver. At the moment of writing there are quite a few issues to be solved in the code before it can be merged, but having tested this myself on a few S3 based boards as long as Louder-Esparagus and Louder-ESP32 boards, I can say it is stable and works really well. Also
+As of mid-2025 work is ongoing ([1](https://github.com/c-MM/esphome-snapclient/), [2](https://github.com/esphome/esphome/pull/8350)) to add snapcast component to ESPHome. This is based on the [original implementation](https://github.com/CarlosDerSeher/snapclient) done by CarlosDerSeher. This has the benefit of enabling all the DAC features implemented by the ESPHome driver. At the moment of writing, there are quite a few issues to be solved in the code before it can be merged, but having tested this myself on a few S3-based boards as long as Louder-Esparagus and Louder-ESP32 boards, I can say it is stable and works really well. Also
 - This is the only implementation that works with ESP32-S3 (exciting!)
-- This implementation allows using advanced TAS5805M DAC features available in the esphome driver, like bridge mode and 15-band EQ. If you have Home Assistant already, that's no brainer
+- This implementation allows using advanced TAS5805M DAC features available in the Esphome driver, like bridge mode and 15-band EQ. If you have Home Assistant already, that's no brainer
 
 ## Squeezelite-ESP32
 
-Squeezelite-ESP32 is a multimedia software suite, that started as a renderer (or player) of LMS (Lyrion Music Server, formerly Logitech Media Server). Now it is extended with 
+Squeezelite-ESP32 is a multimedia software suite that started as a renderer (or player) of LMS (Lyrion Music Server, formerly Logitech Media Server). Now it is extended with 
 - **Spotify** over-the-air player using SpotifyConnect (thanks to cspot)
 - **AirPlay** controller (iPhone, iTunes ...) and enjoy synchronization multiroom as well (although it's AirPlay 1 only)
 - Traditional **Bluetooth** device (iPhone, Android)
@@ -345,7 +345,7 @@ Use [Esparagus Squeezelite-ESP32 installer](https://sonocotta.github.io/esparagu
 |   |   |
 |---|---|
 | Select correct device first | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/d5543eed-e6d6-4cb3-a1ca-c1de495bab6c)
-| Connect the device to USB port and select it from the list | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/dc508db5-0530-4d54-b078-a267aafc6698) ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/2e67cc5a-640d-4820-8dde-ca1c81f33e34)
+| Connect the device to the USB port and select it from the list | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/dc508db5-0530-4d54-b078-a267aafc6698) ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/2e67cc5a-640d-4820-8dde-ca1c81f33e34)
 | Press `Flash` and wait around 2 minutes  | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/04773ec8-f4b6-4186-9f9b-f0d6c52d4eaf)
 | (Optional) You may enter the serial console to get more information, like device IP and boot logs | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/e74d3d5f-5c17-4d12-873a-058c3a753477)
 | Device is in recovery mode. Connect to `squeezelite-299fac` wifi network with `squeezelite` password (your network name suffix will be different) | ![image](https://github.com/sonocotta/esp32-audio-dock/assets/5459747/2763663c-dbc9-4c71-af12-0a6fb9c2d94d) |
@@ -363,15 +363,15 @@ You can use it now
 
 ### Squeezelite-esp32 Bug causing boot loop
 
-Before version 1681 squeezelite-esp32 had a [bug](https://github.com/sle118/squeezelite-esp32/issues/414) that caused a boot loop with certain LMS servers when RGB LED was used for visualizations. It seems to be fixed in 1681, but the quick workaround is to clear `led_vu_config` NVS setting.
+Before version 1681, squeezelite-esp32 had a [bug](https://github.com/sle118/squeezelite-esp32/issues/414) that caused a boot loop with certain LMS servers when the RGB LED was used for visualizations. It seems to be fixed in 1681, but the quick workaround is to clear the `led_vu_config` NVS setting.
 
 ### Squeezelite-esp32 reboots and connection drops
 
-The default configuration of the squeezelite-esp32 runs automatic discovery of the available LMS server nearby. In fact it depends on it so much that in case the LMS service is not found on the network, it will reboot automatically (every few minutes). 
+The default configuration of the squeezelite-esp32 runs automatic discovery of the available LMS server nearby. In fact, it depends on it so much that in case the LMS service is not found on the network, it will reboot automatically (every few minutes). 
 
 ![image](https://github.com/user-attachments/assets/7b91f9ef-054e-42a1-81ab-693315fb3b88)
 
-In many cases, if you use squeezelite for Airplay and Spotify only and don't have LMS servier, you need to disable discovery altogether. Currently disabling Squeezelite in the GUI does not work correctly, it places too much spaces between the commands in the autoexec command. Following `autoexec1` NVS setting can be used to disable it:
+In many cases, if you use squeezelite for AirPlay and Spotify only and don't have an LMS server, you need to disable discovery altogether. Currently, disabling Squeezelite in the GUI does not work correctly; it places too many spaces between the commands in the autoexec command. Following `autoexec1` NVS setting can be used to disable it:
 
 ```
 squeezelite -o i2s -s -disable -b 500:2000 -C 30 -d all=sdebug
@@ -387,7 +387,7 @@ squeezelite -o i2s -s -disable -b 500:2000 -C 30 -d all=sdebug
 | NOPD variant | NA | NA | ![image](https://github.com/user-attachments/assets/832d4c29-7e32-4073-b04d-3a0eea0355c1) | ![DSC_0033](https://github.com/user-attachments/assets/aff9b364-57e8-4f42-b7f4-aeee7e7a90fc)
 
 
-Please visit [hardware](/hardware/) section for board schematics and PCB designs. Note that PCBs are shared as multi-layer PDFs as well as Gerber archives.
+Please visit the [hardware](/hardware/) section for board schematics and PCB designs. Note that PCBs are shared as multi-layer PDFs as well as Gerber archives.
 
 ### Boxed
 
@@ -414,9 +414,9 @@ dac_controlset: `{"init":[{"reg":3,"val":2},{"reg":3,"val":3}],"poweron":[{"reg"
 
 ```
 
-One can test audio with a single speaker connected between L and R terminals (plus on one side and minus on the other). Optionally, jumpers on the board will effectively connect the second driver in parallel doubling the current capability.
+One can test audio with a single speaker connected between the L and R terminals (plus on one side and minus on the other). Optionally, jumpers on the board will effectively connect the second driver in parallel, doubling the current capability.
 
-Important point, this will send only one channel to the output, that’s just how the DAC works. True mono as (L+R)/2 is possible via more in-depth configuration (very poorly documented), but I haven’t managed to configure that on the stand. I’m still working on that. (Along with a few more really cool DSP features that this DAC has, like EQ, subwoofer mode and tone compensation settings)
+Important point, this will send only one channel to the output, that’s just how the DAC works. True mono as (L+R)/2 is possible via more in-depth configuration (very poorly documented), but I haven’t managed to configure that on the stand. I’m still working on that. (Along with a few more really cool DSP features that this DAC has, like EQ, subwoofer mode, and tone compensation settings)
 
 |  | BTL | PBTL |
 |---|---|---|
@@ -426,7 +426,7 @@ Important point, this will send only one channel to the output, that’s just ho
 | Speaker Connection | ![image](https://github.com/user-attachments/assets/6f6542c6-8e7f-4cc1-b306-1ffdd5f6a90c) | ![image](https://github.com/user-attachments/assets/476fdd80-be47-419d-931b-49d33ecc3abe)
 
 
-Starting from Rev E, an additional header is exposed to allow datasheet-specced connectivity
+Starting from Rev E, an additional header is exposed to allow datasheet-specified connectivity
 
 | Image  | Legend  |
 |---|---|
@@ -435,7 +435,7 @@ Starting from Rev E, an additional header is exposed to allow datasheet-specced 
 
 ### TAS5805M DSP capabilities
 
-The TAS5805M DAC has a very powerful DSP, that allows doing lots of data processing on the silicon, that otherwise would take a considerable part of your CPU time. As of the moment of writing it is mostly an undiscovered part of the DAC, since unfortunately, TI is not making it very easy for developers. (A minute of complaint) To be more specific, you need to be (A) a proven hardware manufacturer to get access to the configuration software, namely PurePath. (B) you need to apply for a personal license and go through an approval process, and after a few weeks of waiting you get access to one DAC configuration you asked for. (C) You find out that it will work with TI's own evaluation board that will set you back $250 if you are able to find one. Otherwise, all you have is a list of I2C commands that you need to transfer to the device at your own cost. No wonder no one knows how to use it.
+The TAS5805M DAC has a very powerful DSP, which allows doing lots of data processing on the silicon, that otherwise would take a considerable part of your CPU time. As of the moment of writing, it is mostly an undiscovered part of the DAC, since unfortunately, TI is not making it very easy for developers. (A minute of complaint) To be more specific, you need to be (A) a proven hardware manufacturer to get access to the configuration software, namely PurePath. (B) You need to apply for a personal license and go through an approval process, and after a few weeks of waiting, you get access to the DAC configuration you asked for. (C) You find out that it will work with TI's own evaluation board, which will set you back $250 if you are able to find one. Otherwise, all you have is a list of I2C commands that you need to transfer to the device at your own cost. No wonder no one knows how to use it.
 
 But moanings aside, what do you get after:
 
@@ -446,12 +446,12 @@ But moanings aside, what do you get after:
 - Soft clipper
 - and a few other things
 
-At this moment it is very experimental. In the perfect world, you should be able to adjust all of those settings to make your speaker-enclosure setup work the best it can, and even apply your room factors into the equation. But with the above disclaimer, I can only delivera  limited set of configurations corresponding to the most common use cases:
+At this moment, it is very experimental. In the perfect world, you should be able to adjust all of those settings to make your speaker-enclosure setup work the best it can, and even apply your room factors into the equation. But with the above disclaimer, I can only delivera  limited set of configurations corresponding to the most common use cases:
 
 - Stereo mode with enabled DRC (Loudness) and AGL settings
 - Full range Mono mode with DRC (Loudness) and AGL settings
-- Subwoofer Mono mode with few filter frequency options
-- Bi-Amp configuration with few crossover frequency options
+- Subwoofer Mono mode with a few filter frequency options
+- Bi-Amp configuration with a few crossover frequency options
 
 All of the above are available right now for experimentation. I'm keen to hear your feedback while I move forward with porting this to other software options
 
@@ -463,9 +463,9 @@ All of the above are available right now for experimentation. I'm keen to hear y
 
 ### Louder and Amped Esparagus power considerations
 
-The Louder and Amped Espragus can be quite a power-hungry devices, simply using 5V over the USB-C is clearly not an option. The intention for using a PD-enabled power adapter to run the board is simplicity and ease of use for customers. Ideally, you should supply a 20V 3.25 Amp capable power source, which is common for modern laptops (Dell, HP, and Lenovo have all tested and work perfectly). However, pretty much any 9V/12V/20V PD-enabled power adapter will work, most typically phone chargers with a quick charge option. The smallest of the family is a 25W model, which is plenty enough for a living space.
+The Louder and Amped Espragus can be quite power-hungry devices; simply using 5V over the USB-C is clearly not an option. The intention for using a PD-enabled power adapter to run the board is simplicity and ease of use for customers. Ideally, you should supply a 20V 3.25 Amp capable power source, which is common for modern laptops (Dell, HP, and Lenovo have all tested and work perfectly). However, pretty much any 9V/12V/20V PD-enabled power adapter will work, most typically phone chargers with a quick charge option. The smallest of the family is a 25W model, which is plenty enough for a living space.
 
-The interesting part was all the phone and laptop chargers I used for the test (around five different makes of each), sounded great, with no hissing, no popping. (Apart from the Apple ones, they didn’t work. Likely they have Apple-specific PD protocol). This is probably because modern devices have become so noise-sensitive that manufacturers have been forced to do good work on noise levels.
+The interesting part was all the phone and laptop chargers I used for the test (around five different makes of each), which sounded great, with no hissing, no popping. (Apart from the Apple ones, they didn’t work. Likely, they have an Apple-specific PD protocol). This is probably because modern devices have become so noise-sensitive that manufacturers have been forced to do good work on noise levels.
 
 <details>
   <summary>Tested and perfectly working models are (others may be available)</summary>
@@ -489,7 +489,7 @@ The interesting part was all the phone and laptop chargers I used for the test (
 
 </details>
 
-Because USB-PD is a bit of a Wild West in terms of standards, sometimes not everything goes as designed. Some people have run into this with power adapters that aren’t fully PD-standard compliant. In most cases, the worst that happens is the PD chip doesn’t trigger the 20V mode, so the Esparagus runs at around 5W per channel (which you might not even notice). One person reported that an older adapter somehow triggered just 1V on the USB-C power line, shutting down the Esparagus shortly after plugging in. Thankfully, we’ve confirmed that it works correctly with newer laptop adapters.
+Because USB-PD is a bit of the Wild West in terms of standards, sometimes not everything goes as designed. Some people have run into this with power adapters that aren’t fully PD-standard compliant. In most cases, the worst that happens is the PD chip doesn’t trigger the 20V mode, so the Esparagus runs at around 5W per channel (which you might not even notice). One person reported that an older adapter somehow triggered just 1V on the USB-C power line, shutting down the Esparagus shortly after plugging in. Thankfully, we’ve confirmed that it works correctly with newer laptop adapters.
 
 #### Louder and Amped Esparagus NOPD
 
@@ -501,7 +501,7 @@ With this setup, you can supply more than the 20V limit of PD, giving you a bit 
 
 #### Louder and Amped Esparagus DUAL
 
-In May 2025, I came up with a power mux schematic that is designed to automatically switch between an external power source and a UCB-PD-enabled power source, depending on which one provides higher voltage. So you can either use an external power adapter over the barrel jack and use USB-C for programming-debugging, or simply use USB-C for both power and data. 
+In May 2025, I came up with a power mux schematic that is designed to automatically switch between an external power source and a UCB-PD-enabled power source, depending on which one provides higher voltage. So you can either use an external power adapter over the barrel jack and use USB-C for programming and debugging, or simply use USB-C for both power and data. 
 
 ![DSC_0003](https://github.com/user-attachments/assets/f891e126-1cba-4af1-99d2-2f299a820316)
 
@@ -511,9 +511,9 @@ Because of the limited space on the back panel, I moved the IR reader and RGB LE
 
 #### External voltage selection
 
-The power adapter specs depend on the speaker you're planning to use. DAC efficiency is close to 100%, so just take the power rating of your speaker (say 2x10w), and impedance (say 8 ohms) and you'd need at least `sqrt(10W * 8Ω) ≈ 9V` rated at `9V / 8Ω ≈ 1.2A` per channel, round up to 3 total Amps. 
+The power adapter specs depend on the speaker you're planning to use. DAC efficiency is close to 100%, so just take the power rating of your speaker (say 2x10w), and impedance (say 8 ohms), and you'd need at least `sqrt(10W * 8Ω) ≈ 9V` rated at `9V / 8Ω ≈ 1.2A` per channel, round up to 3 total Amps. 
 
-It is not recommended to go beyond the voltage your speakers can take; otherwise, the amp will blow your speakers in no time. 
+It is not recommended to go beyond the voltage your speakers can handle; otherwise, the amp will blow your speakers in no time. 
 
 The absolute maximum voltage for the TAS5805M DAc is 30V, but it is not guaranteed to be thermally stable in this condition. 
 
@@ -521,7 +521,7 @@ The absolute maximum voltage for the TAS5805M DAc is 30V, but it is not guarante
 
 All boards have an OLED screen header. Originally, I had plans to have it as a feature (It is quite nice when using squeezelite since you can get quite a lot with existing plugins and settings). Later on, I disregarded this as a generally available feature, since it is quite a time-consuming task to solder it in place, and I had no really good idea how to fix the screen in place. Despite that, the header is present on every board revision, and it works. 
 
-At this moment, one can solder the compatible OLED screen and use it with the transparent front panel as a bedside clock or to display the current track (I prefer smoked glass for the final look of it). It takes a few minutes for a skilled engineer to solder it in place and a small strap of double-sided adhesive to fix it mechanically.
+At this moment, one can solder the compatible OLED screen and use it with the transparent front panel as a bedside clock or to display the current track (I prefer smoked glass for the final look). It takes a few minutes for a skilled engineer to solder it in place and a small strap of double-sided adhesive to fix it mechanically.
 
 | A | B | C |
 |---|---|---|
@@ -570,7 +570,7 @@ Most of the 64x128 pixel OLED screen models that are very common among hobbyists
 
 #### Software side
 
-Although you're free to use it your way using the pinout above, I'd expect the most common case to be squeezelite, thus here are the steps you'd need to do
+Although you're free to use it your way, using the pinout above, I'd expect the most common case to be squeezelite, thus here are the steps you'd need to do
 
 | # | Description | Image |
 |---|---|---|
