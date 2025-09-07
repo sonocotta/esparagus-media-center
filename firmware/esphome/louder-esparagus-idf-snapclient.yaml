@@ -84,8 +84,8 @@ audio_dac:
   - platform: tas5805m
     id: tas5805m_dac
     enable_pin: GPIO33  # Physical pin connected to PWDN pin
-    dac_mode: PBTL      # 'BTL' / Bridge Tied Load - 2Ch Stereo, or 'PBTL' / Parallel Bridge Tied Load - 1Ch Mono (double power)
-    mixer_mode: MONO    # STEREO, STEREO_INVERSE, MONO, LEFT, RIGHT
+    dac_mode:  BTL      # 'BTL' / Bridge Tied Load - 2Ch Stereo, or 'PBTL' / Parallel Bridge Tied Load - 1Ch Mono (double power)
+    mixer_mode: STEREO  # STEREO, STEREO_INVERSE, MONO, LEFT, RIGHT
     refresh_eq: BY_SWITCH
     analog_gain: -6db   # Startup Gain or Output voltage swing - pick based on the power supply voltage: https://github.com/sonocotta/esp32-tas5805m-dac?tab=readme-ov-file#digital-volume-and-analog-gain
     # volume_max: -6dB  # Max HA volume mapping to Digital Volume control, goes as high as +24dB, but not recommend going much above 0 dB, risking to cause clipping on high volume
