@@ -22,6 +22,7 @@ Esparagus Media Center is a series of ESP32-based media center devices. They all
   - [Loud Esparagus](#loud-esparagus)
   - [Louder Esparagus](#louder-esparagus)
   - [Amped Esparagus](#amped-esparagus)
+  - [Esparagus Audio Brick (prototype)](#esparagus-audio-brick-prototype)
   - [Which device is right for me](#which-device-is-right-for-me)
   - [Features](#features)
     - [Onboard PSRAM](#onboard-psram)
@@ -61,6 +62,7 @@ Esparagus Media Center is a series of ESP32-based media center devices. They all
     - [OLED screen (solder-less)](#oled-screen-solder-less)
       - [OLED models](#oled-models-1)
       - [Software side](#software-side)
+    - [Audio Brick details](#audio-brick-details)
     - [Relay Driver](#relay-driver)
     - [Errata](#errata)
   - [Where to buy](#where-to-buy)
@@ -99,11 +101,21 @@ The latest update allows a direct power through barrel jack as an alternative to
 
 ## Amped Esparagus
 
-The latest addition to the family, Amped Esparagus, is a device based on PCM5100 HiFi DAC (just like HiFi Esparagus) but adds a powerful and efficient D-class amp (TPA3110D2) so it can drive speakers directly. It has similar power capabilities to the Louder Esparagus, but it is much simpler to set up and use, since this DAC doesn't need any configuration steps to get going, just a valid I2S audio stream. Simplicity comes at a price, it doesn't have a DSP unit either. Since it has an analog stage, you can use it either with a built-in amp or with an external amp, if you prefer so.
+The last in the family, Amped Esparagus, is a device based on PCM5100 HiFi DAC (just like HiFi Esparagus) but adds a powerful and efficient D-class amp (TPA3110D2) so it can drive speakers directly. It has similar power capabilities to the Louder Esparagus, but it is much simpler to set up and use, since this DAC doesn't need any configuration steps to get going, just a valid I2S audio stream. Simplicity comes at a price, it doesn't have a DSP unit either. Since it has an analog stage, you can use it either with a built-in amp or with an external amp, if you prefer so.
 
 ![DSC_0022](https://github.com/user-attachments/assets/e9481545-e98d-4d6a-b0eb-a993ab151dc8)
 
-With the Amped Esparagus, I'm implementing and testing a new updated look with every board equipped with a semi-transparent front face as standard. Behind it, there is a front-facing IR reader and 8-LED RGB strip (that can be used for audio visualization or power state). Most noticeably, there is a rotary encoder with a push-button that allows quick change of volume or play/pause action.  
+With the Amped Esparagus, I'm implementing and testing a new updated look with every board equipped with a semi-transparent front face as standard. Behind it, there is a front-facing IR reader and an 8-LED RGB strip (that can be used for audio visualization or power state). Most noticeably, there is a rotary encoder with a push-button that allows quick change of volume or play/pause action.  
+
+## Esparagus Audio Brick (prototype)
+
+The Esparagus Audio Brick is a new addition to the Esparagus line of ESP32-based audio hardware. Similar to the Louder Esparagus boards for the most part, the Audio Brick uses the newer TAS5825M DAC/amp, which is a considerably more capable chip with considerably better efficiency figures. It is designed with Home Assistant in mind, so it is a little less about look, and a little more about longevity and practicality.
+
+<img width="2288" height="1237" alt="image" src="https://github.com/user-attachments/assets/924644a5-4834-44c5-8c4c-e8f3ce479baa" />
+
+Unlike previous boards, which were mostly intended for table-top use, the Audio Brick is optimized for DIN-rail mounting and modular expansion. Thermal management has been improved for enclosed installs, the power stage has been reworked for efficiency, and the design has been cost-reduced to make multi-unit deployments more practical.
+
+At this moment, I'm preparing a Crowd Supply campaign to support the development of the new DAC driver and the first production batch of the units.
 
 ## Which device is right for me
 
@@ -111,19 +123,19 @@ With the Amped Esparagus, I'm implementing and testing a new updated look with e
 
 ## Features
 
-|  | [HiFi Esparagus](https://www.tindie.com/products/sonocotta/esparagus-hifi-medialink/) | [Loud Esparagus](https://www.tindie.com/products/sonocotta/loud-esparagus-media-center/) | [Louder Esparagus](https://www.tindie.com/products/sonocotta/louder-esparagus-media-center/) | [Amped Esparagus](https://www.tindie.com/products/sonocotta/amped-esparagus-media-center/) |
-|---|---|---|---|---|
-| Image | ![DSC_0709](https://github.com/sonocotta/esparagus-hifi-medialink/assets/98712315/ea45f1d2-32b5-4f12-a63c-a8e403cb22db) | ![DSC_0706](https://github.com/sonocotta/esparagus-hifi-medialink/assets/5459747/2556b8ff-1827-4e03-8e28-31e40199943c) | ![DSC_0713](https://github.com/sonocotta/esparagus-media-center/assets/5459747/14d54647-2b7e-4b1a-9a8e-135a1598eb02) | ![DSC_0022](https://github.com/user-attachments/assets/e9481545-e98d-4d6a-b0eb-a993ab151dc8) |
-| MCU | ESP32-WROVER-N8R8 | ESP32-WROVER-N8R8 | ESP32-WROVER-N16R8 | ESP32-WROVER-N16R8 |
-| DAC | PCM5100A 32bit Stereo DAC -100 dB typical noise level | Dual I2S DAC ([MAX98357](https://www.analog.com/en/products/max98357a.html)) with built in D-Class amp | Stereo I2S DAC ( [TAS5805M](https://www.ti.com/product/TAS5805M) ) with built in D-Class amp | [PCM5100A](https://www.ti.com/product/PCM5100A) 32bit Stereo DAC working with <br /> [TPA3110D2](https://www.ti.com/product/TPA3110D2) D-Class amp |
-| Power | 5V over USB-C, 2x [LP5907](https://www.ti.com/lit/ds/symlink/lp5907.pdf) 3.3 V Ultra-Low-Noise LDO for analog section | 5V from USB-C | Up to 20V from USB-C PD or up to 26V from generic power adapter | Up to 20V from USB-C PD or up to 26V from generic power adapter |
-| Output, 4Ω | Non-amplified stereo output | 2x 3W | 2x 32W (4Ω, 1% THD+N) | 2x 22W (4Ω, 1% THD+N) at 16V <br /> 1x 40W (4Ω, 1% THD+N) at 20V |
-| Output, 8Ω | - | 2x 5W | 2x 22W (8Ω, 1% THD+N) | 2x 25W (8Ω, 1% THD+N) at 22V |
-| PSRAM | 8MB PSRAM (4MB usable) | 8MB PSRAM (4MB usable) | 8MB PSRAM (4MB usable) | 8MB PSRAM (4MB usable) |
-| Peripheral | WS2812B RGB Led <br/> SSD1306 128x64 OLED screen (optional) | WS2812B RGB Led <br/> SSD1306 128x64 OLED screen (optional) | WS2812B RGB Led <br/> SSD1306 128x64 OLED screen (optional) | 8xWS2812B RGB Led <br/> SSD1306 128x64 OLED screen (optional) <br /> Rotary encoder with push button |
-| Connectivity | WiFi <br/> BT4.2 <br/> BLE | WiFi <br/> BT4.2 <br/> BLE | WiFi <br/> BT4.2 </br> BLE <br/> W5500 Ethernet | WiFi <br/> BT4.2 </br> BLE <br/> W5500 Ethernet |
-| Size | 80 x 50 x 20mm | 80 x 50 x 20mm | 100 x 80 x 38mm | 100 x 80 x 38mm |
-| Software support | Arduino samples, squeezelite-esp32, snapcast, ESPhome config | Arduino samples, squeezelite-esp32, snapcast, ESPhome config | Arduino samples, squeezelite-esp32, snapcast, ESPhome config | Arduino samples, squeezelite-esp32, snapcast, ESPhome config |
+|  | [HiFi Esparagus](https://www.tindie.com/products/sonocotta/esparagus-hifi-medialink/) | [Loud Esparagus](https://www.tindie.com/products/sonocotta/loud-esparagus-media-center/) | [Louder Esparagus](https://www.tindie.com/products/sonocotta/louder-esparagus-media-center/) | [Amped Esparagus](https://www.tindie.com/products/sonocotta/amped-esparagus-media-center/) | Esparagus Audio Brick |
+|---|---|---|---|---|---|
+| Image | ![DSC_0709](https://github.com/sonocotta/esparagus-hifi-medialink/assets/98712315/ea45f1d2-32b5-4f12-a63c-a8e403cb22db) | ![DSC_0706](https://github.com/sonocotta/esparagus-hifi-medialink/assets/5459747/2556b8ff-1827-4e03-8e28-31e40199943c) | ![DSC_0713](https://github.com/sonocotta/esparagus-media-center/assets/5459747/14d54647-2b7e-4b1a-9a8e-135a1598eb02) | ![DSC_0022](https://github.com/user-attachments/assets/e9481545-e98d-4d6a-b0eb-a993ab151dc8) | <img width="2214" height="1217" alt="image" src="https://github.com/user-attachments/assets/89792e6c-e530-4c2b-8e8a-6ce86c9a98dc" /> |
+| MCU | ESP32-WROVER-N8R8 | ESP32-WROVER-N8R8 | ESP32-WROVER-N16R8 | ESP32-WROVER-N16R8 | ESP32-WROVER-N16R8 |
+| DAC | PCM5100A 32bit Stereo DAC -100 dB typical noise level | Dual I2S DAC ([MAX98357](https://www.analog.com/en/products/max98357a.html)) with built in D-Class amp | Stereo I2S DAC ( [TAS5805M](https://www.ti.com/product/TAS5805M) ) with built in D-Class amp | [PCM5100A](https://www.ti.com/product/PCM5100A) 32bit Stereo DAC working with   [TPA3110D2](https://www.ti.com/product/TPA3110D2) D-Class amp | Stereo I2S DAC (  [TAS5825M](https://www.ti.com/product/TAS5825M)  ) with built in D-Class amp |
+| Power | 5V over USB-C, 2x [LP5907](https://www.ti.com/lit/ds/symlink/lp5907.pdf) 3.3 V Ultra-Low-Noise LDO for analog section | 5V from USB-C | Up to 20V from USB-C PD or up to 26V from generic power adapter | Up to 20V from USB-C PD or up to 26V from generic power adapter | Up to 26V from a generic power adapter |
+| Output, 4Ω | Non-amplified stereo output | 2x 3W | 2x 32W (4Ω, 1% THD+N) | 2x 22W (4Ω, 1% THD+N) at 16V   1x 40W (4Ω, 1% THD+N) at 20V | 2x 10W at 12V at 4Ω, THD+N = 1% (Efficiency mode) 1x 20W at 12V at 3Ω, THD+N = 1% (Efficiency mode) 1x 65W at 24V at 4Ω, THD+N = 1% (Power mode) |
+| Output, 8Ω | - | 2x 5W | 2x 22W (8Ω, 1% THD+N) | 2x 25W (8Ω, 1% THD+N) at 22V | 2x 30W at 24V at 8Ω, THD+N = 1% (Power mode) |
+| PSRAM | 8MB PSRAM (4MB usable) | 8MB PSRAM (4MB usable) | 8MB PSRAM (4MB usable) | 8MB PSRAM (4MB usable) | 8MB PSRAM (4MB usable) |
+| Peripheral | WS2812B RGB Led   SSD1306 128x64 OLED screen (optional) | WS2812B RGB Led   SSD1306 128x64 OLED screen (optional) | WS2812B RGB Led   SSD1306 128x64 OLED screen (optional) | 8xWS2812B RGB Led   SSD1306 128x64 OLED screen (optional)   Rotary encoder with push button | 1xWS2812B RGB Led   SSD1306 128x64 OLED screen (optional) |
+| Connectivity | WiFi   BT4.2   BLE | WiFi   BT4.2   BLE | WiFi   BT4.2   BLE   W5500 Ethernet | WiFi   BT4.2   BLE   W5500 Ethernet | WiFi   BT4.2   BLE   W5500 Ethernet |
+| Size | 80 x 50 x 20mm | 80 x 50 x 20mm | 100 x 80 x 38mm | 100 x 80 x 38mm | 90 x 90 x 40mm |
+| Software support | Arduino samples, squeezelite-esp32, snapcast, ESPhome config | Arduino samples, squeezelite-esp32, snapcast, ESPhome config | Arduino samples, squeezelite-esp32, snapcast, ESPhome config | Arduino samples, squeezelite-esp32, snapcast, ESPhome config | Arduino samples, squeezelite-esp32, snapcast, ESPhome config |
 
 ### Onboard PSRAM
 
@@ -578,6 +590,14 @@ Although you're free to use it your way, using the pinout above, I'd expect the 
 | 1 | Update NVS settings in the Web UI (switch to recovery mode first) <br/> `display_config` = `SPI,width=128,height=64,cs=15,reset=32,driver=SH1106,HFlip,VFlip` <br/> `spi_config` = `mosi=23,clk=18,host=2,miso=19,dc=4` <br/> You may need to replace `SH1106` with `SSD1306` depending on your model. | ![image](https://github.com/user-attachments/assets/f42af7a5-2fda-42b4-80b6-4ca025bac29b)
 | 2 | In the LMS settings install the `SqueezeESP32` plugin | ![image](https://github.com/user-attachments/assets/5e32f271-cb66-4ea4-8a94-aaf1d0a73c5e)
 | 3 | Update each speaker's settings in the LMS, and navigate to `Display` settings | ![image](https://github.com/user-attachments/assets/ac970067-8b98-4294-af9a-80d0274e0558)
+
+### Audio Brick details
+
+<img width="2210" height="1268" alt="image" src="https://github.com/user-attachments/assets/a24bc2ea-3867-4b77-80f6-911833c483cd" />
+
+The Audio Brick is designed with a DIN-rail mount option, making it suitable not only for hobby projects but also for structured and semi-industrial installations. By mounting directly in an electrical cabinet or distribution box, it becomes easy to wire, power, and manage multiple units in a clean and reliable way. Since each device drives two channels, you can scale simply by adding more Bricks — one per room, per zone, or per speaker as needed. This modular approach makes it practical for whole-home or even small commercial audio installs where consistency and neat wiring matter. 
+
+For added convenience, it will use plug-in connector pairs (not yet on the prototype), which simplify installation and allow quick replacement in case of maintenance or failure.
 
 ### Relay Driver
 
