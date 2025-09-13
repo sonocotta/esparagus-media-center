@@ -105,17 +105,17 @@ The last in the family, Amped Esparagus, is a device based on PCM5100 HiFi DAC (
 
 ![DSC_0022](https://github.com/user-attachments/assets/e9481545-e98d-4d6a-b0eb-a993ab151dc8)
 
-With the Amped Esparagus, I'm implementing and testing a new updated look with every board equipped with a semi-transparent front face as standard. Behind it, there is a front-facing IR reader and 8-LED RGB strip (that can be used for audio visualization or power state). Most noticeably, there is a rotary encoder with a push-button that allows quick change of volume or play/pause action.  
+With the Amped Esparagus, I'm implementing and testing a new updated look with every board equipped with a semi-transparent front face as standard. Behind it, there is a front-facing IR reader and an 8-LED RGB strip (that can be used for audio visualization or power state). Most noticeably, there is a rotary encoder with a push-button that allows quick change of volume or play/pause action.  
 
 ## Esparagus Audio Brick (prototype)
 
-The Esparagus Audio Brick is a new addition to the Esparagus line of ESP32-based audio hardware. Similar to the Louder Esparagus boards for the most part, the Audio Brick uses the newer TAS5825M DAC/amp, which is considerably more capable chip with considerably better efficiency figures. It is designed with Home Assistant in mind, so it is little less about look, and little more about longevity and practicality.
+The Esparagus Audio Brick is a new addition to the Esparagus line of ESP32-based audio hardware. Similar to the Louder Esparagus boards for the most part, the Audio Brick uses the newer TAS5825M DAC/amp, which is a considerably more capable chip with considerably better efficiency figures. It is designed with Home Assistant in mind, so it is a little less about look, and a little more about longevity and practicality.
 
-{image}
+<img width="2288" height="1237" alt="image" src="https://github.com/user-attachments/assets/924644a5-4834-44c5-8c4c-e8f3ce479baa" />
 
 Unlike previous boards, which were mostly intended for table-top use, the Audio Brick is optimized for DIN-rail mounting and modular expansion. Thermal management has been improved for enclosed installs, the power stage has been reworked for efficiency, and the design has been cost-reduced to make multi-unit deployments more practical.
 
-At this moment I'm preparing Crowd Supply campaign to support the development for the new DAC driver and first production batch of the units.
+At this moment, I'm preparing a Crowd Supply campaign to support the development of the new DAC driver and the first production batch of the units.
 
 ## Which device is right for me
 
@@ -125,7 +125,7 @@ At this moment I'm preparing Crowd Supply campaign to support the development fo
 
 |  | [HiFi Esparagus](https://www.tindie.com/products/sonocotta/esparagus-hifi-medialink/) | [Loud Esparagus](https://www.tindie.com/products/sonocotta/loud-esparagus-media-center/) | [Louder Esparagus](https://www.tindie.com/products/sonocotta/louder-esparagus-media-center/) | [Amped Esparagus](https://www.tindie.com/products/sonocotta/amped-esparagus-media-center/) | Esparagus Audio Brick |
 |---|---|---|---|---|---|
-| Image | ![DSC_0709](https://github.com/sonocotta/esparagus-hifi-medialink/assets/98712315/ea45f1d2-32b5-4f12-a63c-a8e403cb22db) | ![DSC_0706](https://github.com/sonocotta/esparagus-hifi-medialink/assets/5459747/2556b8ff-1827-4e03-8e28-31e40199943c) | ![DSC_0713](https://github.com/sonocotta/esparagus-media-center/assets/5459747/14d54647-2b7e-4b1a-9a8e-135a1598eb02) | ![DSC_0022](https://github.com/user-attachments/assets/e9481545-e98d-4d6a-b0eb-a993ab151dc8) | {image} |
+| Image | ![DSC_0709](https://github.com/sonocotta/esparagus-hifi-medialink/assets/98712315/ea45f1d2-32b5-4f12-a63c-a8e403cb22db) | ![DSC_0706](https://github.com/sonocotta/esparagus-hifi-medialink/assets/5459747/2556b8ff-1827-4e03-8e28-31e40199943c) | ![DSC_0713](https://github.com/sonocotta/esparagus-media-center/assets/5459747/14d54647-2b7e-4b1a-9a8e-135a1598eb02) | ![DSC_0022](https://github.com/user-attachments/assets/e9481545-e98d-4d6a-b0eb-a993ab151dc8) | <img width="2214" height="1217" alt="image" src="https://github.com/user-attachments/assets/89792e6c-e530-4c2b-8e8a-6ce86c9a98dc" /> |
 | MCU | ESP32-WROVER-N8R8 | ESP32-WROVER-N8R8 | ESP32-WROVER-N16R8 | ESP32-WROVER-N16R8 | ESP32-WROVER-N16R8 |
 | DAC | PCM5100A 32bit Stereo DAC -100 dB typical noise level | Dual I2S DAC ([MAX98357](https://www.analog.com/en/products/max98357a.html)) with built in D-Class amp | Stereo I2S DAC ( [TAS5805M](https://www.ti.com/product/TAS5805M) ) with built in D-Class amp | [PCM5100A](https://www.ti.com/product/PCM5100A) 32bit Stereo DAC working with   [TPA3110D2](https://www.ti.com/product/TPA3110D2) D-Class amp | Stereo I2S DAC (  [TAS5825M](https://www.ti.com/product/TAS5825M)  ) with built in D-Class amp |
 | Power | 5V over USB-C, 2x [LP5907](https://www.ti.com/lit/ds/symlink/lp5907.pdf) 3.3 V Ultra-Low-Noise LDO for analog section | 5V from USB-C | Up to 20V from USB-C PD or up to 26V from generic power adapter | Up to 20V from USB-C PD or up to 26V from generic power adapter | Up to 26V from a generic power adapter |
@@ -593,11 +593,11 @@ Although you're free to use it your way, using the pinout above, I'd expect the 
 
 ### Audio Brick details
 
-{image}
+<img width="2210" height="1268" alt="image" src="https://github.com/user-attachments/assets/a24bc2ea-3867-4b77-80f6-911833c483cd" />
 
 The Audio Brick is designed with a DIN-rail mount option, making it suitable not only for hobby projects but also for structured and semi-industrial installations. By mounting directly in an electrical cabinet or distribution box, it becomes easy to wire, power, and manage multiple units in a clean and reliable way. Since each device drives two channels, you can scale simply by adding more Bricks — one per room, per zone, or per speaker as needed. This modular approach makes it practical for whole-home or even small commercial audio installs where consistency and neat wiring matter. 
 
-For added convenience, it uses plug-in connector pairs, which simplify installation and allow quick replacement in case of maintenance or failure.
+For added convenience, it will use plug-in connector pairs (not yet on the prototype), which simplify installation and allow quick replacement in case of maintenance or failure.
 
 ### Relay Driver
 
