@@ -57,6 +57,7 @@ Esparagus Media Center is a series of ESP32-based media center devices. They all
       - [Louder and Amped Esparagus NOPD](#louder-and-amped-esparagus-nopd)
       - [Louder and Amped Esparagus DUAL](#louder-and-amped-esparagus-dual)
       - [External voltage selection](#external-voltage-selection)
+    - [Speakers selection](#speakers-selection)
     - [OLED screen (soldered in)](#oled-screen-soldered-in)
       - [OLED models](#oled-models)
     - [OLED screen (solder-less)](#oled-screen-solder-less)
@@ -529,6 +530,17 @@ The power adapter specs depend on the speaker you're planning to use. DAC effici
 It is not recommended to go beyond the voltage your speakers can handle; otherwise, the amp will blow your speakers in no time. 
 
 The absolute maximum voltage for the TAS5805M DAc is 30V, but it is not guaranteed to be thermally stable in this condition. 
+
+### Speakers selection
+
+When choosing speakers, focus on realistic power ratings rather than the often-inflated numbers printed on labels.
+
+A good reference point is 10 watts at 1% THD (Total Harmonic Distortion) — this provides clean, pleasant audio without noticeable distortion. Many manufacturers, however, market their speakers based on higher distortion levels or theoretical peaks:
+	•	Nominal Power (e.g., 20W) — This is often measured at around 10% THD, which produces harsh, phone-like distortion.
+	•	Rated or “Maximum” Power (e.g., 40W) — The level a speaker can handle continuously, but without limiting distortion; sound quality is not measured. It is simply a scenario where speaker is used as a room heater.
+	•	Peak Power (e.g., 80–100W) — The absolute maximum a speaker can withstand for a very short burst (milliseconds), not suitable for sustained playback.
+
+In short, when a speaker claims “100W,” it typically translates to about 10W of clean, listenable power in real use. Always prioritize low-distortion ratings over inflated wattage numbers for the best listening experience.
 
 ### OLED screen (soldered in)
 
