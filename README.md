@@ -118,6 +118,8 @@ Unlike previous boards, which were mostly intended for table-top use, the Audio 
 
 At this moment, I'm preparing a Crowd Supply campaign to support the development of the new DAC driver and the first production batch of the units.
 
+Here you can find a [video overview](https://www.youtube.com/watch?v=Ft5_anhSEE8) of the board.
+
 ## Which device is right for me
 
 <img width="1047" height="1112" alt="Esparagus Lineup-Device Select Map (ESP32) drawio (1)" src="https://github.com/user-attachments/assets/79e9bcd5-f621-416e-8a61-c49d2770f2e1" />
