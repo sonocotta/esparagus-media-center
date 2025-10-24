@@ -19,7 +19,7 @@ This happened because it is very hard to find an **angled-mount rotary encoder w
 ## Solution
 
 I designed a **new 3D-printed adapter** that fits much better.  
-- The **STL file** is attached
+- The **STL file** is [attache](../hardware/3d/amped-esparagus-shaft-adapter.stl)
 - It is printed in **PLA**.  
 - The fit is firm, and the knob feels solid and stable.  
 
