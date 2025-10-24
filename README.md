@@ -635,6 +635,7 @@ External relay can be connected directly between OUT and +5V pins (1st and 3rd p
 ### Errata
 
 - [CH340C 5V level issue](/errata/ch340c-5v-level-issus.md)
+- [Amped Esparagus knob fixture](/errata/amped-esparagus-shaft-adapter.md)
 
 ## Where to buy
 
