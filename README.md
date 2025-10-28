@@ -112,6 +112,8 @@ With the Amped Esparagus, I'm implementing and testing a new updated look with e
 
 The Esparagus Audio Brick is a new addition to the Esparagus line of ESP32-based audio hardware. Similar to the Louder Esparagus boards for the most part, the Audio Brick uses the newer TAS5825M DAC/amp, which is a considerably more capable chip with considerably better efficiency figures. It is designed with Home Assistant in mind, so it is a little less about look, and a little more about longevity and practicality.
 
+Our Crowd Supply [campaign](https://www.crowdsupply.com/sonocotta/esparagus-audio-brick) is underway. Please consider subscribing to make this project go live.
+
 <img width="2288" height="1237" alt="image" src="https://github.com/user-attachments/assets/924644a5-4834-44c5-8c4c-e8f3ce479baa" />
 
 Unlike previous boards, which were mostly intended for table-top use, the Audio Brick is optimized for DIN-rail mounting and modular expansion. Thermal management has been improved for enclosed installs, the power stage has been reworked for efficiency, and the design has been cost-reduced to make multi-unit deployments more practical.
