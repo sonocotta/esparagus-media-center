@@ -48,6 +48,8 @@ Esparagus Media Center is a series of ESP32-based media center devices. They all
     - [How to flash and configure](#how-to-flash-and-configure)
     - [Squeezelite-esp32 Bug causing boot loop](#squeezelite-esp32-bug-causing-boot-loop)
     - [Squeezelite-esp32 reboots and connection drops](#squeezelite-esp32-reboots-and-connection-drops)
+  - [Standalone Snapclient](#standalone-snapclient)
+    - [Snapclient benefits](#snapclient-benefits)
   - [Hardware](#hardware)
     - [Boxed](#boxed)
     - [PCB](#pcb)
@@ -396,6 +398,24 @@ squeezelite -o i2s -s -disable -b 500:2000 -C 30 -d all=sdebug
 ```
 
 ![image](https://github.com/user-attachments/assets/6b4096bd-0793-458b-a0fe-3282418f773f)
+
+## Standalone Snapclient
+
+Snapcast is a multi-room audio player that synchronizes playback across multiple devices, ensuring that audio streams play simultaneously in perfect sync. It consists of a server, which distributes audio streams, and clients, which receive and play the audio.
+
+**Standalone Snapclient is now available for all Esparagus boards.** The main implementation ([ESP32 Snapclient](https://github.com/CarlosDerSeher/snapclient)) is an ESP32 port of the Snapcast client. An installer repository maintained by me ([Esparagus Snapclient](https://github.com/sonocotta/esparagus-snapclient)) contains pre-configured settings for all Esparagus boards as well as a web-installer project.
+
+The [web-installer](https://sonocotta.github.io/esparagus-snapclient/) allows you to flash snapclient firmware using nothing but a browser - no additional software required. Once flashed, the Snapcast server will be auto-discovered on the same network (it can be hosted on Music Assistant, a standalone Raspberry Pi, or any other compatible server).
+
+### Snapclient benefits
+
+- **Perfect multi-room synchronization** - All speakers play in perfect sync across multiple rooms, similar to Sonos but with better accuracy
+- **Zero configuration** - Auto-discovers Snapcast servers on the network
+- **Browser-based flashing** - No need to install any tools, flash directly from the web
+- **Low latency** - Optimized for minimal audio delay
+- **Flexible server options** - Works with Music Assistant, standalone servers, or DIY Raspberry Pi setups
+- **Cost-effective** - Build a whole-home audio system at a fraction of commercial solutions
+- **Possibility to mix up client with diffrent architecture** - ESP32 side-by-side with Raspberries, etc.
 
 ## Hardware
 
