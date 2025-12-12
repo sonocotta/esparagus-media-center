@@ -53,12 +53,16 @@ Esparagus Media Center is a series of ESP32-based media center devices. They all
   - [Hardware](#hardware)
     - [Boxed](#boxed)
     - [PCB](#pcb)
-    - [BTL and PBTL mode (TAS5805M DAC)](#btl-and-pbtl-mode-tas5805m-dac)
+    - [BTL and PBTL mode (Louder and Amped boards)](#btl-and-pbtl-mode-louder-and-amped-boards)
+      - [Power figures (comparison of BTL and PBTL modes)](#power-figures-comparison-of-btl-and-pbtl-modes)
+      - [Amped TPA3110 Amp](#amped-tpa3110-amp)
+      - [Louder TAS5805M DAC](#louder-tas5805m-dac)
     - [TAS5805M DSP capabilities](#tas5805m-dsp-capabilities)
     - [Louder and Amped Esparagus power considerations](#louder-and-amped-esparagus-power-considerations)
+      - [Power Delivery-enabled adapters](#power-delivery-enabled-adapters)
       - [Louder and Amped Esparagus NOPD](#louder-and-amped-esparagus-nopd)
       - [Louder and Amped Esparagus DUAL](#louder-and-amped-esparagus-dual)
-      - [External voltage selection](#external-voltage-selection)
+      - [Efficiency](#efficiency)
     - [Speakers selection](#speakers-selection)
     - [OLED screen (soldered in)](#oled-screen-soldered-in)
       - [OLED models](#oled-models)
@@ -440,36 +444,79 @@ Please visit the [hardware](/hardware/) section for board schematics and PCB des
 |---|---|---|---|
 | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/d56ff3b7-633c-4f67-a82f-5084cfeb4144) | ![image](https://github.com/sonocotta/esparagus-media-center/assets/5459747/f355598b-bf33-43a8-87a1-130de3d1e3b2) | ![DSC_0712 (copy 1) JPG-mh (1)](https://github.com/sonocotta/esparagus-media-center/assets/5459747/a14e9af8-f835-4d23-9772-84217a39a5ec) | ![image](https://github.com/user-attachments/assets/8d4b40c4-b86d-4fa6-834b-d453d9c81f94)
 
-### BTL and PBTL mode (TAS5805M DAC)
+### BTL and PBTL mode (Louder and Amped boards)
 
-[TAS5805M DAC](https://www.ti.com/lit/ds/symlink/tas5805m.pdf?ts=1701767947387) Allows 2 modes of operation - BTL (stereo) and PBTL (parallel, or mono). In Mono amp will use a completely different modulation scheme and basically will fully synchronize output drivers. Jumpers on the board allow both output drivers to connect to the same speaker. The most important step is to inform the Amp to change modulation in the first place via I2C comman. In the case of sqeezelite DAC controlsset value is the following:
+The [TAS5805M DAC](https://www.ti.com/lit/ds/symlink/tas5805m.pdf) DAC used on Louder boards, and the [TPA3110D2](https://www.ti.com/product/TPA3110D2) / [TPA3128](https://www.ti.com/product/TPA3138D2) amplifiers used on Amped boards support PBTL (Parallel BTL), also known as bridge mode. In practice, this lets the amplifier deliver roughly double the current capability into a single speaker, enabling higher output power when paired with a lower-impedance load.
+
+A common misconception is that switching to PBTL will automatically double the power into the same speaker you used in normal 2-channel BTL/stereo mode. It won’t. Even in stereo BTL operation, each channel already drives the speaker across the full supply voltage (VCC), so the power is limited by both the supply voltage and the current capability of each output driver.
+
+In PBTL mode, both channels are paralleled and drive the same signal, effectively doubling the current capability. This allows you to safely connect a lower-impedance speaker, which is what actually increases the possible output power. If you keep the same speaker impedance you used in stereo mode, you only balance the load between the drivers — you do not gain additional output power.
+
+Summary:
+- Use 3–4 Ω speakers in PBTL mode for optimal performance
+- Use 6–8 Ω speakers in standard BTL (stereo) mode
+
+This ensures the amplifier can operate efficiently and deliver its intended power without overloading the output drivers.
+
+In either scenario, you'd need to inform DAC/AMP to change modulation for PBTL mode (via I2C command or physical pins) and connect speakers "across" channels, so both channel drivers can contribute. This can be done in 2 alternative ways:
+
+| Desc  | Image |
+|---|---|
+| Bridge outputs before the speaker connector either with jumpers or solder bridges, use (either) single wire for each speaker terminal | <img width="501" height="378" alt="image" src="https://github.com/user-attachments/assets/9d54fd37-cc08-4dd4-a765-53ece6b9317d" /> |
+| Wire both outputs of the speaker terminals together | <img width="501" height="376" alt="image" src="https://github.com/user-attachments/assets/47cceff1-32d0-40cb-96f3-d1cea6bef2ca" /> |
+
+#### Power figures (comparison of BTL and PBTL modes)
+
+| DAC  | BTL (4Ω) | BTL (8Ω) | PBTL (3-4Ω) |
+|---|---|---|---|
+| TAS5805M | <img width="413" height="333" alt="image" src="https://github.com/user-attachments/assets/0d166711-277b-4910-9a25-13e60922804f" /> | <img width="413" height="294" alt="image" src="https://github.com/user-attachments/assets/199e066e-c770-4f3f-8310-723737ad6e0e" /> | <img width="413" height="314" alt="image" src="https://github.com/user-attachments/assets/f38bd0f2-37fb-4810-bd82-68bc66eaf1c9" /> | 
+| TPA3110  | <img width="417" height="329" alt="image" src="https://github.com/user-attachments/assets/7540a54c-de87-4970-b6be-6bf104a5fd19" /> | <img width="416" height="339" alt="image" src="https://github.com/user-attachments/assets/dd599927-7027-4576-8ae7-92e1bf6eadf9" /> | <img width="418" height="327" alt="image" src="https://github.com/user-attachments/assets/bf7d8604-27f3-411a-83a9-4aaf9ff8d739" /> | 
+| TPA3128 | <img width="418" height="288" alt="image" src="https://github.com/user-attachments/assets/94de8cb3-1490-408d-893a-123cd244ace5" /> | <img width="417" height="288" alt="image" src="https://github.com/user-attachments/assets/02ebc1d8-0c1d-4b9c-9b53-e57e81a4a5a3" />| <img width="416" height="302" alt="image" src="https://github.com/user-attachments/assets/cf155c76-13c7-4c4f-afab-0c5f525695bd" /> | 
+
+#### Amped TPA3110 Amp
+
+Physical connections that need to be done on the board (using solder bridges - normally open bridges to be closed for PBTL mode).
+<img width="909" height="547" alt="image" src="https://github.com/user-attachments/assets/28cf2700-a962-4fef-9743-369ac7474dbc" />
+
+Both drivers will play RIGHT channel signal
+
+#### Louder TAS5805M DAC
+
+The most important step is to inform the Amp to change the modulation in the first place via the I2C command. In the case of sqeezelite DAC control set value is the following:
 ```
 dac_controlset: `{"init":[{"reg":3,"val":2},{"reg":3,"val":3},{"reg":2,"val":4}],"poweron":[{"reg":3,"val":3}],"poweroff":[{"reg":3,"val":0}]}`
 ```
-compared to default:
+compared to the default:
 ```
 dac_controlset: `{"init":[{"reg":3,"val":2},{"reg":3,"val":3}],"poweron":[{"reg":3,"val":3}],"poweroff":[{"reg":3,"val":0}]}`
 
 ```
+One can test audio with a single speaker connected between L and R terminals (plus on one side and minus on the other). Optionally, jumpers on the board will effectively connect the second driver in parallel, doubling the current capability.
 
-One can test audio with a single speaker connected between the L and R terminals (plus on one side and minus on the other). Optionally, jumpers on the board will effectively connect the second driver in parallel, doubling the current capability.
+Important point, this simple setup will send only RIGHT channel to the output, that’s just how the basic DAC setup works. In case you want true mono (LEFT + RIGHT)/2 or pure RIGHT or LEFT audio, you need to apply a mixer configuration. Full config looks like below (thanks @frdfsnlght for helping me [here](https://github.com/sonocotta/esp32-audio-dock/issues/27))
 
-Important point, this will send only one channel to the output, that’s just how the DAC works. True mono as (L+R)/2 is possible via more in-depth configuration (very poorly documented), but I haven’t managed to configure that on the stand. I’m still working on that. (Along with a few more really cool DSP features that this DAC has, like EQ, subwoofer mode, and tone compensation settings)
+Single speaker (PBTL mode), TRUE MONO mix (L+R)/2:
+```
+{"init":[{"reg":3,"val":2},{"reg":3,"val":3},{"reg":2,"val":4},{"reg":0,"val":0},{"reg":127,"val":140},{"reg":0,"val":41},{"reg":24,"val":[0,64,38,231]},{"reg":28,"val":[0,64,38,231]},{"reg":32,"val":[0,0,0,0]},{"reg":36,"val":[0,0,0,0]},{"reg":0,"val":0},{"reg":127,"val":0}],"poweron":[{"reg":3,"val":3}],"poweroff":[{"reg":3,"val":0}]} 
+```
 
-|  | BTL | PBTL |
-|---|---|---|
-| Descriotion | Bridge Tied Load, Stereo | Parallel Bridge Tied Load, Mono |
-| Rated Power | 2×23W (8-Ω, 21 V, THD+N=1%) | 45W (4-Ω, 21 V, THD+N=1%) |
-| Schematics | ![image](https://github.com/sonocotta/esp32-audio-dock/assets/5459747/e7ada8c0-c906-4c08-ae99-be9dfe907574) | ![image](https://github.com/sonocotta/esp32-audio-dock/assets/5459747/55f5315a-03eb-47c8-9aea-51e3eb3757fe)
-| Speaker Connection | ![image](https://github.com/user-attachments/assets/6f6542c6-8e7f-4cc1-b306-1ffdd5f6a90c) | ![image](https://github.com/user-attachments/assets/476fdd80-be47-419d-931b-49d33ecc3abe)
+Single speaker (PBTL mode), RIGHT input only:
+```
+{"init":[{"reg":3,"val":2},{"reg":3,"val":3},{"reg":2,"val":4},{"reg":0,"val":0},{"reg":127,"val":140},{"reg":0,"val":41},{"reg":24,"val":[0,128,0,0]},{"reg":28,"val":[0,0,0,0]},{"reg":32,"val":[0,0,0,0]},{"reg":36,"val":[0,0,0,0]},{"reg":0,"val":0},{"reg":127,"val":0}],"poweron":[{"reg":3,"val":3}],"poweroff":[{"reg":3,"val":0}]} 
+```
 
+Single speaker (PBTL mode), LEFT input only:
+```
+{"init":[{"reg":3,"val":2},{"reg":3,"val":3},{"reg":2,"val":4},{"reg":0,"val":0},{"reg":127,"val":140},{"reg":0,"val":41},{"reg":24,"val":[0,0,0,0]},{"reg":28,"val":[0,128,0,0]},{"reg":32,"val":[0,0,0,0]},{"reg":36,"val":[0,0,0,0]},{"reg":0,"val":0},{"reg":127,"val":0}],"poweron":[{"reg":3,"val":3}],"poweroff":[{"reg":3,"val":0}]} 
+```
 
-Starting from Rev E, an additional header is exposed to allow datasheet-specified connectivity
+Physical connections:
 
-| Image  | Legend  |
+| Image  | Legend |
 |---|---|
-| Stereo Mode - leave open | ![image](https://github.com/user-attachments/assets/c99137a1-c04b-46c3-bc47-9b269bd905ca) |
-| Mono (PBTL) Mode, close horisontally | ![image](https://github.com/user-attachments/assets/0b724400-877e-4faa-be5b-610cc5df055b)
+| Stereo Mode - leave open | <img width="1095" height="663" alt="image" src="https://github.com/user-attachments/assets/9f668275-b37a-482e-a988-2aaf38abc789" /> |
+| Mono (PBTL) Mode, close horizontally | <img width="1064" height="658" alt="image" src="https://github.com/user-attachments/assets/7e1ff4a6-8a99-4440-93f4-2ea60b7f7723" />
+| (Option B) Close at the speaker | <img width="1088" height="713" alt="image" src="https://github.com/user-attachments/assets/0b591bf8-a4cb-4d0b-979e-194e827eebb8" /> 
 
 ### TAS5805M DSP capabilities
 
@@ -494,14 +541,56 @@ At this moment, it is very experimental. In the perfect world, you should be abl
 All of the above are available right now for experimentation. I'm keen to hear your feedback while I move forward with porting this to other software options
 
 - [X] - Bare [I2S TAS5805M library](https://github.com/sonocotta/esp32-tas5805m-dac)
-- [X] - [espragus-snapclient](https://sonocotta.github.io/esparagus-snapclient/) software (You may use Louder-ESP32 firmware for the Louder-Esparagus)
-- [ ] - [squeezelite-esp32](https://sonocotta.github.io/esp32-audio-dock/) <- to do
-- [ ] - flexible configurations with on-the-fly configuration changes
-
+- [X] - [espragus-snapclient](https://sonocotta.github.io/esparagus-snapclient/) software with self-hosted UI (WIP)
+- [X] - [ESPHome driver](https://github.com/mrtoy-me/esphome-tas5805m) with UI in the Home Assistant
+- [ ] - [squeezelite-esp32](https://sonocotta.github.io/esp32-audio-dock/)
 
 ### Louder and Amped Esparagus power considerations
 
-The Louder and Amped Espragus can be quite power-hungry devices; simply using 5V over the USB-C is clearly not an option. The intention for using a PD-enabled power adapter to run the board is simplicity and ease of use for customers. Ideally, you should supply a 20V 3.25 Amp capable power source, which is common for modern laptops (Dell, HP, and Lenovo have all tested and work perfectly). However, pretty much any 9V/12V/20V PD-enabled power adapter will work, most typically phone chargers with a quick charge option. The smallest of the family is a 25W model, which is plenty enough for a living space.
+The power adapter requirements depend on the **speaker power rating** and **impedance**.  
+Since the amplifier (DAC) operates at roughly **80% efficiency**, use the following method to determine the minimum voltage and current required.
+
+**Calculate the Required Voltage (per channel)**
+
+1. Take the **rated power** of one speaker (e.g., **10 W** for a 2×10 W setup).
+2. Take the **speaker impedance** (e.g., **8 Ω**).
+3. Compute the **RMS voltage** needed to deliver that power:
+   `V_RMS = sqrt(P * R)`
+
+   For a 10 W, 8 Ω speaker:
+   `V_RMS = sqrt(10W * 8Ohm} = ~9V`
+
+4. This RMS value is your **minimum supply voltage per channel**.
+
+**Calculate the Required Current (including efficiency)**
+
+1. Use the RMS voltage from Step 1.
+2. Compute the **output current per channel**:
+   `I_out = V_rms / R`
+
+   For 9 V RMS into 8 Ω:
+   `I_out = 9V / 8Ohm = ~1.2A`
+
+3. Adjust for amplifier efficiency (≈ 80%) to determine **input current**.
+4. Multiply by the number of channels (e.g., **2 channels**).
+5. Round up for safety and headroom.
+
+**Example:**  
+Two 10 W, 8 Ω speakers → `≈ 1.2 A per channel × 2 ≈ 2.4 A`, rounded up to **3 A total**.
+
+**Final Result**
+
+For a pair of **10 W / 8 Ω** speakers, you need a power adapter rated for at least:
+
+- Voltage: **~9 V**
+- Current: **3 A** total  
+- Power: **25..30 W**
+
+It is not recommended to go *far beyond* the voltage your speakers can handle; otherwise, the amp will blow your speakers in no time. Using 12V power source with 9V requirement probably will be totally fine, but getting 20V power source for 10W speakers is a waste of budget and added risk.
+
+#### Power Delivery-enabled adapters
+
+The Louder and Amped Espragus can be quite power-hungry devices; simply using 5V over the USB-C is clearly not an option. The intention for using a PD-enabled power adapter to run the board is simplicity and ease of use for customers. At maximum, you can supply a 20V 3.25 Amp capable power source, which is common for modern laptops (Dell, HP, and Lenovo have all tested and work perfectly). However, pretty much any 9V/12V/20V PD-enabled power adapter will work, most typically phone chargers with a quick charge option. The smallest of the family is a 25W model, which is plenty enough for a small living space.
 
 The interesting part was all the phone and laptop chargers I used for the test (around five different makes of each), which sounded great, with no hissing, no popping. (Apart from the Apple ones, they didn’t work. Likely, they have an Apple-specific PD protocol). This is probably because modern devices have become so noise-sensitive that manufacturers have been forced to do good work on noise levels.
 
@@ -547,13 +636,29 @@ This eliminates the need for PD and NOPD revisions, so I will slowly replace all
 
 Because of the limited space on the back panel, I moved the IR reader and RGB LEDs (now eight of them) to the front panel, offering a semi-transparent optional panel, in case you're planning to use them.
 
-#### External voltage selection
+#### Efficiency
 
-The power adapter specs depend on the speaker you're planning to use. DAC efficiency is close to 100%, so just take the power rating of your speaker (say 2x10w), and impedance (say 8 ohms), and you'd need at least `sqrt(10W * 8Ω) ≈ 9V` rated at `9V / 8Ω ≈ 1.2A` per channel, round up to 3 total Amps. 
+I performed Louder-ESP32 board load tests to analyze the thermal stability of the board under maximum load. These tests output a 100Hz sin-wave with a close to rail-to-rail signal (adjusting volume and gain) into an 8-Ohm load (both BD and 1SPW modulation). I started testing with bare naked DAC. As soon as I reached the point where DAC was entering thermal shutdown, I added a small radiator on top, and once more, a larger radiator on the back side (where the thermal pad is connected to the ground plane)
 
-It is not recommended to go beyond the voltage your speakers can handle; otherwise, the amp will blow your speakers in no time. 
+| SIN wave, 100 Hz |  |  | BD-mode |  |  |  |  |  |  | 1-SPW mode |  |  |  |  |  |  |  |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| VCC, V | Speaker voltage | Ratio | Speakers power RMS, W | Consumed power, W | Efficiency, % | Losses, W | Naked chip, 1min run | Heat Sink 10x15mm (top cover) | Heat sink 32x32mm(back side) | Speaker voltage | Speakers power RMS, W | Consumed power, W | Efficiency, % | Losses, W | Naked chip, 1min run | Heat Sink 10x15mm (top cover) | Heat sink 32x32mm(back side) |
+| 5 | 3.09 | 1.62 | 2.4 | 3.2 | 75% | 0.8 | stable | - | - | 3.09 | 2.4 | 3.1 | 76% | 0.7 | stable | - | - |
+| 6 | 3.47 | 1.73 | 3.0 | 4.0 | 75% | 1.0 | stable | - | - | 3.49 | 3.0 | 3.9 | 78% | 0.9 | stable | - | - |
+| 7 | 3.92 | 1.78 | 3.8 | 5.0 | 77% | 1.2 | stable | - | - | 4.05 | 4.1 | 5.4 | 77% | 1.3 | stable | - | - |
+| 8 | 4.36 | 1.83 | 4.8 | 6.1 | 77% | 1.4 | stable | - | - | 4.37 | 4.8 | 5.9 | 80% | 1.2 | stable | - | - |
+| 9 | 5.49 | 1.64 | 7.5 | 9.4 | 80% | 1.9 | stable | - | - | 5.49 | 7.5 | 9.2 | 82% | 1.6 | stable | - | - |
+| 10 | 6.48 | 1.54 | 10.5 | 12.8 | 82% | 2.3 | stable | - | - | 6.48 | 10.5 | 12.7 | 83% | 2.2 | stable | - | - |
+| 11 | 6.90 | 1.59 | 11.9 | 14.7 | 81% | 2.8 | stable | - | - | 6.90 | 11.9 | 14.2 | 84% | 2.3 | stable | - | - |
+| 12 | 7.33 | 1.64 | 13.4 | 16.9 | 80% | 3.4 | stable | - | - | 7.33 | 13.4 | 16.4 | 82% | 3.0 | stable | - | - |
+| 13 | 7.64 | 1.70 | 14.6 | 18.8 | 78% | 4.2 | stable | - | - | 7.66 | 14.7 | 18.3 | 80% | 3.7 | stable | - | - |
+| 14 | 8.74 | 1.60 | 19.1 | 23.9 | 80% | 4.8 | stable | - | - | 8.74 | 19.1 | 23.2 | 82% | 4.1 | stable | - | - |
+| 15 | 9.22 | 1.63 | 21.3 | 27.0 | 79% | 5.7 | OT warning | stable | - | 9.21 | 21.2 | 25.8 | 82% | 4.6 | stable | - | - |
+| 16 | 9.70 | 1.65 | 23.5 | 30.0 | 78% | 6.5 | shutdown | OT warning | stable | 9.70 | 23.5 | 28.7 | 82% | 5.2 | OT warning | - | - |
+| 17 | 10.28 | 1.65 | 26.4 | 33.0 | 80% | 6.6 | - | shutdown | OT warning | 10.29 | 26.5 | 33.0 | 80% | 6.5 | OT warning | OT warning | - |
+| 18 | 11.40 | 1.58 | 32.5 | 41.0 | 79% | 8.5 | - | - | shutdown | 11.37 | 32.3 | 40.2 | 80% | 7.9 | shutdown | OT warning | OT warning |
 
-The absolute maximum voltage for the TAS5805M DAc is 30V, but it is not guaranteed to be thermally stable in this condition. 
+**Conclusion:** Long-term operation without an additional heatsink is only possible up to VCC=15V. Adding a passive heatsink only helps to sustain 1-2 more volts; more power requires active cooling.
 
 ### Speakers selection
 
