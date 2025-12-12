@@ -472,7 +472,7 @@ In either scenario, you'd need to inform DAC/AMP to change modulation for PBTL m
 #### Amped TPA3110 Amp
 
 Physical connections that need to be done on the board (using solder bridges - normally open bridges to be closed for PBTL mode).
-(image placeholder)
+<img width="909" height="547" alt="image" src="https://github.com/user-attachments/assets/28cf2700-a962-4fef-9743-369ac7474dbc" />
 
 Both drivers will play RIGHT channel signal
 
@@ -510,9 +510,9 @@ Physical connections:
 
 | Image  | Legend |
 |---|---|
-| Stereo Mode - leave open | (image) |
-| Mono (PBTL) Mode, close horisontally | (image)
-| (Option B) Close at the speaker | (image)
+| Stereo Mode - leave open | <img width="1095" height="663" alt="image" src="https://github.com/user-attachments/assets/9f668275-b37a-482e-a988-2aaf38abc789" /> |
+| Mono (PBTL) Mode, close horizontally | <img width="1064" height="658" alt="image" src="https://github.com/user-attachments/assets/7e1ff4a6-8a99-4440-93f4-2ea60b7f7723" />
+| (Option B) Close at the speaker | <img width="1088" height="713" alt="image" src="https://github.com/user-attachments/assets/0b591bf8-a4cb-4d0b-979e-194e827eebb8" /> 
 
 ### TAS5805M DSP capabilities
 
