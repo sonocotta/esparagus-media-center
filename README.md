@@ -541,9 +541,9 @@ At this moment, it is very experimental. In the perfect world, you should be abl
 All of the above are available right now for experimentation. I'm keen to hear your feedback while I move forward with porting this to other software options
 
 - [X] - Bare [I2S TAS5805M library](https://github.com/sonocotta/esp32-tas5805m-dac)
-- [X] - [espragus-snapclient](https://sonocotta.github.io/esparagus-snapclient/) software (You may use Louder-ESP32 firmware for the Louder-Esparagus)
-- [ ] - [squeezelite-esp32](https://sonocotta.github.io/esp32-audio-dock/) <- to do
-- [ ] - flexible configurations with on-the-fly configuration changes
+- [X] - [espragus-snapclient](https://sonocotta.github.io/esparagus-snapclient/) software with self-hosted UI (WIP)
+- [X] - [ESPHome driver](https://github.com/mrtoy-me/esphome-tas5805m) with UI in the Home Assistant
+- [ ] - [squeezelite-esp32](https://sonocotta.github.io/esp32-audio-dock/)
 
 ### Louder and Amped Esparagus power considerations
 
