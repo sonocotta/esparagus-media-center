@@ -25,8 +25,8 @@ jobs:
         submodules: true
     - name: Mark repo safe for git (fix dubious ownership in containers)
       run: |
-        git config --global --add safe.directory /__w/esp32-audio-dock/esp32-audio-dock || true
-        git config --global --add safe.directory /__w/esp32-audio-dock/esp32-audio-dock/firmware/squeezelite-esp32 || true
+        git config --global --add safe.directory /__w/esparagus-media-center/esparagus-media-center || true
+        git config --global --add safe.directory /__w/esparagus-media-center/esparagus-media-center/firmware/squeezelite-esp32 || true
 
     - name: Set Docker image and build metadata
       id: setenv
@@ -73,8 +73,8 @@ jobs:
     - name: Mark repo safe for git (fix dubious ownership in containers)
       shell: bash
       run: |
-        git config --global --add safe.directory /__w/esp32-audio-dock/esp32-audio-dock || true
-        git config --global --add safe.directory /__w/esp32-audio-dock/esp32-audio-dock/firmware/squeezelite-esp32 || true
+        git config --global --add safe.directory /__w/esparagus-media-center/esparagus-media-center || true
+        git config --global --add safe.directory /__w/esparagus-media-center/esparagus-media-center/firmware/squeezelite-esp32 || true
 
     - name: Set defaults
       run: |
