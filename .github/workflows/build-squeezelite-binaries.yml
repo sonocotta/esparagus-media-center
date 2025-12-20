@@ -170,7 +170,7 @@ jobs:
           name=$(basename "$tpl")
           # Replace $commitid placeholder with actual short commit and rename 'template' to 'latest'
           outname=${name//-template/-latest}
-          jq --arg commitid "$SHORT_COMMIT" '(.. | objects | select(has("path")) | .path) |= gsub("\\$commitid"; $commitid)' "$tpl" > "$OUT_DIR/$outname" || cp "$tpl" "$OUT_DIR/$outname"
+          jq --arg commitid "$SHORT_COMMIT" '.. |= if type == "string" then gsub("\\$commitid"; $commitid) else . end' "$tpl" > "$OUT_DIR/$outname" || cp "$tpl" "$OUT_DIR/$outname"
         done
         echo "--- Debug: listing generated latest templates in $OUT_DIR ---"
         ls -la "$OUT_DIR" || true
