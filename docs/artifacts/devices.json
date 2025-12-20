@@ -9,7 +9,7 @@
                 ],
                 "title": "HiFi Esparagus",
                 "description": "HiFi Esparagus is a handy low cost media device that will upgrade your legacy audio system with cutting-edge internet streaming capabilities and enhance your audio experience. It exposes line level output that you can plug into a stereo amplifier. It uses the legendary PCM5100 series DAC with supreme audio quality.",
-                "manifest": "artifacts/manifest-hifi-esparagus-2.1681-16.json"
+                "manifest": "artifacts/manifest-hifi-esparagus-latest.json"
             },
             {
                 "images": [
@@ -17,7 +17,7 @@
                 ],
                 "title": "Loud Esparagus",
                 "description": "Loud Esparagus is aimed to be paired with small-to-medium sized speakers in a small room. It uses a dual MAX98357 Hi-Fi DAC that will output 3W per speaker. Admittedly not much, but well enough for a kid's room or work place. Due to the D-class amp, it barely uses power and can be paired with a standard USB wall charger.",
-                "manifest": "artifacts/manifest-loud-esparagus-2.1681-16.json"
+                "manifest": "artifacts/manifest-loud-esparagus-latest.json"
             },
             {
                 "images": [
@@ -25,7 +25,7 @@
                 ],
                 "title": "Amped Esparagus",
                 "description": "Amped Esparagus is a device based on PCM5100 HiFi DAC (just like HiFi Esparagus) but adds a powerful and efficient D-class amp (TPA3110D2) so it can drive speakers directly. It has similar power capabilities to the Louder Esparagus, but it is much simpler to setup and use, since this DAC doesn't need any configuration steps to get going, just a valid I2S audio stream.",
-                "manifest": "artifacts/manifest-amped-esparagus-2.1681-16.json"
+                "manifest": "artifacts/manifest-amped-esparagus-latest.json"
             },
             {
                 "images": [
@@ -33,7 +33,7 @@
                 ],
                 "title": "Louder Esparagus",
                 "description": "Louder Esparagus is a top-of-the-range model that uses modern highly capable TAS5805M DAC and is aimed to be paired with medium-to-large speaker systems. With 25W per channel stereo output it packs a punch and can easily enliven living quarters or dorm rooms.  It can be used both with Wi-Fi and Ethernet (to make sure bad Wi-Fi would not interrupt the stream)",
-                "manifest": "artifacts/manifest-louder-esparagus-2.1681-16.json"
+                "manifest": "artifacts/manifest-louder-esparagus-latest.json"
             }
         ]
     }
