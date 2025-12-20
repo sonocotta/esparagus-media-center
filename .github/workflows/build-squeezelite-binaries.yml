@@ -153,27 +153,27 @@ jobs:
           du -sh "$OUT_DIR" || true
         done
 
-    - name: Generate latests templates
-      shell: bash
-      env:
-        SUBMODULE_COMMIT: ${{ needs.prepare.outputs.build_number }}
-      run: |
-        set -euo pipefail
-        TEMPLATE_DIR=docs/artifacts/templates
-        OUT_DIR=docs/artifacts
-        mkdir -p "$OUT_DIR"
-        SHORT_COMMIT="${SUBMODULE_COMMIT:-unknown}"
-        echo "--- Debug: listing template dir ($TEMPLATE_DIR) before generation ---"
-        ls -la "$TEMPLATE_DIR" || true
-        echo "--- Debug: using SHORT_COMMIT=$SHORT_COMMIT ---"
-        for tpl in "$TEMPLATE_DIR"/*.json; do
-          name=$(basename "$tpl")
-          # Replace $commitid placeholder with actual short commit and rename 'template' to 'latest'
-          outname=${name//-template/-latest}
-          jq --arg commitid "$SHORT_COMMIT" '(.. | objects | select(has("path")) | .path) |= gsub("\\$commitid"; $commitid)' "$tpl" > "$OUT_DIR/$outname" || cp "$tpl" "$OUT_DIR/$outname"
-        done
-        echo "--- Debug: listing generated latest templates in $OUT_DIR ---"
-        ls -la "$OUT_DIR" || true
+    # - name: Generate latests templates
+    #   shell: bash
+    #   env:
+    #     SUBMODULE_COMMIT: ${{ needs.prepare.outputs.build_number }}
+    #   run: |
+    #     set -euo pipefail
+    #     TEMPLATE_DIR=docs/artifacts/templates
+    #     OUT_DIR=docs/artifacts
+    #     mkdir -p "$OUT_DIR"
+    #     SHORT_COMMIT="${SUBMODULE_COMMIT:-unknown}"
+    #     echo "--- Debug: listing template dir ($TEMPLATE_DIR) before generation ---"
+    #     ls -la "$TEMPLATE_DIR" || true
+    #     echo "--- Debug: using SHORT_COMMIT=$SHORT_COMMIT ---"
+    #     for tpl in "$TEMPLATE_DIR"/*.json; do
+    #       name=$(basename "$tpl")
+    #       # Replace $commitid placeholder with actual short commit and rename 'template' to 'latest'
+    #       outname=${name//-template/-latest}
+    #       jq --arg commitid "$SHORT_COMMIT" '(.. | objects | select(has("path")) | .path) |= gsub("\\$commitid"; $commitid)' "$tpl" > "$OUT_DIR/$outname" || cp "$tpl" "$OUT_DIR/$outname"
+    #     done
+    #     echo "--- Debug: listing generated latest templates in $OUT_DIR ---"
+    #     ls -la "$OUT_DIR" || true
 
     - name: Commit all binaries and templates
       uses: stefanzweifel/git-auto-commit-action@v4
