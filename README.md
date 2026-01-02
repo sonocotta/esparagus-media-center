@@ -302,7 +302,7 @@ Also, experimental snapclient configs
 
 #### Sendspin multi-room playback (experimental)
 
-Starting December 2025, new [Sendspin protocol](https://www.music-assistant.io/player-support/sendspin/) become available for multiroom playback. Although it is in the very early stage of development, it promise really good audio sync and set of really interesting features, like visualisation support and server controlled DSP. It is not ready for general use, but I'd encourage everyone to try it out and give some feedback to developers, to support this great initiative.
+Starting December 2025, the new [Sendspin protocol](https://www.music-assistant.io/player-support/sendspin/) become available for multiroom playback. Although it is in the very early stage of development, it promises really good audio sync and a set of really interesting features, like visualisation support and server-controlled DSP. It is not ready for general use, but I'd encourage everyone to try it out and give some feedback to developers to support this great initiative.
 
 - [hifi-esparagus-idf-sendspin](/firmware/esphome/hifi-esparagus-idf-sendspin.yaml)
 - [loud-esparagus-idf-sendspin](/firmware/esphome/loud-esparagus-idf-sendspin.yaml)
