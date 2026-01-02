@@ -43,6 +43,9 @@ Esparagus Media Center is a series of ESP32-based media center devices. They all
       - [Native HA integration](#native-ha-integration)
       - [Integrate into Music Assistant directly](#integrate-into-music-assistant-directly)
     - [Home Assistant: ESPHome](#home-assistant-esphome)
+      - [Snapclient multi-room playback (experimental)](#snapclient-multi-room-playback-experimental)
+      - [Sendspin multi-room playback (experimental)](#sendspin-multi-room-playback-experimental)
+      - [Install steps](#install-steps)
     - [Home Assistant: Snapcast](#home-assistant-snapcast)
   - [Squeezelite-ESP32](#squeezelite-esp32)
     - [How to flash and configure](#how-to-flash-and-configure)
@@ -156,8 +159,8 @@ Audio streaming requires proper buffering to work; even with the ESP32 500K of R
 
 ### Common to every board
 
-|       | I2S CLK | I2S DATA | I2S WS | PSRAM CE | PSRAM CLK |  DAC EN (MAX98357A) 
-|-------|---------|----------|--------|----------|-----------|-----------|
+|       | I2S CLK | I2S DATA | I2S WS | PSRAM CE | PSRAM CLK |  DAC EN (MAX98357A), AMP EN (TPA3128) 
+|-------|---------|----------|--------|----------|-----------|-------------------------------------|
 | ESP32 | 26      | 22       | 25     | 16       | 17        | 13
 
 ### Peripheral (Loud Esparagus & Esparagus HiFi MediaLink )
@@ -288,12 +291,31 @@ Please find specific ESPHome configs in the [firmware](/firmware/esphome/) folde
 - [amped-esparagus-arduino](/firmware/esphome/amped-esparagus-arduino.yaml) and [amped-esparagus-idf](/firmware/esphome/amped-esparagus-idf.yaml) for Amped-Esparagus
 - [louder-esparagus-idf](/firmware/esphome/louder-esparagus-idf.yaml) for Louder-Esparagus
 
+#### Snapclient multi-room playback (experimental)
+
 Also, experimental snapclient configs
 
 - [hifi-esparagus-idf-snapclient](/firmware/esphome/hifi-esparagus-idf-snapclient.yaml)
 - [loud-esparagus-idf-snapclient](/firmware/esphome/loud-esparagus-idf-snapclient.yaml)
 - [amped-esparagus-idf-snapclient](/firmware/esphome/amped-esparagus-idf-snapclient.yaml)
 - [louder-esparagus-idf-snapclient](/firmware/esphome/louder-esparagus-idf-snapclient.yaml)
+
+#### Sendspin multi-room playback (experimental)
+
+Starting December 2025, new [Sendspin protocol](https://www.music-assistant.io/player-support/sendspin/) become available for multiroom playback. Although it is in the very early stage of development, it promise really good audio sync and set of really interesting features, like visualisation support and server controlled DSP. It is not ready for general use, but I'd encourage everyone to try it out and give some feedback to developers, to support this great initiative.
+
+- [hifi-esparagus-idf-sendspin](/firmware/esphome/hifi-esparagus-idf-sendspin.yaml)
+- [loud-esparagus-idf-sendspin](/firmware/esphome/loud-esparagus-idf-sendspin.yaml)
+- [amped-esparagus-idf-sendspin](/firmware/esphome/amped-esparagus-idf-sendspin.yaml)
+- [louder-esparagus-idf-sendspin](/firmware/esphome/louder-esparagus-idf-sendspin.yaml)
+
+References:
+
+- [Music assistant discussion](https://github.com/orgs/music-assistant/discussions/4200#discussioncomment-15345580)
+- [XDA Developers post](https://www.xda-developers.com/sendspin-esphome-multi-room-audio/)
+- [ESPHome PR](https://github.com/esphome/esphome/pull/12284)
+
+#### Install steps
 
 <details>
   <summary>Install instructions</summary>
