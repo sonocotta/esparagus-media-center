@@ -31,9 +31,17 @@
                 "images": [
                     "images/amped-esparagus.jpg"
                 ],
-                "title": "Amped Esparagus",
+                "title": "Amped Esparagus (rev H, TPA3110)",
                 "description": "<a href=\"https://www.tindie.com/products/sonocotta/amped-esparagus-media-center/\">Amped Esparagus</a> is a device based on PCM5100 HiFi DAC (just like HiFi Esparagus) but adds a powerful and efficient D-class amp (TPA3110D2) so it can drive speakers directly. It has similar power capabilities to the Louder Esparagus, but it is much simpler to setup and use, since this DAC doesn't need any configuration steps to get going, just a valid I2S audio stream.",
                 "manifest": "artifacts/manifest-amped-esparagus-latest.json"
+            },
+            {
+                "images": [
+                    "images/amped-esparagus.jpg"
+                ],
+                "title": "Amped Esparagus (rev J, TPA3128)",
+                "description": "<a href=\"https://www.tindie.com/products/sonocotta/amped-esparagus-media-center/\">Amped Esparagus</a> is a device based on PCM5100 HiFi DAC (just like HiFi Esparagus) and upgraded D-class amp (TPA3128) with improved efficiency.",
+                "manifest": "artifacts/manifest-amped-esparagus-j-latest.json"
             }
         ]
     }
