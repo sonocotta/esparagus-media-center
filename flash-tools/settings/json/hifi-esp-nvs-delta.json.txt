@@ -1,3 +1,0 @@
-{
-  "dac_config": "model=I2S,bck=26,ws=25,do=22"
-}
