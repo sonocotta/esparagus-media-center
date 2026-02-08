@@ -123,7 +123,7 @@ The Esparagus Audio Brick is a new addition to the Esparagus line of ESP32-based
 
 Our Crowd Supply [campaign](https://www.crowdsupply.com/sonocotta/esparagus-audio-brick) is underway. Please consider subscribing to make this project go live.
 
-<img width="2288" height="1237" alt="image" src="https://github.com/user-attachments/assets/924644a5-4834-44c5-8c4c-e8f3ce479baa" />
+<img width="1642" height="1156" alt="image" src="https://github.com/user-attachments/assets/f6cafdb7-f3ef-4cc7-a60f-299406c5ee2e" />
 
 Unlike previous boards, which were mostly intended for table-top use, the Audio Brick is optimized for DIN-rail mounting and modular expansion. Thermal management has been improved for enclosed installs, the power stage has been reworked for efficiency, and the design has been cost-reduced to make multi-unit deployments more practical.
 
@@ -140,7 +140,7 @@ Here you can find a [video overview](https://www.youtube.com/watch?v=Ft5_anhSEE8
 |  | [HiFi Esparagus](https://www.tindie.com/products/sonocotta/esparagus-hifi-medialink/) | [Loud Esparagus](https://www.tindie.com/products/sonocotta/loud-esparagus-media-center/) | [Louder Esparagus](https://www.tindie.com/products/sonocotta/louder-esparagus-media-center/) | [Amped Esparagus](https://www.tindie.com/products/sonocotta/amped-esparagus-media-center/) | Esparagus Audio Brick |
 |---|---|---|---|---|---|
 | Image | ![DSC_0709](https://github.com/sonocotta/esparagus-hifi-medialink/assets/98712315/ea45f1d2-32b5-4f12-a63c-a8e403cb22db) | ![DSC_0706](https://github.com/sonocotta/esparagus-hifi-medialink/assets/5459747/2556b8ff-1827-4e03-8e28-31e40199943c) | ![DSC_0713](https://github.com/sonocotta/esparagus-media-center/assets/5459747/14d54647-2b7e-4b1a-9a8e-135a1598eb02) | ![DSC_0022](https://github.com/user-attachments/assets/e9481545-e98d-4d6a-b0eb-a993ab151dc8) | <img width="2214" height="1217" alt="image" src="https://github.com/user-attachments/assets/89792e6c-e530-4c2b-8e8a-6ce86c9a98dc" /> |
-| MCU | ESP32-WROVER-N8R8 | ESP32-WROVER-N8R8 | ESP32-WROVER-N16R8 | ESP32-WROVER-N16R8 | ESP32-WROVER-N16R8 |
+| MCU | ESP32-WROVER-N8R8 (S3 is coming soon) | ESP32-WROVER-N8R8 (S3 is coming soon) | ESP32-WROVER-N16R8 (S3 is coming soon) | ESP32-WROVER-N16R8 (S3 is coming soon) | ESP32-WROVER-N8R8 or ESP32-S3-WROOM-N8R8 |
 | DAC | PCM5100A 32bit Stereo DAC -100 dB typical noise level | Dual I2S DAC ([MAX98357](https://www.analog.com/en/products/max98357a.html)) with built in D-Class amp | Stereo I2S DAC ( [TAS5805M](https://www.ti.com/product/TAS5805M) ) with built in D-Class amp | [PCM5100A](https://www.ti.com/product/PCM5100A) 32bit Stereo DAC working with   [TPA3110D2](https://www.ti.com/product/TPA3110D2) D-Class amp | Stereo I2S DAC (  [TAS5825M](https://www.ti.com/product/TAS5825M)  ) with built in D-Class amp |
 | Power | 5V over USB-C, 2x [LP5907](https://www.ti.com/lit/ds/symlink/lp5907.pdf) 3.3 V Ultra-Low-Noise LDO for analog section | 5V from USB-C | Up to 20V from USB-C PD or up to 26V from generic power adapter | Up to 20V from USB-C PD or up to 26V from generic power adapter | Up to 26V from a generic power adapter |
 | Output, 4Ω | Non-amplified stereo output | 2x 3W | 2x 32W (4Ω, 1% THD+N) | 2x 22W (4Ω, 1% THD+N) at 16V   1x 40W (4Ω, 1% THD+N) at 20V | 2x 10W at 12V at 4Ω, THD+N = 1% (Efficiency mode) 1x 20W at 12V at 3Ω, THD+N = 1% (Efficiency mode) 1x 65W at 24V at 4Ω, THD+N = 1% (Power mode) |
@@ -159,15 +159,17 @@ Audio streaming requires proper buffering to work; even with the ESP32 500K of R
 
 ### Common to every board
 
-|       | I2S CLK | I2S DATA | I2S WS | PSRAM CE | PSRAM CLK |  DAC EN (MAX98357A), AMP EN (TPA3128) 
-|-------|---------|----------|--------|----------|-----------|-------------------------------------|
-| ESP32 | 26      | 22       | 25     | 16       | 17        | 13
+|          | I2S CLK | I2S DATA | I2S WS | PSRAM RESERVED |  DAC EN (MAX98357A), AMP EN (TPA3128) 
+|----------|---------|----------|--------|----------------|-------------------------------------|
+| ESP32    | 26      | 22       | 25     | 16,  17        | 13
+| ESP32-S3 | 14      | 16       | 15     | 35, 36, 37     | 17
 
 ### Peripheral (Loud Esparagus & Esparagus HiFi MediaLink )
 
-|       | SPI HOST| SPI CLK  |SPI MOSI| SPI MISO | OLED DC   | OLED CS   | OLED RST  |  WS2812 RGB LED |  RELAY EN |
-|-------|---------|----------|--------|----------|-----------|-----------|-----------|---------|----------|
-| ESP32 |    2    |  18      |  23    |   19     |   4       | 5         | 32        |     33  |  21      |
+|          | SPI HOST| SPI CLK  |SPI MOSI| SPI MISO | OLED DC   | OLED CS   | OLED RST  |  WS2812 RGB LED |  RELAY EN |
+|----------|---------|----------|--------|----------|-----------|-----------|-----------|-----------------|-----------|
+| ESP32    |    2    |  18      |  23    |   19     |   4       | 5         | 32        |     33          |  21       |
+| ESP32-S3 |    2    |  12      |  11    |   13     |   38      | 47        | 48        |     21          |  --       |
 
 ### Rotary encoder (Amped Esparagus)
 
@@ -176,23 +178,25 @@ Audio streaming requires proper buffering to work; even with the ESP32 500K of R
 | ESP32 |    27    |  33     |  34    |
 
 
-### TAS5805M DAC (Louder Esparagus)
+### TAS5805M/TAS5825M DAC (Louder Esparagus, Audio Brick)
 
-|       | I2C CLK | I2C DATA |  PWDN  |  FAULT   |
-|-------|---------|----------|--------|----------|
-| ESP32 |    27    |  21     |  33    |  34
+|          | I2C CLK  | I2C DATA |  PWDN  |  FAULT (TAS5805M)   | FAULTZ (TAS5825M) | WARNZ (TAS5825M)
+|----------|----------|----------|--------|---------------------|-------------------|-------------------|
+| ESP32    |    27    |  21      |  33    |  34                 |  39               |  36 
+| ESP32-S3 |    9     |  8       |  17    |  --                 |  18               |  04
 
 ### Peripheral - OLED Screen and W5500 Ethernet (Louder Esparagus)
 
 |       | SPI HOST| SPI CLK  |SPI MOSI| SPI MISO | LAN RES   | LAN CS    | LAN INT   | OLED DC   | OLED CS   | OLED RST  |
 |-------|---------|----------|--------|----------|-----------|-----------|-----------|-----------|-----------|-----------|
-| ESP32 |    2    |  18      |  23    |   19     |  14       |  5        |  35       |    4      |   15      |    32     |
+| ESP32 |    2    |  18      |  23    |   19     |  14       |  05       |  35       |   04      |   15      |    32     |
+| ESP32 |    2    |  12      |  11    |   13     |  05       |  10       |  06       |   38      |   47      |    48     |
 
 ### Other Peripheral (Louder Esparagus)
 
 |       | USB-PD EN | USB-PD POWER GOOD | IR INPUT |   WS2812 RGB LED
-|-------|---------|----------|--------|----------|
-| ESP32 |    13   |   36     |    39  | 12       | 
+|-------|-----------|-------------------|----------|-------------------|
+| ESP32 |    13     |   36              |    39    | 12                | 
 
 ## Which software is right for me
 
