@@ -12,7 +12,7 @@ Esparagus Media Center is a series of ESP32-based media center devices. They all
 
 ![image](https://github.com/user-attachments/assets/5d884668-91a0-46bf-9253-0f609236fedd)
 
-⚠️_Looking for Esparagus boards? Check out sister repository: [Esapragus Media Center](https://github.com/sonocotta/esparagus-media-center/)_
+⚠️ _Looking for ESP32-Audio boards? Check out sister repository: [ESP32 Audio Dock](https://github.com/sonocotta/esp32-audio-dock)_
 
 ## Table of Contents
 
