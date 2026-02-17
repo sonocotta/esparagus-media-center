@@ -61,6 +61,9 @@ jobs:
   build:
     needs: prepare
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        depth: [16, 32]
     container:
       image: sle118/squeezelite-esp32-idfv435
     permissions:
@@ -81,7 +84,7 @@ jobs:
     - name: Set defaults
       run: |
         echo "TARGET_BUILD_NAME=I2S-4MFlash" >> $GITHUB_ENV
-        echo "DEPTH=16" >> $GITHUB_ENV
+        echo "DEPTH=${{ matrix.depth }}" >> $GITHUB_ENV
 
     - name: Build for both sdkconfigs sequentially (inside container)
       shell: bash
@@ -137,9 +140,9 @@ jobs:
           idf.py build -DDEPTH=${DEPTH} -DBUILD_NUMBER=${BUILD_NUMBER}-${DEPTH}
           popd
 
-          # Collect produced binaries per-sdk with SHORT_COMMIT suffix
+          # Collect produced binaries per-sdk with SHORT_COMMIT suffix and DEPTH
           SHORT_COMMIT="${SUBMODULE_COMMIT:-unknown}"
-          OUT_DIR="docs/artifacts/binaries/${TARGET_BUILD_NAME}-${SDK_BASENAME}"
+          OUT_DIR="docs/artifacts/binaries/${TARGET_BUILD_NAME}-${SDK_BASENAME}-${DEPTH}bit"
           mkdir -p "$OUT_DIR"
           # Copy binaries and rename with short commit suffix
           [ -f firmware/squeezelite-esp32/build/squeezelite.bin ] && cp firmware/squeezelite-esp32/build/squeezelite.bin "$OUT_DIR/squeezelite-${SHORT_COMMIT}.bin" || true
@@ -183,12 +186,3 @@ jobs:
       with:
         commit_message: "Add built squeezelite binaries and latest templates (latest)"
         file_pattern: "docs/artifacts/**"
-
-    - name: Debug() show generated files and git status
-      shell: bash
-      run: |
-        echo "--- Debug: git status (porcelain) ---"
-        git --no-pager status --porcelain || true
-        echo "--- Debug: list docs/artifacts tree ---"
-        ls -la docs/artifacts || true
-        find docs/artifacts -maxdepth 4 -type f -ls || true
