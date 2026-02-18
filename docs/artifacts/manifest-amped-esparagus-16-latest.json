@@ -1,6 +1,6 @@
 {
   "name": "amped-esparagus",
-  "version": "a71aff68",
+  "version": "02036822",
   "home_assistant_domain": "slim_player",
   "funding_url": "https://esphome.io/guides/supporters.html",
   "new_install_prompt_erase": true,
@@ -10,11 +10,11 @@
       "chipFamily": "ESP32",
       "parts": [
         {
-          "path": "binaries/I2S-4MFlash-sdkconfig.esp32/bootloader-a71aff68.bin",
+          "path": "binaries/I2S-4MFlash-sdkconfig.esp32-16bit/bootloader-02036822.bin",
           "offset": "0x1000"
         },
         {
-          "path": "binaries/I2S-4MFlash-sdkconfig.esp32/partition-table-a71aff68.bin",
+          "path": "binaries/I2S-4MFlash-sdkconfig.esp32-16bit/partition-table-02036822.bin",
           "offset": "0x8000"
         },
         {
@@ -22,23 +22,23 @@
           "offset": "0x9000"
         },
         {
-          "path": "binaries/I2S-4MFlash-sdkconfig.esp32/ota_data_initial-a71aff68.bin",
+          "path": "binaries/I2S-4MFlash-sdkconfig.esp32-16bit/ota_data_initial-02036822.bin",
           "offset": "0xd000"
         },
         {
-          "path": "binaries/I2S-4MFlash-sdkconfig.esp32/recovery-a71aff68.bin",
+          "path": "binaries/I2S-4MFlash-sdkconfig.esp32-16bit/recovery-02036822.bin",
           "offset": "0x10000"
         },
         {
-          "path": "binaries/I2S-4MFlash-sdkconfig.esp32/squeezelite-a71aff68.bin",
+          "path": "binaries/I2S-4MFlash-sdkconfig.esp32-16bit/squeezelite-02036822.bin",
           "offset": "0x150000"
         },
         {
-          "path": "binaries/settings/amped-esparagus-j-settings.bin",
+          "path": "binaries/settings/amped-esparagus-settings.bin",
           "offset": "0x3f0000"
         }
       ]
     }
   ],
-  "manifest_name": "manifest-amped-esparagus-latest.json"
+  "manifest_name": "manifest-amped-esparagus-16-latest.json"
 }

@@ -61,6 +61,9 @@ jobs:
   build:
     needs: prepare
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        depth: [16, 32]
     container:
       image: sle118/squeezelite-esp32-idfv435
     permissions:
@@ -81,9 +84,9 @@ jobs:
     - name: Set defaults
       run: |
         echo "TARGET_BUILD_NAME=I2S-4MFlash" >> $GITHUB_ENV
-        echo "DEPTH=16" >> $GITHUB_ENV
+        echo "DEPTH=${{ matrix.depth }}" >> $GITHUB_ENV
 
-    - name: Build for both sdkconfigs sequentially (inside container)
+    - name: Build (inside container)
       shell: bash
       env:
         SUBMODULE_COMMIT: ${{ needs.prepare.outputs.build_number }}
@@ -137,9 +140,9 @@ jobs:
           idf.py build -DDEPTH=${DEPTH} -DBUILD_NUMBER=${BUILD_NUMBER}-${DEPTH}
           popd
 
-          # Collect produced binaries per-sdk with SHORT_COMMIT suffix
+          # Collect produced binaries per-sdk with SHORT_COMMIT suffix and DEPTH
           SHORT_COMMIT="${SUBMODULE_COMMIT:-unknown}"
-          OUT_DIR="docs/artifacts/binaries/${TARGET_BUILD_NAME}-${SDK_BASENAME}"
+          OUT_DIR="docs/artifacts/binaries/${TARGET_BUILD_NAME}-${SDK_BASENAME}-${DEPTH}bit"
           mkdir -p "$OUT_DIR"
           # Copy binaries and rename with short commit suffix
           [ -f firmware/squeezelite-esp32/build/squeezelite.bin ] && cp firmware/squeezelite-esp32/build/squeezelite.bin "$OUT_DIR/squeezelite-${SHORT_COMMIT}.bin" || true
@@ -155,6 +158,43 @@ jobs:
           echo "--- Debug: size summary for $OUT_DIR ---"
           du -sh "$OUT_DIR" || true
         done
+
+    - name: Upload built binaries
+      uses: actions/upload-artifact@v4
+      with:
+        name: esp32-binaries-${{ matrix.depth }}bit
+        path: docs/artifacts/binaries/
+
+  finalize:
+    needs: [prepare, build]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        submodules: 'recursive'
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Mark repo safe for git (fix dubious ownership in containers)
+      shell: bash
+      run: |
+        git config --global --add safe.directory /__w/esparagus-media-center/esparagus-media-center || true
+        git config --global --add safe.directory /__w/esparagus-media-center/esparagus-media-center/firmware/squeezelite-esp32 || true
+
+    - name: Download ESP32 16-bit artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: esp32-binaries-16bit
+        path: docs/artifacts/binaries/
+
+    - name: Download ESP32 32-bit artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: esp32-binaries-32bit
+        path: docs/artifacts/binaries/
 
     - name: Generate latests templates
       shell: bash
@@ -183,12 +223,3 @@ jobs:
       with:
         commit_message: "Add built squeezelite binaries and latest templates (latest)"
         file_pattern: "docs/artifacts/**"
-
-    - name: Debug() show generated files and git status
-      shell: bash
-      run: |
-        echo "--- Debug: git status (porcelain) ---"
-        git --no-pager status --porcelain || true
-        echo "--- Debug: list docs/artifacts tree ---"
-        ls -la docs/artifacts || true
-        find docs/artifacts -maxdepth 4 -type f -ls || true
