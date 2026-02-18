@@ -1,62 +1,79 @@
+# ============================================================
+# HiFi-Esparagus - Basic Media Player Configuration
+# ============================================================
+# ESP32 audio board with PCM5100 DAC, I2S output
+# Features: Wi-Fi media player, mixer/resampler speakers,
+#           announcements, RGB LED, IR receiver, OLED display
+# Board-specific pinouts are defined in substitutions section
+# ============================================================
+
 substitutions:
-  name: esphome-web-xxxxxx
+  name: esphome-web-dc95a8
   friendly_name: Hifi-Esparagus
-  task_stack_in_psram: "false" # important to disable this for non-S3 model
+  task_stack_in_psram: "false"
+
+  # I2S audio pins
+  i2s_lrclk_pin: GPIO25
+  i2s_bclk_pin: GPIO26
+  i2s_dout_pin: GPIO22
+  
+  # RGB LED
+  rgb_led_pin: GPIO33
+  
+  # IR receiver
+  ir_rx_pin: GPIO39
 
 esphome:
   name: ${name}
   friendly_name: ${friendly_name}
-  min_version: 2025.7.0
-  name_add_mac_suffix: false
+  min_version: 2025.7.2
   platformio_options:
     board_build.flash_mode: dio
 
 esp32:
   board: mhetesp32minikit
+  variant: esp32
   flash_size: 8MB
+  cpu_frequency: 240MHz
   framework:
     type: esp-idf
     version: recommended
     sdkconfig_options:
       CONFIG_BT_ALLOCATION_FROM_SPIRAM_FIRST: "y"
       CONFIG_BT_BLE_DYNAMIC_ENV_MEMORY: "y"
-
       CONFIG_MBEDTLS_EXTERNAL_MEM_ALLOC: "y"
-      CONFIG_MBEDTLS_SSL_PROTO_TLS1_3: "y"  # TLS1.3 support isn't enabled by default in IDF 5.1.5
-
+      CONFIG_MBEDTLS_SSL_PROTO_TLS1_3: "y"  
+      
 # Enable logging
 logger:
   level: DEBUG
-  
-wifi:
-  ssid: !secret esphome_wifi_ssid
-  password: !secret esphome_wifi_password
-  ap:
-    ssid: "$name Hotspot"
-    password: !secret esphome_ap_password
 
-captive_portal:
+debug:
+  update_interval: 5s
 
-# Allow Over-The-Air updates
+# Enable Home Assistant API
+api:
+
 ota:
   platform: esphome
   password: !secret esphome_ota_password
 
-# Enable Home Assistant API
-api:
+wifi:
+  ssid: !secret esphome_wifi_ssid
+  password: !secret esphome_wifi_password
 
 psram:
   speed: 80MHz
 
 i2s_audio:
-  i2s_lrclk_pin: GPIO25
-  i2s_bclk_pin: GPIO26
+  i2s_lrclk_pin: ${i2s_lrclk_pin}
+  i2s_bclk_pin: ${i2s_bclk_pin}
 
 speaker:
   - platform: i2s_audio
     id: speaker_id
     dac_type: external
-    i2s_dout_pin: GPIO22
+    i2s_dout_pin: ${i2s_dout_pin}
     channel: stereo
     sample_rate: 48000
     timeout: never
@@ -121,6 +138,58 @@ media_player:
       - light.turn_off:
           id: rgb_front_led
 
+number:
+  - platform: template
+    name: Announce Volume
+    id: announce_volume
+    icon: mdi:volume-source
+    unit_of_measurement: "%"
+    min_value: 0
+    max_value: 100
+    step: 1
+    restore_value: true
+    initial_value: 50
+    optimistic: true
+
+sensor:
+  - platform: wifi_signal
+    name: "${friendly_name} WiFi Signal"
+    update_interval: 60s
+  - platform: uptime
+    name: "${friendly_name} Uptime"
+    update_interval: 60s
+  - platform: internal_temperature
+    name: "${friendly_name} CPU Temperature"
+    update_interval: 60s
+  - platform: template
+    name: "${friendly_name} Free Heap"
+    lambda: |-
+      return heap_caps_get_free_size(MALLOC_CAP_INTERNAL) / 1024.0;
+    unit_of_measurement: 'kB'
+    update_interval: 10s
+  - platform: template
+    name: "${friendly_name} Free PSRAM"
+    lambda: |-
+      return heap_caps_get_free_size(MALLOC_CAP_SPIRAM) / 1024.0;
+    unit_of_measurement: 'kB'
+    update_interval: 10s
+  - platform: debug
+    loop_time:
+      name: "${friendly_name} Loop Time"
+
+text_sensor:
+  - platform: wifi_info
+    ip_address:
+      name: "${friendly_name} IP"
+    mac_address:
+      name: "${friendly_name} MAC"
+# - platform: version
+#   name: "${friendly_name} ESPHome Version"
+  
+
+binary_sensor:
+  - platform: status
+    name: "${friendly_name} Status"
 
 ### RGB light config
 light:
@@ -128,7 +197,7 @@ light:
     id: rgb_front_led
     name: "${friendly_name} LED"
     rgb_order: GRB
-    pin: GPIO33
+    pin: ${rgb_led_pin}
     num_leds: 1
     chipset: ws2812
     default_transition_length: 0s
@@ -136,7 +205,7 @@ light:
 ### IR reader config. Add your own IR codes as needed
 remote_receiver:
   pin: 
-    number: GPIO39
+    number: ${ir_rx_pin}
     inverted: true
     mode:
       input: true
