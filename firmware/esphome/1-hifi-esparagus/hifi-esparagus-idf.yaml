@@ -1,10 +1,11 @@
 # ============================================================
-# HiFi-Esparagus - Basic Media Player Configuration
+# HiFi-Esparagus - Media Player Configuration
 # ============================================================
 # ESP32 audio board with PCM5100 DAC, I2S output
-# Features: Wi-Fi media player, mixer/resampler speakers,
-#           announcements, RGB LED, IR receiver, OLED display
-# Board-specific pinouts are defined in substitutions section
+# Features: Wi-Fi media player with mixer/resampler,
+#           announcements, RGB LED, IR receiver
+# Board-specific pinouts defined in substitutions
+# Functional blocks imported from /packages
 # ============================================================
 
 substitutions:
@@ -12,7 +13,8 @@ substitutions:
   friendly_name: Hifi-Esparagus
   task_stack_in_psram: "false"
 
-  # I2S audio pins
+  # ===== Board-Specific Pinouts =====
+  # I2S Audio (PCM5100 DAC)
   i2s_lrclk_pin: GPIO25
   i2s_bclk_pin: GPIO26
   i2s_dout_pin: GPIO22
@@ -20,13 +22,13 @@ substitutions:
   # RGB LED
   rgb_led_pin: GPIO33
   
-  # IR receiver
+  # IR Receiver
   ir_rx_pin: GPIO39
 
 esphome:
   name: ${name}
   friendly_name: ${friendly_name}
-  min_version: 2025.7.2
+  min_version: 2025.12.2
   platformio_options:
     board_build.flash_mode: dio
 
@@ -42,16 +44,14 @@ esp32:
       CONFIG_BT_ALLOCATION_FROM_SPIRAM_FIRST: "y"
       CONFIG_BT_BLE_DYNAMIC_ENV_MEMORY: "y"
       CONFIG_MBEDTLS_EXTERNAL_MEM_ALLOC: "y"
-      CONFIG_MBEDTLS_SSL_PROTO_TLS1_3: "y"  
-      
-# Enable logging
+      CONFIG_MBEDTLS_SSL_PROTO_TLS1_3: "y"
+
 logger:
   level: DEBUG
 
 debug:
   update_interval: 5s
 
-# Enable Home Assistant API
 api:
 
 ota:
@@ -65,153 +65,13 @@ wifi:
 psram:
   speed: 80MHz
 
-i2s_audio:
-  i2s_lrclk_pin: ${i2s_lrclk_pin}
-  i2s_bclk_pin: ${i2s_bclk_pin}
-
-speaker:
-  - platform: i2s_audio
-    id: speaker_id
-    dac_type: external
-    i2s_dout_pin: ${i2s_dout_pin}
-    channel: stereo
-    sample_rate: 48000
-    timeout: never
-
-  - platform: mixer
-    id: mixer_speaker_id
-    task_stack_in_psram: ${task_stack_in_psram}
-    output_speaker: speaker_id
-    source_speakers:
-      - id: announcement_spk_mixer_input
-        timeout: never
-      - id: media_spk_mixer_input
-        timeout: never
-
-  - platform: resampler
-    id: media_spk_resampling_input
-    task_stack_in_psram: ${task_stack_in_psram}
-    output_speaker: media_spk_mixer_input
-
-  - platform: resampler
-    id: announcement_spk_resampling_input
-    task_stack_in_psram: ${task_stack_in_psram}
-    output_speaker: announcement_spk_mixer_input
-
-media_player:
-  - platform: speaker
-    name: HiFi Mediaplayer
-    id: hifi_mediaplayer
-    task_stack_in_psram: ${task_stack_in_psram}
-    volume_increment: 5%
-    volume_initial: 45%
-    media_pipeline:
-      speaker: media_spk_resampling_input
-      num_channels: 2
-    announcement_pipeline:
-      speaker: announcement_spk_resampling_input
-      num_channels: 1
-
-    on_announcement:
-      - light.turn_on:
-          id: rgb_front_led
-          blue: 100%
-          red: 0%
-          green: 100%
-          brightness: 50%
-          
-      - mixer_speaker.apply_ducking:
-            id: media_spk_mixer_input
-            decibel_reduction: 40
-            duration: 0.0s
-      - wait_until:
-            media_player.is_announcing:
-
-      - wait_until:
-          not:
-            media_player.is_announcing:
-      - mixer_speaker.apply_ducking:
-            id: media_spk_mixer_input
-            decibel_reduction: 0
-            duration: 1.0s
-
-      - light.turn_off:
-          id: rgb_front_led
-
-number:
-  - platform: template
-    name: Announce Volume
-    id: announce_volume
-    icon: mdi:volume-source
-    unit_of_measurement: "%"
-    min_value: 0
-    max_value: 100
-    step: 1
-    restore_value: true
-    initial_value: 50
-    optimistic: true
-
-sensor:
-  - platform: wifi_signal
-    name: "${friendly_name} WiFi Signal"
-    update_interval: 60s
-  - platform: uptime
-    name: "${friendly_name} Uptime"
-    update_interval: 60s
-  - platform: internal_temperature
-    name: "${friendly_name} CPU Temperature"
-    update_interval: 60s
-  - platform: template
-    name: "${friendly_name} Free Heap"
-    lambda: |-
-      return heap_caps_get_free_size(MALLOC_CAP_INTERNAL) / 1024.0;
-    unit_of_measurement: 'kB'
-    update_interval: 10s
-  - platform: template
-    name: "${friendly_name} Free PSRAM"
-    lambda: |-
-      return heap_caps_get_free_size(MALLOC_CAP_SPIRAM) / 1024.0;
-    unit_of_measurement: 'kB'
-    update_interval: 10s
-  - platform: debug
-    loop_time:
-      name: "${friendly_name} Loop Time"
-
-text_sensor:
-  - platform: wifi_info
-    ip_address:
-      name: "${friendly_name} IP"
-    mac_address:
-      name: "${friendly_name} MAC"
-# - platform: version
-#   name: "${friendly_name} ESPHome Version"
+network:
+  enable_ipv6: true
   
-
-binary_sensor:
-  - platform: status
-    name: "${friendly_name} Status"
-
-### RGB light config
-light:
-  - platform: esp32_rmt_led_strip
-    id: rgb_front_led
-    name: "${friendly_name} LED"
-    rgb_order: GRB
-    pin: ${rgb_led_pin}
-    num_leds: 1
-    chipset: ws2812
-    default_transition_length: 0s
-
-### IR reader config. Add your own IR codes as needed
-remote_receiver:
-  pin: 
-    number: ${ir_rx_pin}
-    inverted: true
-    mode:
-      input: true
-  dump: all
-
-button:
-  - platform: restart
-    id: restart_btn
-    name: "${friendly_name} REBOOT"
+# ===== Packages =====
+packages:
+  audio: !include packages/audio.yaml
+  media_player: !include packages/media-player.yaml
+  light: !include packages/light.yaml
+  ir_receiver: !include packages/ir-receiver.yaml
+  monitoring: !include packages/monitoring.yaml
