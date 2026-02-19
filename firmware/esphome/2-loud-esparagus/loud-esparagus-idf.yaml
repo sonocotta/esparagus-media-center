@@ -34,7 +34,6 @@ esphome:
     board_build.flash_mode: dio
 
 esp32:
-  board: mhetesp32minikit
   variant: esp32
   flash_size: 8MB
   cpu_frequency: 240MHz
@@ -68,7 +67,7 @@ psram:
 
 network:
   enable_ipv6: true
-  
+
 # ===== Packages =====
 packages:
   audio: !include packages/audio.yaml

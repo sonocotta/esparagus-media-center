@@ -15,7 +15,6 @@ esphome:
       - switch.turn_on: enable_dac
 
 esp32:
-  board: mhetesp32minikit
   flash_size: 8MB
   framework:
     type: esp-idf

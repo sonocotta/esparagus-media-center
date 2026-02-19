@@ -1,7 +1,7 @@
 # ============================================================
 # Amped-Esparagus - Media Player Configuration
 # ============================================================
-# ESP32 audio board with dual PCM5100 DAC (I2S) and TPA3110/TPA3128 AMP
+# ESP32 audio board with PCM5100 DAC (I2S) and TPA3110/TPA3128 AMP
 # Features: Wi-Fi media player with mixer/resampler,
 #           announcements, RGB LED, IR receiver
 # Board-specific pinouts defined in substitutions
@@ -59,7 +59,6 @@ esphome:
     board_build.flash_mode: dio
 
 esp32:
-  board: mhetesp32minikit
   variant: esp32
   flash_size: 8MB
   cpu_frequency: 240MHz

@@ -12,7 +12,6 @@ esphome:
     board_build.flash_mode: dio
 
 esp32:
-  board: mhetesp32minikit
   flash_size: 16MB
   framework:
     type: esp-idf
@@ -121,7 +120,7 @@ switch:
     # Will be operated automatially. When disabled DAC will drow dramatically less power
     enable_dac:
       name: Enable Louder
-      id: enable_louder
+      id: enable_dac
       restore_mode: ALWAYS_ON
     # Will be operated automatially. If you use EQ it is required to set it ON
     enable_eq:

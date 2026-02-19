@@ -13,7 +13,6 @@ esphome:
     board_build.flash_mode: dio
 
 esp32:
-  board: mhetesp32minikit
   flash_size: 8MB
   framework:
     type: esp-idf
