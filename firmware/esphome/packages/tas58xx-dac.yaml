@@ -39,6 +39,13 @@ switch:
       id: enable_dac
       restore_mode: ALWAYS_ON 
 
+select:
+  - platform: tas58xx
+    mixer_mode:
+      name: _Mixer Mode
+    eq_mode:
+      name: EQ Mode
+
 number:
   - platform: tas58xx
     # must have both channel_gains configured or none
@@ -47,80 +54,37 @@ number:
     channel_gain_right:
       name: Gain Right Channel
 
-    # # new names for left and right eq gains
-    # left_eq_gain_20Hz:
-    #   name: Left ---20Hz
-    # left_eq_gain_31.5Hz:
-    #   name: Left ---31.5Hz
-    # left_eq_gain_50Hz:
-    #   name: Left ---50Hz
-    # left_eq_gain_80Hz:
-    #   name: Left ---80Hz
-    # left_eq_gain_125Hz:
-    #   name: Left --125Hz
-    # left_eq_gain_200Hz:
-    #   name: Left --200Hz
-    # left_eq_gain_315Hz:
-    #   name: Left --315Hz
-    # left_eq_gain_500Hz:
-    #   name: Left --500Hz
-    # left_eq_gain_800Hz:
-    #   name: Left --800Hz
-    # left_eq_gain_1250Hz:
-    #   name: Left -1250Hz
-    # left_eq_gain_2000Hz:
-    #   name: Left -2000Hz
-    # left_eq_gain_3150Hz:
-    #   name: Left -3150Hz
-    # left_eq_gain_5000Hz:
-    #   name: Left -5000Hz
-    # left_eq_gain_8000Hz:
-    #   name: Left -8000Hz
-    # left_eq_gain_16000Hz:
-    #   name: Left 16000Hz
-    # right_eq_gain_20Hz:
-    #   name: Right ---20Hz
-    # right_eq_gain_31.5Hz:
-    #   name: Right ---31.5Hz
-    # right_eq_gain_50Hz:
-    #   name: Right ---50Hz
-    # right_eq_gain_80Hz:
-    #   name: Right ---80Hz
-    # right_eq_gain_125Hz:
-    #   name: Right --125Hz
-    # right_eq_gain_200Hz:
-    #   name: Right --200Hz
-    # right_eq_gain_315Hz:
-    #   name: Right --315Hz
-    # right_eq_gain_500Hz:
-    #   name: Right --500Hz
-    # right_eq_gain_800Hz:
-    #   name: Right --800Hz
-    # right_eq_gain_1250Hz:
-    #   name: Right -1250Hz
-    # right_eq_gain_2000Hz:
-    #   name: Right -2000Hz
-    # right_eq_gain_3150Hz:
-    #   name: Right -3150Hz
-    # right_eq_gain_5000Hz:
-    #   name: Right -5000Hz
-    # right_eq_gain_8000Hz:
-    #   name: Right -8000Hz
-    # right_eq_gain_16000Hz:
-    #   name: Right 16000Hz
-
-select:
-  - platform: tas58xx
-    mixer_mode:
-      name: _Mixer Mode
-    # eq_mode required if Number left_eq_gains/Right_eq_gains or eq_preset_left_channel/eq_preset_right_channel are configured
-    eq_mode:
-      name: EQ Mode
-    # new eq presets - both must be defined and cannot be used with left_eq_gains and right_eq_gains
-    # eq_preset_left_channel:
-    #   name: EQ Preset Cutoff Left Channel
-    # eq_preset_right_channel:
-    #   name: EQ Preset Cutoff Right Channel
+    # new names for left and right eq gains
+    left_eq_gain_20Hz:
+      name: Left ---20Hz
+    left_eq_gain_31.5Hz:
+      name: Left ---31.5Hz
+    left_eq_gain_50Hz:
+      name: Left ---50Hz
+    left_eq_gain_80Hz:
+      name: Left ---80Hz
+    left_eq_gain_125Hz:
+      name: Left --125Hz
+    left_eq_gain_200Hz:
+      name: Left --200Hz
+    left_eq_gain_315Hz:
+      name: Left --315Hz
+    left_eq_gain_500Hz:
+      name: Left --500Hz
+    left_eq_gain_800Hz:
+      name: Left --800Hz
+    left_eq_gain_1250Hz:
+      name: Left -1250Hz
+    left_eq_gain_2000Hz:
+      name: Left -2000Hz
+    left_eq_gain_3150Hz:
+      name: Left -3150Hz
+    left_eq_gain_5000Hz:
+      name: Left -5000Hz
+    left_eq_gain_8000Hz:
+      name: Left -8000Hz
+    left_eq_gain_16000Hz:
+      name: Left 16000Hz
 
 ### Faults clear registers read from TAS58XX
 sensor:

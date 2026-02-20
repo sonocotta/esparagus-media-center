@@ -14,7 +14,7 @@
 # ============================================================
 
 substitutions:
-  name: esphome-web-xxxxxx
+  name: esphome-web-e0de84
   friendly_name: Louder-Esparagus
   task_stack_in_psram: "false"
 

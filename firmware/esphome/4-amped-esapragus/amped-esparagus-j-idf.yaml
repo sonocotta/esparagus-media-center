@@ -9,7 +9,7 @@
 # ============================================================
 
 substitutions:
-  name: esphome-web-xxxxxx
+  name: esphome-web-47b85c
   friendly_name: Amped-Esparagus
   task_stack_in_psram: "false" 
 
@@ -100,7 +100,7 @@ network:
 packages:
   audio: !include packages/audio.yaml
   media_player: !include packages/media-player-with-dac-enable.yaml
-  light: !include packages/light.yaml
+  light: !include packages/light-8.yaml
   ir_receiver: !include packages/ir-receiver.yaml
   rotary_encoder: !include packages/rotary-encoder.yaml
   # Optional ethernet (replace wifi config above if you use this)
