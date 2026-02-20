@@ -71,7 +71,7 @@ media_source:
     id: file_source
     files:
       id: startup_sync_sound
-      file: https://github.com/mrtoy-me/esphome-tas58xx/raw/main/components/tas58xx/tas58xx_boot.flac
+      file: https://github.com/mrtoy-me/esphome-tas5805m/raw/main/components/tas5805m/tas5805m_boot_louder.flac
 
 media_player:
   - platform: sendspin

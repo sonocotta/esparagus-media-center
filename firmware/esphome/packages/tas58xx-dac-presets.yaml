@@ -54,11 +54,10 @@ select:
       
 number:
   - platform: tas58xx
-    # must have both channel_gains configured or none
     channel_volume_left:
-      name: Gain Left Channel
+      name: _Volume Left
     channel_volume_right:
-      name: Gain Right Channel
+      name: _Volume Right
 
 ### Faults clear registers read from TAS58XX
 sensor:

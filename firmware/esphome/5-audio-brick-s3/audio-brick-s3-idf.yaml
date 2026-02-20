@@ -10,7 +10,7 @@
 # ============================================================
 
 substitutions:
-  name: esphome-web-682920
+  name: esphome-web-2cbffc
   friendly_name: Esparagus-Audio-Brick
   task_stack_in_psram: "true"
 

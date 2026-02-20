@@ -49,13 +49,11 @@ select:
       
 number:
   - platform: tas58xx
-    # must have both channel_gains configured or none
     channel_volume_left:
-      name: Gain Left Channel
+      name: _Volume Left
     channel_volume_right:
-      name: Gain Right Channel
-
-    new names for left and right eq gains
+      name: _Volume Right
+      
     left_eq_gain_20Hz:
       name: Left ---20Hz
     left_eq_gain_31.5Hz:
