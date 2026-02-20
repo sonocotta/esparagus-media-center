@@ -56,19 +56,10 @@ jobs:
             esphome-${{ hashFiles('firmware/esphome/packages/**') }}-
             esphome-
 
-      - name: Create secrets file if needed
+      - name: Copy secrets example file for CI build
         run: |
-          secrets_file="${{ steps.config-info.outputs.config_dir }}/secrets.yaml"
-          if [ ! -f "$secrets_file" ]; then
-            echo "Creating stub secrets file for build"
-            cat > "$secrets_file" << 'EOF'
-          # Stub secrets for CI build
-          wifi_ssid: "CI_BUILD_SSID"
-          wifi_password: "CI_BUILD_PASSWORD"
-          api_encryption_key: "CI_BUILD_KEY_000000000000000000000000="
-          ota_password: "CI_BUILD_PASSWORD"
-          EOF
-          fi
+          cp firmware/esphome/secrets/secrets.yaml.example \
+             "${{ steps.config-info.outputs.config_dir }}/secrets.yaml"
 
       - name: Build ESPHome config
         run: |
