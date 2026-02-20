@@ -1,0 +1,93 @@
+name: Build ESPHome Configs
+
+on:
+  pull_request:
+    paths:
+      - 'firmware/esphome/**'
+      - '.github/workflows/build-esphome.yml'
+
+jobs:
+  prepare:
+    name: Prepare Build Matrix
+    runs-on: ubuntu-latest
+    outputs:
+      configs: ${{ steps.find-configs.outputs.configs }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Find ESPHome configs
+        id: find-configs
+        run: |
+          configs=$(find firmware/esphome -maxdepth 2 -name "*.yaml" -type f \
+            | grep -v "/packages/" \
+            | grep -v "/secrets/" \
+            | grep -v "secrets.yaml" \
+            | jq -R -s -c 'split("\n")[:-1]')
+          echo "configs=$configs" >> $GITHUB_OUTPUT
+          echo "Found configs:"
+          echo "$configs" | jq -r '.[]'
+
+  build:
+    name: Build ${{ matrix.config }}
+    needs: prepare
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        config: ${{ fromJson(needs.prepare.outputs.configs) }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Get config directory and filename
+        id: config-info
+        run: |
+          config_dir=$(dirname "${{ matrix.config }}")
+          config_file=$(basename "${{ matrix.config }}")
+          echo "config_dir=$config_dir" >> $GITHUB_OUTPUT
+          echo "config_file=$config_file" >> $GITHUB_OUTPUT
+          echo "Building: $config_file from $config_dir"
+
+      - name: Cache ESPHome build
+        uses: actions/cache@v3
+        with:
+          path: .esphome-cache
+          key: esphome-${{ hashFiles('firmware/esphome/packages/**') }}-${{ matrix.config }}
+          restore-keys: |
+            esphome-${{ hashFiles('firmware/esphome/packages/**') }}-
+            esphome-
+
+      - name: Create secrets file if needed
+        run: |
+          secrets_file="${{ steps.config-info.outputs.config_dir }}/secrets.yaml"
+          if [ ! -f "$secrets_file" ]; then
+            echo "Creating stub secrets file for build"
+            cat > "$secrets_file" << 'EOF'
+          # Stub secrets for CI build
+          wifi_ssid: "CI_BUILD_SSID"
+          wifi_password: "CI_BUILD_PASSWORD"
+          api_encryption_key: "CI_BUILD_KEY_000000000000000000000000="
+          ota_password: "CI_BUILD_PASSWORD"
+          EOF
+          fi
+
+      - name: Build ESPHome config
+        run: |
+          docker run --rm \
+            -v "${{ github.workspace }}/${{ steps.config-info.outputs.config_dir }}:/config" \
+            -v "${{ github.workspace }}/firmware/esphome/packages:/config/packages" \
+            -v "${{ github.workspace }}/.esphome-cache:/cache" \
+            -e PLATFORMIO_BUILD_CACHE_DIR=/cache/.pio-cache \
+            esphome/esphome:latest \
+            compile "/config/${{ steps.config-info.outputs.config_file }}"
+
+      - name: Upload build artifacts
+        if: success()
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ steps.config-info.outputs.config_file }}-firmware
+          path: |
+            ${{ steps.config-info.outputs.config_dir }}/.esphome/build/**/firmware*.bin
+            ${{ steps.config-info.outputs.config_dir }}/.esphome/build/**/partitions*.bin
+            ${{ steps.config-info.outputs.config_dir }}/.esphome/build/**/bootloader*.bin
+          if-no-files-found: warn
+          retention-days: 7
