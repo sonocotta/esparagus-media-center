@@ -79,15 +79,3 @@ jobs:
             -e PLATFORMIO_BUILD_CACHE_DIR=/cache/.pio-cache \
             esphome/esphome:latest \
             compile "/config/${{ steps.config-info.outputs.config_file }}"
-
-      - name: Upload build artifacts
-        if: success()
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ steps.config-info.outputs.config_file }}-firmware
-          path: |
-            ${{ steps.config-info.outputs.config_dir }}/.esphome/build/**/firmware*.bin
-            ${{ steps.config-info.outputs.config_dir }}/.esphome/build/**/partitions*.bin
-            ${{ steps.config-info.outputs.config_dir }}/.esphome/build/**/bootloader*.bin
-          if-no-files-found: warn
-          retention-days: 7
