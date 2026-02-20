@@ -23,9 +23,8 @@ substitutions:
   i2s_lrclk_pin: GPIO25
   i2s_bclk_pin: GPIO26
   i2s_dout_pin: GPIO22
-  
-  # USB-PD enable pin
-  pd_enable_pin: GPIO13
+  dac_enable_pin: GPIO13
+  dac_enable_restore_mode: ALWAYS_ON
 
   # RGB LED
   rgb_led_pin: GPIO12
@@ -113,11 +112,12 @@ packages:
   ir_receiver: !include packages/ir-receiver.yaml
   monitoring: !include packages/monitoring.yaml
   oled: !include packages/oled.yaml
-  pd_enable: !include packages/pd-enable.yaml
   rotary_encoder: !include packages/rotary-encoder.yaml
   # Optional ethernet (replace wifi config above if you use this)
   # ethernet: !include packages/ethernet-w5500.yaml
 
+  dac-switch: !include packages/dac-switch.yaml
+  
   # Option A: @c-MM original port of esp32-snapclient client
   # Basic implementation without DSP controls
   #snapclient: !include packages/snapclient.yaml

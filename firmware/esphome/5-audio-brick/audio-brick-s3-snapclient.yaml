@@ -1,7 +1,7 @@
 # ============================================================
-# Amped-Esparagus - Snapclient Configuration
+# Esparagus-Audio-Brick - Snapclient Configuration
 # ============================================================
-# ESP32 audio board with PCM5100 DAC (I2S) and TPA3110/TPA3128 AMP
+# ESP32 audio board with TAS5825M DAC (I2C+I2S) with built-in DSP
 # Configured as a Snapcast client for synchronized audio
 # There are two implementations available:
 # 1) Basic snapclient without DSP controls (c-MM original port)
@@ -15,46 +15,38 @@
 
 substitutions:
   name: esphome-web-xxxxxx
-  friendly_name: Amped-Esparagus
+  friendly_name: Esparagus-Audio-Brick
   task_stack_in_psram: "false"
 
   # ===== Board-Specific Pinouts =====
-  # I2S Audio (PCM5100 DAC)
-  i2s_lrclk_pin: GPIO25
-  i2s_bclk_pin: GPIO26
-  i2s_dout_pin: GPIO22
-  
-  # USB-PD enable pin
-  pd_enable_pin: GPIO13
+  # I2S audio pins
+  i2s_lrclk_pin: GPIO15
+  i2s_bclk_pin: GPIO14
+  i2s_dout_pin: GPIO16
+
+  # TAS5825M
+  tas58xx_variant: TAS5825M
+  tas5805m_enable_pin: GPIO17
+  i2c_sda_pin: GPIO8
+  i2c_scl_pin: GPIO9
 
   # RGB LED
-  rgb_led_pin: GPIO12
-  
-  # IR Receiver
-  ir_rx_pin: GPIO39
-
-  # Rotary Encoder
-  rotary_pin_a: GPIO27
-  rotary_pin_b: GPIO33
-  rotary_btn_pin: GPIO34
-
-  # Ethernet (W5500)
-  eth_clk_pin: GPIO18
-  eth_mosi_pin: GPIO23
-  eth_miso_pin: GPIO19
-  eth_cs_pin: GPIO05
-  eth_interrupt_pin: GPIO35
-  eth_reset_pin: GPIO14
+  rgb_led_pin: GPIO21
 
   # SPI pins (for display)
-  spi_clk_pin: GPIO18
-  spi_mosi_pin: GPIO23
-  spi_miso_pin: GPIO19
+  spi_clk_pin: GPIO12
+  spi_mosi_pin: GPIO11
+  spi_miso_pin: GPIO13
   
   # Display control pins
-  display_cs_pin: GPIO15
-  display_dc_pin: GPIO04
-  display_reset_pin: GPIO32
+  display_cs_pin: GPIO47
+  display_dc_pin: GPIO38
+  display_reset_pin: GPIO48
+
+  # Ethernet pins (if using ethernet instead of wifi)
+  eth_cs_pin: GPIO10
+  eth_interrupt_pin: GPIO6
+  eth_reset_pin: GPIO5
 
   # ===== Snapcast Server Configuration =====
   snapcast_server_ip: "192.168.1.49"
@@ -63,18 +55,22 @@ substitutions:
 esphome:
   name: ${name}
   friendly_name: ${friendly_name}
-  min_version: 2025.12.2
+  min_version: 2026.1.4
+  name_add_mac_suffix: false
   platformio_options:
     board_build.flash_mode: dio
 
 esp32:
-  variant: esp32
+  variant: ESP32S3
   flash_size: 8MB
   cpu_frequency: 240MHz
   framework:
     type: esp-idf
     version: recommended
     sdkconfig_options:
+      CONFIG_ESP32S3_DATA_CACHE_64KB: "y"
+      CONFIG_ESP32S3_DATA_CACHE_LINE_64B: "y"
+      CONFIG_ESP32S3_INSTRUCTION_CACHE_32KB: "y"
       # Moves instructions and read only data from flash into PSRAM on boot.
       # Both enabled allows instructions to execute while a flash operation is in progress without needing to be placed in IRAM.
       # Considerably speeds up mWW at the cost of using more PSRAM.
@@ -83,7 +79,7 @@ esp32:
       CONFIG_BT_ALLOCATION_FROM_SPIRAM_FIRST: "y"
       CONFIG_BT_BLE_DYNAMIC_ENV_MEMORY: "y"
       CONFIG_MBEDTLS_EXTERNAL_MEM_ALLOC: "y"
-      CONFIG_MBEDTLS_SSL_PROTO_TLS1_3: "y"
+      CONFIG_MBEDTLS_SSL_PROTO_TLS1_3: "y" 
 
 logger:
   level: DEBUG
@@ -102,7 +98,9 @@ wifi:
   password: !secret esphome_wifi_password
 
 psram:
+  mode: octal
   speed: 80MHz
+  ignore_not_found: false
 
 network:
   enable_ipv6: true
@@ -110,18 +108,18 @@ network:
 # ===== Packages =====
 packages:
   light: !include packages/light.yaml
-  ir_receiver: !include packages/ir-receiver.yaml
+  # TODO: replace with 58xx
+  tas58xx_dac: !include packages/tas5805m-dac.yaml
   monitoring: !include packages/monitoring.yaml
-  oled: !include packages/oled.yaml
-  pd_enable: !include packages/pd-enable.yaml
-  rotary_encoder: !include packages/rotary-encoder.yaml
   # Optional ethernet (replace wifi config above if you use this)
   # ethernet: !include packages/ethernet-w5500.yaml
-
+  oled: !include packages/oled.yaml
+  
   # Option A: @c-MM original port of esp32-snapclient client
   # Basic implementation without DSP controls
-  #snapclient: !include packages/snapclient.yaml
+  snapclient: !include packages/snapclient.yaml
   
   # Option B: @farmed-switch fork of the c-MM snapclient with added DSP controls
   # Implements software BQ-filters for basic DACs and controls hardware DSP for DSP-enabled DACs like TAS5805M
-  snapclient_with_dsp: !include packages/snapclient-with-dsp.yaml
+  # Probably makes less sense since DAC implements hardware EQ, but left here for testing and comparison
+  #snapclient_with_dsp: !include packages/snapclient-with-dsp.yaml
