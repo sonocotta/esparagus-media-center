@@ -1,0 +1,54 @@
+# ============================================================
+# Monitoring - System Metrics and Diagnostics
+# ============================================================
+# Monitors WiFi signal, uptime, temperature, and memory usage
+# Requires substitutions:
+#   - friendly_name
+# ============================================================
+
+sensor:
+  - platform: wifi_signal
+    name: "${friendly_name} WiFi Signal"
+    update_interval: 60s
+    
+  - platform: uptime
+    name: "${friendly_name} Uptime"
+    update_interval: 60s
+    
+  - platform: internal_temperature
+    name: "${friendly_name} CPU Temperature"
+    update_interval: 60s
+    
+  - platform: template
+    name: "${friendly_name} Free Heap"
+    lambda: |-
+      return heap_caps_get_free_size(MALLOC_CAP_INTERNAL) / 1024.0;
+    unit_of_measurement: 'kB'
+    update_interval: 10s
+    
+  - platform: template
+    name: "${friendly_name} Free PSRAM"
+    lambda: |-
+      return heap_caps_get_free_size(MALLOC_CAP_SPIRAM) / 1024.0;
+    unit_of_measurement: 'kB'
+    update_interval: 10s
+    
+  - platform: debug
+    loop_time:
+      name: "${friendly_name} Loop Time"
+
+text_sensor:
+  - platform: wifi_info
+    ip_address:
+      name: "${friendly_name} IP"
+    mac_address:
+      name: "${friendly_name} MAC"
+
+binary_sensor:
+  - platform: status
+    name: "${friendly_name} Status"
+
+button:
+  - platform: restart
+    id: restart_btn
+    name: "${friendly_name} REBOOT"

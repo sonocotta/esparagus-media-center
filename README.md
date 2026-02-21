@@ -290,30 +290,36 @@ Disable SlimProto integration in the HA if you want to go the MA way. If you ena
 
 [Louder-ESP32 running ESPHome](https://www.espthings.io/index.php/2024/04/07/louder-esp32-a-hi-fi-class-d-audio-amplifier-running-esphome/)
 
-Please find specific ESPHome configs in the [firmware](/firmware/esphome/) folder. It should be noted that generally esp-idf-based configurations are preferred over the Arduino counterparts, since they are lighter, faster, and more stable, which is important for audio streaming. However, many components do not work with esp-idf; thus, Arduino examples are also provided. Due to the complexity of the TAS5805M driver, it only exists in the esp-idf variant.
+📖 **For detailed ESPHome documentation, configuration variants, building instructions, and troubleshooting, see the [ESPHome Firmware Guide](/firmware/esphome/README.md).**
 
-- [hifi-esparagus-arduino](/firmware/esphome/hifi-esparagus-arduino.yaml) and [hifi-esparagus-idf](/firmware/esphome/hifi-esparagus-idf.yaml) for HiFi-Esparagus
-- [loud-esparagus-arduino](/firmware/esphome/loud-esparagus-arduino.yaml) and [loud-esparagus-idf](/firmware/esphome/loud-esparagus-idf.yaml) for Loud-Esparagus
-- [amped-esparagus-arduino](/firmware/esphome/amped-esparagus-arduino.yaml) and [amped-esparagus-idf](/firmware/esphome/amped-esparagus-idf.yaml) for Amped-Esparagus
-- [louder-esparagus-idf](/firmware/esphome/louder-esparagus-idf.yaml) for Louder-Esparagus
+ESPHome configs are available in the [firmware/esphome/](/firmware/esphome/) folder, organized by hardware variant. All devices support multiple firmware configurations:
+
+- **Standard Media Player** - Full Home Assistant integration with TTS, announcements, and audio effects
+- **Snapclient** - Synchronized multi-room audio with 18-band equalizer (software DSP)
+- **Sendspin** - ESPHome-native multi-room playback (experimental)
+
+All configurations use the ESP-IDF framework (preferred over Arduino) for better audio performance and stability. Each hardware variant has its own directory with device-specific pinouts and features:
+
+- [1-hifi-esparagus/](/firmware/esphome/1-hifi-esparagus/) - PCM5100 DAC configurations
+- [2-loud-esparagus/](/firmware/esphome/2-loud-esparagus/) - Dual MAX98357A DAC configurations  
+- [3-louder-esparagus/](/firmware/esphome/3-louder-esparagus/) - TAS5805M DAC with DSP
+- [4-amped-esapragus/](/firmware/esphome/4-amped-esapragus/) - PCM5100 + TPA3110/TPA3128 amp
+- [5-audio-brick/](/firmware/esphome/5-audio-brick/) - TAS5825M DIN-rail module (ESP32)
+- [5-audio-brick-s3/](/firmware/esphome/5-audio-brick-s3/) - TAS5825M DIN-rail module (ESP32-S3)
 
 #### Snapclient multi-room playback (experimental)
 
-Also, experimental snapclient configs
+Snapclient configurations provide synchronized multi-room audio with advanced DSP controls (18-band equalizer). See the [ESPHome Firmware Guide](/firmware/esphome/README.md#snapclient) for detailed information.
 
-- [hifi-esparagus-idf-snapclient](/firmware/esphome/hifi-esparagus-idf-snapclient.yaml)
-- [loud-esparagus-idf-snapclient](/firmware/esphome/loud-esparagus-idf-snapclient.yaml)
-- [amped-esparagus-idf-snapclient](/firmware/esphome/amped-esparagus-idf-snapclient.yaml)
-- [louder-esparagus-idf-snapclient](/firmware/esphome/louder-esparagus-idf-snapclient.yaml)
+Available in all hardware variant directories:
+- `*-snapclient.yaml` configurations in each device folder
 
 #### Sendspin multi-room playback (experimental)
 
-Starting December 2025, the new [Sendspin protocol](https://www.music-assistant.io/player-support/sendspin/) become available for multiroom playback. Although it is in the very early stage of development, it promises really good audio sync and a set of really interesting features, like visualisation support and server-controlled DSP. It is not ready for general use, but I'd encourage everyone to try it out and give some feedback to developers to support this great initiative.
+Starting December 2025, the new [Sendspin protocol](https://www.music-assistant.io/player-support/sendspin/) became available for multiroom playback. Although it is in the very early stage of development, it promises really good audio sync and a set of really interesting features, like visualization support and server-controlled DSP. See the [ESPHome Firmware Guide](/firmware/esphome/README.md#sendspin) for detailed information.
 
-- [hifi-esparagus-idf-sendspin](/firmware/esphome/hifi-esparagus-idf-sendspin.yaml)
-- [loud-esparagus-idf-sendspin](/firmware/esphome/loud-esparagus-idf-sendspin.yaml)
-- [amped-esparagus-idf-sendspin](/firmware/esphome/amped-esparagus-idf-sendspin.yaml)
-- [louder-esparagus-idf-sendspin](/firmware/esphome/louder-esparagus-idf-sendspin.yaml)
+Available in all hardware variant directories:
+- `*-sendspin.yaml` configurations in each device folder
 
 References:
 

@@ -1,0 +1,15 @@
+# ============================================================
+# PD Enable - USB-PD Trigger Control
+# ============================================================
+# Enables USB-PD trigger chip to request higher voltage.
+# Requires substitutions:
+#   - pd_enable_pin
+# ============================================================
+
+switch:
+  - platform: gpio
+    id: pd_enable
+    pin: ${pd_enable_pin}
+    restore_mode: ALWAYS_ON
+    inverted: true
+    name: "PD Power Enable"

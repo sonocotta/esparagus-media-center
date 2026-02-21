@@ -1,0 +1,72 @@
+name: Build ESPHome Configs
+
+on:
+  pull_request:
+    paths:
+      - 'firmware/esphome/**'
+      - '.github/workflows/build-esphome.yml'
+
+jobs:
+  prepare:
+    name: Prepare Build Matrix
+    runs-on: ubuntu-latest
+    outputs:
+      configs: ${{ steps.find-configs.outputs.configs }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Find ESPHome configs
+        id: find-configs
+        run: |
+          configs=$(find firmware/esphome -maxdepth 2 -name "*.yaml" -type f \
+            | grep -v "/packages/" \
+            | grep -v "/secrets/" \
+            | grep -v "secrets.yaml" \
+            | jq -R -s -c 'split("\n")[:-1]')
+          echo "configs=$configs" >> $GITHUB_OUTPUT
+          echo "Found configs:"
+          echo "$configs" | jq -r '.[]'
+
+  build:
+    name: Build ${{ matrix.config }}
+    needs: prepare
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        config: ${{ fromJson(needs.prepare.outputs.configs) }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Get config directory and filename
+        id: config-info
+        run: |
+          config_dir=$(dirname "${{ matrix.config }}")
+          config_file=$(basename "${{ matrix.config }}")
+          echo "config_dir=$config_dir" >> $GITHUB_OUTPUT
+          echo "config_file=$config_file" >> $GITHUB_OUTPUT
+          echo "Building: $config_file from $config_dir"
+
+      - name: Cache ESPHome build
+        uses: actions/cache@v3
+        with:
+          path: .esphome-cache
+          key: esphome-${{ hashFiles('firmware/esphome/packages/**') }}-${{ matrix.config }}
+          restore-keys: |
+            esphome-${{ hashFiles('firmware/esphome/packages/**') }}-
+            esphome-
+
+      - name: Copy secrets example file for CI build
+        run: |
+          cp firmware/esphome/secrets/secrets.yaml.example \
+             "${{ steps.config-info.outputs.config_dir }}/secrets.yaml"
+
+      - name: Build ESPHome config
+        run: |
+          docker run --rm \
+            -v "${{ github.workspace }}/${{ steps.config-info.outputs.config_dir }}:/config" \
+            -v "${{ github.workspace }}/firmware/esphome/packages:/config/packages" \
+            -v "${{ github.workspace }}/.esphome-cache:/cache" \
+            -e PLATFORMIO_BUILD_CACHE_DIR=/cache/.pio-cache \
+            esphome/esphome:latest \
+            compile "/config/${{ steps.config-info.outputs.config_file }}"
