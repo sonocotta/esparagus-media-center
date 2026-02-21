@@ -26,7 +26,7 @@ This directory contains ESPHome firmware configurations for all Esparagus Media 
 ## Overview
 
 All configurations use:
-- **ESP-IDF framework** for better audio performance and stability. I used to provide Arduino based examples as well, but they proved to be poor user experience.
+- **ESP-IDF framework** for better audio performance and stability. I used to provide Arduino-based examples as well, but they proved to be a poor user experience.
 - **Modular package system** for code reusability (see `packages/` directory)
 - **Shared secrets** for Wi-Fi credentials and API keys
 - **Common features**: Wi-Fi, OTA updates, API, debug logging, RGB LED, IR receiver
@@ -46,17 +46,16 @@ Each hardware variant has 2-3 firmware options depending on your use case.
 **Configurations:**
 - `hifi-esparagus-idf.yaml` - Standard media player with mixer/resampler
 - `hifi-esparagus-idf-snapclient.yaml` - Snapcast client, 2 variations - basic once and with software DSP controls
-- `hifi-esparagus-idf-sendspin.yaml` - Sendspin synchronized playback, very much experimental but working quire impressively well
+- `hifi-esparagus-idf-sendspin.yaml` - Sendspin synchronized playback, very much experimental but working quite impressively well
 
-<!-- Screenshot placeholder -->
-_Screenshot: HiFi-Esparagus ESPHome dashboard_
+<img width="923" height="1224" alt="image" src="https://github.com/user-attachments/assets/add2bcec-46a6-4068-b173-084b964fcf83" />
 
 ---
 
 ### 2. Loud-Esparagus
 
 **DAC**: Dual MAX98357A (I2S)  
-**Target**: Built-in stereo amplifier for direct speaker connection (small spekers ~5W) 
+**Target**: Built-in stereo amplifier for direct speaker connection (small speakers ~5W) 
 **Features**: RGB LED, IR receiver, DAC enable control
 
 **Configurations:**
@@ -64,8 +63,7 @@ _Screenshot: HiFi-Esparagus ESPHome dashboard_
 - `loud-esparagus-idf-snapclient.yaml` - Snapcast client, 2 variations - basic once and with software DSP controls
 - `loud-esparagus-idf-sendspin.yaml` - Sendspin synchronized playback, very much experimental but working quire impressively well
 
-<!-- Screenshot placeholder -->
-_Screenshot: Loud-Esparagus ESPHome dashboard_
+<img width="923" height="1224" alt="image" src="https://github.com/user-attachments/assets/a6aea826-c532-450e-8944-e5b7e8b16f27" />
 
 ---
 
@@ -80,8 +78,7 @@ _Screenshot: Loud-Esparagus ESPHome dashboard_
 - `louder-esparagus-idf-snapclient.yaml` - Snapcast client with DSP controls, software DSP makes less sense, since hardware DSP is much more efficient here
 - `louder-esparagus-idf-sendspin.yaml` - Sendspin synchronized playback, very much experimental but working quire impressively well, especially in combination with built-in DSP
 
-<!-- Screenshot placeholder -->
-_Screenshot: Louder-Esparagus ESPHome dashboard_
+<img width="923" height="1224" alt="image" src="https://github.com/user-attachments/assets/36084c57-3cf2-4ce3-bc2d-26e8d5b52b04" />
 
 ---
 
@@ -99,8 +96,7 @@ _Screenshot: Louder-Esparagus ESPHome dashboard_
 - `amped-esparagus-idf-sendspin.yaml` - Sendspin synchronized playback
 - `amped-esparagus-idf-j-sendspin.yaml` - Sendspin with Ethernet/OLED (Revision J/TPA3128 with MUTE amp control)
 
-<!-- Screenshot placeholder -->
-_Screenshot: Amped-Esparagus ESPHome dashboard_
+<img width="923" height="1224" alt="image" src="https://github.com/user-attachments/assets/2b68df50-4e4d-4217-b161-adc9de40eb6e" />
 
 ---
 
@@ -124,7 +120,7 @@ All examples allow 3 DSP configurations:
 
 - 15-band EQ in ganged mode (both channels share DSP settings)
 - 15-band Bi-amp (individual EQ per channel)
-- Filter presets - allow applying 4-th order low or high frequency filters (60-150 Hz), mainly for bi-amp subwoofer/satellite use
+- Filter presets - allow applying 4th-order low or high frequency filters (60-150 Hz), mainly for bi-amp subwoofer/satellite use
 
 #### Audio Brick S3 (ESP32-S3)
 
@@ -142,10 +138,27 @@ All examples allow 3 DSP configurations:
 
 - 15-band EQ in ganged mode (both channels share DSP settings)
 - 15-band Bi-amp (individual EQ per channel)
-- Filter presets - allow applying 4-th order low or high frequency filters (60-150 Hz), mainly for bi-amp subwoofer/satellite use
+- Filter presets - allow applying 4th-order low or high frequency filters (60-150 Hz), mainly for bi-amp subwoofer/satellite use
 
-<!-- Screenshot placeholder -->
-_Screenshot: Audio Brick ESPHome dashboard_
+<img width="923" height="1224" alt="image" src="https://github.com/user-attachments/assets/e36a8df6-e476-4d3b-afdf-12fc9db4cc66" />
+
+#### Audio Brick TAS58XX driver
+
+There is a new driver in development that supports both TAS5805M and TAS5825M DACs with a few extra DSP options. At the moment, it allows to configure 3 distinct EQ modes:
+
+- 15-band EQ (ganged), similar to what was available for TAS5805M driver
+
+<img width="374" height="944" alt="image" src="https://github.com/user-attachments/assets/6ef6dd41-05f2-467b-b027-c4c89d00696e" />
+
+- 15-band EQ (individual controls per channel), allows you to fine-tune speakers in assymethrical setup
+
+<img width="443" height="1132" alt="image" src="https://github.com/user-attachments/assets/f056cda6-a997-4b1d-a702-898c930a6932" />
+
+- High/Low frequency profiles for bi-amp config, allows to filter out subwoofer and satellite channels with specific frequency in 60..150Hz range with 10Hz steps.
+
+<img width="504" height="1039" alt="image" src="https://github.com/user-attachments/assets/ae53213c-0a28-4ed2-bed6-9dbcd960a8c6" />
+
+The new driver also allows to adjust gain for both channels, which is essentially a balance for speakers that have different sensitivity and impedance.
 
 ---
 
@@ -166,8 +179,7 @@ Full-featured ESPHome media player with:
 
 **Best for**: General Home Assistant integration, TTS announcements, standard audio playback
 
-<!-- Screenshot placeholder -->
-_Screenshot: Media player controls in Home Assistant_
+<img width="854" height="1168" alt="image" src="https://github.com/user-attachments/assets/047d8522-06d5-46bc-834f-3104928591a5" />
 
 ---
 
@@ -183,19 +195,18 @@ Snapcast client implementation with enhanced features:
 - Perfect audio synchronization across multiple devices
 - Low latency streaming
 
-**Best for**: Multi-room synchronized audio with central Snapcast server
+**Best for**: Multi-room synchronized audio with a central Snapcast server
 
 **Requirements**: Snapcast server (can run in Home Assistant add-on)
 
 **Drawbacks**: Very much experimental at the moment
-- do not support harware mute
+- do not support hardware mute
 - do not support voice announcements
-- limitations when using together with TAS58xx DSP (may not apply EQ if starts without audio)
+- limitations when using together with TAS58xx DSP (may not apply EQ if it starts without audio)
 - do not support displaying audio title
-- do not allow conttrol volume from the snapclient node
+- do not allow control volume from the snapclient node
 
-<!-- Screenshot placeholder -->
-_Screenshot: Snapclient equalizer controls_
+<img width="872" height="1160" alt="image" src="https://github.com/user-attachments/assets/6117be69-e20f-41f3-be36-fae996044c8e" />
 
 ---
 
@@ -210,14 +221,13 @@ Sendspin synchronized audio playback:
 - Simplified setup compared to Snapcast
 - Direct integration with Home Assistant
 - Very much experimental (in beta currently)
-- Allows pulling title, artist and control playback
+- Allows pulling title, artist, and controlling playback
 
 **Best for**: Multi-room audio without external server infrastructure
 
 **Note**: Experimental feature, firmware version 2026.2.0+ required
 
-<!-- Screenshot placeholder -->
-_Screenshot: Sendspin configuration_
+<img width="846" height="1198" alt="image" src="https://github.com/user-attachments/assets/54a9b535-8296-4267-bf6b-4abd00b070f8" />
 
 ---
 
