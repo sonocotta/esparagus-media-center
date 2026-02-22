@@ -96,17 +96,31 @@ network:
 
 # ===== Packages =====
 packages:
-  audio: !include packages/sendspin-audio.yaml
-  
-  # Option A: no OLED connected
-  sendspin: !include packages/sendspin-with-dac-enable.yaml
-  # Option B: OLED displays clock when idling, and track/artist info when playing
+  esparagus_remote:
+    url: https://github.com/sonocotta/esparagus-media-center
+    ref: main
+    files:
+      # Option A: no OLED connected
+      - firmware/esphome/packages/sendspin-with-dac-enable.yaml
+      # Option B: OLED displays clock when idling, and track/artist info when playing
+      # - firmware/esphome/packages/sendspin-with-dac-enable-and-oled.yaml
+      # - firmware/esphome/packages/oled-sendspin.yaml
+
+      - firmware/esphome/packages/sendspin-audio.yaml
+      - firmware/esphome/packages/light-8.yaml
+      - firmware/esphome/packages/ir-receiver.yaml
+      - firmware/esphome/packages/rotary-encoder.yaml
+      - firmware/esphome/packages/monitoring.yaml
+      # Optional ethernet (replace wifi config if you use this)
+      # - firmware/esphome/packages/ethernet-w5500.yaml
+
+  # Debug/local development fallback:
+  # audio: !include packages/sendspin-audio.yaml
+  # sendspin: !include packages/sendspin-with-dac-enable.yaml
   # sendspin: !include packages/sendspin-with-dac-enable-and-oled.yaml
   # oled: !include packages/oled-sendspin.yaml
-  
-  light: !include packages/light-8.yaml
-  ir_receiver: !include packages/ir-receiver.yaml
-  rotary_encoder: !include packages/rotary-encoder.yaml
-  # Optional ethernet (replace wifi config above if you use this)
+  # light: !include packages/light-8.yaml
+  # ir_receiver: !include packages/ir-receiver.yaml
+  # rotary_encoder: !include packages/rotary-encoder.yaml
   # ethernet: !include packages/ethernet-w5500.yaml
-  monitoring: !include packages/monitoring.yaml
+  # monitoring: !include packages/monitoring.yaml

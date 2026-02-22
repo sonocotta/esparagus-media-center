@@ -72,7 +72,6 @@ packages:
   esparagus_remote:
     url: https://github.com/sonocotta/esparagus-media-center
     ref: main
-    refresh: 1d
     files:
       - firmware/esphome/packages/sendspin-audio.yaml
       - firmware/esphome/packages/sendspin.yaml
