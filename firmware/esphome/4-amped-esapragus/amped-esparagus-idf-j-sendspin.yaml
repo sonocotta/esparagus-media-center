@@ -1,9 +1,8 @@
 # ============================================================
-# Amped-Esparagus - Media Player Configuration
+# Amped-Esparagus - Sendspin Configuration
 # ============================================================
 # ESP32 audio board with PCM5100 DAC (I2S) and TPA3110/TPA3128 AMP
-# Features: Wi-Fi media player with mixer/resampler,
-#           announcements, RGB LED, IR receiver
+# Configured with Sendspin for synchronized multi-room audio
 # Board-specific pinouts defined in substitutions
 # Functional blocks imported from /packages
 # ============================================================
@@ -18,9 +17,7 @@ substitutions:
   i2s_lrclk_pin: GPIO25
   i2s_bclk_pin: GPIO26
   i2s_dout_pin: GPIO22
-  
-  # USB-PD enable pin
-  pd_enable_pin: GPIO13
+  dac_enable_pin: GPIO13
 
   # RGB LED
   rgb_led_pin: GPIO12
@@ -50,7 +47,7 @@ substitutions:
   display_cs_pin: GPIO15
   display_dc_pin: GPIO04
   display_reset_pin: GPIO32
-
+  
 esphome:
   name: ${name}
   friendly_name: ${friendly_name}
@@ -99,13 +96,17 @@ network:
 
 # ===== Packages =====
 packages:
-  audio: !include packages/audio.yaml
-  media_player: !include packages/media-player.yaml
+  audio: !include packages/sendspin-audio.yaml
+  
+  # Option A: no OLED connected
+  sendspin: !include packages/sendspin-with-dac-enable.yaml
+  # Option B: OLED displays clock when idling, and track/artist info when playing
+  # sendspin: !include packages/sendspin-with-dac-enable-and-oled.yaml
+  # oled: !include packages/oled-sendspin.yaml
+  
   light: !include packages/light-8.yaml
   ir_receiver: !include packages/ir-receiver.yaml
-  pd_enable: !include packages/pd-enable.yaml
   rotary_encoder: !include packages/rotary-encoder.yaml
   # Optional ethernet (replace wifi config above if you use this)
   # ethernet: !include packages/ethernet-w5500.yaml
   monitoring: !include packages/monitoring.yaml
-  oled: !include packages/oled.yaml

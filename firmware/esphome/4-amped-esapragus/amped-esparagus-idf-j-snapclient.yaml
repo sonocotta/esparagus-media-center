@@ -1,9 +1,14 @@
 # ============================================================
-# Amped-Esparagus - Media Player Configuration
+# Amped-Esparagus - Snapclient Configuration
 # ============================================================
 # ESP32 audio board with PCM5100 DAC (I2S) and TPA3110/TPA3128 AMP
-# Features: Wi-Fi media player with mixer/resampler,
-#           announcements, RGB LED, IR receiver
+# Configured as a Snapcast client for synchronized audio
+# There are two implementations available:
+# 1) Basic snapclient without DSP controls (c-MM original port)
+# 2) snapclient with added DSP controls (farmed-switch fork of c-MM port)
+#     Frequencies: 40, 50, 60, 70, 80, 90, 100, 110, 120, 130,
+#                 140, 200, 315, 500, 800, 1250, 2000, 5000 Hz
+#     Range: -15dB to +15dB per band
 # Board-specific pinouts defined in substitutions
 # Functional blocks imported from /packages
 # ============================================================
@@ -11,16 +16,15 @@
 substitutions:
   name: esphome-web-47b85c
   friendly_name: Amped-Esparagus
-  task_stack_in_psram: "false" 
+  task_stack_in_psram: "false"
 
   # ===== Board-Specific Pinouts =====
   # I2S Audio (PCM5100 DAC)
   i2s_lrclk_pin: GPIO25
   i2s_bclk_pin: GPIO26
   i2s_dout_pin: GPIO22
-  
-  # USB-PD enable pin
-  pd_enable_pin: GPIO13
+  dac_enable_pin: GPIO13
+  dac_enable_restore_mode: ALWAYS_ON
 
   # RGB LED
   rgb_led_pin: GPIO12
@@ -51,6 +55,10 @@ substitutions:
   display_dc_pin: GPIO04
   display_reset_pin: GPIO32
 
+  # ===== Snapcast Server Configuration =====
+  snapcast_server_ip: "192.168.1.49"
+  snapcast_server_port: "1704"
+  
 esphome:
   name: ${name}
   friendly_name: ${friendly_name}
@@ -99,13 +107,20 @@ network:
 
 # ===== Packages =====
 packages:
-  audio: !include packages/audio.yaml
-  media_player: !include packages/media-player.yaml
   light: !include packages/light-8.yaml
   ir_receiver: !include packages/ir-receiver.yaml
-  pd_enable: !include packages/pd-enable.yaml
+  monitoring: !include packages/monitoring.yaml
+  oled: !include packages/oled.yaml
   rotary_encoder: !include packages/rotary-encoder.yaml
   # Optional ethernet (replace wifi config above if you use this)
   # ethernet: !include packages/ethernet-w5500.yaml
-  monitoring: !include packages/monitoring.yaml
-  oled: !include packages/oled.yaml
+
+  dac-switch: !include packages/dac-switch.yaml
+  
+  # Option A: @c-MM original port of esp32-snapclient client
+  # Basic implementation without DSP controls
+  snapclient: !include packages/snapclient.yaml
+  
+  # Option B: @farmed-switch fork of the c-MM snapclient with added DSP controls
+  # Implements software BQ-filters for basic DACs and controls hardware DSP for DSP-enabled DACs like TAS5805M
+  #snapclient_with_dsp: !include packages/snapclient-with-dsp.yaml

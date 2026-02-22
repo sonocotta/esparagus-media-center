@@ -1,0 +1,7 @@
+.vscode-ctags
+**/.DS_Store
+
+secrets.yaml
+.esphome-cache/**
+.DS_Store
+.esphome

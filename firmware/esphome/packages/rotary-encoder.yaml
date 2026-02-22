@@ -1,0 +1,25 @@
+# ============================================================
+# Rotary Encoder - Button and Encoder Sensor
+# ============================================================
+# Requires substitutions:
+#   - friendly_name
+#   - rotary_pin_a
+#   - rotary_pin_b
+#   - rotary_btn_pin
+# ============================================================
+
+binary_sensor:
+  - platform: gpio
+    id: rotary_btn
+    name: "${friendly_name} Rotary button"
+    pin: ${rotary_btn_pin}
+
+sensor:
+  - platform: rotary_encoder
+    name: "${friendly_name} Rotary Encoder"
+    pin_a: ${rotary_pin_a}
+    pin_b: ${rotary_pin_b}
+    on_clockwise:
+      - logger.log: "Rotary Turned Clockwise"
+    on_anticlockwise:
+      - logger.log: "Rotary Turned Anticlockwise"
