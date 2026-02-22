@@ -109,6 +109,6 @@ packages:
   media_player: !include packages/media-player-tas58xx.yaml
   light: !include packages/light.yaml
   # Optional ethernet (replace wifi config above if you use this)
-  ethernet: !include packages/ethernet-w5500.yaml
+  #ethernet: !include packages/ethernet-w5500.yaml
   monitoring: !include packages/monitoring.yaml
   oled: !include packages/oled.yaml
