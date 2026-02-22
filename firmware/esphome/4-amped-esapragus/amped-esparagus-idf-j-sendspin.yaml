@@ -76,9 +76,6 @@ esp32:
 logger:
   level: DEBUG
 
-debug:
-  update_interval: 5s
-
 api:
 
 ota:

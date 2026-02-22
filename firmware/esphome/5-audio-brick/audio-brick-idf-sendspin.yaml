@@ -27,7 +27,6 @@ substitutions:
   # RGB LED
   rgb_led_pin: GPIO12
 
-
   # Ethernet (W5500)
   eth_clk_pin: GPIO18
   eth_mosi_pin: GPIO23
@@ -81,9 +80,6 @@ esp32:
 
 logger:
   level: DEBUG
-
-debug:
-  update_interval: 5s
 
 api:
   on_client_connected: 

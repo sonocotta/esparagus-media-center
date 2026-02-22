@@ -18,3 +18,5 @@ ethernet:
   cs_pin: ${eth_cs_pin}
   interrupt_pin: ${eth_interrupt_pin}
   reset_pin: ${eth_reset_pin}
+
+# wifi: !remove
