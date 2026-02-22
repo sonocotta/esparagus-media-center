@@ -62,6 +62,8 @@ esp32:
   framework:
     type: esp-idf
     version: recommended
+    advanced:
+      minimum_chip_revision: "3.1" 
     sdkconfig_options:
       # Moves instructions and read only data from flash into PSRAM on boot.
       # Both enabled allows instructions to execute while a flash operation is in progress without needing to be placed in IRAM.
@@ -95,11 +97,16 @@ network:
 # ===== Packages =====
 packages:
   audio: !include packages/sendspin-audio.yaml
+  
+  # Option A: no OLED connected
   sendspin: !include packages/sendspin-with-dac-enable.yaml
+  # Option B: OLED displays clock when idling, and track/artist info when playing
+  # sendspin: !include packages/sendspin-with-dac-enable-and-oled.yaml
+  # oled: !include packages/oled-sendspin.yaml
+  
   light: !include packages/light-8.yaml
   ir_receiver: !include packages/ir-receiver.yaml
   rotary_encoder: !include packages/rotary-encoder.yaml
   # Optional ethernet (replace wifi config above if you use this)
   # ethernet: !include packages/ethernet-w5500.yaml
   monitoring: !include packages/monitoring.yaml
-  oled: !include packages/oled-sendspin.yaml

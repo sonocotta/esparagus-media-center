@@ -10,6 +10,12 @@
 #   - display_reset_pin
 # ============================================================
 
+api:
+  on_client_connected: 
+    then:
+      - display.page.show: page_clock
+      - component.update: spi_display
+
 text_sensor:
   # These don't have names, they don't need sharing back to HA (MA knows)
   - platform: sendspin

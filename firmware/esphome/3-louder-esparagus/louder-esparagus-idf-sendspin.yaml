@@ -71,6 +71,8 @@ esp32:
   framework:
     type: esp-idf
     version: recommended
+    advanced:
+      minimum_chip_revision: "3.1" 
     sdkconfig_options:
       # Moves instructions and read only data from flash into PSRAM on boot.
       # Both enabled allows instructions to execute while a flash operation is in progress without needing to be placed in IRAM.
@@ -86,10 +88,6 @@ logger:
   level: DEBUG
 
 api:
-  on_client_connected: 
-    then:
-      - display.page.show: page_clock
-      - component.update: spi_display
 
 ota:
   platform: esphome
@@ -111,11 +109,16 @@ http_request:
 packages:
   tas5805m_dac: !include packages/tas5805m-dac.yaml
   audio: !include packages/sendspin-audio-tas5805m.yaml
-  sendspin: !include packages/sendspin-tas5805m-with-oled.yaml
+
+  # Option A: no OLED connected
+  sendspin: !include packages/sendspin-tas5805m.yaml
+  # Option B: OLED displays clock when idling, and track/artist info when playing
+  # sendspin: !include packages/sendspin-tas5805m-with-oled.yaml
+  # oled: !include packages/oled-sendspin.yaml
+  
   light: !include packages/light.yaml
   pd_enable: !include packages/pd-enable.yaml
   ir_receiver: !include packages/ir-receiver.yaml
   # Optional ethernet (replace wifi config above if you use this)
   # ethernet: !include packages/ethernet-w5500.yaml
   monitoring: !include packages/monitoring.yaml
-  oled: !include packages/oled-sendspin.yaml
