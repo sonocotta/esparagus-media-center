@@ -99,13 +99,28 @@ network:
 
 # ===== Packages =====
 packages:
-  audio: !include packages/audio.yaml
-  media_player: !include packages/media-player.yaml
-  light: !include packages/light-8.yaml
-  ir_receiver: !include packages/ir-receiver.yaml
-  pd_enable: !include packages/pd-enable.yaml
-  rotary_encoder: !include packages/rotary-encoder.yaml
-  # Optional ethernet (replace wifi config above if you use this)
+  esparagus_remote:
+    url: https://github.com/sonocotta/esparagus-media-center
+    ref: main
+    files:
+      - firmware/esphome/packages/audio.yaml
+      - firmware/esphome/packages/media-player.yaml
+      - firmware/esphome/packages/light-8.yaml
+      - firmware/esphome/packages/ir-receiver.yaml
+      - firmware/esphome/packages/pd-enable.yaml
+      - firmware/esphome/packages/rotary-encoder.yaml
+      - firmware/esphome/packages/monitoring.yaml
+      - firmware/esphome/packages/oled.yaml
+      # Optional ethernet (replace wifi config if you use this)
+      # - firmware/esphome/packages/ethernet-w5500.yaml
+
+  # Debug/local development fallback:
+  # audio: !include packages/audio.yaml
+  # media_player: !include packages/media-player.yaml
+  # light: !include packages/light-8.yaml
+  # ir_receiver: !include packages/ir-receiver.yaml
+  # pd_enable: !include packages/pd-enable.yaml
+  # rotary_encoder: !include packages/rotary-encoder.yaml
   # ethernet: !include packages/ethernet-w5500.yaml
-  monitoring: !include packages/monitoring.yaml
-  oled: !include packages/oled.yaml
+  # monitoring: !include packages/monitoring.yaml
+  # oled: !include packages/oled.yaml
