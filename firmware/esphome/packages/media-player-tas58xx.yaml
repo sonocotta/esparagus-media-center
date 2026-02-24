@@ -2,11 +2,11 @@
 # Media Player - Speaker Platform with Announcement Ducking
 # ============================================================
 # Configures media player with announcement ducking logic
-# Uses TAS58xx DAC, so depends on audio-tas58xx.yaml for speaker stack
+# Uses TAS58xx DAC, so depends on audio-external-dac.yaml for speaker stack
 # Requires substitutions:
 #   - friendly_name
 #   - task_stack_in_psram
-# Dependencies: audio-tas58xx.yaml (speaker stack)
+# Dependencies: audio-external-dac.yaml (speaker stack)
 # ============================================================
 
 globals:
@@ -68,7 +68,7 @@ media_player:
           then:
             - lambda: |-
                 id(announcement_triggered) = true;
-                id(current_volume) = id(tas58xx_dac).volume();
+                id(current_volume) = id(external_dac).volume();
             - light.turn_on:
                 id: rgb_front_led
                 blue: 100%
@@ -82,7 +82,7 @@ media_player:
             - wait_until:
                 media_player.is_announcing: external_media_player
             - delay: 0.75s
-            - lambda: id(tas58xx_dac).set_volume(id(announce_volume).state / 100);
+            - lambda: id(external_dac).set_volume(id(announce_volume).state / 100);
             - wait_until:
                 - not:
                     media_player.is_announcing: external_media_player
@@ -90,7 +90,7 @@ media_player:
                       id: media_spk_mixer_input
                       decibel_reduction: 0
                       duration: 1.0s
-            - lambda: id(tas58xx_dac).set_volume(id(current_volume));
+            - lambda: id(external_dac).set_volume(id(current_volume));
             - light.turn_off:
                 id: rgb_front_led
             - lambda: id(announcement_triggered) = false;

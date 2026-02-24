@@ -109,11 +109,11 @@ packages:
     ref: main
     files:
       # Option A: TAS58xx configured with ganged 15-band EQ
-      - firmware/esphome/packages/tas58xx-dac.yaml
+      - firmware/esphome/packages/dac-tas58xx.yaml
       # Option B: TAS58xx configured with individual 15-band EQ per channel
-      # - firmware/esphome/packages/tas58xx-dac-biamp.yaml
+      # - firmware/esphome/packages/dac-tas58xx-biamp.yaml
       # Option C: TAS58xx configured with bi-amp mode, with filters applied to both channels (HF or LF)
-      # - firmware/esphome/packages/tas58xx-dac-presets.yaml
+      # - firmware/esphome/packages/dac-tas58xx-presets.yaml
 
       # Option A: @c-MM original port of esp32-snapclient client
       # Basic implementation without DSP controls
@@ -129,9 +129,9 @@ packages:
       # - firmware/esphome/packages/ethernet-w5500.yaml
 
   # Debug/local development fallback:
-  # tas58xx_dac: !include packages/tas58xx-dac.yaml
-  # tas58xx_dac_biamp: !include packages/tas58xx-dac-biamp.yaml
-  # tas58xx_dac_biamp: !include packages/tas58xx-dac-presets.yaml
+  # external_dac: !include packages/dac-tas58xx.yaml
+  # external_dac: !include packages/dac-tas58xx-biamp.yaml
+  # external_dac: !include packages/dac-tas58xx-presets.yaml
   # monitoring: !include packages/monitoring.yaml
   # ethernet: !include packages/ethernet-w5500.yaml
   # oled: !include packages/oled.yaml
