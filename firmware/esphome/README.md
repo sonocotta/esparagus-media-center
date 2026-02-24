@@ -356,7 +356,7 @@ substitutions:
 Most functionality is imported from packages. To customize:
 
 1. **Shared packages** (used by all devices): `packages/audio.yaml`, `packages/oled.yaml`
-2. **DAC-specific packages**: `packages/audio-tas5805m.yaml`, `packages/audio-tas58xx.yaml`
+2. **DAC-specific packages**: `packages/audio-external-dac.yaml`, `packages/audio-external-dac.yaml`
 3. **Feature packages**: `packages/sendspin-*.yaml`, `packages/ethernet-w5500.yaml`
 
 Feel free to experiment with IR/RGB/Rotary/OLEd configuration. I on;y provide most basic configuration to get you started. Don't hesitate to extend it.
@@ -396,10 +396,10 @@ The package system promotes code reusability across different hardware variants:
 
 ### DAC-Specific Packages
 
-- **`audio-tas5805m.yaml`**: TAS5805M I2C DAC configuration
-- **`audio-tas58xx.yaml`**: Generic TAS58xx family DAC support
-- **`tas58xx-dac.yaml`**: TAS58xx with basic DAC config
-- **`tas58xx-dac-biamp.yaml`**: TAS58xx with bi-amp configuration
+- **`audio-external-dac.yaml`**: TAS5805M I2C DAC configuration
+- **`audio-external-dac.yaml`**: Generic TAS58xx family DAC support
+- **`dac-tas58xx.yaml`**: TAS58xx with basic DAC config
+- **`dac-tas58xx-biamp.yaml`**: TAS58xx with bi-amp configuration
 
 ### Feature Packages
 
