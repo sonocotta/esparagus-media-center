@@ -22,6 +22,7 @@ binary_sensor:
 
 sensor:
   - platform: rotary_encoder
+    id: rotary_dial
     name: "${friendly_name} Rotary Encoder"
     pin_a: ${rotary_pin_a}
     pin_b: ${rotary_pin_b}
