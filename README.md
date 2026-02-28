@@ -772,7 +772,12 @@ Although you're free to use it your way, using the pinout above, I'd expect the 
 
 The Audio Brick is designed with a DIN-rail mount option, making it suitable not only for hobby projects but also for structured and semi-industrial installations. By mounting directly in an electrical cabinet or distribution box, it becomes easy to wire, power, and manage multiple units in a clean and reliable way. Since each device drives two channels, you can scale simply by adding more Bricks — one per room, per zone, or per speaker as needed. This modular approach makes it practical for whole-home or even small commercial audio installs where consistency and neat wiring matter. 
 
-For added convenience, it will use plug-in connector pairs (not yet on the prototype), which simplify installation and allow quick replacement in case of maintenance or failure.
+<img width="632" height="868" alt="Audio Brick diagrams-Front+Back drawio" src="https://github.com/user-attachments/assets/d2134930-3935-4438-941e-3ede950112fb" />
+
+For added convenience, it uses plug-in connector pairs (not yet on the prototype), which simplify installation and allow quick replacement in case of maintenance or failure.
+
+<img width="770" height="670" alt="image" src="https://github.com/user-attachments/assets/27671666-027b-4462-81c2-f58d77ac949b" />
+
 
 ### Relay Driver
 
