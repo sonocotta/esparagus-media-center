@@ -13,6 +13,12 @@ binary_sensor:
     id: rotary_btn
     name: "${friendly_name} Rotary button"
     pin: ${rotary_btn_pin}
+    filters:
+      invert: # idle state must be 'off' to support click actions
+    on_click:
+      - logger.log: "Rotary Single Click"
+    on_double_click:
+      - logger.log: "Rotary Double Click"
 
 sensor:
   - platform: rotary_encoder
