@@ -80,5 +80,45 @@
                 ]
             }
         ]
+    },
+    {
+        "id": "group-02",
+        "title": "Esparagus Audio Brick",
+        "devices": [
+            {
+                "images": [
+                    "https://github.com/user-attachments/assets/f6cafdb7-f3ef-4cc7-a60f-299406c5ee2e"
+                ],
+                "title": "Esparagus Audio Brick (ESP32)",
+                "description": "<a href=\"https://www.crowdsupply.com/sonocotta/esparagus-audio-brick\">Esparagus Audio Brick</a> is a compact, Hi-Fi-grade DAC with built-in amplifier. Designed for seamless integration with Home Assistant, it transforms any speaker into a smart, synchronized, and fully customizable audio system. With a built-in powerful DSP (15-band EQ, fault management, precise gain control to match given speaker, and more), and sustainable hardware built to last, the Esparagus Audio Brick grows with your smart home instead of becoming obsolete.",
+                "manifests": [
+                    {
+                        "label": "16-bit (Standard)",
+                        "path": "artifacts/manifest-esparagus-audio-brick-16-latest.json"
+                    },
+                    {
+                        "label": "32-bit (High Quality)",
+                        "path": "artifacts/manifest-esparagus-audio-brick-32-latest.json"
+                    }
+                ]
+            },
+            {
+                "images": [
+                    "https://github.com/user-attachments/assets/f6cafdb7-f3ef-4cc7-a60f-299406c5ee2e"
+                ],
+                "title": "Esparagus Audio Brick (ESP32-S3)",
+                "description": "<a href=\"https://www.crowdsupply.com/sonocotta/esparagus-audio-brick\">Esparagus Audio Brick (ESP32-S3)</a> is ESP32-S3 version of the board. It has the same features and capabilities as the ESP32 version, but with a more powerful processor and more RAM. This gives little more headroom in audio streaming tasks.",
+                "manifests": [
+                    {
+                        "label": "16-bit (Standard)",
+                        "path": "artifacts/manifest-esparagus-audio-brick-s3-16-latest.json"
+                    },
+                    {
+                        "label": "32-bit (High Quality)",
+                        "path": "artifacts/manifest-esparagus-audio-brick-s3-32-latest.json"
+                    }
+                ]
+            }
+        ]
     }
 ]
