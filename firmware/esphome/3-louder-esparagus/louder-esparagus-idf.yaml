@@ -23,7 +23,6 @@ substitutions:
   # TAS5805M
   tas58xx_variant: TAS5805M
   tas58xx_enable_pin: GPIO33
-  tas5805m_enable_pin: GPIO33
   i2c_sda_pin: GPIO21
   i2c_scl_pin: GPIO27
 
