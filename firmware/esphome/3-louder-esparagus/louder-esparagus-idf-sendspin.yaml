@@ -19,7 +19,8 @@ substitutions:
   i2s_dout_pin: GPIO22
 
   # TAS5805M
-  tas5805m_enable_pin: GPIO33
+  tas58xx_variant: TAS5805M
+  tas58xx_enable_pin: GPIO33
   i2c_sda_pin: GPIO21
   i2c_scl_pin: GPIO27
 
@@ -55,14 +56,6 @@ esphome:
   name_add_mac_suffix: false
   platformio_options:
     board_build.flash_mode: dio
-  # Importnant! Play sound on boot required for DAC to capture clock signal and enable DSP configuration
-  # If any of the DSP configs are sent before clock signal, they are simply ignored. This applies to EQ and Mixer controls
-  on_boot:
-    priority: 220.0
-    then:
-      media_player.play_media:
-        id: external_media_player
-        media_url: file://startup_sync_sound
 
 esp32:
   variant: esp32
@@ -107,33 +100,37 @@ http_request:
 
 # ===== Packages =====
 packages:
-  esparagus_remote:
-    url: https://github.com/sonocotta/esparagus-media-center
-    ref: main
-    files:
-      # Option A: no OLED connected
-      - firmware/esphome/packages/sendspin-tas5805m.yaml
-      # Option B: OLED displays clock when idling, and track/artist info when playing
-      # - firmware/esphome/packages/sendspin-tas5805m-with-oled.yaml
-      # - firmware/esphome/packages/oled-sendspin.yaml
+  # esparagus_remote:
+  #   url: https://github.com/sonocotta/esparagus-media-center
+  #   ref: main
+  #   files:
+  #     # Option A: no OLED connected
+  #     - firmware/esphome/packages/sendspin-tas5805m.yaml
+  #     # Option B: OLED displays clock when idling, and track/artist info when playing
+  #     # - firmware/esphome/packages/sendspin-tas5805m-with-oled.yaml
+  #     # - firmware/esphome/packages/oled-sendspin.yaml
 
-      - firmware/esphome/packages/dac-tas5805m.yaml
-      - firmware/esphome/packages/sendspin-audio-external-dac.yaml
-      - firmware/esphome/packages/light.yaml
-      - firmware/esphome/packages/pd-enable.yaml
-      - firmware/esphome/packages/ir-receiver.yaml
-      - firmware/esphome/packages/monitoring.yaml
-      # Optional ethernet (replace wifi config if you use this)
-      # - firmware/esphome/packages/ethernet-w5500.yaml
+  #     - firmware/esphome/packages/dac-tas5805m.yaml
+  #     - firmware/esphome/packages/sendspin-audio-external-dac.yaml
+  #     - firmware/esphome/packages/light.yaml
+  #     - firmware/esphome/packages/pd-enable.yaml
+  #     - firmware/esphome/packages/ir-receiver.yaml
+  #     - firmware/esphome/packages/monitoring.yaml
+  #     # Optional ethernet (replace wifi config if you use this)
+  #     # - firmware/esphome/packages/ethernet-w5500.yaml
 
   # Debug/local development fallback:
-  # tas5805m_dac: !include packages/dac-tas5805m.yaml
-  # audio: !include packages/sendspin-audio-external-dac.yaml
-  # sendspin: !include packages/sendspin-tas5805m.yaml
-  # sendspin: !include packages/sendspin-tas5805m-with-oled.yaml
-  # oled: !include packages/oled-sendspin.yaml
-  # light: !include packages/light.yaml
-  # pd_enable: !include packages/pd-enable.yaml
-  # ir_receiver: !include packages/ir-receiver.yaml
+  external_dac: !include packages/dac-tas58xx.yaml
+  # external_dac: !include packages/dac-tas58xx-biamp.yaml
+  # external_dac: !include packages/dac-tas58xx-presets.yaml
+  sendspin_audio: !include packages/sendspin-audio.yaml
+  sendspin_external_dac: !include packages/sendspin-audio-addon-external-dac.yaml
+  sendspin: !include packages/sendspin.yaml
+  sendspin_enable_dac: !include packages/sendspin-addon-dac-enable.yaml
+  sendspin_tas58xx: !include packages/sendspin-addon-tas58xx.yaml
+  oled: !include packages/sendspin-addon-oled.yaml
+  light: !include packages/light.yaml
+  pd_enable: !include packages/pd-enable.yaml
+  ir_receiver: !include packages/ir-receiver.yaml
   # ethernet: !include packages/ethernet-w5500.yaml
-  # monitoring: !include packages/monitoring.yaml
+  monitoring: !include packages/monitoring.yaml

@@ -21,6 +21,8 @@ substitutions:
   i2s_dout_pin: GPIO22
 
   # TAS5805M
+  tas58xx_variant: TAS5805M
+  tas58xx_enable_pin: GPIO33
   tas5805m_enable_pin: GPIO33
   i2c_sda_pin: GPIO21
   i2c_scl_pin: GPIO27
@@ -57,12 +59,6 @@ esphome:
   name_add_mac_suffix: false
   platformio_options:
     board_build.flash_mode: dio
-  # Importnant! Play sound on boot required for DAC to capture clock signal and enable DSP configuration
-  # If any of the DSP configs are sent before clock signal, they are simply ignored. This applies to EQ and Mixer controls
-  on_boot:
-    priority: 220.0
-    then:
-      media_player.speaker.play_on_device_media_file: startup_sync_sound
 
 esp32:
   variant: esp32
@@ -105,28 +101,33 @@ network:
 
 # ===== Packages =====
 packages:
-  esparagus_remote:
-    url: https://github.com/sonocotta/esparagus-media-center
-    ref: main
-    files:
-      - firmware/esphome/packages/dac-tas5805m.yaml
-      - firmware/esphome/packages/audio-external-dac.yaml
-      - firmware/esphome/packages/media-player-tas5805m.yaml
-      - firmware/esphome/packages/light.yaml
-      - firmware/esphome/packages/ir-receiver.yaml
-      - firmware/esphome/packages/pd-enable.yaml
-      - firmware/esphome/packages/monitoring.yaml
-      - firmware/esphome/packages/oled.yaml
-      # Optional ethernet (replace wifi config if you use this)
-      # - firmware/esphome/packages/ethernet-w5500.yaml
+  # esparagus_remote:
+  #   url: https://github.com/sonocotta/esparagus-media-center
+  #   ref: main
+  #   files:
+  #     - firmware/esphome/packages/dac-tas5805m.yaml
+  #     - firmware/esphome/packages/audio-external-dac.yaml
+  #     - firmware/esphome/packages/media-player-tas5805m.yaml
+  #     - firmware/esphome/packages/light.yaml
+  #     - firmware/esphome/packages/ir-receiver.yaml
+  #     - firmware/esphome/packages/pd-enable.yaml
+  #     - firmware/esphome/packages/monitoring.yaml
+  #     - firmware/esphome/packages/oled.yaml
+  #     # Optional ethernet (replace wifi config if you use this)
+  #     # - firmware/esphome/packages/ethernet-w5500.yaml
 
   # Debug/local development fallback:
-  # tas5805m_dac: !include packages/dac-tas5805m.yaml
-  # audio: !include packages/audio-external-dac.yaml
-  # media_player: !include packages/media-player-tas5805m.yaml
-  # light: !include packages/light.yaml
-  # ir_receiver: !include packages/ir-receiver.yaml
-  # pd_enable: !include packages/pd-enable.yaml
+  external_dac: !include packages/dac-tas58xx.yaml
+  # external_dac: !include packages/dac-tas58xx-biamp.yaml
+  # external_dac: !include packages/dac-tas58xx-presets.yaml
+  audio: !include packages/audio.yaml
+  audio_external_dac: !include packages/audio-addon-external-dac.yaml
+  media_player: !include packages/media-player.yaml
+  media_player_dac_enable: !include packages/media-player-addon-dac-enable.yaml
+  media_player_tas5805m: !include packages/media-player-addon-tas58xx.yaml
+  light: !include packages/light.yaml
+  ir_receiver: !include packages/ir-receiver.yaml
+  pd_enable: !include packages/pd-enable.yaml
   # ethernet: !include packages/ethernet-w5500.yaml
-  # monitoring: !include packages/monitoring.yaml
-  # oled: !include packages/oled.yaml
+  monitoring: !include packages/monitoring.yaml
+  oled: !include packages/oled.yaml
