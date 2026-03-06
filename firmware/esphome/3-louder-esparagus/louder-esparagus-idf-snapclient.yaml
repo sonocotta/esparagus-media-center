@@ -111,7 +111,7 @@ packages:
     url: https://github.com/sonocotta/esparagus-media-center
     ref: main
     files:
-      - firmware/esphome/packages/light.yaml
+      - firmware/esphome/packages/light-8.yaml
       - firmware/esphome/packages/dac-tas5805m.yaml
       - firmware/esphome/packages/ir-receiver.yaml
       - firmware/esphome/packages/pd-enable.yaml
@@ -128,12 +128,12 @@ packages:
       # - firmware/esphome/packages/ethernet-w5500.yaml
 
   # Debug/local development fallback:
-  # light: !include packages/light.yaml
+  # light: !include packages/light-8.yaml
   # tas5805m_dac: !include packages/dac-tas5805m.yaml
   # ir_receiver: !include packages/ir-receiver.yaml
   # pd_enable: !include packages/pd-enable.yaml
   # monitoring: !include packages/monitoring.yaml
-  # ethernet: !include packages/ethernet-w5500.yaml
   # oled: !include packages/oled.yaml
   # snapclient: !include packages/snapclient.yaml
   # snapclient_with_dsp: !include packages/snapclient-with-dsp.yaml
+  # ethernet: !include packages/ethernet-w5500.yaml
