@@ -123,9 +123,10 @@ packages:
       # - firmware/esphome/packages/snapclient-with-dsp.yaml
 
       - firmware/esphome/packages/monitoring.yaml
+      - firmware/esphome/packages/monitoring-wifi.yaml
       - firmware/esphome/packages/oled.yaml
       - firmware/esphome/packages/light.yaml
-      # Optional ethernet (replace wifi config if you use this)
+      # Optional ethernet (replace wifi config if you use this, you need to exclude OLED package if you do this to free up SPI bus)
       # - firmware/esphome/packages/ethernet-w5500.yaml
 
   # Debug/local development fallback:
@@ -133,8 +134,9 @@ packages:
   # external_dac: !include packages/dac-tas58xx-biamp.yaml
   # external_dac: !include packages/dac-tas58xx-presets.yaml
   # monitoring: !include packages/monitoring.yaml
-  # ethernet: !include packages/ethernet-w5500.yaml
+  # monitoring_wifi: !include packages/monitoring-wifi.yaml
   # oled: !include packages/oled.yaml
   # light: !include packages/light.yaml
   # snapclient: !include packages/snapclient.yaml
   # snapclient_with_dsp: !include packages/snapclient-with-dsp.yaml
+  # ethernet: !include packages/ethernet-w5500.yaml
