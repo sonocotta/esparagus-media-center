@@ -27,8 +27,8 @@ substitutions:
   ir_rx_pin: GPIO39
 
   # Rotary Encoder
-  rotary_pin_a: GPIO27
-  rotary_pin_b: GPIO33
+  rotary_pin_a: GPIO33
+  rotary_pin_b: GPIO27
   rotary_btn_pin: GPIO34
 
   # SPI pins (for display and ethernet)
