@@ -33,18 +33,17 @@ substitutions:
   # IR Receiver
   ir_rx_pin: GPIO39
 
+  # SPI pins (for display and ethernet)
+  spi_clk_pin: GPIO18
+  spi_mosi_pin: GPIO23
+  spi_miso_pin: GPIO19
+
   # Ethernet (W5500)
-  eth_clk_pin: GPIO18
-  eth_mosi_pin: GPIO23
-  eth_miso_pin: GPIO19
   eth_cs_pin: GPIO05
   eth_interrupt_pin: GPIO35
   eth_reset_pin: GPIO14
 
   # OLED (SPI)
-  spi_clk_pin: GPIO18
-  spi_mosi_pin: GPIO23
-  spi_miso_pin: GPIO19
   display_cs_pin: GPIO15
   display_dc_pin: GPIO04
   display_reset_pin: GPIO32
@@ -123,7 +122,8 @@ packages:
       - firmware/esphome/packages/pd-enable.yaml
       - firmware/esphome/packages/ir-receiver.yaml
       - firmware/esphome/packages/monitoring.yaml
-      # Optional ethernet (replace wifi config if you use this)
+      - firmware/esphome/packages/monitoring-wifi.yaml
+      # Optional ethernet (replace wifi config if you use this, you need to exclude OLED package if you do this to free up SPI bus)
       # - firmware/esphome/packages/ethernet-w5500.yaml
 
   # # Debug/local development fallback:
@@ -142,4 +142,5 @@ packages:
   # pd_enable: !include packages/pd-enable.yaml
   # ir_receiver: !include packages/ir-receiver.yaml
   # monitoring: !include packages/monitoring.yaml
+  # monitoring_wifi: !include packages/monitoring-wifi.yaml
   # # ethernet: !include packages/ethernet-w5500.yaml
