@@ -1,0 +1,24 @@
+# ============================================================
+# Snapclient - DAC enable addon
+# ============================================================
+# Configures snapclient with DAC enable control
+# Dependencies: snapclient-newer.yaml
+# dac-switch.yaml (DAC enable switch, some DACs delare them as well)
+# ============================================================
+
+media_player:
+  - id: !extend snapclient_media_player
+
+    on_play:
+      - if:
+          condition:
+            switch.is_off: enable_dac
+          then:
+            switch.turn_on: enable_dac
+
+    on_idle:
+      - if:
+          condition:
+            switch.is_on: enable_dac
+          then:
+            switch.turn_off: enable_dac

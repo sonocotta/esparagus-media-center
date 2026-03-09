@@ -1,0 +1,35 @@
+# ============================================================
+# Snapclient - DAC enable addon
+# ============================================================
+# Configures snapclient with DAC enable control
+# Dependencies: snapclient-newer.yaml
+# dac-switch.yaml (DAC enable switch, some DACs delare them as well)
+# ============================================================
+
+globals:
+  - id: preset_applied
+    type: bool
+    initial_value: 'false'
+    
+substitutions:
+  tas58xx_preset_default_index: 0
+
+media_player:
+  - id: !extend snapclient_media_player
+
+    on_play:
+      - if:
+          condition:
+            - lambda: return (!id(preset_applied));
+          then:
+            - delay: 0.5s
+            - select.set_index:
+                id: _eq_mode
+                index: 1 #"EQ Presets"
+
+            - delay: 0.5s
+            - select.set_index:
+                id: _eq_preset_left_channel
+                index: ${tas58xx_preset_default_index}
+            - lambda: |-
+                id(preset_applied) = true;
