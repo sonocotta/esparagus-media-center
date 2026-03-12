@@ -28,6 +28,7 @@ substitutions:
 
   # RGB LED
   rgb_led_pin: GPIO12
+  num_leds: 8
   
   # IR Receiver
   ir_rx_pin: GPIO39
@@ -108,7 +109,7 @@ packages:
     url: https://github.com/sonocotta/esparagus-media-center
     ref: main
     files:
-      - firmware/esphome/packages/light-8.yaml
+      - firmware/esphome/packages/light-x.yaml
       - firmware/esphome/packages/ir-receiver.yaml
       - firmware/esphome/packages/monitoring.yaml
       - firmware/esphome/packages/monitoring-wifi.yaml
@@ -126,7 +127,7 @@ packages:
       # - firmware/esphome/packages/ethernet-w5500.yaml
 
   # Debug/local development fallback:
-  # light: !include packages/light-8.yaml
+  # light: !include packages/light-x.yaml
   # ir_receiver: !include packages/ir-receiver.yaml
   # monitoring: !include packages/monitoring.yaml
   # monitoring_wifi: !include packages/monitoring-wifi.yaml

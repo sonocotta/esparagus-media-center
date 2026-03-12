@@ -17,10 +17,14 @@ substitutions:
   i2s_lrclk_pin: GPIO25
   i2s_bclk_pin: GPIO26
   i2s_dout_pin: GPIO22
+
+  # DAC Enable Pin
   dac_enable_pin: GPIO13
+  dac_enable_restore_mode: ALWAYS_OFF
 
   # RGB LED
   rgb_led_pin: GPIO12
+  num_leds: 8
   
   # IR Receiver
   ir_rx_pin: GPIO39
@@ -97,14 +101,14 @@ packages:
     url: https://github.com/sonocotta/esparagus-media-center
     ref: main
     files:
-      # Option A: no OLED connected
-      - firmware/esphome/packages/sendspin-with-dac-enable.yaml
-      # Option B: OLED displays clock when idling, and track/artist info when playing
-      # - firmware/esphome/packages/sendspin-with-dac-enable-and-oled.yaml
-      # - firmware/esphome/packages/oled-sendspin.yaml
+      - firmware/esphome/packages/sendspin.yaml
+      - firmware/esphome/packages/dac-switch.yaml
+      - firmware/esphome/packages/media-player-addon-dac-enable.yaml  
+      # Optional : OLED displays clock when idling, and track/artist info when playing
+      # - firmware/esphome/packages/sendspin-addon-oled.yaml
 
       - firmware/esphome/packages/sendspin-audio.yaml
-      - firmware/esphome/packages/light-8.yaml
+      - firmware/esphome/packages/light-x.yaml
       - firmware/esphome/packages/ir-receiver.yaml
       - firmware/esphome/packages/rotary-encoder.yaml
       - firmware/esphome/packages/monitoring.yaml
@@ -113,11 +117,12 @@ packages:
       # - firmware/esphome/packages/ethernet-w5500.yaml
 
   # Debug/local development fallback:
+  # sendspin: !include packages/sendspin.yaml
+  # dac_switch: !include packages/dac-switch.yaml
+  # dac_enable: !include packages/media-player-addon-dac-enable.yaml
+  # oled: !include packages/sendspin-addon-oled.yaml
   # audio: !include packages/sendspin-audio.yaml
-  # sendspin: !include packages/sendspin-with-dac-enable.yaml
-  # sendspin: !include packages/sendspin-with-dac-enable-and-oled.yaml
-  # oled: !include packages/oled-sendspin.yaml
-  # light: !include packages/light-8.yaml
+  # light: !include packages/light-x.yaml
   # ir_receiver: !include packages/ir-receiver.yaml
   # rotary_encoder: !include packages/rotary-encoder.yaml
   # monitoring: !include packages/monitoring.yaml

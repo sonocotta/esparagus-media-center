@@ -22,10 +22,13 @@ media_player:
           condition:
             - lambda: return (!id(preset_applied));
           then:
+            - select.set_index:
+                id: _eq_preset_left_channel
+                index: 0
             - delay: 0.5s
             - select.set_index:
                 id: _eq_mode
-                index: 1 #"EQ Presets"
+                index: 1 # "EQ Presets"
 
             - delay: 0.5s
             - select.set_index:
