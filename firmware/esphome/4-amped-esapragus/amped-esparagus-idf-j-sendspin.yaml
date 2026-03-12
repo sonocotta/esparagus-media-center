@@ -21,6 +21,7 @@ substitutions:
 
   # RGB LED
   rgb_led_pin: GPIO12
+  num_leds: 8
   
   # IR Receiver
   ir_rx_pin: GPIO39
@@ -104,7 +105,7 @@ packages:
       # - firmware/esphome/packages/oled-sendspin.yaml
 
       - firmware/esphome/packages/sendspin-audio.yaml
-      - firmware/esphome/packages/light-8.yaml
+      - firmware/esphome/packages/light-x.yaml
       - firmware/esphome/packages/ir-receiver.yaml
       - firmware/esphome/packages/rotary-encoder.yaml
       - firmware/esphome/packages/monitoring.yaml
@@ -117,7 +118,7 @@ packages:
   # sendspin: !include packages/sendspin-with-dac-enable.yaml
   # sendspin: !include packages/sendspin-with-dac-enable-and-oled.yaml
   # oled: !include packages/oled-sendspin.yaml
-  # light: !include packages/light-8.yaml
+  # light: !include packages/light-x.yaml
   # ir_receiver: !include packages/ir-receiver.yaml
   # rotary_encoder: !include packages/rotary-encoder.yaml
   # monitoring: !include packages/monitoring.yaml

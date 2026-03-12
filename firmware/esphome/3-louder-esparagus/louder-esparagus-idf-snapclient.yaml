@@ -35,6 +35,7 @@ substitutions:
 
   # RGB LED
   rgb_led_pin: GPIO12
+  num_leds: 8
 
   # IR Receiver
   ir_rx_pin: GPIO39
@@ -118,7 +119,7 @@ packages:
       # Option C: TAS58xx configured with bi-amp mode, with filters applied to both channels (HF or LF)
       # - firmware/esphome/packages/dac-tas58xx-presets.yaml
       
-      - firmware/esphome/packages/light-8.yaml
+      - firmware/esphome/packages/light-x.yaml
       - firmware/esphome/packages/ir-receiver.yaml
       - firmware/esphome/packages/pd-enable.yaml
       - firmware/esphome/packages/monitoring.yaml
@@ -135,7 +136,7 @@ packages:
       # - firmware/esphome/packages/ethernet-w5500.yaml
 
   # Debug/local development fallback:
-  # light: !include packages/light-8.yaml
+  # light: !include packages/light-x.yaml
   # external_dac: !include packages/dac-tas58xx.yaml
   # external_dac: !include packages/dac-tas58xx-biamp.yaml
   # external_dac: !include packages/dac-tas58xx-presets.yaml
