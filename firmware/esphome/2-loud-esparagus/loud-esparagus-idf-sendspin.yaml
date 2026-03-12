@@ -17,7 +17,10 @@ substitutions:
   i2s_lrclk_pin: GPIO25
   i2s_bclk_pin: GPIO26
   i2s_dout_pin: GPIO22
+
+  # DAC Enable Pin
   dac_enable_pin: GPIO13
+  dac_enable_restore_mode: ALWAYS_OFF
 
   # RGB LED
   rgb_led_pin: GPIO33

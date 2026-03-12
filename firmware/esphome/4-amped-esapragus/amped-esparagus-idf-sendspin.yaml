@@ -101,8 +101,6 @@ packages:
     ref: main
     files:
       - firmware/esphome/packages/sendspin.yaml
-      - firmware/esphome/packages/dac-switch.yaml
-      - firmware/esphome/packages/media-player-addon-dac-enable.yaml  
       # Optional : OLED displays clock when idling, and track/artist info when playing
       # - firmware/esphome/packages/sendspin-addon-oled.yaml
 
@@ -118,8 +116,6 @@ packages:
 
   # Debug/local development fallback:
   # sendspin: !include packages/sendspin.yaml
-  # dac_switch: !include packages/dac-switch.yaml
-  # dac_enable: !include packages/media-player-addon-dac-enable.yaml
   # oled: !include packages/sendspin-addon-oled.yaml
   # audio: !include packages/sendspin-audio.yaml
   # light: !include packages/light-x.yaml
