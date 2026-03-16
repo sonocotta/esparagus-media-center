@@ -22,6 +22,23 @@
             },
             {
                 "images": [
+                    "images/hifi-esparagus.jpg"
+                ],
+                "title": "HiFi Esparagus (S3)",
+                "description": "<a href=\"https://www.tindie.com/products/sonocotta/hifi-esparagus-media-center/\">HiFi Esparagus S3</a> is a ESP32-S3 version of the board. It has the same features and capabilities as the ESP32 version, but with a more powerful processor and more RAM. This gives little more headroom in audio streaming tasks.",
+                "manifests": [
+                    {
+                        "label": "16-bit (Standard)",
+                        "path": "artifacts/manifest-hifi-esparagus-s3-16-latest.json"
+                    },
+                    {
+                        "label": "32-bit (High Quality)",
+                        "path": "artifacts/manifest-hifi-esparagus-s3-32-latest.json"
+                    }
+                ]
+            },
+            {
+                "images": [
                     "images/loud-esparagus.jpg"
                 ],
                 "title": "Loud Esparagus",
@@ -116,6 +133,46 @@
                     {
                         "label": "32-bit (High Quality)",
                         "path": "artifacts/manifest-esparagus-audio-brick-s3-32-latest.json"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "group-03",
+        "title": "Esparagus Echo",
+        "devices": [
+            {
+                "images": [
+                    "https://github.com/user-attachments/assets/b4957751-f71e-4a23-b3bd-ac48bdb77a90"
+                ],
+                "title": "Esparagus Echo Solo (ESP32-S3)",
+                "description": "<a href=\"https://www.tindie.com/products/sonocotta/esparagus-echo/\">Esparagus Echo Solo</a> has all the basic necessities, a Mic on the front panel, a couple of feedback LEDs, and a single speaker at the back. Onboard is a simple and well-known MAX98357 DAC with a reasonable 5W output audio.",
+                "manifests": [
+                    {
+                        "label": "16-bit (Standard)",
+                        "path": "artifacts/manifest-esparagus-echo-solo-16-latest.json"
+                    },
+                    {
+                        "label": "32-bit (High Quality)",
+                        "path": "artifacts/manifest-esparagus-echo-solo-32-latest.json"
+                    }
+                ]
+            },
+            {
+                "images": [
+                    "https://github.com/user-attachments/assets/fa25aedf-96f9-48c8-bf72-99b5bf84d71a"
+                ],
+                "title": "Esparagus Echo Duo (ESP32-S3)",
+                "description": "<a href=\"https://www.tindie.com/products/sonocotta/esparagus-echo/\">Esparagus Echo Duo</a> uses a dual Mic setup, extra LED, and most importantly 2-channels MAX98357 channels to deliver quality stereo-audio (and thus can be used as a media player device). To make sure it would stream audio without a hiccup it has SPI Ethernet for the most robust networking",
+                "manifests": [
+                    {
+                        "label": "16-bit (Standard)",
+                        "path": "artifacts/manifest-esparagus-echo-duo-16-latest.json"
+                    },
+                    {
+                        "label": "32-bit (High Quality)",
+                        "path": "artifacts/manifest-esparagus-echo-duo-32-latest.json"
                     }
                 ]
             }
