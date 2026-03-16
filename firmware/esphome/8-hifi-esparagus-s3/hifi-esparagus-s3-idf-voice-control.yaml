@@ -115,7 +115,7 @@ packages:
 
   esparagus_echo:
     url: https://github.com/sonocotta/esparagus-echo
-    ref: features/voice-control-configs-refactoring
+    ref: main
     files:
       - firmware/esphome/packages/audio.yaml
       - firmware/esphome/packages/microphone.yaml
