@@ -24,7 +24,7 @@ Esparagus Media Center is a series of ESP32-based media center devices. They all
   - [Loud Esparagus](#loud-esparagus)
   - [Louder Esparagus](#louder-esparagus)
   - [Amped Esparagus](#amped-esparagus)
-  - [Esparagus Audio Brick (prototype)](#esparagus-audio-brick-prototype)
+  - [Esparagus Audio Brick](#esparagus-audio-brick)
   - [Which device is right for me](#which-device-is-right-for-me)
   - [Features](#features)
     - [Onboard PSRAM](#onboard-psram)
@@ -32,9 +32,10 @@ Esparagus Media Center is a series of ESP32-based media center devices. They all
     - [Common to every board](#common-to-every-board)
     - [Peripheral (Loud Esparagus \& Esparagus HiFi MediaLink )](#peripheral-loud-esparagus--esparagus-hifi-medialink-)
     - [Rotary encoder (Amped Esparagus)](#rotary-encoder-amped-esparagus)
-    - [TAS5805M DAC (Louder Esparagus)](#tas5805m-dac-louder-esparagus)
+    - [TAS5805M/TAS5825M DAC (Louder Esparagus, Audio Brick)](#tas5805mtas5825m-dac-louder-esparagus-audio-brick)
     - [Peripheral - OLED Screen and W5500 Ethernet (Louder Esparagus)](#peripheral---oled-screen-and-w5500-ethernet-louder-esparagus)
     - [Other Peripheral (Louder Esparagus)](#other-peripheral-louder-esparagus)
+    - [Mic header](#mic-header)
   - [Which software is right for me](#which-software-is-right-for-me)
   - [Software samples](#software-samples)
     - [Platformio IDE](#platformio-ide)
@@ -93,35 +94,37 @@ Over the last few years, I have seen a few amazing software products created to 
 
 ## Esparagus HiFi MediaLink
 
-Esparagus HiFi MediaLink is a handy low-cost media device that will upgrade your legacy audio system with cutting-edge internet streaming capabilities and enhance your audio experience. It exposes line-level output that you can plug into a stereo amplifier. It uses the legendary PCM51 series DAC with supreme audio quality.
+**HiFi Esparagus** and HiFi **Esparagus S3** are handy, low-cost media devices that will upgrade your legacy audio system with internet streaming capabilities. It exposes line-level output that you can plug into active speakers, a stereo amplifier, or headphones. They use the legendary PCM5100 series DAC with supreme audio quality.
 
-![DSC_0702](https://github.com/sonocotta/esparagus-hifi-medialink/assets/98712315/3ef311c6-2fbc-4969-aa99-4fed7e1e1dd5)
+<img width="1673" height="1241" alt="image" src="https://github.com/user-attachments/assets/6bdf15d3-b4ed-4b35-9f51-b142dab5c45a" />
+
+Recent addition - ESP32-S3 version - adds front-facing microphone and RGB LED, so it can also be used as a voice-assist device, providing an off-grid Alexa-like experience for your Home Assistant setup.
 
 ## Loud Esparagus
 
-Loud Esparagus is aimed to be paired with small-to-medium-sized speakers in a small room. It uses a dual MAX98357 Hi-Fi DAC that will output 3W per speaker. Admittedly not much, but well enough for a kid's room or workplace. Due to the D-class amp, it barely uses power and can be paired with a standard USB wall charger.   
+**Loud Esparagus** is aimed to be paired with small-to-medium-sized speakers in a small room. It uses a dual MAX98357 Hi-Fi DAC that will output 3W per speaker. Admittedly not much, but well enough for a kid's room or workplace. Due to the D-class amp, it barely uses power and can be paired with a standard USB wall charger.   
 
 ![DSC_0689](https://github.com/sonocotta/esparagus-hifi-medialink/assets/5459747/7635cb2a-6ef1-43e8-8396-c27ef5387a25)
 
 ## Louder Esparagus
 
-Louder Esparagus is a top-of-the-range model that uses a modern, highly capable TAS5805M DAC and is aimed to be paired with medium-to-large speaker systems. With 25W per channel stereo output, it packs a punch and can easily enliven living quarters or dorm rooms. It is highly efficient, but much more demanding for power when cranked; therefore, it uses USB-C Power Delivery to pull up to 65W from the wall power adapter. It can be used both with Wi-Fi and Ethernet (to make sure bad Wi-Fi does not interrupt the stream)
+**Louder Esparagus** is a top-of-the-range model that uses a modern, highly capable TAS5805M DAC and is aimed to be paired with medium-to-large speaker systems. With 25W per channel stereo output, it packs a punch and can easily enliven living quarters or dorm rooms. It is highly efficient, but much more demanding for power when cranked; therefore, it uses USB-C Power Delivery to pull up to 65W from the wall power adapter. It can be used both with Wi-Fi and Ethernet (to make sure bad Wi-Fi does not interrupt the stream)
 
-The latest update allows a direct power through barrel jack as an alternative to the USB-PD to provide an alternative and allow more precise control over the power source for your audio 
+The latest update allows direct power through barrel jack as an alternative to the USB-PD to provide an alternative and allow more precise control over the power source for your audio 
 
 ![DSC_0009](https://github.com/user-attachments/assets/538e0165-d973-4222-81e7-64d4013869d6)
 
 ## Amped Esparagus
 
-The last in the family, Amped Esparagus, is a device based on PCM5100 HiFi DAC (just like HiFi Esparagus) but adds a powerful and efficient D-class amp (TPA3110D2) so it can drive speakers directly. It has similar power capabilities to the Louder Esparagus, but it is much simpler to set up and use, since this DAC doesn't need any configuration steps to get going, just a valid I2S audio stream. Simplicity comes at a price, it doesn't have a DSP unit either. Since it has an analog stage, you can use it either with a built-in amp or with an external amp, if you prefer so.
+The last in the family, **Amped Esparagus**, is a device based on PCM5100 HiFi DAC (just like HiFi Esparagus) but adds a powerful and efficient D-class amp (TPA3110D2) so it can drive speakers directly. It has similar power capabilities to the Louder Esparagus, but it is much simpler to set up and use, since this DAC doesn't need any configuration steps to get going, just a valid I2S audio stream. Simplicity comes at a price; it doesn't have a DSP unit either. Since it has an analog stage, you can use it either with a built-in amp or with an external amp, if you prefer.
 
 ![DSC_0022](https://github.com/user-attachments/assets/e9481545-e98d-4d6a-b0eb-a993ab151dc8)
 
 With the Amped Esparagus, I'm implementing and testing a new updated look with every board equipped with a semi-transparent front face as standard. Behind it, there is a front-facing IR reader and an 8-LED RGB strip (that can be used for audio visualization or power state). Most noticeably, there is a rotary encoder with a push-button that allows quick change of volume or play/pause action.  
 
-## Esparagus Audio Brick (prototype)
+## Esparagus Audio Brick
 
-The Esparagus Audio Brick is a new addition to the Esparagus line of ESP32-based audio hardware. Similar to the Louder Esparagus boards for the most part, the Audio Brick uses the newer TAS5825M DAC/amp, which is a considerably more capable chip with considerably better efficiency figures. It is designed with Home Assistant in mind, so it is a little less about look, and a little more about longevity and practicality.
+The **Esparagus Audio Brick** is a new addition to the Esparagus line of ESP32-based audio hardware. Similar to the Louder Esparagus boards for the most part, the Audio Brick uses the newer TAS5825M DAC/amp, which is a considerably more capable chip with considerably better efficiency figures. It is designed with Home Assistant in mind, so it is a little less about looks, and a little more about longevity and practicality.
 
 Our Crowd Supply [campaign](https://www.crowdsupply.com/sonocotta/esparagus-audio-brick) is underway. Please consider subscribing to make this project go live.
 
@@ -142,13 +145,13 @@ Here you can find a [video overview](https://www.youtube.com/watch?v=Ft5_anhSEE8
 |  | [HiFi Esparagus](https://www.tindie.com/products/sonocotta/esparagus-hifi-medialink/) | [Loud Esparagus](https://www.tindie.com/products/sonocotta/loud-esparagus-media-center/) | [Louder Esparagus](https://www.tindie.com/products/sonocotta/louder-esparagus-media-center/) | [Amped Esparagus](https://www.tindie.com/products/sonocotta/amped-esparagus-media-center/) | Esparagus Audio Brick |
 |---|---|---|---|---|---|
 | Image | ![DSC_0709](https://github.com/sonocotta/esparagus-hifi-medialink/assets/98712315/ea45f1d2-32b5-4f12-a63c-a8e403cb22db) | ![DSC_0706](https://github.com/sonocotta/esparagus-hifi-medialink/assets/5459747/2556b8ff-1827-4e03-8e28-31e40199943c) | ![DSC_0713](https://github.com/sonocotta/esparagus-media-center/assets/5459747/14d54647-2b7e-4b1a-9a8e-135a1598eb02) | ![DSC_0022](https://github.com/user-attachments/assets/e9481545-e98d-4d6a-b0eb-a993ab151dc8) | <img width="2214" height="1217" alt="image" src="https://github.com/user-attachments/assets/89792e6c-e530-4c2b-8e8a-6ce86c9a98dc" /> |
-| MCU | ESP32-WROVER-N8R8 (S3 is coming soon) | ESP32-WROVER-N8R8 (S3 is coming soon) | ESP32-WROVER-N16R8 (S3 is coming soon) | ESP32-WROVER-N16R8 (S3 is coming soon) | ESP32-WROVER-N8R8 or ESP32-S3-WROOM-N8R8 |
+| MCU | ESP32-WROVER-N8R8 or ESP32-S3-WROOM-N8R8 | ESP32-WROVER-N8R8 | ESP32-WROVER-N16R8 (S3 is coming soon) | ESP32-WROVER-N16R8 (S3 is coming soon) | ESP32-WROVER-N8R8 or ESP32-S3-WROOM-N8R8 |
 | DAC | PCM5100A 32bit Stereo DAC -100 dB typical noise level | Dual I2S DAC ([MAX98357](https://www.analog.com/en/products/max98357a.html)) with built in D-Class amp | Stereo I2S DAC ( [TAS5805M](https://www.ti.com/product/TAS5805M) ) with built in D-Class amp | [PCM5100A](https://www.ti.com/product/PCM5100A) 32bit Stereo DAC working with   [TPA3110D2](https://www.ti.com/product/TPA3110D2) D-Class amp | Stereo I2S DAC (  [TAS5825M](https://www.ti.com/product/TAS5825M)  ) with built in D-Class amp |
 | Power | 5V over USB-C, 2x [LP5907](https://www.ti.com/lit/ds/symlink/lp5907.pdf) 3.3 V Ultra-Low-Noise LDO for analog section | 5V from USB-C | Up to 20V from USB-C PD or up to 26V from generic power adapter | Up to 20V from USB-C PD or up to 26V from generic power adapter | Up to 26V from a generic power adapter |
 | Output, 4Ω | Non-amplified stereo output | 2x 3W | 2x 32W (4Ω, 1% THD+N) | 2x 22W (4Ω, 1% THD+N) at 16V   1x 40W (4Ω, 1% THD+N) at 20V | 2x 10W at 12V at 4Ω, THD+N = 1% (Efficiency mode) 1x 20W at 12V at 3Ω, THD+N = 1% (Efficiency mode) 1x 65W at 24V at 4Ω, THD+N = 1% (Power mode) |
 | Output, 8Ω | - | 2x 5W | 2x 22W (8Ω, 1% THD+N) | 2x 25W (8Ω, 1% THD+N) at 22V | 2x 30W at 24V at 8Ω, THD+N = 1% (Power mode) |
-| PSRAM | 8MB PSRAM (4MB usable) | 8MB PSRAM (4MB usable) | 8MB PSRAM (4MB usable) | 8MB PSRAM (4MB usable) | 8MB PSRAM (4MB usable) |
-| Peripheral | WS2812B RGB Led   SSD1306 128x64 OLED screen (optional) | WS2812B RGB Led   SSD1306 128x64 OLED screen (optional) | WS2812B RGB Led   SSD1306 128x64 OLED screen (optional) | 8xWS2812B RGB Led   SSD1306 128x64 OLED screen (optional)   Rotary encoder with push button | 1xWS2812B RGB Led   SSD1306 128x64 OLED screen (optional) |
+| PSRAM | 8MB PSRAM | 8MB PSRAM | 8MB PSRAM | 8MB PSRAM | 8MB PSRAM |
+| Peripheral | WS2812B RGB Led, I2S microphone (S3 only) | WS2812B RGB Led | 8x WS2812B RGB Led, SSD1306 128x64 OLED screen (optional) | 8x WS2812B RGB Led, SSD1306 128x64 OLED screen (optional), Rotary encoder with push button | 1xWS2812B RGB Led, SSD1306 128x64 OLED screen (optional) |
 | Connectivity | WiFi   BT4.2   BLE | WiFi   BT4.2   BLE | WiFi   BT4.2   BLE   W5500 Ethernet | WiFi   BT4.2   BLE   W5500 Ethernet | WiFi   BT4.2   BLE   W5500 Ethernet |
 | Size | 80 x 50 x 20mm | 80 x 50 x 20mm | 100 x 80 x 38mm | 100 x 80 x 38mm | 90 x 90 x 40mm |
 | Software support | Arduino samples, squeezelite-esp32, snapcast, ESPhome config | Arduino samples, squeezelite-esp32, snapcast, ESPhome config | Arduino samples, squeezelite-esp32, snapcast, ESPhome config | Arduino samples, squeezelite-esp32, snapcast, ESPhome config | Arduino samples, squeezelite-esp32, snapcast, ESPhome config |
@@ -199,6 +202,18 @@ Audio streaming requires proper buffering to work; even with the ESP32 500K of R
 |       | USB-PD EN | USB-PD POWER GOOD | IR INPUT |   WS2812 RGB LED
 |-------|-----------|-------------------|----------|-------------------|
 | ESP32 |    13     |   36              |    39    | 12                | 
+
+### Mic header
+
+ESP32-S3 versions of the board have an onboard I2C microphone (or a header for an I2S microphone module, in case of Audio Brick). It can be used for wake word functionality in the Home Assistant or for custom firmware.
+
+|                         | I2S CLK | I2S WS | I2S DATA |
+|-------------------------|---------|--------|----------|
+| ESP32-S3                | 17      | 18     | 08       |
+
+The mic model that I used for testing and validation is the TDK ICS-43432 MEMS microphone; in the case of the optional module, it is the INMP441 MEMS Microphone, which uses the same data format and rate. The pinout is created for this model. 
+
+<img width="356" height="301" alt="image" src="https://github.com/user-attachments/assets/d7f3dbff-4d94-45f1-9305-beaac4166c8f" />
 
 ## Which software is right for me
 
