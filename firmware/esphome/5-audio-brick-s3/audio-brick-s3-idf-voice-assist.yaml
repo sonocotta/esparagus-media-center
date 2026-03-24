@@ -31,6 +31,13 @@ substitutions:
   tas58xx_enable_pin: GPIO17
   i2c_sda_pin: GPIO8
   i2c_scl_pin: GPIO9
+  
+  # ===== DAC Overrides (optional) =====
+  # tas58xx_dac_mode: PBTL 
+  # tas58xx_mixer_mode: MONO
+  # tas58xx_analog_gain: 0db
+  # tas58xx_volume_max: 0dB
+  # tas58xx_volume_min: -60dB
 
   # RGB LED
   rgb_led_pin: GPIO21
@@ -126,42 +133,27 @@ packages:
       # Option C: TAS58xx configured with bi-amp mode, with filters applied to both channels (HF or LF)
       # - firmware/esphome/packages/dac-tas58xx-presets.yaml
 
+      - firmware/esphome/packages/microphone.yaml
+      - firmware/esphome/packages/audio-voice-assist.yaml
+      - firmware/esphome/packages/audio-addon-external-dac.yaml
+      - firmware/esphome/packages/media-player-voice-assist.yaml
+      - firmware/esphome/packages/media-player-addon-dac-enable.yaml
+      - firmware/esphome/packages/media-player-addon-tas58xx.yaml
+      - firmware/esphome/packages/voice-assist.yaml
+
       - firmware/esphome/packages/light-x.yaml
       - firmware/esphome/packages/monitoring.yaml
       - firmware/esphome/packages/monitoring-wifi.yaml
+      # Optional ethernet (replace wifi config if you use this, you need to exclude OLED package if you do this to free up SPI bus)
+      # - firmware/esphome/packages/ethernet-w5500.yaml
 
-  # Debug/local development fallback:
-  microphone: !include packages/microphone.yaml
-  audio: !include packages/audio-voice-assist.yaml
-  audio_external_dac: !include packages/audio-addon-external-dac.yaml
+  # # Debug/local development fallback:
+  # microphone: !include packages/microphone.yaml
+  # audio: !include packages/audio-voice-assist.yaml
+  # audio_external_dac: !include packages/audio-addon-external-dac.yaml
 
-  media_player: !include packages/media-player-voice-assist.yaml
-  media_player_tas58xx: !include packages/media-player-addon-tas58xx.yaml
-  media_player_dac_enable: !include packages/media-player-addon-dac-enable.yaml
-  voice_assist: !include packages/voice-assist.yaml
-
-# # ===== Packages =====
-# packages:
-#   # esparagus_remote:
-#   #   url: https://github.com/sonocotta/esparagus-media-center
-#   #   ref: main
-#   #   files:
-#   #     # Option A: TAS58xx configured with ganged 15-band EQ
-#   #     - firmware/esphome/packages/dac-tas58xx.yaml
-#   #     # Option B: TAS58xx configured with individual 15-band EQ per channel
-#   #     # - firmware/esphome/packages/dac-tas58xx-biamp.yaml
-#   #     # Option C: TAS58xx configured with bi-amp mode, with filters applied to both channels (HF or LF)
-#   #     # - firmware/esphome/packages/dac-tas58xx-presets.yaml
-
-#   #     - firmware/esphome/packages/audio.yaml
-#   #     - firmware/esphome/packages/audio-addon-external-dac.yaml
-#   #     - firmware/esphome/packages/media-player.yaml
-#   #     - firmware/esphome/packages/media-player-addon-dac-enable.yaml
-#   #     - firmware/esphome/packages/media-player-addon-tas58xx.yaml
-      
-#   #     - firmware/esphome/packages/light.yaml
-#   #     - firmware/esphome/packages/monitoring.yaml
-#   #     - firmware/esphome/packages/monitoring-wifi.yaml
-#   #     - firmware/esphome/packages/oled.yaml
-#   #     # Optional ethernet (replace wifi config if you use this, you need to exclude OLED package if you do this to free up SPI bus)
-#   #     # - firmware/esphome/packages/ethernet-w5500.yaml
+  # media_player: !include packages/media-player-voice-assist.yaml
+  # media_player_tas58xx: !include packages/media-player-addon-tas58xx.yaml
+  # media_player_dac_enable: !include packages/media-player-addon-dac-enable.yaml
+  # voice_assist: !include packages/voice-assist.yaml
+  # # ethernet: !include packages/ethernet-w5500.yaml
