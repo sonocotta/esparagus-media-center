@@ -59,8 +59,8 @@ media_player:
                 brightness: 50%
             - mixer_speaker.apply_ducking:
                   id: media_spk_mixer_input
-                  decibel_reduction: 40
-                  duration: 0.0s
+                  decibel_reduction: 30
+                  duration: 0.5s
             - wait_until:
                 media_player.is_announcing: external_media_player
             - delay: 0.75s

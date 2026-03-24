@@ -1,0 +1,31 @@
+# ============================================================
+# Micprophone - I2S Audio Setup and Mic Configuration
+# ============================================================
+# Configures I2S mic input and related settings for Esparagus-Echo
+# Requires substitutions:
+#   - i2s_lrclk_pin
+#   - i2s_bclk_pin
+#   - i2s_dout_pin
+#   - task_stack_in_psram
+# ============================================================
+
+substitutions:
+  i2s_mic_channel: right
+
+i2s_audio:
+- id: i2s_in
+  i2s_lrclk_pin: ${i2s_mic_lrclk_pin}
+  i2s_bclk_pin: ${i2s_mic_bclk_pin}
+
+microphone:
+  - platform: i2s_audio
+    adc_type: external
+    id: voice_assistant_mic
+    i2s_audio_id: i2s_in
+    i2s_din_pin: ${i2s_mic_din_pin}
+    pdm: false
+    channel: ${i2s_mic_channel}
+    sample_rate: 16000
+    bits_per_sample: 32bit
+    use_apll: true              # Better clock accuracy
+    i2s_mode: primary

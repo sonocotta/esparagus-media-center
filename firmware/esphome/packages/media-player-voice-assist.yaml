@@ -1,0 +1,51 @@
+# ============================================================
+# Media Player - Speaker Platform with Announcement Ducking
+# ============================================================
+# Configures media player with announcement ducking logic
+# Requires substitutions:
+#   - friendly_name
+#   - task_stack_in_psram
+# Dependencies: audio.yaml (speaker stack)
+# ============================================================
+
+media_player:
+  - platform: speaker
+    id: external_media_player
+    name: "${friendly_name} Media Player"
+    internal: false
+    announcement_pipeline:
+      speaker: announcement_resampling_speaker
+      format: WAV                # Changed from FLAC (less CPU)
+      num_channels: 1
+      sample_rate: 48000
+    media_pipeline:
+      speaker: media_resampling_speaker
+      format: WAV                # Changed from FLAC (less CPU)
+      num_channels: 2
+      sample_rate: 48000
+    buffer_size: 2000000         # INCREASED buffer (2MB vs default 1MB)
+    task_stack_in_psram: true    # Use PSRAM for audio tasks
+    on_announcement:
+      - mixer_speaker.apply_ducking:
+          id: media_mixing_input
+          decibel_reduction: 20
+          duration: 0.0s
+    on_state:
+      if:
+        condition:
+          and:
+            - switch.is_off: timer_ringing
+            - not:
+                voice_assistant.is_running:
+            - not:
+                media_player.is_announcing:
+        then:
+          - mixer_speaker.apply_ducking:
+              id: media_mixing_input
+              decibel_reduction: 0
+              duration: 1.0s
+    files:
+    - id: timer_finished_sound
+      file: https://github.com/esphome/home-assistant-voice-pe/raw/dev/sounds/timer_finished.flac
+    - id: wake_word_triggered_sound
+      file: https://github.com/esphome/home-assistant-voice-pe/raw/dev/sounds/wake_word_triggered.flac
