@@ -1,0 +1,52 @@
+# ============================================================
+# Audio - I2S Audio Setup and Speaker Configuration
+# ============================================================
+# Configures I2S DAC, mixer, and resampler for multi-source audio
+# Requires substitutions:
+#   - i2s_lrclk_pin
+#   - i2s_bclk_pin
+#   - i2s_dout_pin
+#   - task_stack_in_psram
+# ============================================================
+
+i2s_audio:
+- id: i2s_out
+  i2s_lrclk_pin: ${i2s_lrclk_pin}
+  i2s_bclk_pin: ${i2s_bclk_pin}
+
+speaker:
+  # Primary I2S speaker
+  - platform: i2s_audio
+    id: speaker_id
+    i2s_audio_id: i2s_out
+    dac_type: external
+    i2s_dout_pin: ${i2s_dout_pin}
+    i2s_mode: primary
+    buffer_duration: 500ms     # INCREASED from 100ms (reduces glitches)
+    channel: stereo
+    sample_rate: 48000
+    timeout: never
+    bits_per_sample: 16bit      # Keep at 32bit for quality
+
+  # Mixer to combine announcement and media feeds
+  - platform: mixer
+    id: mixing_speaker
+    output_speaker: speaker_id
+    num_channels: 2
+    source_speakers:
+      - id: announcement_mixing_input
+        timeout: never
+      - id: media_mixing_input
+        timeout: never
+
+  # OPTIMIZED resamplers - 32bit for better quality
+  - platform: resampler
+    id: announcement_resampling_speaker
+    output_speaker: announcement_mixing_input
+    sample_rate: 48000
+    bits_per_sample: 16        # Changed from 16 to 32
+  - platform: resampler
+    id: media_resampling_speaker
+    output_speaker: media_mixing_input
+    sample_rate: 48000
+    bits_per_sample: 16        # Changed from 16 to 32

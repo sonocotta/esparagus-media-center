@@ -5,3 +5,4 @@ secrets.yaml
 .esphome-cache/**
 .DS_Store
 .esphome
+firmware/esphome/7-group-alarm-bot/group-alarm-bot-s3-idf-snapclient.yaml
