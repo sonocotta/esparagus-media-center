@@ -669,7 +669,7 @@ Because USB-PD is a bit of the Wild West in terms of standards, sometimes not ev
 
 #### Louder and Amped Esparagus NOPD
 
-The “hammer-style” solution I came up with is a new NOPD version of the Louder Esparagus that lets you use a barrel power jack to supply raw voltage directly. The catch? Standard 2mm pins can’t handle high currents, so I’ve gone with a 2.5mm pin instead — it’s a bit unusual but still common enough in the laptop world.
+The “hammer-style” solution I came up with is a new NOPD version of the Louder Esparagus that lets you use a barrel power jack to supply raw voltage directly. The catch? Standard 2mm pins can’t handle high currents, so I’ve gone with a [barrel jack with thick middle pin](https://jlcpcb.com/partdetail/XUNPU-DC_044AA250/C720576) with a **2.5mm pin** — it’s a bit unusual but still common enough in the laptop world. Also, it is much more sturdy and resistant to desoldering. 
 
 ![image](https://github.com/user-attachments/assets/59acba9e-b447-4724-a6a1-bf777f053787)
 
