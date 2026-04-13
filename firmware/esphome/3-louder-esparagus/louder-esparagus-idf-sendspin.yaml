@@ -30,7 +30,8 @@ substitutions:
   # tas58xx_analog_gain: 0db
   # tas58xx_volume_max: 0dB
   # tas58xx_volume_min: -60dB
-  
+  # tas58xx_branch: experimental <- can be changed to test latest driver features
+
   # USB-PD enable pin
   pd_enable_pin: GPIO13
 

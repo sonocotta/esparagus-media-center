@@ -22,8 +22,10 @@ substitutions:
   tas58xx_analog_gain: 0db     # Startup Gain or Output voltage swing
   tas58xx_volume_max: 0dB      # Max HA volume mapping to Digital Volume control
   tas58xx_volume_min: -60dB    # Min HA volume mapping to Digital Volume control
+  tas58xx_branch: main         # Branch of the esphome-tas58xx component to use, default to 'main' for stable code
+
 external_components:
-  - source: github://mrtoy-me/esphome-tas58xx@main
+  - source: github://mrtoy-me/esphome-tas58xx@${tas58xx_branch}
     components: [tas58xx]
     refresh: 48h
 

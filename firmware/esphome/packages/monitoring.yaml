@@ -46,6 +46,7 @@ text_sensor:
 binary_sensor:
   - platform: status
     name: "${friendly_name} Status"
+    update_interval: 60s
 
 button:
   - platform: restart
