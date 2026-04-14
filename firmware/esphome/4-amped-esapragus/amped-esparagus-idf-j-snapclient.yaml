@@ -134,7 +134,7 @@ packages:
   # oled: !include packages/oled.yaml
   # rotary_encoder: !include packages/rotary-encoder.yaml
   # dac-switch: !include packages/dac-switch.yaml
-  snapclient: !include packages/snapclient.yaml
+  snapclient: !include packages/snapclient-new.yaml
   dac_enable: !include packages/snapclient-addon-dac-enable.yaml
   # snapclient_with_dsp: !include packages/snapclient-with-dsp.yaml
   # ethernet: !include packages/ethernet-w5500.yaml
