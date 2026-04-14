@@ -24,7 +24,7 @@ substitutions:
   i2s_bclk_pin: GPIO26
   i2s_dout_pin: GPIO22
   dac_enable_pin: GPIO13
-  dac_enable_restore_mode: ALWAYS_ON
+  dac_enable_restore_mode: ALWAYS_OFF
   
   # RGB LED
   rgb_led_pin: GPIO33
@@ -98,7 +98,7 @@ packages:
       # - firmware/esphome/packages/snapclient.yaml
       # Option B: @farmed-switch fork of the c-MM snapclient with added DSP controls
       # Implements software BQ-filters for basic DACs and controls hardware DSP for DSP-enabled DACs like TAS5805M
-      - firmware/esphome/packages/snapclient-with-dsp.yaml
+      # - firmware/esphome/packages/snapclient-with-dsp.yaml
 
   # Debug/local development fallback:
   # light: !include packages/light.yaml
@@ -106,5 +106,6 @@ packages:
   # monitoring: !include packages/monitoring.yaml
   # monitoring_wifi: !include packages/monitoring-wifi.yaml
   # dac-switch: !include packages/dac-switch.yaml
-  # snapclient: !include packages/snapclient.yaml
+  snapclient: !include packages/snapclient-new.yaml
+  dac_enable: !include packages/snapclient-addon-dac-enable.yaml
   # snapclient_with_dsp: !include packages/snapclient-with-dsp.yaml
