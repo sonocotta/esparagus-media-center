@@ -116,7 +116,7 @@ The latest update allows direct power through barrel jack as an alternative to t
 
 ## Amped Esparagus
 
-The last in the family, **Amped Esparagus**, is a device based on PCM5100 HiFi DAC (just like HiFi Esparagus) but adds a powerful and efficient D-class amp (TPA3110D2) so it can drive speakers directly. It has similar power capabilities to the Louder Esparagus, but it is much simpler to set up and use, since this DAC doesn't need any configuration steps to get going, just a valid I2S audio stream. Simplicity comes at a price; it doesn't have a DSP unit either. Since it has an analog stage, you can use it either with a built-in amp or with an external amp, if you prefer.
+The last in the family, **Amped Esparagus**, is a device based on PCM5100 HiFi DAC (just like HiFi Esparagus) but adds a powerful and efficient D-class amp (TPA3110D2/TPA3118D2/TPA3128D2 depending on the version) so it can drive speakers directly. It has similar power capabilities to the Louder Esparagus, but it is much simpler to set up and use, since this DAC doesn't need any configuration steps to get going, just a valid I2S audio stream. Simplicity comes at a price; it doesn't have a DSP unit either. Since it has an analog stage, you can use it either with a built-in amp or with an external amp, if you prefer.
 
 ![DSC_0022](https://github.com/user-attachments/assets/e9481545-e98d-4d6a-b0eb-a993ab151dc8)
 
@@ -142,13 +142,13 @@ Here you can find a [video overview](https://www.youtube.com/watch?v=Ft5_anhSEE8
 
 ## Features
 
-|  | [HiFi Esparagus](https://www.tindie.com/products/sonocotta/esparagus-hifi-medialink/) | [Loud Esparagus](https://www.tindie.com/products/sonocotta/loud-esparagus-media-center/) | [Louder Esparagus](https://www.tindie.com/products/sonocotta/louder-esparagus-media-center/) | [Amped Esparagus](https://www.tindie.com/products/sonocotta/amped-esparagus-media-center/) | Esparagus Audio Brick |
+|  | [HiFi Esparagus](https://www.tindie.com/products/sonocotta/esparagus-hifi-medialink/) | [Loud Esparagus](https://www.tindie.com/products/sonocotta/loud-esparagus-media-center/) | [Louder Esparagus](https://www.tindie.com/products/sonocotta/louder-esparagus-media-center/) | [Amped Esparagus](https://www.tindie.com/products/sonocotta/amped-esparagus-media-center/) | [Esparagus Audio Brick](https://www.crowdsupply.com/sonocotta/esparagus-audio-brick) |
 |---|---|---|---|---|---|
 | Image | ![DSC_0709](https://github.com/sonocotta/esparagus-hifi-medialink/assets/98712315/ea45f1d2-32b5-4f12-a63c-a8e403cb22db) | ![DSC_0706](https://github.com/sonocotta/esparagus-hifi-medialink/assets/5459747/2556b8ff-1827-4e03-8e28-31e40199943c) | ![DSC_0713](https://github.com/sonocotta/esparagus-media-center/assets/5459747/14d54647-2b7e-4b1a-9a8e-135a1598eb02) | ![DSC_0022](https://github.com/user-attachments/assets/e9481545-e98d-4d6a-b0eb-a993ab151dc8) | <img width="2214" height="1217" alt="image" src="https://github.com/user-attachments/assets/89792e6c-e530-4c2b-8e8a-6ce86c9a98dc" /> |
 | MCU | ESP32-WROVER-N8R8 or ESP32-S3-WROOM-N8R8 | ESP32-WROVER-N8R8 | ESP32-WROVER-N16R8 (S3 is coming soon) | ESP32-WROVER-N16R8 (S3 is coming soon) | ESP32-WROVER-N8R8 or ESP32-S3-WROOM-N8R8 |
-| DAC | PCM5100A 32bit Stereo DAC -100 dB typical noise level | Dual I2S DAC ([MAX98357](https://www.analog.com/en/products/max98357a.html)) with built in D-Class amp | Stereo I2S DAC ( [TAS5805M](https://www.ti.com/product/TAS5805M) ) with built in D-Class amp | [PCM5100A](https://www.ti.com/product/PCM5100A) 32bit Stereo DAC working with   [TPA3110D2](https://www.ti.com/product/TPA3110D2) D-Class amp | Stereo I2S DAC (  [TAS5825M](https://www.ti.com/product/TAS5825M)  ) with built in D-Class amp |
+| DAC | PCM5100A 32bit Stereo DAC -100 dB typical noise level | Dual I2S DAC ([MAX98357](https://www.analog.com/en/products/max98357a.html)) with built in D-Class amp | Stereo I2S DAC ( [TAS5805M](https://www.ti.com/product/TAS5805M) ) with built in D-Class amp | [PCM5100A](https://www.ti.com/product/PCM5100A) 32bit Stereo DAC working with   [TPA3110D2](https://www.ti.com/product/TPA3110D2)/[TPA3118D2](https://www.ti.com/product/TPA3118D2)/[TPA3128D2](https://www.ti.com/product/TPA3128D2) D-Class amp | Stereo I2S DAC (  [TAS5825M](https://www.ti.com/product/TAS5825M)  ) with built in D-Class amp |
 | Power | 5V over USB-C, 2x [LP5907](https://www.ti.com/lit/ds/symlink/lp5907.pdf) 3.3 V Ultra-Low-Noise LDO for analog section | 5V from USB-C | Up to 20V from USB-C PD or up to 26V from generic power adapter | Up to 20V from USB-C PD or up to 26V from generic power adapter | Up to 26V from a generic power adapter |
-| Output, 4Ω | Non-amplified stereo output | 2x 3W | 2x 32W (4Ω, 1% THD+N) | 2x 22W (4Ω, 1% THD+N) at 16V   1x 40W (4Ω, 1% THD+N) at 20V | 2x 10W at 12V at 4Ω, THD+N = 1% (Efficiency mode) 1x 20W at 12V at 3Ω, THD+N = 1% (Efficiency mode) 1x 65W at 24V at 4Ω, THD+N = 1% (Power mode) |
+| Output, 4Ω | Non-amplified stereo output | 2x 3W | 2x 32W (4Ω, 1% THD+N) | 2x 40W (4Ω, 1% THD+N)   1x 60W (4Ω, 1% THD+N) | 2x 10W at 12V at 4Ω, THD+N = 1% (Efficiency mode) 1x 20W at 12V at 3Ω, THD+N = 1% (Efficiency mode) 1x 65W at 24V at 4Ω, THD+N = 1% (Power mode) |
 | Output, 8Ω | - | 2x 5W | 2x 22W (8Ω, 1% THD+N) | 2x 25W (8Ω, 1% THD+N) at 22V | 2x 30W at 24V at 8Ω, THD+N = 1% (Power mode) |
 | PSRAM | 8MB PSRAM | 8MB PSRAM | 8MB PSRAM | 8MB PSRAM | 8MB PSRAM |
 | Peripheral | WS2812B RGB Led, I2S microphone (S3 only) | WS2812B RGB Led | 8x WS2812B RGB Led, SSD1306 128x64 OLED screen (optional) | 8x WS2812B RGB Led, SSD1306 128x64 OLED screen (optional), Rotary encoder with push button | 1xWS2812B RGB Led, SSD1306 128x64 OLED screen (optional) |
@@ -158,7 +158,7 @@ Here you can find a [video overview](https://www.youtube.com/watch?v=Ft5_anhSEE8
 
 ### Onboard PSRAM
 
-Audio streaming requires proper buffering to work; even with the ESP32 500K of RAM, it is a challenging task. All Esparagus boards are based on WROVER modules that have an onboard PSRAM chip.
+Audio streaming requires proper buffering to work; even with the ESP32's 500K of RAM, it is a challenging task. All Esparagus boards are based on WROVER modules that have an onboard PSRAM chip.
 
 ## Board Pinout
 
@@ -318,7 +318,7 @@ All configurations use the ESP-IDF framework (preferred over Arduino) for better
 - [1-hifi-esparagus/](/firmware/esphome/1-hifi-esparagus/) - PCM5100 DAC configurations
 - [2-loud-esparagus/](/firmware/esphome/2-loud-esparagus/) - Dual MAX98357A DAC configurations  
 - [3-louder-esparagus/](/firmware/esphome/3-louder-esparagus/) - TAS5805M DAC with DSP
-- [4-amped-esapragus/](/firmware/esphome/4-amped-esapragus/) - PCM5100 + TPA3110/TPA3128 amp
+- [4-amped-esapragus/](/firmware/esphome/4-amped-esapragus/) - PCM5100 + TPA3110/TPA3118/TPA3128 amp
 - [5-audio-brick/](/firmware/esphome/5-audio-brick/) - TAS5825M DIN-rail module (ESP32)
 - [5-audio-brick-s3/](/firmware/esphome/5-audio-brick-s3/) - TAS5825M DIN-rail module (ESP32-S3)
 
@@ -495,7 +495,7 @@ Please visit the [hardware](/hardware/) section for board schematics and PCB des
 
 ### BTL and PBTL mode (Louder and Amped boards)
 
-The [TAS5805M DAC](https://www.ti.com/lit/ds/symlink/tas5805m.pdf) DAC used on Louder boards, and the [TPA3110D2](https://www.ti.com/product/TPA3110D2) / [TPA3128](https://www.ti.com/product/TPA3138D2) amplifiers used on Amped boards support PBTL (Parallel BTL), also known as bridge mode. In practice, this lets the amplifier deliver roughly double the current capability into a single speaker, enabling higher output power when paired with a lower-impedance load.
+The [TAS5805M DAC](https://www.ti.com/lit/ds/symlink/tas5805m.pdf) DAC used on Louder boards, and the [TPA3110D2](https://www.ti.com/product/TPA3110D2) / [TPA3118](https://www.ti.com/product/TPA3118D2) / [TPA3128](https://www.ti.com/product/TPA3128D2) amplifiers used on Amped boards support PBTL (Parallel BTL), also known as bridge mode. In practice, this lets the amplifier deliver roughly double the current capability into a single speaker, enabling higher output power when paired with a lower-impedance load.
 
 A common misconception is that switching to PBTL will automatically double the power into the same speaker you used in normal 2-channel BTL/stereo mode. It won’t. Even in stereo BTL operation, each channel already drives the speaker across the full supply voltage (VCC), so the power is limited by both the supply voltage and the current capability of each output driver.
 
@@ -520,14 +520,14 @@ In either scenario, you'd need to inform DAC/AMP to change modulation for PBTL m
 |---|---|---|---|
 | TAS5805M | <img width="413" height="333" alt="image" src="https://github.com/user-attachments/assets/0d166711-277b-4910-9a25-13e60922804f" /> | <img width="413" height="294" alt="image" src="https://github.com/user-attachments/assets/199e066e-c770-4f3f-8310-723737ad6e0e" /> | <img width="413" height="314" alt="image" src="https://github.com/user-attachments/assets/f38bd0f2-37fb-4810-bd82-68bc66eaf1c9" /> | 
 | TPA3110  | <img width="417" height="329" alt="image" src="https://github.com/user-attachments/assets/7540a54c-de87-4970-b6be-6bf104a5fd19" /> | <img width="416" height="339" alt="image" src="https://github.com/user-attachments/assets/dd599927-7027-4576-8ae7-92e1bf6eadf9" /> | <img width="418" height="327" alt="image" src="https://github.com/user-attachments/assets/bf7d8604-27f3-411a-83a9-4aaf9ff8d739" /> | 
-| TPA3128 | <img width="418" height="288" alt="image" src="https://github.com/user-attachments/assets/94de8cb3-1490-408d-893a-123cd244ace5" /> | <img width="417" height="288" alt="image" src="https://github.com/user-attachments/assets/02ebc1d8-0c1d-4b9c-9b53-e57e81a4a5a3" />| <img width="416" height="302" alt="image" src="https://github.com/user-attachments/assets/cf155c76-13c7-4c4f-afab-0c5f525695bd" /> | 
+| TPA3118/TPA3128 | <img width="418" height="288" alt="image" src="https://github.com/user-attachments/assets/94de8cb3-1490-408d-893a-123cd244ace5" /> | <img width="417" height="288" alt="image" src="https://github.com/user-attachments/assets/02ebc1d8-0c1d-4b9c-9b53-e57e81a4a5a3" />| <img width="416" height="302" alt="image" src="https://github.com/user-attachments/assets/cf155c76-13c7-4c4f-afab-0c5f525695bd" /> | 
 
 #### Amped TPA3110 Amp
 
 Physical connections that need to be done on the board (using solder bridges - normally open bridges to be closed for PBTL mode).
 <img width="909" height="547" alt="image" src="https://github.com/user-attachments/assets/28cf2700-a962-4fef-9743-369ac7474dbc" />
 
-Both drivers will play RIGHT channel signal
+Both drivers will play the RIGHT channel signal
 
 #### Louder TAS5805M DAC
 
@@ -715,7 +715,7 @@ When choosing speakers, focus on realistic power ratings rather than the often-i
 
 A good reference point is 10 watts at 1% THD (Total Harmonic Distortion) — this provides clean, pleasant audio without noticeable distortion. Many manufacturers, however, market their speakers based on higher distortion levels or theoretical peaks:
 	•	Nominal Power (e.g., 20W) — This is often measured at around 10% THD, which produces harsh, phone-like distortion.
-	•	Rated or “Maximum” Power (e.g., 40W) — The level a speaker can handle continuously, but without limiting distortion; sound quality is not measured. It is simply a scenario where speaker is used as a room heater.
+	•	Rated or “Maximum” Power (e.g., 40W) — The level a speaker can handle continuously, but without limiting distortion; sound quality is not measured. It is simply a scenario where a speaker is used as a room heater.
 	•	Peak Power (e.g., 80–100W) — The absolute maximum a speaker can withstand for a very short burst (milliseconds), not suitable for sustained playback.
 
 In short, when a speaker claims “100W,” it typically translates to about 10W of clean, listenable power in real use. Always prioritize low-distortion ratings over inflated wattage numbers for the best listening experience.
