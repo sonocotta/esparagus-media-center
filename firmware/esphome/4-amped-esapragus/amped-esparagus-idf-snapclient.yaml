@@ -122,7 +122,7 @@ packages:
       # - firmware/esphome/packages/snapclient.yaml
       # Option B: @farmed-switch fork of the c-MM snapclient with added DSP controls
       # Implements software BQ-filters for basic DACs and controls hardware DSP for DSP-enabled DACs like TAS5805M
-      - firmware/esphome/packages/snapclient-with-dsp.yaml
+      # - firmware/esphome/packages/snapclient-with-dsp.yaml
 
       # Optional Ethernet (replace wifi config if you use this, you need to exclude OLED package if you do this to free up SPI bus)
       # - firmware/esphome/packages/ethernet-w5500.yaml
@@ -135,6 +135,6 @@ packages:
   # oled: !include packages/oled.yaml
   # pd_enable: !include packages/pd-enable.yaml
   # rotary_encoder: !include packages/rotary-encoder.yaml
-  # snapclient: !include packages/snapclient.yaml
+  snapclient: !include packages/snapclient-new.yaml
   # snapclient_with_dsp: !include packages/snapclient-with-dsp.yaml
   # ethernet: !include packages/ethernet-w5500.yaml

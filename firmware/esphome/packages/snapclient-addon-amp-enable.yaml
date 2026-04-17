@@ -1,10 +1,9 @@
 # ============================================================
-# Media Player - DAC enable addon
+# Media Player - Amp enable addon
 # ============================================================
-# Extends snapclient media player with DAC enable control
+# Extends snapclient media player with Amp enable control
 # Dependencies: snapclient-new.yaml (speaker stack)
-# dac-switch.yaml (DAC enable switch)
-# or tas58xx-dac.yaml (DAC enable switch included in DAC component)
+# amp-unmute.yaml (Amp enable switch)
 # ============================================================
 
 media_player:
@@ -13,13 +12,13 @@ media_player:
     on_play:
       - if:
           condition:
-            switch.is_off: enable_dac
+            switch.is_off: enable_amp
           then:
-            switch.turn_on: enable_dac
+            switch.turn_on: enable_amp
 
     on_idle:
       - if:
           condition:
-            switch.is_on: enable_dac
+            switch.is_on: enable_amp
           then:
-            switch.turn_off: enable_dac
+            switch.turn_off: enable_amp
