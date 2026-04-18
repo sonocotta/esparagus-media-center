@@ -51,6 +51,7 @@ substitutions:
   
   # ESP32 optimal settings for Sendspin
   media_source_buffer_size: 100000
+
 esphome:
   name: ${name}
   friendly_name: ${friendly_name}
