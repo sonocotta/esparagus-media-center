@@ -21,6 +21,7 @@ substitutions:
   # TAS5805M
   tas58xx_variant: TAS5805M
   tas58xx_enable_pin: GPIO33
+  
   i2c_sda_pin: GPIO21
   i2c_scl_pin: GPIO27
 
@@ -56,6 +57,9 @@ substitutions:
   display_cs_pin: GPIO15
   display_dc_pin: GPIO04
   display_reset_pin: GPIO32
+
+  # ESP32 optimal settings for Sendspin
+  media_source_buffer_size: 100000
 
 esphome:
   name: ${name}
@@ -121,9 +125,9 @@ packages:
 
       - firmware/esphome/packages/sendspin-audio.yaml
       - firmware/esphome/packages/sendspin-audio-addon-external-dac.yaml
-      - firmware/esphome/packages/sendspin.yaml
+      # - firmware/esphome/packages/sendspin.yaml
       - firmware/esphome/packages/sendspin-addon-dac-enable.yaml
-      - firmware/esphome/packages/sendspin-addon-tas58xx.yaml
+      # - firmware/esphome/packages/sendspin-addon-tas58xx.yaml
       # Optional OLED display for showing track info, clock, etc.
       # - firmware/esphome/packages/sendspin-addon-oled.yaml
 
@@ -142,9 +146,9 @@ packages:
   
   # sendspin_audio: !include packages/sendspin-audio.yaml
   # sendspin_external_dac: !include packages/sendspin-audio-addon-external-dac.yaml
-  # sendspin: !include packages/sendspin.yaml
+  sendspin: !include packages/sendspin.yaml
   # sendspin_enable_dac: !include packages/sendspin-addon-dac-enable.yaml
-  # sendspin_tas58xx: !include packages/sendspin-addon-tas58xx.yaml
+  sendspin_tas58xx: !include packages/sendspin-addon-tas58xx.yaml
   # oled: !include packages/sendspin-addon-oled.yaml
 
   # light: !include packages/light-x.yaml
