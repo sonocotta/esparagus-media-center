@@ -24,10 +24,13 @@ substitutions:
   # IR Receiver
   ir_rx_pin: GPIO39
 
+  # ESP32 optimal settings for Sendspin
+  media_source_buffer_size: 100000
+  
 esphome:
   name: ${name}
   friendly_name: ${friendly_name}
-  min_version: 2026.2.0
+  min_version: 2026.3.0
   platformio_options:
     board_build.flash_mode: dio
 
@@ -74,7 +77,7 @@ packages:
     ref: main
     files:
       - firmware/esphome/packages/sendspin-audio.yaml
-      - firmware/esphome/packages/sendspin.yaml
+      # - firmware/esphome/packages/sendspin.yaml
       - firmware/esphome/packages/light.yaml
       - firmware/esphome/packages/ir-receiver.yaml
       - firmware/esphome/packages/monitoring.yaml
@@ -82,7 +85,7 @@ packages:
 
   # Debug/local development fallback:
   # audio: !include packages/sendspin-audio.yaml
-  # sendspin: !include packages/sendspin.yaml
+  sendspin: !include packages/sendspin.yaml
   # light: !include packages/light.yaml
   # ir_receiver: !include packages/ir-receiver.yaml
   # monitoring: !include packages/monitoring.yaml

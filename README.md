@@ -52,8 +52,9 @@ Esparagus Media Center is a series of ESP32-based media center devices. They all
     - [Home Assistant: Snapcast](#home-assistant-snapcast)
   - [Squeezelite-ESP32](#squeezelite-esp32)
     - [How to flash and configure](#how-to-flash-and-configure)
-    - [Squeezelite-esp32 Bug causing boot loop](#squeezelite-esp32-bug-causing-boot-loop)
     - [Squeezelite-esp32 reboots and connection drops](#squeezelite-esp32-reboots-and-connection-drops)
+  - [Airplay-2](#airplay-2)
+    - [How to Get Started](#how-to-get-started)
   - [Standalone Snapclient](#standalone-snapclient)
     - [Snapclient benefits](#snapclient-benefits)
   - [Hardware](#hardware)
@@ -434,10 +435,6 @@ You can use it now
 
 </details>
 
-### Squeezelite-esp32 Bug causing boot loop
-
-Before version 1681, squeezelite-esp32 had a [bug](https://github.com/sle118/squeezelite-esp32/issues/414) that caused a boot loop with certain LMS servers when the RGB LED was used for visualizations. It seems to be fixed in 1681, but the quick workaround is to clear the `led_vu_config` NVS setting.
-
 ### Squeezelite-esp32 reboots and connection drops
 
 The default configuration of the squeezelite-esp32 runs automatic discovery of the available LMS server nearby. In fact, it depends on it so much that in case the LMS service is not found on the network, it will reboot automatically (every few minutes). 
@@ -451,6 +448,27 @@ squeezelite -o i2s -s -disable -b 500:2000 -C 30 -d all=sdebug
 ```
 
 ![image](https://github.com/user-attachments/assets/6b4096bd-0793-458b-a0fe-3282418f773f)
+
+## Airplay-2
+
+The drawback is squeezelite's implementation is a first version of AirPlay. This [new, open-source implementation](https://github.com/rbouteiller/airplay-esp32) of the Airplay protocol is a standalone v2 alternative, with great work done by the community despite lack of help from Apple!
+
+The good news is the project supports Louder boards out of the box (the rest of the boards are cmoing soon as well). You just need to pull the code from the repo and flash it to your device. A code-free web-installer is coming as well.
+
+### How to Get Started
+
+While I'm working on a simplified web-installer with pre-built binaries, you can try it out right away with the help of another community project - Platformio. All you need to do is install [vscode](https://code.visualstudio.com/), add [platformio plugin](https://docs.platformio.org/en/latest/integration/ide/vscode.html), and you're ready to go.
+
+Pull the AirPlay code somewhere into your filesystem first:
+
+```sh
+git clone https://github.com/rbouteiller/airplay-esp32 && code airplay-esp32
+
+```
+
+When VSCode loads, find the Platformio tab in the left navigation, select `esparagus-audio-brick` or `esparagus-louder` in the list of available configs, and run the `Upload Filesystem image` and `Upload and Monitor` tasks (assuming you have your board connected to the USB).
+
+The Platformio magic happens now, pulling all the dependencies, platform files, frameworks, and building a binary for your board. Once it is flashed, all that is left to do is configure Wifi credentials using the built-in access point or connect Ethernet, if you're looking for lower latency.
 
 ## Standalone Snapclient
 
