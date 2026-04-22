@@ -50,6 +50,7 @@ Esparagus Media Center is a series of ESP32-based media center devices. They all
       - [Sendspin multi-room playback (experimental)](#sendspin-multi-room-playback-experimental)
       - [Install steps](#install-steps)
     - [Home Assistant: Snapcast](#home-assistant-snapcast)
+    - [Home Assistant: HiFi-ESparagus-S3](#home-assistant-hifi-esparagus-s3)
   - [Squeezelite-ESP32](#squeezelite-esp32)
     - [How to flash and configure](#how-to-flash-and-configure)
     - [Squeezelite-esp32 reboots and connection drops](#squeezelite-esp32-reboots-and-connection-drops)
@@ -391,9 +392,46 @@ Snapcast is a multi-room audio player that synchronizes playback across multiple
 
 </details>
 
-As of mid-2025 work is ongoing ([1](https://github.com/c-MM/esphome-snapclient/), [2](https://github.com/esphome/esphome/pull/8350)) to add snapcast component to ESPHome. This is based on the [original implementation](https://github.com/CarlosDerSeher/snapclient) done by CarlosDerSeher. This has the benefit of enabling all the DAC features implemented by the ESPHome driver. At the moment of writing, there are quite a few issues to be solved in the code before it can be merged, but having tested this myself on a few S3-based boards as long as Louder-Esparagus and Louder-ESP32 boards, I can say it is stable and works really well. Also
+As of mid-2025 work is ongoing ([1](https://github.com/c-MM/esphome-snapclient/), [2](https://github.com/esphome/esphome/pull/8350)) to add snapcast component to ESPHome. This is based on the [original implementation](https://github.com/CarlosDerSeher/snapclient) done by CarlosDerSeher. This has the benefit of enabling all the DAC features implemented by the ESPHome driver. At the moment of writing, there are quite a few issues to be solved in the code before it can be merged, but having tested this myself on a few S3-based boards such as Louder-Esparagus and Louder-ESP32 boards, I can say it is stable and works really well. Also
 - This is the only implementation that works with ESP32-S3 (exciting!)
 - This implementation allows using advanced TAS5805M DAC features available in the Esphome driver, like bridge mode and 15-band EQ. If you have Home Assistant already, that's no brainer
+
+### Home Assistant: HiFi-ESparagus-S3
+
+Recent ESPHome developments show more and more promise in supporting ESP32-S3 boards, which are cheaper, more powerful, and more feature-rich than classic ESP32. The Sendspin, for example, works much better on the S3, and voice-assist is only available on the S3. For that reason, I decided to ensure that every board is available in both Classic-ESP32 and ESP32-S3 variants - keeping the classic version mainly for Classic Bluetooth audio support.
+
+One of the features of the S3 is a USB host, which allows an alternative way to flash the board - S3 supports both the serial method (same as classic ESP32, TX, RX, and GPIO0/RESET dance), and the USB-only method. This allows for saving on a USB-Serial converter chip, let alone extra possibilities of the USB port, such as a built-in debug interface. 
+
+One of the pitfalls of that is you need to understand your Serial interfaces really well, since now you have both hardware Serial on pins 43/44 and a USB Serial interface (Assuming it is enabled in SDKCONFIG, and that's an important distinction!). As a consequence, you may not have your Serial interface at all times, as [described here](https://github.com/sonocotta/esp32-audio-dock/#flashing-esp32-s3), and your software might use an interface that is not configured.
+
+To avoid issues with flashing ESP32-S3 for the first time (since it is not that convenient for a cased device), I decided to try using Hardware serial on the HiFi-Esparagus-S3, so you're guaranteed to be able to flash the device without the need to disassemble. As it turned out, ESPHome default configuration *assumes* USB Serial, so after flashing, the hardware serial is not communicated with, the WiFi onboarding is not working, and therefore the standard flashing process is not working.
+
+While I decided to get back to the standard USB-only approach in the next revision, I'll put below the workaround steps to onboard the device using an alternative method
+
+<details>
+  <summary>Install instructions</summary>
+
+1. Navigate to your ESPHome dashboard in Home Assistant and add a new device manually; it doesn't have to be connected at this moment. You should use the default ESP32-S3 configuration.
+
+<img width="556" height="433" alt="image" src="https://github.com/user-attachments/assets/58afbbb6-edf8-4160-90ad-d4190b1566f1" />
+
+2. Download the binary from the Dashboard, using the "Plug into this computer" option.
+
+<img width="649" height="457" alt="image" src="https://github.com/user-attachments/assets/660ba253-5fa1-4dd6-83e8-5840dace8266" />
+
+3. Navigate to [web.esphome.io](https://web.esphome.io/) and connect to the HiFi-Esparagus-S3 device. Instead of flashing the default configuration, use the "INSTALL" option and the binary exported in the previous step
+
+<img width="532" height="448" alt="image" src="https://github.com/user-attachments/assets/f3179899-a6b4-49cb-8cb6-027c0c66cb6a" />
+
+4. When the process completes, the device will go online, connect to wifi automatically, and it can be managed using ESPHome Dashboard as normal. Note that serial logs "on the wire" are still limited, but OTA logging will work as usual.
+
+<img width="1159" height="560" alt="image" src="https://github.com/user-attachments/assets/c83c0898-2d3b-4c24-9f6c-59737212f793" />
+
+5. Using ESPHome Dashboard, you may now flash the selected configuration, selected from [this folder](https://github.com/sonocotta/esparagus-media-center/tree/main/firmware/esphome/8-hifi-esparagus-s3)
+
+<img width="957" height="550" alt="image" src="https://github.com/user-attachments/assets/fd494cb1-cbf2-46f5-baaa-c4c0093cf87f" />
+
+</details>
 
 ## Squeezelite-ESP32
 
