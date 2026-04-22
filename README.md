@@ -433,6 +433,8 @@ While I decided to get back to the standard USB-only approach in the next revisi
 
 </details>
 
+The above issues can be solved by updating the default SDKCONFIG settings in the ESPHome config, but I'm still in the process of finding the right combination. 
+
 ## Squeezelite-ESP32
 
 Squeezelite-ESP32 is a multimedia software suite that started as a renderer (or player) of LMS (Lyrion Music Server, formerly Logitech Media Server). Now it is extended with 
