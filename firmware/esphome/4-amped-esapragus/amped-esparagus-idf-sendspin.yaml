@@ -109,7 +109,7 @@ packages:
       # - firmware/esphome/packages/sendspin-addon-oled.yaml
 
       - firmware/esphome/packages/sendspin-audio.yaml
-      - firmware/esphome/packages/sendspin-audio-esp32.yaml
+      - firmware/esphome/packages/sendspin-addon-esp32.yaml
       - firmware/esphome/packages/light-x.yaml
       - firmware/esphome/packages/ir-receiver.yaml
       - firmware/esphome/packages/rotary-encoder.yaml
