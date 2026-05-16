@@ -178,9 +178,9 @@ display:
       - id: page_clock
         lambda: |-
           // display clock
-          auto hours = id(esptime).now().hour;
-          auto minutes = id(esptime).now().minute;
-          auto seconds = id(esptime).now().second;
+          auto hours = id(sntp_time).now().hour;
+          auto minutes = id(sntp_time).now().minute;
+          auto seconds = id(sntp_time).now().second;
           auto dot = seconds % 2 == 0 ? " " : ":";
 
           it.printf(it.get_width() / 2, 
@@ -314,4 +314,3 @@ globals:
     type: int
     restore_value: no
     initial_value: '0'
-    
