@@ -104,12 +104,12 @@ packages:
     url: https://github.com/sonocotta/esparagus-media-center
     ref: main
     files:
+      - firmware/esphome/packages/audio.yaml
       - firmware/esphome/packages/sendspin.yaml
       # Optional : OLED displays clock when idling, and track/artist info when playing
       # - firmware/esphome/packages/sendspin-addon-oled.yaml
-
-      - firmware/esphome/packages/sendspin-audio.yaml
       - firmware/esphome/packages/sendspin-addon-esp32.yaml
+      
       - firmware/esphome/packages/light-x.yaml
       - firmware/esphome/packages/ir-receiver.yaml
       - firmware/esphome/packages/rotary-encoder.yaml

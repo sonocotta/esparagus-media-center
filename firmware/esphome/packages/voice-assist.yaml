@@ -91,7 +91,8 @@ micro_wake_word:
                     condition:
                       switch.is_off: ducking_switch
                     then:
-                      media_player.stop:
+                      media_player.stop: 
+                        id: external_media_player
                 - if:
                     condition:
                       voice_assistant.is_running:
@@ -102,7 +103,8 @@ micro_wake_word:
                           condition:
                             media_player.is_announcing:
                           then:
-                            - media_player.stop:
+                            - media_player.stop: 
+                                id: external_media_player
                                 announcement: true
                           else:
                             - if:
@@ -334,7 +336,8 @@ switch:
             media_player.is_announcing:
           then:
             media_player.stop:
-              announcement: true
+                id: external_media_player
+                announcement: true
       - mixer_speaker.apply_ducking:
           id: media_mixing_input
           decibel_reduction: 0

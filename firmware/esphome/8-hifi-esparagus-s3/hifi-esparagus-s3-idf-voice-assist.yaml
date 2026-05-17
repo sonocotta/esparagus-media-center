@@ -115,9 +115,10 @@ packages:
 
   esparagus_echo:
     url: https://github.com/sonocotta/esparagus-echo
-    ref: main
+    ref: features/voice-assist-with-sendspin
     files:
-      - firmware/esphome/packages/audio.yaml
+      - firmware/esphome/packages/microphone-i2s.yaml
       - firmware/esphome/packages/microphone.yaml
-      - firmware/esphome/packages/voice-assist-media-player.yaml
+      - firmware/esphome/packages/audio.yaml
+      - firmware/esphome/packages/media-player.yaml
       - firmware/esphome/packages/voice-assist.yaml

@@ -84,11 +84,12 @@ packages:
     url: https://github.com/sonocotta/esparagus-media-center
     ref: main
     files:
+      - firmware/esphome/packages/audio.yaml
       - firmware/esphome/packages/sendspin.yaml
-      - firmware/esphome/packages/sendspin-audio.yaml
       - firmware/esphome/packages/sendspin-addon-esp32.yaml
+      - firmware/esphome/packages/media-player-addon-dac-enable.yaml
+
       - firmware/esphome/packages/dac-switch.yaml
-      - firmware/esphome/packages/media-player-addon-dac-enable.yaml  
       - firmware/esphome/packages/light.yaml
       - firmware/esphome/packages/ir-receiver.yaml
       - firmware/esphome/packages/monitoring.yaml
