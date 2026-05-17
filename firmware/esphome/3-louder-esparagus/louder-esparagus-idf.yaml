@@ -110,7 +110,7 @@ network:
 packages:
   esparagus_remote:
     url: https://github.com/sonocotta/esparagus-media-center
-    ref: main
+    ref: features/sendspin-config-refactoring
     files:
       # Option A: TAS58xx configured with ganged 15-band EQ
       - firmware/esphome/packages/dac-tas58xx.yaml

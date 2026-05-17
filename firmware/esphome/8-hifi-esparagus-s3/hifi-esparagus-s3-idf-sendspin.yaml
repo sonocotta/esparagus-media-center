@@ -101,11 +101,11 @@ network:
 packages:
   esparagus_remote:
     url: https://github.com/sonocotta/esparagus-media-center
-    ref: main
+    ref: features/sendspin-config-refactoring
     files:
       - firmware/esphome/packages/audio.yaml
       - firmware/esphome/packages/sendspin.yaml
-      
+
       - firmware/esphome/packages/light.yaml
       - firmware/esphome/packages/ir-receiver.yaml
       - firmware/esphome/packages/monitoring.yaml

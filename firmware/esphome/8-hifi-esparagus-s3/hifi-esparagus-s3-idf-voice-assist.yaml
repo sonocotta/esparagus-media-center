@@ -107,7 +107,7 @@ network:
 packages:
   esparagus_remote:
     url: https://github.com/sonocotta/esparagus-media-center
-    ref: main
+    ref: features/sendspin-config-refactoring
     files:
       - firmware/esphome/packages/light-x.yaml
       - firmware/esphome/packages/monitoring.yaml
@@ -121,4 +121,5 @@ packages:
       - firmware/esphome/packages/microphone.yaml
       - firmware/esphome/packages/audio.yaml
       - firmware/esphome/packages/media-player.yaml
+      - firmware/esphome/packages/media-player-addon-voice-assist.yaml
       - firmware/esphome/packages/voice-assist.yaml

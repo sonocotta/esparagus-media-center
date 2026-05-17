@@ -100,12 +100,12 @@ network:
 packages:
   esparagus_remote:
     url: https://github.com/sonocotta/esparagus-media-center
-    ref: main
+    ref: features/sendspin-config-refactoring
     files:
       - firmware/esphome/packages/audio.yaml
       - firmware/esphome/packages/media-player.yaml
       - firmware/esphome/packages/media-player-addon-dac-enable.yaml
-      
+
       - firmware/esphome/packages/dac-switch.yaml
       - firmware/esphome/packages/light-x.yaml
       - firmware/esphome/packages/ir-receiver.yaml
