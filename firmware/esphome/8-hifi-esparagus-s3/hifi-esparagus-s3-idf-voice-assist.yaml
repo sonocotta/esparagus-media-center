@@ -115,7 +115,7 @@ packages:
 
   esparagus_echo:
     url: https://github.com/sonocotta/esparagus-echo
-    ref: features/voice-assist-with-sendspin
+    ref: main
     files:
       - firmware/esphome/packages/microphone-i2s.yaml
       - firmware/esphome/packages/microphone.yaml
