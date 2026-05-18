@@ -136,9 +136,10 @@ packages:
 
       - firmware/esphome/packages/audio.yaml
       - firmware/esphome/packages/audio-addon-external-dac.yaml
-      - firmware/esphome/packages/media-player.yaml
-      # - firmware/esphome/packages/media-player-addon-dac-enable.yaml
-      - firmware/esphome/packages/media-player-addon-tas58xx.yaml
+
+      - firmware/esphome/packages/sendspin.yaml
+      # - firmware/esphome/packages/sendspin-addon-dac-enable.yaml
+      - firmware/esphome/packages/sendspin-addon-voice-assist-tas58xx.yaml
 
       - firmware/esphome/packages/light-x.yaml
       - firmware/esphome/packages/monitoring.yaml
@@ -153,15 +154,17 @@ packages:
       - firmware/esphome/packages/microphone-i2s.yaml
       - firmware/esphome/packages/microphone.yaml
       
-      - firmware/esphome/packages/media-player-addon-voice-assist.yaml
-      - firmware/esphome/packages/voice-assist.yaml
+      - firmware/esphome/packages/voice-assist-sendspin.yaml
+      - firmware/esphome/packages/sendspin-addon-voice-assist.yaml
       # - firmware/esphome/packages/voice-assist-addon-dac-enable.yaml
-
+      
   # # Debug/local development fallback:
   # microphone: !include packages/microphone.yaml
   # audio: !include packages/audio-voice-assist.yaml
   # audio_external_dac: !include packages/audio-addon-external-dac.yaml
 
+  # sendspin: !include packages/sendspin.yaml
+  # sendspin_tas58xx: !include packages/sendspin-addon-voice-assist-tas58xx.yaml
   # media_player: !include packages/media-player-voice-assist.yaml
   # media_player_tas58xx: !include packages/media-player-addon-tas58xx.yaml
   # media_player_dac_enable: !include packages/media-player-addon-dac-enable.yaml

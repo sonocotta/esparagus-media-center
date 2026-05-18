@@ -117,7 +117,9 @@ packages:
     url: https://github.com/sonocotta/esparagus-echo
     ref: main
     files:
-      - firmware/esphome/packages/audio.yaml
+      - firmware/esphome/packages/microphone-i2s.yaml
       - firmware/esphome/packages/microphone.yaml
-      - firmware/esphome/packages/voice-assist-media-player.yaml
+      - firmware/esphome/packages/audio.yaml
+      - firmware/esphome/packages/media-player.yaml
+      - firmware/esphome/packages/media-player-addon-voice-assist.yaml
       - firmware/esphome/packages/voice-assist.yaml

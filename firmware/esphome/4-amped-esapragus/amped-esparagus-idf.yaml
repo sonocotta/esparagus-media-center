@@ -103,6 +103,7 @@ packages:
     files:
       - firmware/esphome/packages/audio.yaml
       - firmware/esphome/packages/media-player.yaml
+
       - firmware/esphome/packages/light-x.yaml
       - firmware/esphome/packages/ir-receiver.yaml
       - firmware/esphome/packages/pd-enable.yaml

@@ -56,7 +56,7 @@ esp32:
       CONFIG_MBEDTLS_SSL_PROTO_TLS1_3: "y"
 
 logger:
-  level: DEBUG
+  level: INFO
 
 api:
 
@@ -77,16 +77,17 @@ packages:
     url: https://github.com/sonocotta/esparagus-media-center
     ref: main
     files:
+      - firmware/esphome/packages/audio.yaml
       - firmware/esphome/packages/sendspin.yaml
-      - firmware/esphome/packages/sendspin-audio.yaml
       - firmware/esphome/packages/sendspin-addon-esp32.yaml
+
       - firmware/esphome/packages/light.yaml
       - firmware/esphome/packages/ir-receiver.yaml
       - firmware/esphome/packages/monitoring.yaml
-      - firmware/esphome/packages/monitoring-wifi.yaml
+      # - firmware/esphome/packages/monitoring-wifi.yaml
 
   # Debug/local development fallback:
-  # audio: !include packages/sendspin-audio.yaml
+  # audio: !include packages/audio.yaml
   # sendspin: !include packages/sendspin.yaml
   # sendspin_esp32: !include packages/sendspin-addon-esp32.yaml
   # light: !include packages/light.yaml

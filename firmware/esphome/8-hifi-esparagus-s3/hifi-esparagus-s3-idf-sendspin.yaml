@@ -103,15 +103,16 @@ packages:
     url: https://github.com/sonocotta/esparagus-media-center
     ref: main
     files:
-      - firmware/esphome/packages/sendspin-audio.yaml
+      - firmware/esphome/packages/audio.yaml
       - firmware/esphome/packages/sendspin.yaml
+
       - firmware/esphome/packages/light.yaml
       - firmware/esphome/packages/ir-receiver.yaml
       - firmware/esphome/packages/monitoring.yaml
       - firmware/esphome/packages/monitoring-wifi.yaml
 
   # Debug/local development fallback:
-  # audio: !include packages/sendspin-audio.yaml
+  # audio: !include packages/audio.yaml
   # sendspin: !include packages/sendspin.yaml
   # light: !include packages/light.yaml
   # ir_receiver: !include packages/ir-receiver.yaml
