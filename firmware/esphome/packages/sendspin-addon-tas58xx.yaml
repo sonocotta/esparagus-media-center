@@ -5,7 +5,7 @@
 # - startup sync file source
 # - boot-time startup sync playback
 # - DAC enable/disable hooks for playback events
-# Dependencies: sendspin.yaml, sendspin-audio-addon-external-dac.yaml,
+# Dependencies: sendspin.yaml, audio-addon-external-dac.yaml,
 #               sendspin-addon-dac-enable.yaml
 # ============================================================
 

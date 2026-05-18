@@ -87,7 +87,7 @@ packages:
       - firmware/esphome/packages/monitoring-wifi.yaml
 
   # Debug/local development fallback:
-  # audio: !include packages/sendspin-audio.yaml
+  # audio: !include packages/audio.yaml
   # sendspin: !include packages/sendspin.yaml
   # sendspin_esp32: !include packages/sendspin-addon-esp32.yaml
   # light: !include packages/light.yaml

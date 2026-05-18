@@ -126,7 +126,7 @@ packages:
   # dac_switch: !include packages/dac-switch.yaml
   # dac_enable: !include packages/sendspin-addon-dac-enable.yaml
   # oled: !include packages/sendspin-addon-oled.yaml
-  # audio: !include packages/sendspin-audio.yaml
+  # audio: !include packages/audio.yaml
   # light: !include packages/light-x.yaml
   # ir_receiver: !include packages/ir-receiver.yaml
   # rotary_encoder: !include packages/rotary-encoder.yaml

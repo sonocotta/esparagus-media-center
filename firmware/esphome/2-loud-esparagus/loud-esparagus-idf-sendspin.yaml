@@ -99,7 +99,7 @@ packages:
   # sendspin: !include packages/sendspin.yaml
   # dac_switch: !include packages/dac-switch.yaml
   # dac_enable: !include packages/media-player-addon-dac-enable.yaml
-  # audio: !include packages/sendspin-audio.yaml
+  # audio: !include packages/audio.yaml
   # audio_esp32: !include packages/sendspin-addon-esp32.yaml
   # light: !include packages/light.yaml
   # ir_receiver: !include packages/ir-receiver.yaml
