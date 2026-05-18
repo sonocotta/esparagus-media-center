@@ -56,7 +56,7 @@ esp32:
       CONFIG_MBEDTLS_SSL_PROTO_TLS1_3: "y"
 
 logger:
-  level: DEBUG
+  level: INFO
 
 api:
 
@@ -84,7 +84,7 @@ packages:
       - firmware/esphome/packages/light.yaml
       - firmware/esphome/packages/ir-receiver.yaml
       - firmware/esphome/packages/monitoring.yaml
-      - firmware/esphome/packages/monitoring-wifi.yaml
+      # - firmware/esphome/packages/monitoring-wifi.yaml
 
   # Debug/local development fallback:
   # audio: !include packages/audio.yaml
