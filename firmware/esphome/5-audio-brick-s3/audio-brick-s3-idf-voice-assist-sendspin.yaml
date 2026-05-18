@@ -137,7 +137,7 @@ packages:
       - firmware/esphome/packages/audio.yaml
       - firmware/esphome/packages/audio-addon-external-dac.yaml
 
-      # - firmware/esphome/packages/sendspin.yaml
+      - firmware/esphome/packages/sendspin.yaml
       # - firmware/esphome/packages/sendspin-addon-dac-enable.yaml
       - firmware/esphome/packages/sendspin-addon-voice-assist-tas58xx.yaml
 
@@ -149,12 +149,11 @@ packages:
 
   esparagus_echo:
     url: https://github.com/sonocotta/esparagus-echo
-    ref: features/led-management-in-voice-assist-with-sendspin
+    ref: main
     files:
       - firmware/esphome/packages/microphone-i2s.yaml
       - firmware/esphome/packages/microphone.yaml
       
-      - firmware/esphome/packages/sendspin.yaml
       - firmware/esphome/packages/voice-assist-sendspin.yaml
       - firmware/esphome/packages/sendspin-addon-voice-assist.yaml
       # - firmware/esphome/packages/voice-assist-addon-dac-enable.yaml
