@@ -48,7 +48,9 @@ Esparagus Media Center is a series of ESP32-based media center devices. They all
       - [Sendspin multi-room playback (experimental)](#sendspin-multi-room-playback-experimental)
       - [Install steps](#install-steps)
     - [Home Assistant: Snapcast](#home-assistant-snapcast)
-    - [Home Assistant: HiFi-ESparagus-S3](#home-assistant-hifi-esparagus-s3)
+    - [Home Assistant: HiFi-Esparagus-S3](#home-assistant-hifi-esparagus-s3)
+      - [Revision G: early prototype](#revision-g-early-prototype)
+      - [Revision H: current distribution](#revision-h-current-distribution)
   - [Squeezelite-ESP32](#squeezelite-esp32)
     - [How to flash and configure](#how-to-flash-and-configure)
     - [Squeezelite-esp32 reboots and connection drops](#squeezelite-esp32-reboots-and-connection-drops)
@@ -321,6 +323,8 @@ All configurations use the ESP-IDF framework (preferred over Arduino) for better
 - [4-amped-esapragus/](/firmware/esphome/4-amped-esapragus/) - PCM5100 + TPA3110/TPA3118/TPA3128 amp
 - [5-audio-brick/](/firmware/esphome/5-audio-brick/) - TAS5825M DIN-rail module (ESP32)
 - [5-audio-brick-s3/](/firmware/esphome/5-audio-brick-s3/) - TAS5825M DIN-rail module (ESP32-S3)
+- [8-hifi-esparagus-s3](/firmware/esphome/8-hifi-esparagus-s3/) - PCM5100 DAC with mic and RGB LED (ESP32-S3)
+- [9-audio-brick-dual-s3](/firmware/esphome/9-audio-brick-dual-s3/) - Dual TAS5825M DAC on the DIN-rail enclosure (ESP32-S3)
 
 #### Snapclient multi-room playback (experimental)
 
@@ -394,13 +398,15 @@ As of mid-2025 work is ongoing ([1](https://github.com/c-MM/esphome-snapclient/)
 - This is the only implementation that works with ESP32-S3 (exciting!)
 - This implementation allows using advanced TAS5805M DAC features available in the Esphome driver, like bridge mode and 15-band EQ. If you have Home Assistant already, that's no brainer
 
-### Home Assistant: HiFi-ESparagus-S3
+### Home Assistant: HiFi-Esparagus-S3
 
 Recent ESPHome developments show more and more promise in supporting ESP32-S3 boards, which are cheaper, more powerful, and more feature-rich than classic ESP32. The Sendspin, for example, works much better on the S3, and voice-assist is only available on the S3. For that reason, I decided to ensure that every board is available in both Classic-ESP32 and ESP32-S3 variants - keeping the classic version mainly for Classic Bluetooth audio support.
 
 One of the features of the S3 is a USB host, which allows an alternative way to flash the board - S3 supports both the serial method (same as classic ESP32, TX, RX, and GPIO0/RESET dance), and the USB-only method. This allows for saving on a USB-Serial converter chip, let alone extra possibilities of the USB port, such as a built-in debug interface. 
 
 One of the pitfalls of that is you need to understand your Serial interfaces really well, since now you have both hardware Serial on pins 43/44 and a USB Serial interface (Assuming it is enabled in SDKCONFIG, and that's an important distinction!). As a consequence, you may not have your Serial interface at all times, as [described here](https://github.com/sonocotta/esp32-audio-dock/#flashing-esp32-s3), and your software might use an interface that is not configured.
+
+#### Revision G: early prototype
 
 To avoid issues with flashing ESP32-S3 for the first time (since it is not that convenient for a cased device), I decided to try using Hardware serial on the HiFi-Esparagus-S3, so you're guaranteed to be able to flash the device without the need to disassemble. As it turned out, ESPHome default configuration *assumes* USB Serial, so after flashing, the hardware serial is not communicated with, the WiFi onboarding is not working, and therefore the standard flashing process is not working.
 
@@ -432,6 +438,10 @@ While I decided to get back to the standard USB-only approach in the next revisi
 </details>
 
 The above issues can be solved by updating the default SDKCONFIG settings in the ESPHome config, but I'm still in the process of finding the right combination. 
+
+#### Revision H: current distribution
+
+The latest revision of the HiFi-Esparagus-S3 is now using the USB-only flashing method, which is more standard and works with all ESPHome configurations. To make sure you don't have to disassemble the device, it comes with ESPHome pre-flashed, which requires wifi configuration and Home Assistant integration. While I'm looking into the possibility of an easy-to-use Voice PE-like experience for the S3-based devices, I still recommend using the web-flashing method, which would work normally with the device and not require any disassembly.
 
 ## Squeezelite-ESP32
 
