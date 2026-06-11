@@ -441,7 +441,7 @@ The above issues can be solved by updating the default SDKCONFIG settings in the
 
 #### Revision H: current distribution
 
-Latest revision of the HiFi-Esparagus-S3 is now using the USB-only flashing method, which is more standard and works with all ESPHome configurations. To make sure you don't have to disassemble the device, it comes with esphome pre-flashed, which requires wifi configuration and home assistant integration. While I'm looking into the possibility of easy-to-use Voice PE-like experience for the S3-based devices, I still recommend using web-flashing method, that would work normally with the device, nor require any disassembly.
+The latest revision of the HiFi-Esparagus-S3 is now using the USB-only flashing method, which is more standard and works with all ESPHome configurations. To make sure you don't have to disassemble the device, it comes with ESPHome pre-flashed, which requires wifi configuration and Home Assistant integration. While I'm looking into the possibility of an easy-to-use Voice PE-like experience for the S3-based devices, I still recommend using the web-flashing method, which would work normally with the device and not require any disassembly.
 
 ## Squeezelite-ESP32
 
