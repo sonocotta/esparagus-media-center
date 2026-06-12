@@ -5,7 +5,7 @@
 # ============================================================
 
 substitutions:
-  name: esphome-web-e349e4
+  name: esphome-web-c8e688
   friendly_name: Audio-Brick-Dual-S3
   task_stack_in_psram: "true" 
 
@@ -44,6 +44,11 @@ substitutions:
   display_dc_pin: GPIO38
   display_reset_pin: GPIO48
   display_backlight_pin: GPIO2
+
+  # Fan pins
+  fan_input_pin: GPIO7
+  fan_pwn_pin: GPIO4 
+
 
 esphome:
   name: ${name}
@@ -91,7 +96,7 @@ psram:
   mode: octal
   speed: 80MHz
 
-  
+
   ignore_not_found: false
 
 network:
@@ -117,6 +122,5 @@ packages:
   # Debug/local development fallback:
   dacs: !include ../packages/dac-tas58xx-dual.yaml
   media_player_addon_dac_enable: !include ../packages/media-player-addon-dac-enable-dual.yaml
-
+  fan: !include ../packages/fan.yaml
   tft: !include ../packages/sendspin-addon-tft.yaml
-  
