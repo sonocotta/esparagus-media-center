@@ -113,5 +113,5 @@ packages:
   dacs: !include ../packages/dac-tas58xx-dual.yaml
   media_player_addon_tas58xx: !include ../packages/media-player-addon-tas58xx-dual.yaml
   media_player_addon_dac_enable: !include ../packages/media-player-addon-dac-enable-dual.yaml
-  
+  fan: !include ../packages/fan.yaml
   tft: !include ../packages/tft-spi.yaml

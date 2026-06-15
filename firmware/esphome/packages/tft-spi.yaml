@@ -1,5 +1,5 @@
 # ============================================================
-# OLED display - Shows simple clock using the SH1106 128x64 OLED connected via SPI
+# TFT display - Shows simple clock using the ILI9341 240x320 TFT connected via SPI
 # ============================================================
 # Requires substitutions:
 #   - spi_clk_pin
