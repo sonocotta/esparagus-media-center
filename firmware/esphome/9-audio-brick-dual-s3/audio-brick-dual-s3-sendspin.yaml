@@ -108,19 +108,23 @@ packages:
     url: https://github.com/sonocotta/esparagus-media-center
     ref: main
     files:
+      - firmware/esphome/packages/dac-tas58xx-dual.yaml
       - firmware/esphome/packages/audio.yaml
       - firmware/esphome/packages/audio-addon-external-dac.yaml
 
       - firmware/esphome/packages/sendspin.yaml
       - firmware/esphome/packages/sendspin-addon-tas58xx.yaml
-      # - firmware/esphome/packages/sendspin-addon-tft.yaml
+      - firmware/esphome/packages/media-player-addon-dac-enable-dual.yaml
+      # Optional display configuration for TFT SPI display
+      - firmware/esphome/packages/sendspin-addon-tft.yaml
 
+      - firmware/esphome/packages/fan.yaml
       - firmware/esphome/packages/light.yaml
       - firmware/esphome/packages/monitoring.yaml
       - firmware/esphome/packages/monitoring-wifi.yaml
 
   # Debug/local development fallback:
-  dacs: !include ../packages/dac-tas58xx-dual.yaml
-  media_player_addon_dac_enable: !include ../packages/media-player-addon-dac-enable-dual.yaml
-  fan: !include ../packages/fan.yaml
-  tft: !include ../packages/sendspin-addon-tft.yaml
+  # dacs: !include ../packages/dac-tas58xx-dual.yaml
+  # media_player_addon_dac_enable: !include ../packages/media-player-addon-dac-enable-dual.yaml
+  # fan: !include ../packages/fan.yaml
+  # tft: !include ../packages/sendspin-addon-tft.yaml
