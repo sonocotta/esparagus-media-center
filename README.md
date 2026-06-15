@@ -24,7 +24,6 @@ Esparagus Media Center is a series of ESP32-based media center devices. They all
   - [Amped Esparagus](#amped-esparagus)
   - [Esparagus Audio Brick](#esparagus-audio-brick)
     - [Dual DAC model (prototype)](#dual-dac-model-prototype)
-  - [Which device is right for me](#which-device-is-right-for-me)
   - [Features](#features)
     - [Onboard PSRAM](#onboard-psram)
   - [Board Pinout](#board-pinout)
@@ -78,7 +77,7 @@ Esparagus Media Center is a series of ESP32-based media center devices. They all
     - [OLED screen (solder-less)](#oled-screen-solder-less)
       - [OLED models](#oled-models-1)
       - [Software side](#software-side)
-    - [Audio Brick details](#audio-brick-details)
+    - [ details](#audio-brick-details)
     - [Relay Driver](#relay-driver)
     - [Errata](#errata)
   - [Where to buy](#where-to-buy)
@@ -127,7 +126,7 @@ With the Amped Esparagus, I'm implementing and testing a new updated look with e
 
 ## Esparagus Audio Brick
 
-The **Esparagus Audio Brick** is a new addition to the Esparagus line of ESP32-based audio hardware. Similar to the Louder Esparagus boards for the most part, the Audio Brick uses the newer TAS5825M DAC/amp, which is a considerably more capable chip with considerably better efficiency figures. It is designed with Home Assistant in mind, so it is a little less about looks, and a little more about longevity and practicality.
+The **Esparagus Audio Brick** is a new addition to the Esparagus line of ESP32-based audio hardware. Similar to the Louder Esparagus boards for the most part, the Audio Brick uses the newer TAS5825M DAC/amp, which is a considerably more capable chip with considerably better efficiency figures. It is designed with Home Assistant in mind, so it is a little less about looks and a little more about longevity and practicality.
 
 Our Crowd Supply [campaign](https://www.crowdsupply.com/sonocotta/esparagus-audio-brick) is underway. Please consider subscribing to make this project go live.
 
@@ -135,26 +134,25 @@ Our Crowd Supply [campaign](https://www.crowdsupply.com/sonocotta/esparagus-audi
 
 Unlike previous boards, which were mostly intended for table-top use, the Audio Brick is optimized for DIN-rail mounting and modular expansion. Thermal management has been improved for enclosed installs, the power stage has been reworked for efficiency, and the design has been cost-reduced to make multi-unit deployments more practical.
 
-Our [Crowd Supply campaign](https://www.crowdsupply.com/sonocotta/esparagus-audio-brick) to back the manufacturing of the Audio Brick was successfully funded, and I'm working hard to make sue all orders are shipped to backers in  July.  Thanks to everyone who made that possible.
+Our [Crowd Supply campaign](https://www.crowdsupply.com/sonocotta/esparagus-audio-brick) to back the manufacturing of the Audio Brick was successfully funded, and I'm working hard to make sure all orders are shipped to backers in  July.  Thanks to everyone who made that possible.
 
 Here you can find a [video overview](https://www.youtube.com/watch?v=Ft5_anhSEE8) of the board.
 
 ### Dual DAC model (prototype)
 
+<img width="1658" height="1161" alt="image" src="https://github.com/user-attachments/assets/0aec7b6e-b6ab-4625-977a-4ff1256a7901" />
+
 I’m currently working on the dual DAC variant of the Audio Brick. Its main feature is a second TAS5825M DAC that is connected to the same I2S line (so it is perfectly synced with the primary DAC), but allows flexible configuration as either additional 2 channels of audio, a more powerful subwoofer channel, or even a bi-amp configuration, with each DAC driving one speaker (one driver per channel).
 
+<img width="1059" height="523" alt="image" src="https://github.com/user-attachments/assets/4852786c-4075-474d-bdd3-e95eefa819c9" />
 
 Software was a little problematic at the beginning, as most open source projects would not expect two I2C-controlled DACs at the same time, but with the power of ESPHome, it was made possible, so the Audio Brick exposes a single audio sink, with precise control over each DAC configuration, volume, filters, and mixer configuration.
-
-## Which device is right for me
-
-<img width="1047" height="1112" alt="Esparagus Lineup-Device Select Map (ESP32) drawio (1)" src="https://github.com/user-attachments/assets/79e9bcd5-f621-416e-8a61-c49d2770f2e1" />
 
 ## Features
 
 |  | [HiFi Esparagus](https://www.tindie.com/products/sonocotta/esparagus-hifi-medialink/) | [Loud Esparagus](https://www.tindie.com/products/sonocotta/loud-esparagus-media-center/) | [Louder Esparagus](https://www.tindie.com/products/sonocotta/louder-esparagus-media-center/) | [Amped Esparagus](https://www.tindie.com/products/sonocotta/amped-esparagus-media-center/) | [Esparagus Audio Brick](https://www.crowdsupply.com/sonocotta/esparagus-audio-brick) | Esparagus Audio Brick Daul DAC |
 |---|---|---|---|---|---|---|
-| Image | ![DSC_0709](https://github.com/sonocotta/esparagus-hifi-medialink/assets/98712315/ea45f1d2-32b5-4f12-a63c-a8e403cb22db) | ![DSC_0706](https://github.com/sonocotta/esparagus-hifi-medialink/assets/5459747/2556b8ff-1827-4e03-8e28-31e40199943c) | ![DSC_0713](https://github.com/sonocotta/esparagus-media-center/assets/5459747/14d54647-2b7e-4b1a-9a8e-135a1598eb02) | ![DSC_0022](https://github.com/user-attachments/assets/e9481545-e98d-4d6a-b0eb-a993ab151dc8) | <img width="2214" height="1217" alt="image" src="https://github.com/user-attachments/assets/89792e6c-e530-4c2b-8e8a-6ce86c9a98dc" /> |
+| Image | ![DSC_0709](https://github.com/sonocotta/esparagus-hifi-medialink/assets/98712315/ea45f1d2-32b5-4f12-a63c-a8e403cb22db) | ![DSC_0706](https://github.com/sonocotta/esparagus-hifi-medialink/assets/5459747/2556b8ff-1827-4e03-8e28-31e40199943c) | ![DSC_0713](https://github.com/sonocotta/esparagus-media-center/assets/5459747/14d54647-2b7e-4b1a-9a8e-135a1598eb02) | ![DSC_0022](https://github.com/user-attachments/assets/e9481545-e98d-4d6a-b0eb-a993ab151dc8) | <img width="2214" height="1217" alt="image" src="https://github.com/user-attachments/assets/89792e6c-e530-4c2b-8e8a-6ce86c9a98dc" /> | <img width="1625" height="1148" alt="image" src="https://github.com/user-attachments/assets/df78090e-6869-4d63-a812-e7a53d5559a0" />
 | MCU | ESP32-WROVER-N8R8 or ESP32-S3-WROOM-N8R8 | ESP32-WROVER-N8R8 | ESP32-WROVER-N16R8 (S3 is coming soon) | ESP32-WROVER-N16R8 (S3 is coming soon) | ESP32-WROVER-N8R8 or ESP32-S3-WROOM-N8R8 | ESP32-S3-WROOM-N8R8 |
 | DAC | PCM5100A 32bit Stereo DAC -100 dB typical noise level | Dual I2S DAC ([MAX98357](https://www.analog.com/en/products/max98357a.html)) with built in D-Class amp | Stereo I2S DAC ( [TAS5805M](https://www.ti.com/product/TAS5805M) ) with built in D-Class amp | [PCM5100A](https://www.ti.com/product/PCM5100A) 32bit Stereo DAC working with   [TPA3110D2](https://www.ti.com/product/TPA3110D2)/[TPA3118D2](https://www.ti.com/product/TPA3118D2)/[TPA3128D2](https://www.ti.com/product/TPA3128D2) D-Class amp | Stereo I2S DAC (  [TAS5825M](https://www.ti.com/product/TAS5825M)  ) with a built-in D-Class amp | Dual Stereo I2S DAC (  <br>[TAS5825M](https://www.ti.com/product/TAS5825M)<br>  ) with a built-in D-Class amp |
 | Power | 5V over USB-C, 2x [LP5907](https://www.ti.com/lit/ds/symlink/lp5907.pdf) 3.3 V Ultra-Low-Noise LDO for analog section | 5V from USB-C | Up to 20V from USB-C PD or up to 26V from generic power adapter | Up to 20V from USB-C PD or up to 26V from generic power adapter | Up to 26V from a generic power adapter | Up to 26V from a generic power adapter |
