@@ -101,7 +101,10 @@ packages:
     url: https://github.com/sonocotta/esparagus-media-center
     ref: main
     files:
-      - firmware/esphome/packages/dac-tas58xx-dual.yaml
+      # A: 2.1 configuration with secondary DAC (PBTL) and main DAC (BTL)
+      # - firmware/esphome/packages/dac-tas58xx-dual-2.1.yaml
+      # B: 4.0 configuration with 4-full size speakers
+      - firmware/esphome/packages/dac-tas58xx-dual-4.0.yaml
 
       - firmware/esphome/packages/audio.yaml
       - firmware/esphome/packages/audio-addon-external-dac.yaml

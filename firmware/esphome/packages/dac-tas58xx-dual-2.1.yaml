@@ -117,35 +117,35 @@ number:
 
     # new names for left and right eq gains
     left_eq_gain_20Hz:
-      name: Left ---20Hz
+      name: Front ---20Hz
     left_eq_gain_31.5Hz:
-      name: Left ---31.5Hz
+      name: Front ---31.5Hz
     left_eq_gain_50Hz:
-      name: Left ---50Hz
+      name: Front ---50Hz
     left_eq_gain_80Hz:
-      name: Left ---80Hz
+      name: Front ---80Hz
     left_eq_gain_125Hz:
-      name: Left --125Hz
+      name: Front --125Hz
     left_eq_gain_200Hz:
-      name: Left --200Hz
+      name: Front --200Hz
     left_eq_gain_315Hz:
-      name: Left --315Hz
+      name: Front --315Hz
     left_eq_gain_500Hz:
-      name: Left --500Hz
+      name: Front --500Hz
     left_eq_gain_800Hz:
-      name: Left --800Hz
+      name: Front --800Hz
     left_eq_gain_1250Hz:
-      name: Left -1250Hz
+      name: Front -1250Hz
     left_eq_gain_2000Hz:
-      name: Left -2000Hz
+      name: Front -2000Hz
     left_eq_gain_3150Hz:
-      name: Left -3150Hz
+      name: Front -3150Hz
     left_eq_gain_5000Hz:
-      name: Left -5000Hz
+      name: Front -5000Hz
     left_eq_gain_8000Hz:
-      name: Left -8000Hz
+      name: Front -8000Hz
     left_eq_gain_16000Hz:
-      name: Left 16000Hz
+      name: Front 16000Hz
 
 ### Faults clear registers read from TAS58XX
 # sensor:
