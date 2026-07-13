@@ -1,0 +1,21 @@
+# ============================================================
+# Media Player - Sync volume betweeem main and secondary DACs
+# ============================================================
+# Dependencies: media-player.yaml (speaker stack)
+# ============================================================
+
+media_player:
+  - id: !extend external_media_player
+
+    on_volume:
+      - lambda: |-
+          id(external_dac_secondary).set_volume(x);
+
+# id(external_media_player).get_volume()
+    on_mute:
+      - lambda: |-
+          id(external_dac_secondary).set_mute_on();
+
+    on_unmute:
+      - lambda: |-
+          id(external_dac_secondary).set_mute_off();
