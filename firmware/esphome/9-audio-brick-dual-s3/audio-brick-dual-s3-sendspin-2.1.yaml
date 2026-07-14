@@ -5,7 +5,7 @@
 # ============================================================
 
 substitutions:
-  name: esphome-web-e349e4
+  name: esphome-web-c8f04c
   friendly_name: Audio-Brick-Dual-S3
   task_stack_in_psram: "true" 
 
@@ -33,7 +33,7 @@ substitutions:
   
   # RGB LED
   rgb_led_pin: GPIO21
-  
+
   # SPI pins (for display)
   spi_clk_pin: GPIO12
   spi_mosi_pin: GPIO11
@@ -44,6 +44,11 @@ substitutions:
   display_dc_pin: GPIO38
   display_reset_pin: GPIO48
   display_backlight_pin: GPIO2
+
+  # Fan pins
+  fan_input_pin: GPIO7
+  fan_pwn_pin: GPIO4 
+
 
 esphome:
   name: ${name}
@@ -90,6 +95,8 @@ wifi:
 psram:
   mode: octal
   speed: 80MHz
+
+
   ignore_not_found: false
 
 network:
@@ -102,27 +109,29 @@ packages:
     ref: main
     files:
       # A: 2.1 configuration with secondary DAC (PBTL) and main DAC (BTL)
-      # - firmware/esphome/packages/dac-tas58xx-dual-2.1.yaml
+      - firmware/esphome/packages/dac-tas58xx-dual-2.1.yaml
       # B: 4.0 configuration with 4-full size speakers
-      - firmware/esphome/packages/dac-tas58xx-dual-4.0.yaml
-
+      # - firmware/esphome/packages/dac-tas58xx-dual-4.0.yaml
+      
       - firmware/esphome/packages/audio.yaml
       - firmware/esphome/packages/audio-addon-external-dac.yaml
-      - firmware/esphome/packages/media-player.yaml
-      - firmware/esphome/packages/media-player-addon-tas58xx-dual.yaml
+
+      - firmware/esphome/packages/sendspin.yaml
+      - firmware/esphome/packages/sendspin-addon-tas58xx.yaml
       - firmware/esphome/packages/media-player-addon-dac-enable-dual.yaml
       - firmware/esphome/packages/media-player-addon-volume-sync-dual.yaml
+
+      # Optional display configuration for TFT SPI display
+      # - firmware/esphome/packages/sendspin-addon-tft.yaml
 
       # - firmware/esphome/packages/fan.yaml <- only if you have it installed
       - firmware/esphome/packages/light.yaml
       - firmware/esphome/packages/monitoring.yaml
       - firmware/esphome/packages/monitoring-wifi.yaml
-      # Optional display configuration for TFT SPI display
-      - firmware/esphome/packages/tft-spi.yaml
 
   # Debug/local development fallback:
-  # dacs: !include ../packages/dac-tas58xx-dual.yaml
-  # media_player_addon_tas58xx: !include ../packages/media-player-addon-tas58xx-dual.yaml
+  # dacs: !include ../packages/dac-tas58xx-dual-4.0.yaml
   # media_player_addon_dac_enable: !include ../packages/media-player-addon-dac-enable-dual.yaml
+  # volume_sync: !include ../packages/media-player-addon-volume-sync-dual.yaml
   # fan: !include ../packages/fan.yaml
-  # tft: !include ../packages/tft-spi.yaml
+  # tft: !include ../packages/sendspin-addon-tft.yaml
