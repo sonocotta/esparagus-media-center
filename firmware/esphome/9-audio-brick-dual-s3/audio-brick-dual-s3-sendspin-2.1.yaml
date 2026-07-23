@@ -95,8 +95,6 @@ wifi:
 psram:
   mode: octal
   speed: 80MHz
-
-
   ignore_not_found: false
 
 network:
@@ -120,6 +118,8 @@ packages:
       - firmware/esphome/packages/sendspin-addon-tas58xx.yaml
       - firmware/esphome/packages/media-player-addon-dac-enable-dual.yaml
       - firmware/esphome/packages/media-player-addon-volume-sync-dual.yaml
+      # Optional addon to adjust subwoofer gain based on the main volume slider - loudness effect
+      # - firmware/esphome/packages/media-player-addon-dynamic-gain-dual.yaml
 
       # Optional display configuration for TFT SPI display
       # - firmware/esphome/packages/sendspin-addon-tft.yaml
@@ -130,8 +130,10 @@ packages:
       - firmware/esphome/packages/monitoring-wifi.yaml
 
   # Debug/local development fallback:
+  # dacs: !include ../packages/dac-tas58xx-dual-2.1.yaml
   # dacs: !include ../packages/dac-tas58xx-dual-4.0.yaml
   # media_player_addon_dac_enable: !include ../packages/media-player-addon-dac-enable-dual.yaml
   # volume_sync: !include ../packages/media-player-addon-volume-sync-dual.yaml
+  # dynamic_gain: !include ../packages/media-player-addon-dynamic-gain-dual.yaml
   # fan: !include ../packages/fan.yaml
   # tft: !include ../packages/sendspin-addon-tft.yaml

@@ -106,13 +106,16 @@ number:
   - platform: tas58xx
     tas58xx_id: external_dac_secondary
     channel_volume_left:
+      id: subwoofer_volume_id
       name: _Volume Sub
 
   - platform: tas58xx
     tas58xx_id: external_dac
     channel_volume_left:
+      id: left_channel_volume_id
       name: _Volume Left
     channel_volume_right:
+      id: right_channel_volume_id
       name: _Volume Right
 
     # new names for left and right eq gains

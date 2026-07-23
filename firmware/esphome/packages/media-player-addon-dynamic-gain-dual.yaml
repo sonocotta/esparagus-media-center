@@ -1,0 +1,15 @@
+# ============================================================
+# Media Player - Dynamic subwoofer gain (based on volume)
+# ============================================================
+# Dependencies: media-player.yaml (speaker stack)
+# ============================================================
+
+media_player:
+  - id: !extend external_media_player
+
+    on_volume:
+      - lambda: |-
+          auto call = id(subwoofer_volume_id).make_call();
+          int sub_gain = 24 * (1.0 - x);
+          call.set_value(sub_gain);
+          call.perform();
