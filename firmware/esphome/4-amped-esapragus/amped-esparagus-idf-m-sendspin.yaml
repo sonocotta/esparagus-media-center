@@ -44,12 +44,14 @@ substitutions:
   eth_interrupt_pin: GPIO35
   eth_reset_pin: GPIO14
 
-  # OLED (SPI)
+  # TFT (SPI)
   display_cs_pin: GPIO15
   display_dc_pin: GPIO04
   display_reset_pin: GPIO32
   display_backlight_pin: GPIO21
-  
+  display_rotation: 0
+  display_model: ILI9342
+
   # ESP32 optimal settings for Sendspin
   media_source_buffer_size: 100000
 
@@ -67,7 +69,7 @@ esp32:
   cpu_frequency: 240MHz
   framework:
     type: esp-idf
-    version: recommended
+    version: 5.5.4 # recommended
     advanced:
       minimum_chip_revision: "3.1" 
     sdkconfig_options:
@@ -112,6 +114,7 @@ packages:
       # Optional : OLED displays clock when idling, and track/artist info when playing
       # - firmware/esphome/packages/sendspin-addon-oled.yaml
       - firmware/esphome/packages/sendspin-addon-esp32.yaml
+      - firmware/esphome/packages/sendspin-addon-rotary.yaml
 
       - firmware/esphome/packages/dac-switch.yaml
       - firmware/esphome/packages/light-x.yaml
@@ -119,13 +122,17 @@ packages:
       - firmware/esphome/packages/rotary-encoder.yaml
       - firmware/esphome/packages/monitoring.yaml
       - firmware/esphome/packages/monitoring-wifi.yaml
+
       # Optional ethernet (replace wifi config if you use this, you need to exclude OLED package if you do this to free up SPI bus)
       # - firmware/esphome/packages/ethernet-w5500.yaml
       # Optional display configuration for TFT SPI display
-      # - firmware/esphome/packages/tft-spi.yaml
-      - firmware/esphome/packages/sendspin-addon-tft.yaml
+      # - firmware/esphome/packages/weather-sensors.yaml
+      # - firmware/esphome/packages/sendspin-addon-tft-weather-vertical.yaml
 
-  rotary_light_addon: !include ../packages/sendspin-addon-rotary.yaml
+  # sendspin_rotary_light_addon: !include ../packages/sendspin-addon-rotary.yaml
+  # sendspin_tft_addon: !include ../packages/sendspin-addon-tft.yaml
+  # weather_sensors: !include ../packages/weather-sensors.yaml
+  # sendspin_tft_addon: !include ../packages/sendspin-addon-tft-weather-vertical.yaml
   # Debug/local development fallback:
   # sendspin: !include packages/sendspin.yaml
   # dac_switch: !include packages/dac-switch.yaml

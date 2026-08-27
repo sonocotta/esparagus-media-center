@@ -1,0 +1,1181 @@
+# ============================================================
+# TFT display - Shows simple clock using the SH1106 128x64 OLED connected via SPI
+# ============================================================
+# Requires substitutions:
+#   - spi_clk_pin
+#   - spi_mosi_pin
+#   - spi_miso_pin
+#   - display_cs_pin
+#   - display_dc_pin
+#   - display_reset_pin
+# ============================================================
+
+defaults:
+  font_small: 24
+  font_family: Roboto
+  font_glyphsets: "GF_Latin_Core"
+  
+substitutions:
+  mdi_pause_glyph: \U000F03E4
+  mdi_play_glyph: \U000F040A
+  mdi_skip_previous_glyph: \U000F04AE
+  mdi_skip_next_glyph: \U000F04AD
+
+  # Time to wait before verifying optimistic state changes match actual state
+  optimistic_state_correction_delay: 1000ms
+
+  display_rotation: 0
+  display_model: ILI9341
+  display_invert_colors: false
+
+external_components:
+  # - source: github://esphome/esphome@dev
+  - source: github://pr#17937
+    components: [ runtime_image , sendspin ]
+    refresh: 1h
+
+media_player:
+  - id: !extend sendspin_group_media_player
+
+    on_play:
+      # Update play/pause icon
+      # - lambda: lv_label_set_text(id(play_pause_icon), "${mdi_pause_glyph}");
+      - if:
+          condition:
+            lvgl.page.is_showing: idle_page
+          then:
+            - lvgl.page.show: 
+                id: sendspin_page
+                animation: FADE_IN
+                time: 300ms
+    # on_pause:
+    #   # Update play/pause icon
+    #   - lambda: lv_label_set_text(id(play_pause_icon), "${mdi_play_glyph}");
+      
+    on_idle:
+      # Update play/pause icon
+      # - lambda: lv_label_set_text(id(play_pause_icon), "${mdi_play_glyph}");
+      - if:
+          condition:
+            not:
+              lvgl.page.is_showing: idle_page
+          then:
+            - lvgl.page.show: 
+                id: idle_page
+                animation: FADE_OUT
+                time: 300ms
+
+text_sensor:
+  - platform: sendspin
+    id: track_title
+    type: title
+    on_value:
+      - lambda: |-
+          lv_label_set_text(id(track_progress_label), "");
+      - component.update: now_playing_text
+  - platform: sendspin
+    id: album_title
+    type: album
+  - platform: sendspin
+    id: track_artist
+    type: artist
+    on_value:
+      - component.update: now_playing_text
+  # - platform: sendspin
+  #   id: album_year
+  #   type: year
+  # - platform: sendspin
+  #   id: track_number
+  #   type: track
+  - platform: template
+    id: now_playing_text
+    lambda: |-
+      std::string playing_text = id(track_title).get_state();
+      if (!id(track_artist).get_state().empty()) {
+        if (!playing_text.empty()) {
+          playing_text += " - ";
+        }
+        playing_text += id(track_artist).get_state();
+      }
+      return playing_text;
+    on_value:
+      - lvgl.label.update: 
+          id: now_playing_label
+          text: !lambda return x;
+    update_interval: never
+
+sensor:
+  - platform: sendspin
+    type: track_duration
+    id: ss_track_duration
+    on_value:
+      # If the duration has changed, reset the progress bar length
+      - globals.set: 
+          id: progress_length
+          value: '0'
+
+  - platform: sendspin
+    type: track_progress
+    id: ss_track_progress
+    on_value:
+      # Do the calculation on the pixel size of the progress bar, having
+      # made sure there's a duration to compare against, and it's not too
+      # large.  Can't check it's just the wrong one.
+      - globals.set: 
+          id: progress_length
+          value: !lambda |-
+            if (x > id(ss_track_duration).state) {
+              return 0;
+            } else if (id(ss_track_duration).state > 0.0) {
+              uint32_t tmp = floor(x);
+              tmp *= 128;
+              return int(tmp/id(ss_track_duration).state);
+            } else {
+              return 0;
+            }
+
+output:
+  - platform: ledc
+    pin: ${display_backlight_pin}
+    id: backlight_output
+
+light:
+  - platform: monochromatic
+    id: led
+    name: Screen
+    icon: "mdi:television"
+    entity_category: config
+    output: backlight_output
+    restore_mode: RESTORE_DEFAULT_ON
+    default_transition_length: 250ms
+
+  # - platform: template
+  #   name: "Screen"
+  #   id: switch_screen
+  #   optimistic: true
+  #   restore_mode: ALWAYS_ON
+  #   turn_on_action:
+  #     - if:
+  #         condition:
+  #           api.connected:
+  #         then:
+  #           - if:
+  #               condition:
+  #                 media_player.is_idle: sendspin_group_media_player
+  #               then:
+  #                 - display.page.show: page_clock
+  #               else:
+  #                 - display.page.show: page_play
+  #           - component.update: spi_display
+  #   turn_off_action:
+  #     - display.page.show: page_off
+  #     - component.update: spi_display
+
+time:
+  - platform: homeassistant
+    id: sntp_time
+
+interval:
+  # - interval: 0.5s
+  #   then:
+  #     - if:
+  #         condition:
+  #           - media_player.is_playing: sendspin_group_media_player
+  #         then:
+  #           # - sendspin.get_track_progress:
+  #           #     then:
+  #           - lambda: |-
+  #               uint32_t seconds = x / 1000;
+  #               uint32_t minutes = seconds / 60;
+  #               seconds %= 60;
+  #               char buf[16];
+  #               snprintf(buf, sizeof(buf), "%d:%02d", minutes, seconds);
+  #               lv_label_set_text(id(track_progress_label), buf);
+                
+  - interval: 0.5s
+    then:
+      - lambda: |-
+          auto now = id(sntp_time).now();
+          if (!now.is_valid()) return;
+
+          // Update hours
+          char hours_buf[8];
+          snprintf(hours_buf, sizeof(hours_buf), "%d", now.hour);
+          lv_label_set_text(id(clock_hours_label), hours_buf);
+
+          // Update minutes
+          char minutes_buf[8];
+          snprintf(minutes_buf, sizeof(minutes_buf), "%02d", now.minute);
+          lv_label_set_text(id(clock_minutes_label), minutes_buf);
+
+          // Update flashing separator (toggles every second)
+          if (now.second % 2 == 0) {
+            lv_label_set_text(id(clock_separator_label), ".");
+          } else {
+            lv_label_set_text(id(clock_separator_label), " ");
+          }
+
+          // Update small clock on the sendspin page info line
+          char info_clock_buf[8];
+          snprintf(info_clock_buf, sizeof(info_clock_buf), "%02d:%02d", now.hour, now.minute);
+          lv_label_set_text(id(info_clock_label), info_clock_buf);
+
+          // Rainbow color cycling based on current timestamp
+          auto colorFunc = [](int seq) -> int {
+            seq = seq % 0xff;
+            if (seq < 85)
+              return seq * 3;
+            else if (seq < 170)
+              return 255 - (seq - 85) * 3;
+            return 0;
+          };
+          auto seq = now.timestamp;
+          auto r = colorFunc(seq), g = colorFunc(seq + 85), b = colorFunc(seq + 170);
+          auto textColor = lv_color_make(r, g, b);
+
+          lv_obj_set_style_text_color(id(clock_hours_label), textColor, 0);
+          lv_obj_set_style_text_color(id(clock_separator_label), textColor, 0);
+          lv_obj_set_style_text_color(id(clock_minutes_label), textColor, 0);
+
+          // Weather icon map
+          static std::map<std::string, std::pair<std::string, int>> weather_icon_map = {
+            {"cloudy", {"\U000F0590", id(sun_color)}},
+            {"cloudy-alert", {"\U000F0F2F", id(water_color)}},
+            {"cloudy-arrow-right", {"\U000F0E6E", id(water_color)}},
+            {"fog", {"\U000F0591", 0xFFFFFF}},
+            {"hail", {"\U000F0592", 0xFFFFFF}},
+            {"hazy", {"\U000F0F30", 0xFFFFFF}},
+            {"hurricane", {"\U000F0898", id(water_color)}},
+            {"lightning", {"\U000F0593", 0xFFFFFF}},
+            {"lightning-rainy", {"\U000F067E", 0xFFFFFF}},
+            {"night", {"\U000F0594", id(night_color)}},
+            {"night-partly-cloudy", {"\U000F0F31", id(night_color)}},
+            {"partlycloudy", {"\U000F0595", id(sun_color)}},
+            {"partly-lightning", {"\U000F0F32", id(water_color)}},
+            {"partly-rainy", {"\U000F0F33", id(water_color)}},
+            {"partly-snowy", {"\U000F0F34", id(greenish_color)}},
+            {"partly-snowy-rainy", {"\U000F0F35", id(greenish_color)}},
+            {"pouring", {"\U000F0596", id(water_color)}},
+            {"rainy", {"\U000F0597", id(water_color)}},
+            {"snowy", {"\U000F0598", id(greenish_color)}},
+            {"snowy-heavy", {"\U000F0F36", id(greenish_color)}},
+            {"snowy-rainy", {"\U000F067F", id(greenish_color)}},
+            {"sunny", {"\U000F0599", id(sun_color)}},
+            {"sunny-alert", {"\U000F0F37", id(sun_color)}},
+            {"sunny-off", {"\U000F14E4", id(sun_color)}},
+            {"sunset", {"\U000F059A", id(sunset_color)}},
+            {"sunset-down", {"\U000F059B", id(sunset_color)}},
+            {"sunset-up", {"\U000F059C", id(sunset_color)}},
+            {"tornado", {"\U000F0F38", id(greenish_color)}},
+            {"windy", {"\U000F059D", id(greenish_color)}},
+            {"windy-variant", {"\U000F059E", id(greenish_color)}},
+          };
+
+          // --- Weather display update ---
+          if (id(weather).has_state()) {
+            std::string weather_state = id(weather).get_state();
+            auto it = weather_icon_map.find(weather_state);
+            if (it != weather_icon_map.end()) {
+              lv_label_set_text(id(weather_icon_label), it->second.first.c_str());
+              lv_obj_set_style_text_color(id(weather_icon_label), lv_color_hex(it->second.second), 0);
+              // Also update the small info line icon on the sendspin page
+              lv_label_set_text(id(info_weather_icon_label), it->second.first.c_str());
+              lv_obj_set_style_text_color(id(info_weather_icon_label), lv_color_hex(it->second.second), 0);
+            }
+          }
+          if (id(temperature).has_state()) {
+            char temp_buf[8];
+            snprintf(temp_buf, sizeof(temp_buf), "%d", int(id(temperature).state));
+            lv_label_set_text(id(temperature_label), temp_buf);
+            // Also update the small info line temperature on the sendspin page
+            lv_label_set_text(id(info_temperature_label), temp_buf);
+          }
+          if (id(temperature_unit).has_state()) {
+            lv_label_set_text(id(temp_unit_label), id(temperature_unit).get_state().c_str());
+            lv_label_set_text(id(info_temp_unit_label), id(temperature_unit).get_state().c_str());
+          }
+
+          // --- 4-day forecast update ---
+          if (id(forecast_1d_weather).has_state()) {
+            auto date_temp = now;
+            date_temp.increment_day();
+            char date_buf[16];
+            snprintf(date_buf, sizeof(date_buf), "%02d/%02d", date_temp.day_of_month, date_temp.month + 1);
+            lv_label_set_text(id(forecast_1d_date_label), date_buf);
+
+            std::string f1_weather = id(forecast_1d_weather).get_state();
+            auto f1_it = weather_icon_map.find(f1_weather);
+            if (f1_it != weather_icon_map.end()) {
+              lv_label_set_text(id(forecast_1d_icon_label), f1_it->second.first.c_str());
+              lv_obj_set_style_text_color(id(forecast_1d_icon_label), lv_color_hex(f1_it->second.second), 0);
+            }
+            if (id(forecast_1d_temperature_low).has_state() && id(forecast_1d_temperature_high).has_state()) {
+              char temp_buf[32];
+              snprintf(temp_buf, sizeof(temp_buf), "%d..%d%s", int(id(forecast_1d_temperature_low).state), int(id(forecast_1d_temperature_high).state), id(temperature_unit).get_state().c_str());
+              lv_label_set_text(id(forecast_1d_temp_label), temp_buf);
+            }
+            if (id(forecast_1d_precipitation).has_state()) {
+              char precip_buf[16];
+              snprintf(precip_buf, sizeof(precip_buf), "%d%%", int(id(forecast_1d_precipitation).state));
+              lv_label_set_text(id(forecast_1d_precip_label), precip_buf);
+            }
+          }
+
+          if (id(forecast_2d_weather).has_state()) {
+            auto date_temp = now;
+            date_temp.increment_day();
+            date_temp.increment_day();
+            char date_buf[16];
+            snprintf(date_buf, sizeof(date_buf), "%02d/%02d", date_temp.day_of_month, date_temp.month + 1);
+            lv_label_set_text(id(forecast_2d_date_label), date_buf);
+
+            std::string f2_weather = id(forecast_2d_weather).get_state();
+            auto f2_it = weather_icon_map.find(f2_weather);
+            if (f2_it != weather_icon_map.end()) {
+              lv_label_set_text(id(forecast_2d_icon_label), f2_it->second.first.c_str());
+              lv_obj_set_style_text_color(id(forecast_2d_icon_label), lv_color_hex(f2_it->second.second), 0);
+            }
+            if (id(forecast_2d_temperature_low).has_state() && id(forecast_2d_temperature_high).has_state()) {
+              char temp_buf[32];
+              snprintf(temp_buf, sizeof(temp_buf), "%d..%d%s", int(id(forecast_2d_temperature_low).state), int(id(forecast_2d_temperature_high).state), id(temperature_unit).get_state().c_str());
+              lv_label_set_text(id(forecast_2d_temp_label), temp_buf);
+            }
+            if (id(forecast_2d_precipitation).has_state()) {
+              char precip_buf[16];
+              snprintf(precip_buf, sizeof(precip_buf), "%d%%", int(id(forecast_2d_precipitation).state));
+              lv_label_set_text(id(forecast_2d_precip_label), precip_buf);
+            }
+          }
+
+          if (id(forecast_3d_weather).has_state()) {
+            auto date_temp = now;
+            date_temp.increment_day();
+            date_temp.increment_day();
+            date_temp.increment_day();
+            char date_buf[16];
+            snprintf(date_buf, sizeof(date_buf), "%02d/%02d", date_temp.day_of_month, date_temp.month + 1);
+            lv_label_set_text(id(forecast_3d_date_label), date_buf);
+
+            std::string f3_weather = id(forecast_3d_weather).get_state();
+            auto f3_it = weather_icon_map.find(f3_weather);
+            if (f3_it != weather_icon_map.end()) {
+              lv_label_set_text(id(forecast_3d_icon_label), f3_it->second.first.c_str());
+              lv_obj_set_style_text_color(id(forecast_3d_icon_label), lv_color_hex(f3_it->second.second), 0);
+            }
+            if (id(forecast_3d_temperature_low).has_state() && id(forecast_3d_temperature_high).has_state()) {
+              char temp_buf[32];
+              snprintf(temp_buf, sizeof(temp_buf), "%d..%d%s", int(id(forecast_3d_temperature_low).state), int(id(forecast_3d_temperature_high).state), id(temperature_unit).get_state().c_str());
+              lv_label_set_text(id(forecast_3d_temp_label), temp_buf);
+            }
+            if (id(forecast_3d_precipitation).has_state()) {
+              char precip_buf[16];
+              snprintf(precip_buf, sizeof(precip_buf), "%d%%", int(id(forecast_3d_precipitation).state));
+              lv_label_set_text(id(forecast_3d_precip_label), precip_buf);
+            }
+          }
+
+          if (id(forecast_4d_weather).has_state()) {
+            auto date_temp = now;
+            date_temp.increment_day();
+            date_temp.increment_day();
+            date_temp.increment_day();
+            date_temp.increment_day();
+            char date_buf[16];
+            snprintf(date_buf, sizeof(date_buf), "%02d/%02d", date_temp.day_of_month, date_temp.month + 1);
+            lv_label_set_text(id(forecast_4d_date_label), date_buf);
+
+            std::string f4_weather = id(forecast_4d_weather).get_state();
+            auto f4_it = weather_icon_map.find(f4_weather);
+            if (f4_it != weather_icon_map.end()) {
+              lv_label_set_text(id(forecast_4d_icon_label), f4_it->second.first.c_str());
+              lv_obj_set_style_text_color(id(forecast_4d_icon_label), lv_color_hex(f4_it->second.second), 0);
+            }
+            if (id(forecast_4d_temperature_low).has_state() && id(forecast_4d_temperature_high).has_state()) {
+              char temp_buf[32];
+              snprintf(temp_buf, sizeof(temp_buf), "%d..%d%s", int(id(forecast_4d_temperature_low).state), int(id(forecast_4d_temperature_high).state), id(temperature_unit).get_state().c_str());
+              lv_label_set_text(id(forecast_4d_temp_label), temp_buf);
+            }
+            if (id(forecast_4d_precipitation).has_state()) {
+              char precip_buf[16];
+              snprintf(precip_buf, sizeof(precip_buf), "%d%%", int(id(forecast_4d_precipitation).state));
+              lv_label_set_text(id(forecast_4d_precip_label), precip_buf);
+            }
+          }
+
+font:
+  - file: 'gfonts://Material+Symbols+Outlined'
+    id: icons_small
+    size: ${font_small}
+    glyphs:
+      - "\ue019" # album
+      - "\ue01a" # artist
+      - "\U000fffd8" # music notes
+  - file:
+      type: gfonts
+      family: Ubuntu
+      weight: regular
+    id: text_small
+    size: ${font_small}
+    glyphsets: 
+      - GF_Latin_Core # European alphabets too
+  # For the clock page
+  - file:
+      type: gfonts
+      family: ${font_family}
+      weight: regular
+    id: text_big
+    size: 96
+    glyphs: ['.', ' ', ':', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+
+  # Use a mono font to make track progress colon in the same position as it increments
+  - file:
+      type: gfonts
+      family: Roboto Mono
+      weight: 400
+    id: font_time
+    size: 16
+    glyphsets:
+      - ${font_glyphsets}
+
+  - file:
+      type: gfonts
+      family: ${font_family}
+      weight: 300
+    id: font_display
+    size: 20
+    glyphsets:
+      - ${font_glyphsets}
+
+  # Small font for weather text
+  - file:
+      type: gfonts
+      family: ${font_family}
+      weight: 300
+    id: font_small
+    size: 14
+    glyphsets:
+      - ${font_glyphsets}
+  - file:
+      type: gfonts
+      family: ${font_family}
+      weight: 500
+    id: font_thick
+    size: 64
+    glyphsets:
+      - ${font_glyphsets}
+  - file:
+      type: gfonts
+      family: ${font_family}
+      weight: 300
+    id: font_thin
+    size: 64
+    glyphsets:
+      - ${font_glyphsets}
+  - file:
+      type: gfonts
+      family: ${font_family}
+      weight: 300
+    id: font_medium
+    size: 32
+    glyphsets:
+      - ${font_glyphsets}
+
+  # Material Design Icons font for media controls
+  - file: https://github.com/Templarian/MaterialDesign-Webfont/raw/refs/heads/master/fonts/materialdesignicons-webfont.ttf
+    id: font_mdi
+    size: 40
+    glyphs: [
+      "\U000F03E4",  # mdi:pause
+      "\U000F040A",  # mdi:play
+      "\U000F04AD",  # mdi:skip-next
+      "\U000F04AE",  # mdi:skip-previous
+    ]
+  # Weather icons font (large)
+  - file: https://github.com/Templarian/MaterialDesign-Webfont/raw/refs/heads/master/fonts/materialdesignicons-webfont.ttf
+    id: font_mdi_large
+    size: 72
+    glyphs: [
+      "\U000F0590", # cloudy
+      "\U000F0F2F", # cloudy-alert
+      "\U000F0E6E", # cloudy-arrow-right
+      "\U000F0591", # fog
+      "\U000F0592", # hail
+      "\U000F0F30", # hazy
+      "\U000F0898", # hurricane
+      "\U000F0593", # lightning
+      "\U000F067E", # lightning-rainy
+      "\U000F0594", # night
+      "\U000F0F31", # night-partly-cloudy
+      "\U000F0595", # partlycloudy
+      "\U000F0F32", # partly-lightning
+      "\U000F0F33", # partly-rainy
+      "\U000F0F34", # partly-snowy
+      "\U000F0F35", # partly-snowy-rainy
+      "\U000F0596", # pouring
+      "\U000F0597", # rainy
+      "\U000F0598", # snowy
+      "\U000F0F36", # snowy-heavy
+      "\U000F067F", # snowy-rainy
+      "\U000F0599", # sunny
+      "\U000F0F37", # sunny-alert
+      "\U000F14E4", # sunny-off
+      "\U000F059A", # sunset
+      "\U000F059B", # sunset-down
+      "\U000F059C", # sunset-up
+      "\U000F0F38", # tornado
+      "\U000F059D", # windy
+      "\U000F059E", # windy-variant
+    ]
+
+  # Weather icons font (medium, for forecast)
+  - file: https://github.com/Templarian/MaterialDesign-Webfont/raw/refs/heads/master/fonts/materialdesignicons-webfont.ttf
+    id: font_mdi_medium
+    size: 40
+    glyphs: [
+      "\U000F0590", # cloudy
+      "\U000F0F2F", # cloudy-alert
+      "\U000F0E6E", # cloudy-arrow-right
+      "\U000F0591", # fog
+      "\U000F0592", # hail
+      "\U000F0F30", # hazy
+      "\U000F0898", # hurricane
+      "\U000F0593", # lightning
+      "\U000F067E", # lightning-rainy
+      "\U000F0594", # night
+      "\U000F0F31", # night-partly-cloudy
+      "\U000F0595", # partlycloudy
+      "\U000F0F32", # partly-lightning
+      "\U000F0F33", # partly-rainy
+      "\U000F0F34", # partly-snowy
+      "\U000F0F35", # partly-snowy-rainy
+      "\U000F0596", # pouring
+      "\U000F0597", # rainy
+      "\U000F0598", # snowy
+      "\U000F0F36", # snowy-heavy
+      "\U000F067F", # snowy-rainy
+      "\U000F0599", # sunny
+      "\U000F0F37", # sunny-alert
+      "\U000F14E4", # sunny-off
+      "\U000F059A", # sunset
+      "\U000F059B", # sunset-down
+      "\U000F059C", # sunset-up
+      "\U000F0F38", # tornado
+      "\U000F059D", # windy
+      "\U000F059E", # windy-variant
+    ]
+  # Weather icons font (small, for precipitation)
+  - file: https://github.com/Templarian/MaterialDesign-Webfont/raw/refs/heads/master/fonts/materialdesignicons-webfont.ttf
+    id: font_mdi_small
+    size: 18
+    glyphs: [
+      "\U000F0E0A", # water-percent
+    ]
+
+spi:
+  clk_pin: ${spi_clk_pin}
+  mosi_pin: ${spi_mosi_pin}
+  miso_pin: ${spi_miso_pin}
+  id: spi_bus_display
+
+image:
+  - platform: sendspin
+    id: sendspin_cover_art
+    format: JPEG
+    type: RGB565
+    resize: 240x240
+    source: ALBUM
+    current_image:
+      id: cover_art
+    transition_image:
+      id: cover_art_transition
+    on_image_display:
+      - logger.log:
+          format: "Album art displayed (late by %u ms)"
+          args: ["(unsigned) lateness_ms"]
+      # Stand in for a display transition. With a transition image, every display must end
+      # with transition_finished so the next frame is released.
+      - delay: 300ms
+      - sendspin.image.transition_finished: sendspin_cover_art
+      - if:
+          condition:
+            lvgl.page.is_showing: sendspin_page
+          then:
+            # Built-in lvgl.image.update action doesn't support fading
+            # Update image and fade in after decoding
+            - lambda: |-
+                lv_obj_t* img = id(album_art_widget);
+                // Update image source
+                lv_img_set_src(img, id(cover_art));
+                lv_img_set_zoom(img, LV_ZOOM_NONE);
+                // Fade in new image
+                static lv_anim_t fade_in;
+                lv_anim_init(&fade_in);
+                lv_anim_set_var(&fade_in, img);
+                lv_anim_set_values(&fade_in, 0, 255);
+                lv_anim_set_time(&fade_in, 300);  // 300ms fade in
+                lv_anim_set_exec_cb(&fade_in, [](void* obj, int32_t v) {
+                    lv_obj_set_style_img_opa((lv_obj_t*)obj, v, 0);
+                });
+                lv_anim_start(&fade_in);
+          else:
+            # Page isn't currently open, don't bother fading
+            - lvgl.image.update: 
+                id: album_art_widget
+                src: cover_art
+    on_image_error:
+      - logger.log: "Failed to decode cover art image"
+
+  # - platform: sendspin
+  #   id: sendspin_artist_picture
+  #   format: JPEG
+  #   type: rgb565
+  #   resize: 240x240
+  #   source: ARTIST
+  #   on_image_display:
+  #     - lvgl.image.update: 
+  #         id: artist_picture_widget
+  #         src: sendspin_artist_picture
+  #     - logger.log: "Decoded artist picture"
+  #   on_image_error:
+  #     - logger.log: "Failed to decode artist picture"
+
+display:
+  - platform: mipi_spi
+    model: ${display_model}
+    color_order: RGB
+    invert_colors: true
+    id: s3_box_lcd
+    spi_id: spi_bus_display
+    cs_pin: ${display_cs_pin}
+    dc_pin: ${display_dc_pin}
+    reset_pin: ${display_reset_pin}
+    # These two set how much time the ESP32 is running the display
+    # which takes time away from playing audio!
+    data_rate: 10MHz # T_cycle min is 100ns
+    auto_clear_enabled: false
+    update_interval: never
+
+# We're caching pixel lengths of strings here, as it's unclear
+# how expensive those string calculations are every screen raster
+globals:
+  - id: title_length
+    type: int
+    restore_value: no
+    initial_value: '0'
+  - id: artist_length
+    type: int
+    restore_value: no
+    initial_value: '0'
+  - id: album_length
+    type: int
+    restore_value: no
+    initial_value: '0'
+  - id: progress_length
+    type: int
+    restore_value: no
+    initial_value: '0'
+  # Color constants for weather display
+  - id: sun_color
+    type: int
+    restore_value: no
+    initial_value: '0xFFFF00'  # Yellow
+  - id: water_color
+    type: int
+    restore_value: no
+    initial_value: '0x00BFFF'  # DeepSkyBlue
+  - id: greenish_color
+    type: int
+    restore_value: no
+    initial_value: '0x90EE90'  # LightGreen
+  - id: night_color
+    type: int
+    restore_value: no
+    initial_value: '0x2E2EFF'  # DarkBlue
+  - id: sunset_color
+    type: int
+    restore_value: no
+    initial_value: '0xFFA500'  # Orange
+  - id: aux_text_color
+    type: int
+    restore_value: no
+    initial_value: '0xAAAAAA'  # Light gray
+
+# script:
+#   - id: hide_media_controls
+#     mode: restart  # Restart the timer if called again
+#     then:
+#       - delay: 5s
+#       - lvgl.widget.hide: media_controls_overlay
+#       - logger.log: "Hiding media controls"
+
+lvgl:
+  displays:
+    - s3_box_lcd
+  rotation: ${display_rotation}
+  buffer_size: 25%
+  color_depth: 16
+  bg_color: 0x000000
+  default_font: font_display
+  # top_layer:
+    # widgets:
+      # Media controls overlay (initially hidden) - works on all pages
+      # - obj:
+      #     id: media_controls_overlay
+      #     align: TOP_MID
+      #     width: 320
+      #     height: 80
+      #     bg_color: 0x000000
+      #     bg_opa: 60%  # Semi-transparent background
+      #     border_width: 0
+      #     radius: 10
+      #     scrollbar_mode: "OFF"  # Hide scrollbars
+      #     scrollable: false  # Disable scrolling completely
+      #     hidden: true  # Initially hidden
+      #     widgets:
+      #       # Previous button - doesn't currently work with current media player
+      #       - button:
+      #           id: prev_button
+      #           align: LEFT_MID
+      #           x: 30
+      #           width: 70
+      #           height: 70
+      #           bg_color: 0x404040
+      #           bg_opa: 70%
+      #           radius: 35
+      #           on_click:
+      #             - media_player.previous: sendspin_group_media_player
+      #             - logger.log: "Previous button pressed"
+      #             - script.stop: hide_media_controls
+      #             - script.execute: hide_media_controls
+      #           widgets:
+      #             - label:
+      #                 align: CENTER
+      #                 text: "\U000F04AE"  # mdi:skip-previous
+      #                 text_color: 0xFFFFFF
+      #                 text_font: font_mdi
+
+      #       # Play/Pause button
+      #       - button:
+      #           id: play_pause_button
+      #           align: CENTER
+      #           width: 70
+      #           height: 70
+      #           bg_color: 0x404040
+      #           bg_opa: 70%
+      #           radius: 35
+      #           on_click:
+      #             - media_player.toggle: sendspin_group_media_player
+      #             - logger.log: "Play/Pause button pressed"
+      #             - lambda: |-
+      #                 // Optimistically toggle the icon for immediate feedback
+      #                 const char* current_text = lv_label_get_text(id(play_pause_icon));
+      #                 if (strcmp(current_text, "${mdi_pause_glyph}") == 0) {
+      #                   lv_label_set_text(id(play_pause_icon), "${mdi_play_glyph}");
+      #                 } else {
+      #                   lv_label_set_text(id(play_pause_icon), "${mdi_pause_glyph}");
+      #                 }
+      #             - delay: ${optimistic_state_correction_delay}
+      #             - lambda: |-
+      #                 // After delay, ensure icon matches actual state
+      #                 if (id(sendspin_group_media_player)->state == media_player::MediaPlayerState::MEDIA_PLAYER_STATE_PLAYING) {
+      #                   lv_label_set_text(id(play_pause_icon), "${mdi_pause_glyph}");
+      #                 } else {
+      #                   lv_label_set_text(id(play_pause_icon), "${mdi_play_glyph}");
+      #                 }
+      #             - script.stop: hide_media_controls
+      #             - script.execute: hide_media_controls
+      #           widgets:
+      #             - label:
+      #                 id: play_pause_icon
+      #                 align: CENTER
+      #                 text: "\U000F03E4"  # mdi:pause (default)
+      #                 text_color: 0xFFFFFF
+      #                 text_font: font_mdi
+
+      #       # Next button - doesn't currently work with current media player
+      #       - button:
+      #           id: next_button
+      #           align: RIGHT_MID
+      #           x: -30
+      #           width: 70
+      #           height: 70
+      #           bg_color: 0x404040
+      #           bg_opa: 70%
+      #           radius: 35
+      #           on_click:
+      #             - media_player.next: sendspin_group_media_player
+      #             - logger.log: "Next button pressed"
+      #             - script.stop: hide_media_controls
+      #             - script.execute: hide_media_controls
+      #           widgets:
+      #             - label:
+      #                 align: CENTER
+      #                 text: "\U000F04AD"  # mdi:skip-next
+      #                 text_color: 0xFFFFFF
+      #                 text_font: font_mdi
+
+  pages:
+    - id: idle_page
+      bg_color: 0x000000
+      skip: true
+      # on_swipe_right:
+      #   - lambda: 'lv_indev_wait_release(lv_indev_get_act());'
+      #   - lvgl.page.next:
+      #       animation: OUT_RIGHT
+      #       time: 300ms
+      #   - logger.log: "Swiped right"
+      # on_swipe_left:
+      #   - lambda: 'lv_indev_wait_release(lv_indev_get_act());'
+      #   - lvgl.page.previous:
+      #       animation: OUT_LEFT
+      #       time: 300ms
+      #   - logger.log: "Swiped left"
+      widgets:
+        # Weather section - above clock
+        # Weather icon
+        - label:
+            id: weather_icon_label
+            align: TOP_MID
+            x: -80
+            y: 12
+            text_color: 0xFFFFFF
+            text_font: font_mdi_large
+            text: ""
+        # Temperature value
+        - label:
+            id: temperature_label
+            align: TOP_MID
+            x: 0
+            y: 12
+            text_color: 0xFFFFFF
+            text_font: font_thick
+            text: ""
+        # Temperature unit
+        - label:
+            id: temp_unit_label
+            align: TOP_MID
+            x: 70
+            y: 12
+            text_color: 0xFFFFFF
+            text_font: font_thin
+            text: ""
+        # Clock display - large clock when audio is not playing
+        - label:
+            id: clock_hours_label
+            align: CENTER
+            x: -60
+            y: -5
+            text_color: 0xFFFFFF
+            text_font: text_big
+            text: "--"
+        - label:
+            id: clock_separator_label
+            align: CENTER
+            x: 0
+            y: -5
+            text_color: 0xFFFFFF
+            text_font: text_big
+            text: "."
+        - label:
+            id: clock_minutes_label
+            align: CENTER
+            x: 60
+            y: -5
+            text_color: 0xFFFFFF
+            text_font: text_big
+            text: "--"
+        # Forecast section - 4-day forecast (below clock, evenly distributed)
+        # Day 1
+        - label:
+            id: forecast_1d_date_label
+            align: BOTTOM_MID
+            x: -120
+            y: -80
+            text_color: 0xAAAAAA
+            text_font: font_small
+            text: ""
+        - label:
+            id: forecast_1d_icon_label
+            align: BOTTOM_MID
+            x: -120
+            y: -40
+            text_color: 0xFFFFFF
+            text_font: font_mdi_medium
+            text: ""
+        - label:
+            id: forecast_1d_temp_label
+            align: BOTTOM_MID
+            x: -120
+            y: -20
+            text_color: 0xFFFF00
+            text_font: font_small
+            text: ""
+        - label:
+            id: forecast_1d_precip_label
+            align: BOTTOM_MID
+            x: -120
+            y: 0
+            text_color: 0x00BFFF
+            text_font: font_small
+            text: ""
+        # Day 2
+        - label:
+            id: forecast_2d_date_label
+            align: BOTTOM_MID
+            x: -40
+            y: -80
+            text_color: 0xAAAAAA
+            text_font: font_small
+            text: ""
+        - label:
+            id: forecast_2d_icon_label
+            align: BOTTOM_MID
+            x: -40
+            y: -40
+            text_color: 0xFFFFFF
+            text_font: font_mdi_medium
+            text: ""
+        - label:
+            id: forecast_2d_temp_label
+            align: BOTTOM_MID
+            x: -40
+            y: -20
+            text_color: 0xFFFF00
+            text_font: font_small
+            text: ""
+        - label:
+            id: forecast_2d_precip_label
+            align: BOTTOM_MID
+            x: -40
+            y: 0
+            text_color: 0x00BFFF
+            text_font: font_small
+            text: ""
+        # Day 3
+        - label:
+            id: forecast_3d_date_label
+            align: BOTTOM_MID
+            x: 40
+            y: -80
+            text_color: 0xAAAAAA
+            text_font: font_small
+            text: ""
+        - label:
+            id: forecast_3d_icon_label
+            align: BOTTOM_MID
+            x: 40
+            y: -40
+            text_color: 0xFFFFFF
+            text_font: font_mdi_medium
+            text: ""
+        - label:
+            id: forecast_3d_temp_label
+            align: BOTTOM_MID
+            x: 40
+            y: -20
+            text_color: 0xFFFF00
+            text_font: font_small
+            text: ""
+        - label:
+            id: forecast_3d_precip_label
+            align: BOTTOM_MID
+            x: 40
+            y: 0
+            text_color: 0x00BFFF
+            text_font: font_small
+            text: ""
+        # Day 4
+        - label:
+            id: forecast_4d_date_label
+            align: BOTTOM_MID
+            x: 120
+            y: -80
+            text_color: 0xAAAAAA
+            text_font: font_small
+            text: ""
+        - label:
+            id: forecast_4d_icon_label
+            align: BOTTOM_MID
+            x: 120
+            y: -40
+            text_color: 0xFFFFFF
+            text_font: font_mdi_medium
+            text: ""
+        - label:
+            id: forecast_4d_temp_label
+            align: BOTTOM_MID
+            x: 120
+            y: -20
+            text_color: 0xFFFF00
+            text_font: font_small
+            text: ""
+        - label:
+            id: forecast_4d_precip_label
+            align: BOTTOM_MID
+            x: 120
+            y: 0
+            text_color: 0x00BFFF
+            text_font: font_small
+            text: ""
+        # - label:
+        #     id: idle_label
+        #     align: BOTTOM_MID
+        #     y: 25
+        #     text: "Sendspin Player"
+        #     text_color: 0x666666
+        #     text_font: font_display
+        #     clickable: true
+        #     on_click:
+        #       - lvgl.page.show: sendspin_page
+        # - obj:
+        #     id: touch_capture_idle
+        #     x: 0
+        #     y: 0
+        #     width: 240
+        #     height: 320
+        #     bg_opa: TRANSP
+        #     border_opa: TRANSP
+        #     clickable: true
+        #     on_click:
+        #       - lambda: |-
+        #           if (id(sendspin_group_media_player)->state == media_player::MediaPlayerState::MEDIA_PLAYER_STATE_PLAYING) {
+        #             lv_label_set_text(id(play_pause_icon), "\U000F03E4");
+        #           } else {
+        #             lv_label_set_text(id(play_pause_icon), "\U000F040A");
+        #           }
+        #       - lvgl.widget.show: media_controls_overlay
+        #       - logger.log: "Showing media controls"
+        #       - script.execute: hide_media_controls
+
+    - id: sendspin_page
+      bg_color: 0x000000
+      scrollbar_mode: "OFF"  # Hide scrollbars on main page
+      # on_swipe_right:
+      #   - lambda: 'lv_indev_wait_release(lv_indev_get_act());'
+      #   - lvgl.page.next:
+      #       animation: OUT_RIGHT
+      #       time: 300ms
+      #   - logger.log: "Swiped right"
+      # on_swipe_left:
+      #   - lambda: 'lv_indev_wait_release(lv_indev_get_act());'
+      #   - lvgl.page.previous:
+      #       animation: OUT_LEFT
+      #       time: 300ms
+      #   - logger.log: "Swiped left"
+      widgets:
+        - image:
+            id: album_art_widget
+            align: LEFT_MID
+            src: cover_art
+            height: 240
+            width: 240
+            x: 80
+            y: 0
+            antialias: true  # Better quality when scaling
+            clickable: false
+        - obj:
+            id: track_info_container
+            x: 0
+            y: 240
+            width: 320
+            height: 40
+            bg_color: 0x000000
+            border_width: 0
+            pad_all: 0
+            scrollbar_mode: "OFF"  # Hide scrollbars
+            clickable: false
+            widgets:
+              - label:
+                  id: now_playing_label
+                  align: CENTER
+                  text_color: 0xFFFFFF
+                  text_font: font_display
+                  text: ""
+                  width: 300  # Slightly less than container width for padding
+                  long_mode: SCROLL_CIRCULAR  # Continuously scroll text that doesn't fit
+        # Info line: small clock + weather icon + temperature (single line)
+        - obj:
+            id: info_line_container
+            x: 0
+            y: 0
+            width: 80
+            height: 240
+            bg_color: 0x000000
+            border_width: 0
+            pad_all: 0
+            scrollbar_mode: "OFF"  # Hide scrollbars
+            clickable: false
+            widgets:
+              # Small clock aligned left
+              - label:
+                  id: info_clock_label
+                  align: CENTER
+                  y: -90
+                  text_color: 0xFFFFFF
+                  text_font: font_medium
+                  text: "--:--"
+              # Current weather icon between clock and temperature
+              - label:
+                  id: info_weather_icon_label
+                  align: CENTER
+                  y: -30
+                  text_color: 0xFFFFFF
+                  text_font: font_mdi_medium
+                  text: ""
+              # Current temperature aligned right
+              - label:
+                  id: info_temperature_label
+                  align: LEFT_MID
+                  y: 30
+                  text_color: 0xFFFFFF
+                  text_font: font_medium
+                  text: ""
+              # Temperature unit
+              - label:
+                  id: info_temp_unit_label
+                  align: RIGHT_MID
+                  y: 30
+                  text_color: 0xFFFFFF
+                  text_font: font_medium
+                  text: ""
+        # Track progress time (left of album art)
+        - label:
+            id: track_progress_label
+            x: 0
+            y: 178
+            width: 40
+            height: 20
+            text_align: CENTER
+            text_color: 0xAAAAAA
+            text_font: font_time
+            text: ""
+        # Track duration time (right of album art)
+        - label:
+            id: track_duration_label
+            x: 200
+            y: 178
+            width: 40
+            height: 20
+            text_align: CENTER
+            text_color: 0xAAAAAA
+            text_font: font_time
+            text: ""
+        # - obj:
+        #     id: touch_capture
+        #     x: 0
+        #     y: 0
+        #     width: 240
+        #     height: 320
+        #     bg_opa: TRANSP
+        #     border_opa: TRANSP
+        #     clickable: true
+        #     on_click:
+        #       - lambda: |-
+        #           if (id(sendspin_group_media_player)->state == media_player::MediaPlayerState::MEDIA_PLAYER_STATE_PLAYING) {
+        #             lv_label_set_text(id(play_pause_icon), "\U000F03E4");
+        #           } else {
+        #             lv_label_set_text(id(play_pause_icon), "\U000F040A");
+        #           }
+        #       - lvgl.widget.show: media_controls_overlay
+        #       - logger.log: "Showing media controls"
+        #       - script.execute: hide_media_controls

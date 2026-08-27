@@ -1,0 +1,290 @@
+# This relies on the template in the Ha, that extracts daily forecast data from the weather integration. It is used by the TFT display to show the weather forecast for the next 4 days.
+# file: templates/weather_forecast.yaml
+
+# trigger:
+#   - platform: time_pattern
+#     hours: /1
+# action:
+#   - service: weather.get_forecasts
+#     data:
+#       type: daily
+#     target:
+#       entity_id: weather.home
+#     response_variable: daily
+# sensor:
+#   - name: Weather Forecast Temperature Max Today
+#     unique_id: weather_forecast_temperature_max_0d
+#     state: "{{ daily['weather.home'].forecast[0].temperature }}"
+#     unit_of_measurement: °C
+
+#   - name: Weather Forecast Datetime 0d
+#     unique_id: weather_forecast_datetime_0d
+#     state: "{{ daily['weather.home'].forecast[0].datetime }}"
+#     device_class: timestamp
+#     icon: "mdi:calendar-clock"
+
+#   - name: Weather Forecast Temperature Low Today
+#     unique_id: weather_forecast_temperature_low_0d
+#     state: "{{ daily['weather.home'].forecast[0].templow }}"
+#     unit_of_measurement: °C
+
+#   - name: Weather Forecast wind_speed Today
+#     unique_id: weather_forecast_wind_speed_0d
+#     state: "{{ daily['weather.home'].forecast[0].wind_speed }}"
+#     unit_of_measurement: km/h
+
+#   - name: Weather Forecast precipitation Today
+#     unique_id: weather_forecast_precipitation_0d
+#     state: "{{ daily['weather.home'].forecast[0].precipitation_probability }}"
+#     unit_of_measurement: "%"
+
+#   - name: Weather Forecast Today
+#     unique_id: weather_forecast_condition_0d
+#     state: "{{ daily['weather.home'].forecast[0].condition }}"
+
+#   - name: Weather Forecast Temperature Max 1d
+#     unique_id: weather_forecast_temperature_max_1d
+#     state: "{{ daily['weather.home'].forecast[1].temperature }}"
+#     unit_of_measurement: °C
+
+#   - name: Weather Forecast Datetime 1d
+#     unique_id: weather_forecast_datetime_1d
+#     state: "{{ daily['weather.home'].forecast[1].datetime }}"
+#     device_class: timestamp
+#     icon: "mdi:calendar-clock"
+
+#   - name: Weather Forecast Temperature Low 1d
+#     unique_id: weather_forecast_temperature_low_1d
+#     state: "{{ daily['weather.home'].forecast[1].templow }}"
+#     unit_of_measurement: °C
+
+#   - name: Weather Forecast wind_speed 1d
+#     unique_id: weather_forecast_wind_speed_1d
+#     state: "{{ daily['weather.home'].forecast[1].wind_speed }}"
+#     unit_of_measurement: km/h
+
+#   - name: Weather Forecast precipitation 1d
+#     unique_id: weather_forecast_precipitation_1d
+#     state: "{{ daily['weather.home'].forecast[1].precipitation_probability }}"
+#     unit_of_measurement: "%"
+
+#   - name: Weather Forecast 1d
+#     unique_id: weather_forecast_condition_1d
+#     state: "{{ daily['weather.home'].forecast[1].condition }}"
+
+#   - name: Weather Forecast Temperature Max 2d
+#     unique_id: weather_forecast_temperature_max_2d
+#     state: "{{ daily['weather.home'].forecast[2].temperature }}"
+#     unit_of_measurement: °C
+
+#   - name: Weather Forecast Datetime 2d
+#     unique_id: weather_forecast_datetime_2d
+#     state: "{{ daily['weather.home'].forecast[2].datetime }}"
+#     device_class: timestamp
+#     icon: "mdi:calendar-clock"
+
+#   - name: Weather Forecast Temperature Low 2d
+#     unique_id: weather_forecast_temperature_low_2d
+#     state: "{{ daily['weather.home'].forecast[2].templow }}"
+#     unit_of_measurement: °C
+
+#   - name: Weather Forecast wind_speed 2d
+#     unique_id: weather_forecast_wind_speed_2d
+#     state: "{{ daily['weather.home'].forecast[2].wind_speed }}"
+#     unit_of_measurement: km/h
+
+#   - name: Weather Forecast precipitation 2d
+#     unique_id: weather_forecast_precipitation_2d
+#     state: "{{ daily['weather.home'].forecast[2].precipitation_probability }}"
+#     unit_of_measurement: "%"
+
+#   - name: Weather Forecast 2d
+#     unique_id: weather_forecast_condition_2d
+#     state: "{{ daily['weather.home'].forecast[2].condition }}"
+
+#   - name: Weather Forecast Temperature Max 3d
+#     unique_id: weather_forecast_temperature_max_3d
+#     state: "{{ daily['weather.home'].forecast[3].temperature }}"
+#     unit_of_measurement: °C
+
+#   - name: Weather Forecast Datetime 3d
+#     unique_id: weather_forecast_datetime_3d
+#     state: "{{ daily['weather.home'].forecast[3].datetime }}"
+#     device_class: timestamp
+#     icon: "mdi:calendar-clock"
+
+#   - name: Weather Forecast Temperature Low 3d
+#     unique_id: weather_forecast_temperature_low_3d
+#     state: "{{ daily['weather.home'].forecast[3].templow }}"
+#     unit_of_measurement: °C
+
+#   - name: Weather Forecast wind_speed 3d
+#     unique_id: weather_forecast_wind_speed_3d
+#     state: "{{ daily['weather.home'].forecast[3].wind_speed }}"
+#     unit_of_measurement: km/h
+
+#   - name: Weather Forecast precipitation 3d
+#     unique_id: weather_forecast_precipitation_3d
+#     state: "{{ daily['weather.home'].forecast[3].precipitation_probability }}"
+#     unit_of_measurement: "%"
+
+#   - name: Weather Forecast 3d
+#     unique_id: weather_forecast_condition_3d
+#     state: "{{ daily['weather.home'].forecast[3].condition }}"
+
+#   - name: Weather Forecast Temperature Max 4d
+#     unique_id: weather_forecast_temperature_max_4d
+#     state: "{{ daily['weather.home'].forecast[4].temperature }}"
+#     unit_of_measurement: °C
+
+#   - name: Weather Forecast Datetime 4d
+#     unique_id: weather_forecast_datetime_4d
+#     state: "{{ daily['weather.home'].forecast[4].datetime }}"
+#     device_class: timestamp
+#     icon: "mdi:calendar-clock"
+
+#   - name: Weather Forecast Temperature Low 4d
+#     unique_id: weather_forecast_temperature_low_4d
+#     state: "{{ daily['weather.home'].forecast[4].templow }}"
+#     unit_of_measurement: °C
+
+#   - name: Weather Forecast wind_speed 4d
+#     unique_id: weather_forecast_wind_speed_4d
+#     state: "{{ daily['weather.home'].forecast[4].wind_speed }}"
+#     unit_of_measurement: km/h
+
+#   - name: Weather Forecast precipitation 4d
+#     unique_id: weather_forecast_precipitation_4d
+#     state: "{{ daily['weather.home'].forecast[4].precipitation_probability }}"
+#     unit_of_measurement: "%"
+
+#   - name: Weather Forecast 4d
+#     unique_id: weather_forecast_condition_4d
+#     state: "{{ daily['weather.home'].forecast[4].condition }}"
+
+#   - name: Weather Forecast Temperature Max 5d
+#     unique_id: weather_forecast_temperature_max_5d
+#     state: "{{ daily['weather.home'].forecast[5].temperature }}"
+#     unit_of_measurement: °C
+
+
+sensor:
+  - platform: homeassistant
+    entity_id: weather.forecast_home
+    id: temperature
+    attribute: temperature
+
+  - platform: homeassistant
+    entity_id: weather.forecast_home
+    id: humidity
+    attribute: humidity
+
+  - platform: homeassistant
+    entity_id: weather.forecast_home
+    id: pressure
+    attribute: pressure
+
+  - platform: homeassistant
+    entity_id: weather.forecast_home
+    id: wind_speed
+    attribute: wind_speed
+
+  - platform: homeassistant
+    entity_id: sensor.weather_forecast_precipitation_1d
+    id: forecast_1d_precipitation
+
+  - platform: homeassistant
+    entity_id: sensor.weather_forecast_wind_speed_1d
+    id: forecast_1d_wind_speed
+
+  - platform: homeassistant
+    entity_id: sensor.weather_forecast_temperature_max_1d
+    id: forecast_1d_temperature_high
+
+  - platform: homeassistant
+    entity_id: sensor.weather_forecast_temperature_low_1d
+    id: forecast_1d_temperature_low
+
+  - platform: homeassistant
+    entity_id: sensor.weather_forecast_precipitation_2d
+    id: forecast_2d_precipitation
+
+  - platform: homeassistant
+    entity_id: sensor.weather_forecast_wind_speed_2d
+    id: forecast_2d_wind_speed
+
+  - platform: homeassistant
+    entity_id: sensor.weather_forecast_temperature_max_2d
+    id: forecast_2d_temperature_high
+
+  - platform: homeassistant
+    entity_id: sensor.weather_forecast_temperature_low_2d
+    id: forecast_2d_temperature_low
+
+  - platform: homeassistant
+    entity_id: sensor.weather_forecast_precipitation_3d
+    id: forecast_3d_precipitation
+
+  - platform: homeassistant
+    entity_id: sensor.weather_forecast_wind_speed_3d
+    id: forecast_3d_wind_speed
+
+  - platform: homeassistant
+    entity_id: sensor.weather_forecast_temperature_max_3d
+    id: forecast_3d_temperature_high
+
+  - platform: homeassistant
+    entity_id: sensor.weather_forecast_temperature_low_3d
+    id: forecast_3d_temperature_low
+
+  - platform: homeassistant
+    entity_id: sensor.weather_forecast_precipitation_4d
+    id: forecast_4d_precipitation
+
+  - platform: homeassistant
+    entity_id: sensor.weather_forecast_wind_speed_4d
+    id: forecast_4d_wind_speed
+
+  - platform: homeassistant
+    entity_id: sensor.weather_forecast_temperature_max_4d
+    id: forecast_4d_temperature_high
+
+  - platform: homeassistant
+    entity_id: sensor.weather_forecast_temperature_low_4d
+    id: forecast_4d_temperature_low
+
+text_sensor:
+  - platform: homeassistant
+    entity_id: weather.forecast_home
+    id: weather
+
+  - platform: homeassistant
+    entity_id: weather.forecast_home
+    id: temperature_unit
+    attribute: temperature_unit
+
+  - platform: homeassistant
+    entity_id: weather.forecast_home
+    id: pressure_unit
+    attribute: pressure_unit
+
+  - platform: homeassistant
+    entity_id: weather.forecast_home
+    id: wind_speed_unit
+    attribute: wind_speed_unit
+
+  - platform: homeassistant
+    entity_id: sensor.weather_forecast_1d
+    id: forecast_1d_weather
+
+  - platform: homeassistant
+    entity_id: sensor.weather_forecast_2d
+    id: forecast_2d_weather
+
+  - platform: homeassistant
+    entity_id: sensor.weather_forecast_3d
+    id: forecast_3d_weather
+
+  - platform: homeassistant
+    entity_id: sensor.weather_forecast_4d
+    id: forecast_4d_weather
