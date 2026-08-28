@@ -755,6 +755,8 @@ In May 2025, I came up with a power mux schematic that is designed to automatica
 
 This eliminates the need for PD and NOPD revisions, so I will slowly replace all products with a single DUAL option.
 
+<img width="1208" height="903" alt="image" src="https://github.com/user-attachments/assets/dbe1b989-f54c-4ddc-b732-41e0f99ee4eb" />
+
 Because of the limited space on the back panel, I moved the IR reader and RGB LEDs (now eight of them) to the front panel, offering a semi-transparent optional panel, in case you're planning to use them.
 
 #### Efficiency
