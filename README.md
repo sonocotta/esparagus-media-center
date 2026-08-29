@@ -28,7 +28,7 @@ Esparagus Media Center is a series of ESP32-based media center devices. They all
     - [Onboard PSRAM](#onboard-psram)
   - [Board Pinout](#board-pinout)
     - [Common to every board](#common-to-every-board)
-    - [Peripheral (Loud Esparagus \& Esparagus HiFi MediaLink )](#peripheral-loud-esparagus--esparagus-hifi-medialink-)
+    - [Peripheral](#peripheral)
     - [Rotary encoder (Amped Esparagus)](#rotary-encoder-amped-esparagus)
     - [TAS5805M/TAS5825M DAC (Louder Esparagus, Audio Brick)](#tas5805mtas5825m-dac-louder-esparagus-audio-brick)
     - [Peripheral - OLED Screen and W5500 Ethernet (Louder Esparagus)](#peripheral---oled-screen-and-w5500-ethernet-louder-esparagus)
@@ -65,6 +65,7 @@ Esparagus Media Center is a series of ESP32-based media center devices. They all
       - [Power figures (comparison of BTL and PBTL modes)](#power-figures-comparison-of-btl-and-pbtl-modes)
       - [Amped TPA3110 Amp](#amped-tpa3110-amp)
       - [Louder TAS5805M DAC](#louder-tas5805m-dac)
+    - [Amped-Esparagus with TPA3118/TPA3128 amp](#amped-esparagus-with-tpa3118tpa3128-amp)
     - [TAS5805M DSP capabilities](#tas5805m-dsp-capabilities)
     - [Louder and Amped Esparagus power considerations](#louder-and-amped-esparagus-power-considerations)
       - [Power Delivery-enabled adapters](#power-delivery-enabled-adapters)
@@ -77,7 +78,7 @@ Esparagus Media Center is a series of ESP32-based media center devices. They all
     - [OLED screen (solder-less)](#oled-screen-solder-less)
       - [OLED models](#oled-models-1)
       - [Software side](#software-side)
-    - [ details](#audio-brick-details)
+    - [Audio Brick details](#audio-brick-details)
     - [Relay Driver](#relay-driver)
     - [Errata](#errata)
   - [Where to buy](#where-to-buy)
@@ -172,17 +173,17 @@ Audio streaming requires proper buffering to work; even with the ESP32's 500K of
 
 ### Common to every board
 
-|          | I2S CLK | I2S DATA | I2S WS | PSRAM RESERVED |  DAC EN (MAX98357A), AMP EN (TPA3128) 
-|----------|---------|----------|--------|----------------|-------------------------------------|
-| ESP32    | 26      | 22       | 25     | 16,  17        | 13
-| ESP32-S3 | 14      | 16       | 15     | 35, 36, 37     | 17
+|          | I2S CLK | I2S DATA | I2S WS | PSRAM RESERVED | 
+|----------|---------|----------|--------|----------------|
+| ESP32    | 26      | 22       | 25     | 16,  17        |
+| ESP32-S3 | 14      | 16       | 15     | 35, 36, 37     |
 
-### Peripheral (Loud Esparagus & Esparagus HiFi MediaLink )
+### Peripheral
 
-|          | SPI HOST| SPI CLK  |SPI MOSI| SPI MISO | OLED DC   | OLED CS   | OLED RST  |  WS2812 RGB LED |  RELAY EN |
-|----------|---------|----------|--------|----------|-----------|-----------|-----------|-----------------|-----------|
-| ESP32    |    2    |  18      |  23    |   19     |   4       | 5         | 32        |     33          |  21       |
-| ESP32-S3 |    2    |  12      |  11    |   13     |   38      | 47        | 48        |     21          |  --       |
+|          | SPI HOST| SPI CLK  |SPI MOSI| SPI MISO | DISPLAY DC   | DISPLAY CS| DISPLAY RST  | DISPLAY BL      |  WS2812 RGB LED | 
+|----------|---------|----------|--------|----------|--------------|-----------|--------------|-----------------|-----------------|
+| ESP32    |    2    |  18      |  23    |   19     |   4          | 5         | 32           |     33          |  21       |
+| ESP32-S3 |    2    |  12      |  11    |   13     |   38         | 47        | 48           |     21          |  --       |
 
 ### Rotary encoder (Amped Esparagus)
 
@@ -639,6 +640,25 @@ Physical connections:
 | Mono (PBTL) Mode, close horizontally | <img width="1064" height="658" alt="image" src="https://github.com/user-attachments/assets/7e1ff4a6-8a99-4440-93f4-2ea60b7f7723" />
 | (Option B) Close at the speaker | <img width="1088" height="713" alt="image" src="https://github.com/user-attachments/assets/0b591bf8-a4cb-4d0b-979e-194e827eebb8" /> 
 
+### Amped-Esparagus with TPA3118/TPA3128 amp
+
+Originally, I used the TPA3110 amp with Amped Esparagus and Amped-ESP32 boards for its simplicity and availability. The only issue with TAP3110 is that it lacks the MUTE pin. It does have an STBY pin, but as it turned out, it is not pop-free, meaning each time you switch it on and off, the amp makes a loud pop in the speakers. I tried changing the level slowly, but it didn't help.
+
+Help came with a newer TPA3128 amp with revision H of the Amped-ESP32
+
+- It does have a true MUTE pin, and now it is software-controlled on Amped-ESP32. It means that the board starts dead-quiet, and it stays quiet when the audio is paused
+- It can work with 4.5V, so it plays even when powered from a simple USB-C, similar to Louder-ESP32. TPA3110 needs at least 8V to spin up
+- TPA3128 has a marginally better audio quality, as they say. I cannot hear the difference 😉
+
+⚠️ TPA3128 boards default to 1SPW modulation, which causes audible pops when exiting MUTE and a quiet static noise afterward. See [errata: TPA3128 1SPW modulation pop and static noise issue](/errata/tpa3128-1spw-pop-noise.md) for a permanent hardware fix.
+
+On the latest revisions I'm switching over to the TPA3118 amp, replacing TPA3128 for a few reasons:
+
+- MUTE schematic is updated to slow down voltage ramping speed on turn on – this helps reduce pop noise to “I can no longer hear it” level
+- Modulation is hardwired to BD (1SPW is more efficient, but caused pops as well)
+- Gain is fixed at a 20dB level – also helps with pops
+- I added a band-pass input filter network to make sure it is noise-free.
+ 
 ### TAS5805M DSP capabilities
 
 The TAS5805M DAC has a very powerful DSP, which allows doing lots of data processing on the silicon, that otherwise would take a considerable part of your CPU time. As of the moment of writing, it is mostly an undiscovered part of the DAC, since unfortunately, TI is not making it very easy for developers. (A minute of complaint) To be more specific, you need to be (A) a proven hardware manufacturer to get access to the configuration software, namely PurePath. (B) You need to apply for a personal license and go through an approval process, and after a few weeks of waiting, you get access to the DAC configuration you asked for. (C) You find out that it will work with TI's own evaluation board, which will set you back $250 if you are able to find one. Otherwise, all you have is a list of I2C commands that you need to transfer to the device at your own cost. No wonder no one knows how to use it.
