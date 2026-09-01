@@ -1,0 +1,85 @@
+#================== based on tmuWolverine Changes
+substitutions:
+  max_brightness: 128
+  num_leds: 8
+
+light:
+  - id: !extend rgb_front_led
+
+    effects:
+      - addressable_lambda:
+          name: "Volume Display"
+          update_interval: 50ms
+          lambda: |-
+            int max_brightness = ${max_brightness};
+            int num_leds  = ${num_leds};
+            int leds = (int) ceil(id(current_volume) * (float) num_leds);
+
+            for (int i = 0; i < num_leds; i++) {
+              if (i < leds) {
+                if (i == num_leds - 1) {
+                  it[i] = Color(max_brightness, 0, 0);      // last LED: red
+                } else if (i == num_leds - 2) {
+                  it[i] = Color(max_brightness, max_brightness, 0);    // second-to-last: yellow
+                } else {
+                  it[i] = Color(0, max_brightness, 0);      // rest: green
+                }
+              } else {
+                it[i] = Color(0, 0, 0);
+              }
+            }
+
+globals:
+  - id: last_volume
+    type: float
+    initial_value: '-1.0'
+
+script:
+  - id: update_volume_leds
+    then:
+      - light.turn_on:
+          id: rgb_front_led
+          effect: "Volume Display"
+
+interval:
+  - interval: 50ms
+    then:
+      - if:
+          condition:
+            lambda: |-
+              return id(current_volume) != id(last_volume);
+          then:
+            - lambda: |-
+                id(last_volume) = id(current_volume);
+            - script.execute: update_volume_leds
+                        
+sensor:
+  - id: !extend rotary_dial
+
+    on_clockwise:
+      - lambda: |-
+          float new_vol = id(current_volume) + 0.05f;
+          if (new_vol > 1.0f) 
+            new_vol = 1.0f;
+          id(current_volume) = new_vol;
+      - media_player.volume_set:
+          id: external_media_player
+          volume: !lambda "return id(current_volume);"
+
+    on_anticlockwise:
+      - lambda: |-
+          float new_vol = id(current_volume) - 0.05f;
+          if (new_vol < 0.0f)
+            new_vol = 0.0f;
+          id(current_volume) = new_vol;
+      - media_player.volume_set:
+          id: external_media_player
+          volume: !lambda "return id(current_volume);"
+
+binary_sensor:
+  - id: !extend rotary_btn
+
+    on_click:
+      - media_player.toggle:
+          id: external_media_player
+

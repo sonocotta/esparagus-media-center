@@ -28,7 +28,7 @@ Esparagus Media Center is a series of ESP32-based media center devices. They all
     - [Onboard PSRAM](#onboard-psram)
   - [Board Pinout](#board-pinout)
     - [Common to every board](#common-to-every-board)
-    - [Peripheral (Loud Esparagus \& Esparagus HiFi MediaLink )](#peripheral-loud-esparagus--esparagus-hifi-medialink-)
+    - [Peripheral](#peripheral)
     - [Rotary encoder (Amped Esparagus)](#rotary-encoder-amped-esparagus)
     - [TAS5805M/TAS5825M DAC (Louder Esparagus, Audio Brick)](#tas5805mtas5825m-dac-louder-esparagus-audio-brick)
     - [Peripheral - OLED Screen and W5500 Ethernet (Louder Esparagus)](#peripheral---oled-screen-and-w5500-ethernet-louder-esparagus)
@@ -173,17 +173,17 @@ Audio streaming requires proper buffering to work; even with the ESP32's 500K of
 
 ### Common to every board
 
-|          | I2S CLK | I2S DATA | I2S WS | PSRAM RESERVED |  DAC EN (MAX98357A), AMP EN (TPA3128) 
-|----------|---------|----------|--------|----------------|-------------------------------------|
-| ESP32    | 26      | 22       | 25     | 16,  17        | 13
-| ESP32-S3 | 14      | 16       | 15     | 35, 36, 37     | 17
+|          | I2S CLK | I2S DATA | I2S WS | PSRAM RESERVED | 
+|----------|---------|----------|--------|----------------|
+| ESP32    | 26      | 22       | 25     | 16,  17        |
+| ESP32-S3 | 14      | 16       | 15     | 35, 36, 37     |
 
-### Peripheral (Loud Esparagus & Esparagus HiFi MediaLink )
+### Peripheral
 
-|          | SPI HOST| SPI CLK  |SPI MOSI| SPI MISO | OLED DC   | OLED CS   | OLED RST  |  WS2812 RGB LED |  RELAY EN |
-|----------|---------|----------|--------|----------|-----------|-----------|-----------|-----------------|-----------|
-| ESP32    |    2    |  18      |  23    |   19     |   4       | 5         | 32        |     33          |  21       |
-| ESP32-S3 |    2    |  12      |  11    |   13     |   38      | 47        | 48        |     21          |  --       |
+|          | SPI HOST| SPI CLK  |SPI MOSI| SPI MISO | DISPLAY DC   | DISPLAY CS| DISPLAY RST  | DISPLAY BL      |  WS2812 RGB LED | 
+|----------|---------|----------|--------|----------|--------------|-----------|--------------|-----------------|-----------------|
+| ESP32    |    2    |  18      |  23    |   19     |   4          | 5         | 32           |     33          |  21       |
+| ESP32-S3 |    2    |  12      |  11    |   13     |   38         | 47        | 48           |     21          |  --       |
 
 ### Rotary encoder (Amped Esparagus)
 
@@ -659,7 +659,7 @@ On the latest revisions I'm switching over to the TPA3118 amp, replacing TPA3128
 - Modulation is hardwired to BD (1SPW is more efficient, but caused pops as well)
 - Gain is fixed at a 20dB level – also helps with pops
 - I added a band-pass input filter network to make sure it is noise-free.
-  
+
 ### TAS5805M DSP capabilities
 
 The TAS5805M DAC has a very powerful DSP, which allows doing lots of data processing on the silicon, that otherwise would take a considerable part of your CPU time. As of the moment of writing, it is mostly an undiscovered part of the DAC, since unfortunately, TI is not making it very easy for developers. (A minute of complaint) To be more specific, you need to be (A) a proven hardware manufacturer to get access to the configuration software, namely PurePath. (B) You need to apply for a personal license and go through an approval process, and after a few weeks of waiting, you get access to the DAC configuration you asked for. (C) You find out that it will work with TI's own evaluation board, which will set you back $250 if you are able to find one. Otherwise, all you have is a list of I2C commands that you need to transfer to the device at your own cost. No wonder no one knows how to use it.

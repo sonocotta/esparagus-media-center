@@ -1,5 +1,5 @@
 # ============================================================
-# OLED display - Shows simple clock using the SH1106 128x64 OLED connected via SPI
+# TFT display - Shows simple clock using the SH1106 128x64 OLED connected via SPI
 # ============================================================
 # Requires substitutions:
 #   - spi_clk_pin
@@ -15,9 +15,8 @@ defaults:
   font_family: Roboto
   font_glyphsets: "GF_Latin_Core"
   display_model: ILI9341
-
+  
 substitutions:
-
   mdi_pause_glyph: \U000F03E4
   mdi_play_glyph: \U000F040A
   mdi_skip_previous_glyph: \U000F04AE
@@ -26,9 +25,13 @@ substitutions:
   # Time to wait before verifying optimistic state changes match actual state
   optimistic_state_correction_delay: 1000ms
 
+  display_rotation: 0
+  display_invert_colors: false
+
 external_components:
-  - source: github://pr#16057
-    components: [ generic_image, sendspin ]
+  # - source: github://esphome/esphome@dev
+  - source: github://pr#17937
+    components: [ runtime_image , sendspin ]
     refresh: 1h
 
 media_player:
@@ -60,37 +63,6 @@ media_player:
                 id: idle_page
                 animation: FADE_OUT
                 time: 300ms
-
-# interval:
-#   - interval: 0.5s
-#     then:
-#       - if:
-#           condition:
-#             - media_player.is_playing: sendspin_group_media_player
-#           then:
-#             - sendspin.get_track_progress:
-#                 then:
-#                   - lambda: |-
-#                       uint32_t seconds = x / 1000;
-#                       uint32_t minutes = seconds / 60;
-#                       seconds %= 60;
-#                       char buf[16];
-#                       snprintf(buf, sizeof(buf), "%d:%02d", minutes, seconds);
-#                       lv_label_set_text(id(track_progress_label), buf);
-
-#     on_play:
-#       - display.page.show: page_play
-#       - switch.template.publish:
-#           id: switch_screen
-#           state: ON
-
-#     on_idle:
-#       - display.page.show: page_clock
-
-# api:
-#   on_client_connected: 
-#     then:
-#       - display.page.show: page_clock
 
 text_sensor:
   - platform: sendspin
@@ -176,28 +148,6 @@ light:
     restore_mode: RESTORE_DEFAULT_ON
     default_transition_length: 250ms
 
-  # - platform: template
-  #   name: "Screen"
-  #   id: switch_screen
-  #   optimistic: true
-  #   restore_mode: ALWAYS_ON
-  #   turn_on_action:
-  #     - if:
-  #         condition:
-  #           api.connected:
-  #         then:
-  #           - if:
-  #               condition:
-  #                 media_player.is_idle: sendspin_group_media_player
-  #               then:
-  #                 - display.page.show: page_clock
-  #               else:
-  #                 - display.page.show: page_play
-  #           - component.update: spi_display
-  #   turn_off_action:
-  #     - display.page.show: page_off
-  #     - component.update: spi_display
-
 time:
   - platform: homeassistant
     id: sntp_time
@@ -263,14 +213,25 @@ spi:
   miso_pin: ${spi_miso_pin}
   id: spi_bus_display
 
-generic_image:
+image:
   - platform: sendspin
     id: sendspin_cover_art
     format: JPEG
-    type: rgb565
-    resize: 200x200
+    type: RGB565
+    resize: 240x240
     source: ALBUM
+    current_image:
+      id: cover_art
+    transition_image:
+      id: cover_art_transition
     on_image_display:
+      - logger.log:
+          format: "Album art displayed (late by %u ms)"
+          args: ["(unsigned) lateness_ms"]
+      # Stand in for a display transition. With a transition image, every display must end
+      # with transition_finished so the next frame is released.
+      - delay: 300ms
+      - sendspin.image.transition_finished: sendspin_cover_art
       - if:
           condition:
             lvgl.page.is_showing: sendspin_page
@@ -280,7 +241,7 @@ generic_image:
             - lambda: |-
                 lv_obj_t* img = id(album_art_widget);
                 // Update image source
-                lv_img_set_src(img, id(sendspin_cover_art));
+                lv_img_set_src(img, id(cover_art));
                 lv_img_set_zoom(img, LV_ZOOM_NONE);
                 // Fade in new image
                 static lv_anim_t fade_in;
@@ -296,35 +257,33 @@ generic_image:
             # Page isn't currently open, don't bother fading
             - lvgl.image.update: 
                 id: album_art_widget
-                src: sendspin_cover_art
+                src: cover_art
     on_image_error:
       - logger.log: "Failed to decode cover art image"
 
-  - platform: sendspin
-    id: sendspin_artist_picture
-    format: JPEG
-    type: rgb565
-    resize: 200x200
-    source: ARTIST
-    on_image_display:
-      - lvgl.image.update: 
-          id: artist_picture_widget
-          src: sendspin_artist_picture
-      - logger.log: "Decoded artist picture"
-    on_image_error:
-      - logger.log: "Failed to decode artist picture"
+  # - platform: sendspin
+  #   id: sendspin_artist_picture
+  #   format: JPEG
+  #   type: RGB565
+  #   resize: 240x240
+  #   source: ARTIST
+  #   current_image:
+  #     id: artist_img
+  #   transition_image:
+  #     id: artist_img_transition
+  #   on_image_display:
+  #     - lvgl.image.update: 
+  #         id: artist_picture_widget
+  #         src: artist_img
+  #     - logger.log: "Decoded artist picture"
+  #   on_image_error:
+  #     - logger.log: "Failed to decode artist picture"
 
 display:
-  - platform: ili9xxx
+  - platform: mipi_spi
     model: ${display_model}
-    dimensions:
-      width: 320
-      height: 240
-      offset_height: 0
-      offset_width: 0
     color_order: RGB
     invert_colors: true
-    # rotation: 90
     id: s3_box_lcd
     spi_id: spi_bus_display
     cs_pin: ${display_cs_pin}
@@ -335,148 +294,6 @@ display:
     data_rate: 10MHz # T_cycle min is 100ns
     auto_clear_enabled: false
     update_interval: never
-
-    # pages:
-    #   - id: page_startup
-    #     lambda: |-
-    #       it.printf(it.get_width() / 2, 20, 
-    #                 id(text_small), TextAlign::CENTER, "${friendly_name}");
-    #       it.printf(it.get_width() / 2, 40, 
-    #                 id(text_small), TextAlign::CENTER, "connecting...");
-
-    #   # Selected by api.on_connection
-    #   - id: page_clock
-    #     lambda: |-
-    #       // display clock
-    #       auto hours = id(sntp_time).now().hour;
-    #       auto minutes = id(sntp_time).now().minute;
-    #       auto seconds = id(sntp_time).now().second;
-    #       auto dot = seconds % 2 == 0 ? " " : ":";
-
-    #       it.printf(it.get_width() / 2, 
-    #                 it.get_height() / 2, 
-    #                 id(text_big), 
-    #                 TextAlign::CENTER, 
-    #                 "%d%s%02d", hours, dot, minutes);
-          
-    #   # Blank the display (e.g. before suspending the component)
-    #   - id: page_off
-    #     lambda: return;
-
-    #   # Selected by the speaker on_play
-    #   - id: page_play
-    #     lambda: |-
-
-
-# // Draw album art at top center of the display
-# {
-#   int art_size = 128;
-#   auto* img = id(sendspin_cover_art);
-#   if (img->get_width() > 0 && img->get_height() > 0) {
-#     int art_x = (it.get_width() - art_size) / 2;
-#     int art_y = 4;
-#     it.image(art_x, art_y, img, art_size, art_size);
-#   }
-# }
-
-# const int PADDING_LEFT = 18, PADDING_RIGHT = 28;
-# const int LINE_HEIGHTS[] = {320 - 32, 320 - 64, 320 - 96};
-# int x1, y1, new_h, new_w, 
-#     title_width_offset = PADDING_LEFT, 
-#     artist_width_offset = PADDING_LEFT,
-#     album_width_offset = PADDING_LEFT;
-# bool increment = false;
-# static int iteration = 0;
-
-# // Draw some icons
-# it.print(0, LINE_HEIGHTS[0], 
-#           id(icons_small), 
-#           TextAlign::CENTER_LEFT, 
-#           "\U000fffd8"); // music icon
-# it.print(0, LINE_HEIGHTS[1], 
-#         id(icons_small), 
-#         TextAlign::CENTER_LEFT, 
-#         "\ue01a"); // artist icon
-# it.print(0, LINE_HEIGHTS[2], 
-#         id(icons_small), 
-#         TextAlign::CENTER_LEFT, 
-#         "\ue019"); // album icon
-
-# // Don't scroll over the icons
-# it.start_clipping( Rect(PADDING_LEFT, 
-#                         0, 
-#                         it.get_width(), 
-#                         it.get_height()));
-
-# if (id(title_length) == 0) {
-#   it.get_text_bounds(0, 0, 
-#                     id(ss_title).state.c_str(), 
-#                     id(text_small), 
-#                     TextAlign::TOP_LEFT, 
-#                     &x1, &y1, &new_w, &new_h);
-#   id(title_length) = new_w;
-# }
-
-# if (id(title_length) + PADDING_LEFT >= it.get_width()) {
-#   auto missing_artist_text = id(title_length) - it.get_width();
-#   increment = true;
-#   title_width_offset = PADDING_LEFT - (iteration % (missing_artist_text + PADDING_RIGHT));
-# }
-# it.print(title_width_offset, LINE_HEIGHTS[0], 
-#           id(text_small), 
-#           TextAlign::CENTER_LEFT, 
-#           id(ss_title).state.c_str());
-
-# // Do this again for the artist
-# if (id(artist_length) == 0) {
-#   it.get_text_bounds(0, 0, 
-#                     id(ss_artist).state.c_str(), 
-#                     id(text_small), 
-#                     TextAlign::TOP_LEFT, 
-#                     &x1, &y1, &new_w, &new_h);
-#   id(artist_length) = new_w;
-# }
-
-# if (id(artist_length) + PADDING_LEFT >= it.get_width()) {
-#   auto missing_title_text = id(artist_length) - it.get_width();
-#   increment = true;
-#   artist_width_offset = PADDING_LEFT - (iteration % (missing_title_text + PADDING_RIGHT));
-# }
-# it.print(artist_width_offset, LINE_HEIGHTS[1], 
-#         id(text_small), 
-#         TextAlign::CENTER_LEFT, 
-#         id(ss_artist).state.c_str());
-
-# // And the album
-# if (id(album_length) == 0) {
-#   it.get_text_bounds(0, 0, 
-#                     id(ss_album).state.c_str(), 
-#                     id(text_small), 
-#                     TextAlign::TOP_LEFT, 
-#                     &x1, &y1, &new_w, &new_h);
-#   id(album_length) = new_w;
-# }
-
-# if (id(album_length) + PADDING_LEFT >= it.get_width()) {
-#   auto missing_album_text = id(album_length) - it.get_width();
-#   increment = true;
-#   album_width_offset = PADDING_LEFT - (iteration % (missing_album_text + PADDING_RIGHT));
-# }
-# it.print(album_width_offset, LINE_HEIGHTS[2], 
-#         id(text_small), 
-#         TextAlign::CENTER_LEFT, 
-#         id(ss_album).state.c_str());
-
-# it.end_clipping();
-
-# if (id(progress_length) > 0) {
-#   it.filled_rectangle(0, it.get_height()-2,
-#                       id(progress_length), it.get_height());
-# }
-
-# if (increment) {
-#   iteration++;
-# }
 
 # We're caching pixel lengths of strings here, as it's unclear
 # how expensive those string calculations are every screen raster
@@ -509,7 +326,7 @@ script:
 lvgl:
   displays:
     - s3_box_lcd
-  rotation: 180
+  rotation: ${display_rotation}
   buffer_size: 25%
   color_depth: 16
   bg_color: 0x000000
@@ -677,15 +494,15 @@ lvgl:
         - image:
             id: album_art_widget
             align: TOP_MID
-            src: sendspin_cover_art
-            height: 200
-            width: 200
+            src: cover_art
+            height: 240
+            width: 240
             antialias: true  # Better quality when scaling
             clickable: false
         - obj:
             id: track_info_container
             x: 0
-            y: 200
+            y: 240
             width: 320
             height: 40
             bg_color: 0x000000
@@ -724,69 +541,31 @@ lvgl:
             text_color: 0xAAAAAA
             text_font: font_time
             text: ""
-        - obj:
-            id: touch_capture
-            x: 0
-            y: 0
-            width: 320
-            height: 240
-            bg_opa: TRANSP
-            border_opa: TRANSP
-            clickable: true
-            on_click:
-              - lambda: |-
-                  if (id(sendspin_group_media_player)->state == media_player::MediaPlayerState::MEDIA_PLAYER_STATE_PLAYING) {
-                    lv_label_set_text(id(play_pause_icon), "\U000F03E4");
-                  } else {
-                    lv_label_set_text(id(play_pause_icon), "\U000F040A");
-                  }
-              - lvgl.widget.show: media_controls_overlay
-              - logger.log: "Showing media controls"
-              - script.execute: hide_media_controls
 
-    - id: sendspin_artist_page
-      bg_color: 0x000000
-      scrollbar_mode: "OFF"  # Hide scrollbars on main page
-      on_swipe_right:
-        - lambda: 'lv_indev_wait_release(lv_indev_get_act());'
-        - lvgl.page.next:
-            animation: OUT_RIGHT
-            time: 300ms
-        - logger.log: "Swiped right"
-      on_swipe_left:
-        - lambda: 'lv_indev_wait_release(lv_indev_get_act());'
-        - lvgl.page.previous:
-            animation: OUT_LEFT
-            time: 300ms
-        - logger.log: "Swiped left"
-      widgets:
-        - image:
-            id: artist_picture_widget
-            align: TOP_MID
-            src: sendspin_artist_picture
-            height: 200
-            width: 200
-            antialias: true  # Better quality when scaling
-            clickable: true
-        - obj:
-            id: touch_capture_artist
-            x: 0
-            y: 0
-            width: 320
-            height: 240
-            bg_opa: TRANSP
-            border_opa: TRANSP
-            clickable: true
-            on_click:
-              - lambda: |-
-                  if (id(sendspin_group_media_player)->state == media_player::MediaPlayerState::MEDIA_PLAYER_STATE_PLAYING) {
-                    lv_label_set_text(id(play_pause_icon), "\U000F03E4");
-                  } else {
-                    lv_label_set_text(id(play_pause_icon), "\U000F040A");
-                  }
-              - lvgl.widget.show: media_controls_overlay
-              - logger.log: "Showing media controls"
-              - script.execute: hide_media_controls
+    # - id: sendspin_artist_page
+    #   bg_color: 0x000000
+    #   scrollbar_mode: "OFF"  # Hide scrollbars on main page
+    #   on_swipe_right:
+    #     - lambda: 'lv_indev_wait_release(lv_indev_get_act());'
+    #     - lvgl.page.next:
+    #         animation: OUT_RIGHT
+    #         time: 300ms
+    #     - logger.log: "Swiped right"
+    #   on_swipe_left:
+    #     - lambda: 'lv_indev_wait_release(lv_indev_get_act());'
+    #     - lvgl.page.previous:
+    #         animation: OUT_LEFT
+    #         time: 300ms
+    #     - logger.log: "Swiped left"
+    #   widgets:
+    #     - image:
+    #         id: artist_picture_widget
+    #         align: TOP_MID
+    #         src: artist_img
+    #         height: 240
+    #         width: 240
+    #         antialias: true  # Better quality when scaling
+    #         clickable: true
 
 binary_sensor:
   - platform: gpio
