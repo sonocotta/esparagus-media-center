@@ -92,9 +92,9 @@ ota:
   platform: esphome
   password: !secret esphome_ota_password
 
-wifi:
-  ssid: !secret esphome_wifi_ssid
-  password: !secret esphome_wifi_password
+# wifi:
+#   ssid: !secret esphome_wifi_ssid
+#   password: !secret esphome_wifi_password
 
 psram:
   speed: 80MHz
@@ -106,7 +106,7 @@ network:
 packages:
   esparagus_remote:
     url: https://github.com/sonocotta/esparagus-media-center
-    ref: features/amped-esparagus-m-configs
+    ref: main
     files:
       - firmware/esphome/packages/audio.yaml
       - firmware/esphome/packages/sendspin.yaml
@@ -121,10 +121,10 @@ packages:
       - firmware/esphome/packages/ir-receiver.yaml
       - firmware/esphome/packages/rotary-encoder.yaml
       - firmware/esphome/packages/monitoring.yaml
-      - firmware/esphome/packages/monitoring-wifi.yaml
+      # - firmware/esphome/packages/monitoring-wifi.yaml
 
       # Optional ethernet (replace wifi config if you use this, you need to exclude OLED package if you do this to free up SPI bus)
-      # - firmware/esphome/packages/ethernet-w5500.yaml
+      - firmware/esphome/packages/ethernet-w5500.yaml
       # Optional display configuration for TFT SPI display
       # - firmware/esphome/packages/weather-sensors.yaml
       # - firmware/esphome/packages/sendspin-addon-tft-weather-vertical.yaml
