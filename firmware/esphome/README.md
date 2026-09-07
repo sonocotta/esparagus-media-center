@@ -16,10 +16,13 @@ This directory contains ESPHome firmware configurations for all Esparagus Media 
       - [Audio Brick (ESP32)](#audio-brick-esp32)
       - [Audio Brick S3 (ESP32-S3)](#audio-brick-s3-esp32-s3)
       - [Audio Brick TAS58XX driver](#audio-brick-tas58xx-driver)
+    - [8. HiFi-Esparagus-S3](#8-hifi-esparagus-s3)
+    - [9. Esparagus Audio Brick Dual S3](#9-esparagus-audio-brick-dual-s3)
   - [Configuration Variants](#configuration-variants)
     - [Standard Media Player](#standard-media-player)
     - [Snapclient](#snapclient)
     - [Sendspin](#sendspin)
+    - [Voice Assistant](#voice-assistant)
   - [Quick Start](#quick-start)
   - [Building and Flashing](#building-and-flashing)
     - [Using VS Code Tasks (Fast, as long as you have good hardware)](#using-vs-code-tasks-fast-as-long-as-you-have-good-hardware)
@@ -115,6 +118,7 @@ Each hardware variant has 2-3 firmware options depending on your use case.
 - `amped-esparagus-idf-j-snapclient.yaml` - Snapcast client (Revision J/TPA3128 with MUTE amp control)
 - `amped-esparagus-idf-sendspin.yaml` - Sendspin synchronized playback
 - `amped-esparagus-idf-j-sendspin.yaml` - Sendspin with Ethernet/OLED (Revision J/TPA3128 with MUTE amp control)
+- `amped-esparagus-idf-m-sendspin.yaml` - Sendspin synchronized playback (Revision M/TPA3118 with USB-PD, optional Ethernet/TFT display)
 
 <img width="923" height="1224" alt="image" src="https://github.com/user-attachments/assets/2b68df50-4e4d-4217-b161-adc9de40eb6e" />
 
@@ -153,6 +157,8 @@ All examples allow 3 DSP configurations:
 - `audio-brick-s3-idf.yaml` - Standard media player
 - `audio-brick-s3-idf-snapclient.yaml` - Snapcast client
 - `audio-brick-s3-idf-sendspin.yaml` - Sendspin synchronized playback
+- `audio-brick-s3-idf-voice-assist.yaml` - Local voice assistant (wake word + media player with ducking)
+- `audio-brick-s3-idf-voice-assist-sendspin.yaml` - Voice assistant combined with Sendspin multi-room playback
 
 All examples allow 3 DSP configurations:
 
@@ -179,6 +185,39 @@ There is a new driver in development that supports both TAS5805M and TAS5825M DA
 <img width="504" height="1039" alt="image" src="https://github.com/user-attachments/assets/ae53213c-0a28-4ed2-bed6-9dbcd960a8c6" />
 
 The new driver also allows to adjust gain for both channels, which is essentially a balance for speakers that have different sensitivity and impedance.
+
+---
+
+### 8. HiFi-Esparagus-S3
+
+**MCU**: ESP32-S3 with PSRAM
+**DAC**: PCM5100 (I2S)
+**Target**: Compact, low-cost media link with line-level output, upgraded with a front-facing I2S microphone for voice assistant use cases
+**Features**: RGB LED, IR receiver, I2S microphone, optional SPI display
+
+**Configurations:**
+- `hifi-esparagus-s3-idf.yaml` - Standard media player with mixer/resampler
+- `hifi-esparagus-s3-idf-snapclient.yaml` - Snapcast client (basic)
+- `hifi-esparagus-s3-idf-snapclient-with-dsp.yaml` - Snapcast client with software DSP controls
+- `hifi-esparagus-s3-idf-sendspin.yaml` - Sendspin synchronized playback
+- `hifi-esparagus-s3-idf-voice-assist.yaml` - Local voice assistant (wake word + media player with ducking)
+- `hifi-esparagus-s3-idf-voice-assist-sendspin.yaml` - Voice assistant combined with Sendspin multi-room playback
+
+See [Home Assistant: HiFi-Esparagus-S3](../../README.md#home-assistant-hifi-esparagus-s3) in the main README for flashing notes specific to this board's USB-only Revision H.
+
+---
+
+### 9. Esparagus Audio Brick Dual S3
+
+**DAC**: 2x TAS5825M (I2C + I2S) with built-in DSP, both DACs share the same I2S bus for perfect sync
+**MCU**: ESP32-S3 with PSRAM
+**Target**: DIN-rail audio module with two DACs, supporting 2.1 (subwoofer + stereo satellites) or 4.0 (four full-range channels) speaker layouts, tied to the same I2S signal (DSP settings per DAC can be configured independently)
+**Features**: RGB LED, optional SPI TFT display, optional fan control
+
+**Configurations:**
+- `audio-brick-dual-s3-media-player.yaml` - Standard media player, selectable 2.1 (PBTL subwoofer + BTL stereo) or 4.0 (four BTL channels) DAC layout
+- `audio-brick-dual-s3-sendspin-2.1.yaml` - Sendspin synchronized playback, 2.1 DAC layout
+- `audio-brick-dual-s3-sendspin-4.0.yaml` - Sendspin synchronized playback, 4.0 DAC layout
 
 ---
 
@@ -251,6 +290,25 @@ Sendspin synchronized audio playback:
 
 ---
 
+### Voice Assistant
+
+**Files**: `*-voice-assist.yaml`, `*-voice-assist-sendspin.yaml`
+
+Local, off-grid voice assistant implementation for Home Assistant's Assist pipeline:
+
+- On-device wake word detection
+- Media player with ducking (announcements/responses lower background music)
+- RGB LED status indication for listening/thinking/speaking states
+- The `-sendspin` variant layers Sendspin multi-room playback on top of the voice pipeline
+
+**Best for**: An off-grid, Alexa-like voice experience tied directly into Home Assistant
+
+**Requirements**: ESP32-S3 board with an onboard or header-connected I2S microphone (currently HiFi-Esparagus-S3 and Audio Brick S3)
+
+**Drawbacks**: Only available on ESP32-S3 boards; still an early feature and setup is more involved than the other variants
+
+---
+
 ## Quick Start
 
 1. **Choose your hardware variant** from the directories:
@@ -259,11 +317,14 @@ Sendspin synchronized audio playback:
    - `3-louder-esparagus/`
    - `4-amped-esapragus/`
    - `5-audio-brick/` or `5-audio-brick-s3/`
+   - `8-hifi-esparagus-s3/`
+   - `9-audio-brick-dual-s3/`
 
 2. **Choose your configuration variant**:
    - Standard: `*-idf.yaml`
    - Snapclient: `*-snapclient.yaml`
    - Sendspin: `*-sendspin.yaml`
+   - Voice Assistant (ESP32-S3 boards only): `*-voice-assist.yaml`
 
 3. **Configure secrets** (see [Secrets Management](#secrets-management))
 

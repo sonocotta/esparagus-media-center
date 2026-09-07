@@ -46,6 +46,7 @@ Esparagus Media Center is a series of ESP32-based media center devices. They all
     - [Home Assistant: ESPHome](#home-assistant-esphome)
       - [Snapclient multi-room playback (experimental)](#snapclient-multi-room-playback-experimental)
       - [Sendspin multi-room playback (experimental)](#sendspin-multi-room-playback-experimental)
+      - [Voice Assistant (ESP32-S3 only)](#voice-assistant-esp32-s3-only)
       - [Install steps](#install-steps)
     - [Home Assistant: Snapcast](#home-assistant-snapcast)
     - [Home Assistant: HiFi-Esparagus-S3](#home-assistant-hifi-esparagus-s3)
@@ -321,6 +322,7 @@ ESPHome configs are available in the [firmware/esphome/](/firmware/esphome/) fol
 - **Standard Media Player** - Full Home Assistant integration with TTS, announcements, and audio effects
 - **Snapclient** - Synchronized multi-room audio with 18-band equalizer (software DSP)
 - **Sendspin** - ESPHome-native multi-room playback (experimental)
+- **Voice Assistant** - Local wake-word voice assistant for Home Assistant's Assist pipeline (ESP32-S3 boards only)
 
 All configurations use the ESP-IDF framework (preferred over Arduino) for better audio performance and stability. Each hardware variant has its own directory with device-specific pinouts and features:
 
@@ -346,6 +348,14 @@ Starting December 2025, the new [Sendspin protocol](https://www.music-assistant.
 
 Available in all hardware variant directories:
 - `*-sendspin.yaml` configurations in each device folder
+
+#### Voice Assistant (ESP32-S3 only)
+
+Local, off-grid voice assistant configurations bring on-device wake-word detection and Home Assistant's Assist pipeline directly to the device, without depending on cloud services. See the [ESPHome Firmware Guide](/firmware/esphome/README.md#voice-assistant) for detailed information.
+
+Available on ESP32-S3 boards with an I2S microphone (currently [8-hifi-esparagus-s3](/firmware/esphome/8-hifi-esparagus-s3/) and [5-audio-brick-s3](/firmware/esphome/5-audio-brick-s3/)):
+- `*-voice-assist.yaml` - Voice assistant with local media player
+- `*-voice-assist-sendspin.yaml` - Voice assistant combined with Sendspin multi-room playback
 
 References:
 
