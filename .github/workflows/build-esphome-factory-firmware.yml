@@ -1,0 +1,143 @@
+name: Build ESPHome Factory Firmware
+
+# Builds the shippable ("factory") ESPHome image(s) that end users
+# install and auto-update through GitHub Pages - see
+# esphome-factory-firmware-architecture.md for the full design.
+#
+# Unlike build-esphome-configs.yml (which just sanity-compiles every
+# dev config on every push/PR), this workflow produces the actual
+# artifacts served from docs/: the ESP Web Tools flash manifest +
+# firmware.factory.bin, and the OTA manifest + firmware.ota.bin that
+# already-provisioned devices poll for updates. It only runs for
+# configs that live under firmware/esphome/distribution/*.factory.yaml.
+#
+# On a pull_request it still compiles the real factory config end to
+# end (catching breakage the excluded-from-the-matrix distribution/*.yaml
+# would otherwise slip through with), but skips the final commit step -
+# only a push to main writes to docs/artifacts, the GitHub Pages source.
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'firmware/esphome/distribution/**.factory.yaml'
+      - 'firmware/esphome/distribution/hifi-esparagus-idf-sendspin.yaml'
+      - 'firmware/esphome/packages/**'
+      - 'docs/artifacts/templates/esphome/**'
+      - '.github/workflows/build-esphome-factory-firmware.yml'
+  pull_request:
+    paths:
+      - 'firmware/esphome/distribution/**.factory.yaml'
+      - 'firmware/esphome/distribution/hifi-esparagus-idf-sendspin.yaml'
+      - 'firmware/esphome/packages/**'
+      - 'docs/artifacts/templates/esphome/**'
+      - '.github/workflows/build-esphome-factory-firmware.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: build-esphome-factory-firmware
+  cancel-in-progress: false
+
+jobs:
+  build-hifi-esparagus-sendspin:
+    name: Build hifi-esparagus (Sendspin)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      DEVICE_SLUG: hifi-esparagus-sendspin
+      CONFIG_DIR: firmware/esphome/distribution
+      CONFIG_FILE: hifi-esparagus-idf-sendspin.factory.yaml
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Compute version
+        id: version
+        run: |
+          SHORT_SHA=$(git rev-parse --short=8 HEAD)
+          VERSION="$(date -u +%Y.%m.%d)-${SHORT_SHA}"
+          echo "short_sha=$SHORT_SHA" >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "Building $CONFIG_FILE as version $VERSION ($SHORT_SHA)"
+
+      - name: Stamp version into factory config
+        run: |
+          sed -i "s/^  version: dev\$/  version: \"${{ steps.version.outputs.version }}\"/" \
+            "$CONFIG_DIR/$CONFIG_FILE"
+          grep -n "version:" "$CONFIG_DIR/$CONFIG_FILE" | head -5
+
+      - name: Compile factory firmware
+        run: |
+          docker run --rm \
+            -v "${{ github.workspace }}/$CONFIG_DIR:/config" \
+            ghcr.io/esphome/esphome:2026.8.1 \
+            compile "/config/$CONFIG_FILE"
+
+      - name: Collect build artifacts
+        id: collect
+        run: |
+          set -euo pipefail
+          BUILD_DIR=$(find "$CONFIG_DIR/.esphome/build" -maxdepth 1 -mindepth 1 -type d | head -1)
+
+          echo "--- Debug: build output ---"
+          find "$BUILD_DIR" -maxdepth 3
+
+          FACTORY_BIN=$(find "$BUILD_DIR" -name firmware.factory.bin | head -1)
+          OTA_BIN=$(find "$BUILD_DIR" -name firmware.ota.bin | head -1)
+          [ -n "$FACTORY_BIN" ] && [ -n "$OTA_BIN" ] || {
+            echo "::error::Could not locate firmware.factory.bin / firmware.ota.bin under $BUILD_DIR"
+            exit 1
+          }
+
+          OUT_DIR="docs/artifacts/binaries/esphome/${DEVICE_SLUG}"
+          mkdir -p "$OUT_DIR"
+          cp "$FACTORY_BIN" "$OUT_DIR/firmware.factory.bin"
+          cp "$OTA_BIN" "$OUT_DIR/firmware.ota.bin"
+
+          MD5=$(md5sum "$OUT_DIR/firmware.ota.bin" | cut -d' ' -f1)
+          echo "md5=$MD5" >> "$GITHUB_OUTPUT"
+          echo "Factory+OTA binaries copied to $OUT_DIR (ota md5=$MD5)"
+
+      - name: Render manifests
+        run: |
+          set -euo pipefail
+          # Deliberately its own subdirectory, not docs/artifacts/templates/
+          # directly: build-squeezelite-binaries.yml globs every *.json in
+          # that directory and only substitutes $commitid, so anything of
+          # ours living there gets silently reprocessed (and half-clobbered,
+          # since it doesn't know about our $version/$md5 placeholders) by
+          # its own "finalize" job whenever docs/artifacts/templates/**
+          # changes. See git history of ota-manifest-hifi-esparagus-sendspin-latest.json
+          # for what that looked like in practice.
+          TEMPLATE_DIR=docs/artifacts/templates/esphome
+          OUT_DIR=docs/artifacts
+
+          render() {
+            local tpl="$1"
+            local outname
+            outname=$(basename "${tpl/-template/-latest}")
+            jq --arg version "${{ steps.version.outputs.version }}" \
+               --arg commitid "${{ steps.version.outputs.short_sha }}" \
+               --arg md5 "${{ steps.collect.outputs.md5 }}" \
+               '.. |= (if type == "string" then
+                    gsub("\\$version"; $version)
+                    | gsub("\\$commitid"; $commitid)
+                    | gsub("\\$md5"; $md5)
+                  else . end)' \
+               "$tpl" > "$OUT_DIR/$outname"
+            echo "Rendered $OUT_DIR/$outname"
+          }
+
+          render "$TEMPLATE_DIR/manifest-${DEVICE_SLUG}-esphome-template.json"
+          render "$TEMPLATE_DIR/ota-manifest-${DEVICE_SLUG}-template.json"
+
+      # Pull requests only validate that the factory config still compiles
+      # end to end (steps above); they never touch docs/artifacts.
+      - name: Commit artifacts
+        if: github.event_name == 'push'
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Build hifi-esparagus (Sendspin) ESPHome factory firmware ${{ steps.version.outputs.version }}"
+          file_pattern: "docs/artifacts/**"

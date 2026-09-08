@@ -1,7 +1,7 @@
 [
     {
         "id": "group-01",
-        "title": "Esparagus Boards",
+        "title": "Hifi and Loud Esparagus",
         "devices": [
             {
                 "images": [
@@ -9,20 +9,39 @@
                 ],
                 "title": "HiFi Esparagus",
                 "description": "<a href=\"https://www.tindie.com/products/sonocotta/hifi-esparagus-media-center/\">HiFi Esparagus</a> is a handy low cost media device that will upgrade your legacy audio system with cutting-edge internet streaming capabilities and enhance your audio experience. It exposes line level output that you can plug into a stereo amplifier. It uses the legendary PCM5100 series DAC with supreme audio quality.",
-                "manifests": [
+                "firmwares": [
                     {
-                        "label": "16-bit (Standard)",
-                        "path": "artifacts/manifest-hifi-esparagus-16-latest.json"
+                        "id": "esphome",
+                        "label": "ESPHome",
+                        "badge": "Recommended",
+                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards.",
+                        "manifests": [
+                            {
+                                "label": "Install ESPHome (Sendspin multi-room)",
+                                "path": "artifacts/manifest-hifi-esparagus-sendspin-esphome-latest.json"
+                            }
+                        ]
                     },
                     {
-                        "label": "32-bit (High Quality)",
-                        "path": "artifacts/manifest-hifi-esparagus-32-latest.json"
+                        "id": "squeezelite",
+                        "label": "Squeezelite-ESP32",
+                        "note": "Classic Logitech Media Server / Squeezelite client firmware.",
+                        "manifests": [
+                            {
+                                "label": "16-bit (Standard)",
+                                "path": "artifacts/manifest-hifi-esparagus-16-latest.json"
+                            },
+                            {
+                                "label": "32-bit (High Quality)",
+                                "path": "artifacts/manifest-hifi-esparagus-32-latest.json"
+                            }
+                        ]
                     }
                 ]
             },
             {
                 "images": [
-                    "images/hifi-esparagus.jpg"
+                    "https://github.com/user-attachments/assets/6bdf15d3-b4ed-4b35-9f51-b142dab5c45a"
                 ],
                 "title": "HiFi Esparagus (S3)",
                 "description": "<a href=\"https://www.tindie.com/products/sonocotta/hifi-esparagus-media-center/\">HiFi Esparagus S3</a> is a ESP32-S3 version of the board. It has the same features and capabilities as the ESP32 version, but with a more powerful processor and more RAM. This gives little more headroom in audio streaming tasks.",
@@ -53,10 +72,16 @@
                         "path": "artifacts/manifest-loud-esparagus-32-latest.json"
                     }
                 ]
-            },
+            }
+        ]
+    },
+    {
+        "id": "group-02",
+        "title": "Louder Esparagus",
+        "devices": [
             {
                 "images": [
-                    "images/louder-esparagus.jpg"
+                    "https://github.com/user-attachments/assets/538e0165-d973-4222-81e7-64d4013869d6"
                 ],
                 "title": "Louder Esparagus",
                 "description": "<a href=\"https://www.tindie.com/products/sonocotta/louder-esparagus-media-center/\">Louder Esparagus</a> is a top-of-the-range model that uses modern highly capable TAS5805M DAC and is aimed to be paired with medium-to-large speaker systems. With 25W per channel stereo output it packs a punch and can easily enliven living quarters or dorm rooms.  It can be used both with Wi-Fi and Ethernet (to make sure bad Wi-Fi would not interrupt the stream)",
@@ -70,12 +95,18 @@
                         "path": "artifacts/manifest-louder-esparagus-32-latest.json"
                     }
                 ]
-            },
+            }
+        ]
+    },
+    {
+        "id": "group-03",
+        "title": "Amped Esparagus",
+        "devices": [
             {
                 "images": [
                     "images/amped-esparagus.jpg"
                 ],
-                "title": "Amped Esparagus (rev H, TPA3110)",
+                "title": "Amped Esparagus (Rev E→H, TPA3110)",
                 "description": "<a href=\"https://www.tindie.com/products/sonocotta/amped-esparagus-media-center/\">Amped Esparagus</a> is a device based on PCM5100 HiFi DAC (just like HiFi Esparagus) but adds a powerful and efficient D-class amp (TPA3110D2) so it can drive speakers directly. It has similar power capabilities to the Louder Esparagus, but it is much simpler to setup and use, since this DAC doesn't need any configuration steps to get going, just a valid I2S audio stream.",
                 "manifests": [
                     {
@@ -85,7 +116,16 @@
                     {
                         "label": "TPA3110, 32-bit (High Quality)",
                         "path": "artifacts/manifest-amped-esparagus-32-latest.json"
-                    },
+                    }
+                ]
+            },
+            {
+                "images": [
+                    "images/amped-esparagus.jpg"
+                ],
+                "title": "Amped Esparagus (rev J→K, TPA3128)",
+                "description": "<a href=\"https://www.tindie.com/products/sonocotta/amped-esparagus-media-center/\">Amped Esparagus</a> is a next revision of the Amped Esparagus board that uses TPA3128D2 amp. It can work from 5V power source and adds GPIO controlled MUTE pin, that allows toc ompletely show down output drivers when audio is not playing.",
+                "manifests": [
                     {
                         "label": "TPA3128, 16-bit (Standard)",
                         "path": "artifacts/manifest-amped-esparagus-j-16-latest.json"
@@ -99,7 +139,7 @@
         ]
     },
     {
-        "id": "group-02",
+        "id": "group-04",
         "title": "Esparagus Audio Brick",
         "devices": [
             {
@@ -139,7 +179,7 @@
         ]
     },
     {
-        "id": "group-03",
+        "id": "group-05",
         "title": "Esparagus Echo",
         "devices": [
             {
