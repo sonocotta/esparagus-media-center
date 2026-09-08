@@ -24,14 +24,14 @@ on:
       - 'firmware/esphome/distribution/**.factory.yaml'
       - 'firmware/esphome/distribution/hifi-esparagus-idf-sendspin.yaml'
       - 'firmware/esphome/packages/**'
-      - 'docs/artifacts/templates/*hifi-esparagus-sendspin*'
+      - 'docs/artifacts/templates/esphome/**'
       - '.github/workflows/build-esphome-factory-firmware.yml'
   pull_request:
     paths:
       - 'firmware/esphome/distribution/**.factory.yaml'
       - 'firmware/esphome/distribution/hifi-esparagus-idf-sendspin.yaml'
       - 'firmware/esphome/packages/**'
-      - 'docs/artifacts/templates/*hifi-esparagus-sendspin*'
+      - 'docs/artifacts/templates/esphome/**'
       - '.github/workflows/build-esphome-factory-firmware.yml'
   workflow_dispatch:
 
@@ -103,7 +103,15 @@ jobs:
       - name: Render manifests
         run: |
           set -euo pipefail
-          TEMPLATE_DIR=docs/artifacts/templates
+          # Deliberately its own subdirectory, not docs/artifacts/templates/
+          # directly: build-squeezelite-binaries.yml globs every *.json in
+          # that directory and only substitutes $commitid, so anything of
+          # ours living there gets silently reprocessed (and half-clobbered,
+          # since it doesn't know about our $version/$md5 placeholders) by
+          # its own "finalize" job whenever docs/artifacts/templates/**
+          # changes. See git history of ota-manifest-hifi-esparagus-sendspin-latest.json
+          # for what that looked like in practice.
+          TEMPLATE_DIR=docs/artifacts/templates/esphome
           OUT_DIR=docs/artifacts
 
           render() {

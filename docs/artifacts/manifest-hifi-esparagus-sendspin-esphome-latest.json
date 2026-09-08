@@ -1,6 +1,6 @@
 {
   "name": "hifi-esparagus-sendspin",
-  "version": "$version",
+  "version": "dev",
   "home_assistant_domain": "esphome",
   "funding_url": "https://esphome.io/guides/supporters.html",
   "new_install_prompt_erase": true,
