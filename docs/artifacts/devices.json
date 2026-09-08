@@ -9,14 +9,33 @@
                 ],
                 "title": "HiFi Esparagus",
                 "description": "<a href=\"https://www.tindie.com/products/sonocotta/hifi-esparagus-media-center/\">HiFi Esparagus</a> is a handy low cost media device that will upgrade your legacy audio system with cutting-edge internet streaming capabilities and enhance your audio experience. It exposes line level output that you can plug into a stereo amplifier. It uses the legendary PCM5100 series DAC with supreme audio quality.",
-                "manifests": [
+                "firmwares": [
                     {
-                        "label": "16-bit (Standard)",
-                        "path": "artifacts/manifest-hifi-esparagus-16-latest.json"
+                        "id": "esphome",
+                        "label": "ESPHome",
+                        "badge": "Recommended",
+                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards.",
+                        "manifests": [
+                            {
+                                "label": "Install ESPHome (Sendspin multi-room)",
+                                "path": "artifacts/manifest-hifi-esparagus-sendspin-esphome-latest.json"
+                            }
+                        ]
                     },
                     {
-                        "label": "32-bit (High Quality)",
-                        "path": "artifacts/manifest-hifi-esparagus-32-latest.json"
+                        "id": "squeezelite",
+                        "label": "Squeezelite-ESP32",
+                        "note": "Classic Logitech Media Server / Squeezelite client firmware.",
+                        "manifests": [
+                            {
+                                "label": "16-bit (Standard)",
+                                "path": "artifacts/manifest-hifi-esparagus-16-latest.json"
+                            },
+                            {
+                                "label": "32-bit (High Quality)",
+                                "path": "artifacts/manifest-hifi-esparagus-32-latest.json"
+                            }
+                        ]
                     }
                 ]
             },
