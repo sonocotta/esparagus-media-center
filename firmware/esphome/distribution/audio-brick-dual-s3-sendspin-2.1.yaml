@@ -1,0 +1,134 @@
+# ============================================================
+# Audio-Brick-Dual-S3 - Sendspin Configuration, 2.1 (Factory-shippable copy)
+# ============================================================
+# ESP32-S3 audio board with 2x TAS5825M DAC (I2C+I2S) with built-in DSP
+# DAC wiring: main DAC in BTL (stereo mains) + secondary DAC in PBTL
+# (mono, driven harder) - i.e. a stereo pair + powered subwoofer channel.
+#
+# This is a factory-shippable copy of
+# ../9-audio-brick-dual-s3/audio-brick-dual-s3-sendspin-2.1.yaml, kept
+# in sync by hand. It differs from the dev config in the ways a binary
+# that ships to strangers must:
+#   - No `!secret` Wi-Fi credentials or OTA password baked in (those
+#     only exist on the developer's own machine) — Wi-Fi is instead
+#     provisioned per-unit via Improv (see the sibling .factory.yaml).
+#   - `esphome.ota` is provided by the .factory.yaml overlay
+#     (platform: http_request) instead of platform: esphome.
+# Board-specific pinouts defined in substitutions
+# Functional blocks imported from /packages
+# ============================================================
+
+substitutions:
+  name: audio-brick-dual-s3-21
+  friendly_name: Audio-Brick-Dual-S3
+  task_stack_in_psram: "true"
+
+  # ===== Board-Specific Pinouts =====
+  # I2S audio pins
+  i2s_lrclk_pin: GPIO15
+  i2s_bclk_pin: GPIO14
+  i2s_dout_pin: GPIO16
+
+  # TAS5825M MAIN DAC
+  tas58xx_variant: TAS5825M
+  tas58xx_enable_pin: GPIO18
+  i2c_sda_pin: GPIO8
+  i2c_scl_pin: GPIO9
+
+  # TAS5825M SECONDARY DAC
+  tas58xx_enable_pin_secondary: GPIO17
+
+  # RGB LED
+  rgb_led_pin: GPIO21
+
+  # SPI pins (for display)
+  spi_clk_pin: GPIO12
+  spi_mosi_pin: GPIO11
+  spi_miso_pin: GPIO13
+
+  # Display control pins
+  display_cs_pin: GPIO47
+  display_dc_pin: GPIO38
+  display_reset_pin: GPIO48
+  display_backlight_pin: GPIO2
+
+  # Fan pins
+  fan_input_pin: GPIO7
+  fan_pwn_pin: GPIO4
+
+esphome:
+  name: ${name}
+  friendly_name: ${friendly_name}
+  min_version: 2026.5.0
+  name_add_mac_suffix: false
+  platformio_options:
+    board_build.flash_mode: dio
+
+esp32:
+  variant: ESP32S3
+  flash_size: 8MB
+  cpu_frequency: 240MHz
+  framework:
+    type: esp-idf
+    version: recommended
+    sdkconfig_options:
+      CONFIG_ESP32S3_DATA_CACHE_64KB: "y"
+      CONFIG_ESP32S3_DATA_CACHE_LINE_64B: "y"
+      CONFIG_ESP32S3_INSTRUCTION_CACHE_32KB: "y"
+      # Moves instructions and read only data from flash into PSRAM on boot.
+      # Both enabled allows instructions to execute while a flash operation is in progress without needing to be placed in IRAM.
+      # Considerably speeds up mWW at the cost of using more PSRAM.
+      CONFIG_SPIRAM_RODATA: "y"
+      CONFIG_SPIRAM_FETCH_INSTRUCTIONS: "y"
+      CONFIG_BT_ALLOCATION_FROM_SPIRAM_FIRST: "y"
+      CONFIG_BT_BLE_DYNAMIC_ENV_MEMORY: "y"
+      CONFIG_MBEDTLS_EXTERNAL_MEM_ALLOC: "y"
+      CONFIG_MBEDTLS_SSL_PROTO_TLS1_3: "y"
+
+logger:
+  level: DEBUG
+
+api:
+
+# Wi-Fi credentials are never baked in: this image ships with no
+# configured network and is provisioned per-unit over Improv
+# (BLE + Serial), wired up in the .factory.yaml overlay.
+wifi:
+  id: wifi_id
+
+psram:
+  mode: octal
+  speed: 80MHz
+  ignore_not_found: false
+
+network:
+  enable_ipv6: true
+
+# ===== Packages =====
+packages:
+  esparagus_remote:
+    url: https://github.com/sonocotta/esparagus-media-center
+    ref: main
+    files:
+      # A: 2.1 configuration with secondary DAC (PBTL) and main DAC (BTL)
+      - firmware/esphome/packages/dac-tas58xx-dual-2.1.yaml
+      # B: 4.0 configuration with 4-full size speakers
+      # - firmware/esphome/packages/dac-tas58xx-dual-4.0.yaml
+
+      - firmware/esphome/packages/audio.yaml
+      - firmware/esphome/packages/audio-addon-external-dac.yaml
+
+      - firmware/esphome/packages/sendspin.yaml
+      - firmware/esphome/packages/sendspin-addon-tas58xx.yaml
+      - firmware/esphome/packages/media-player-addon-dac-enable-dual.yaml
+      - firmware/esphome/packages/media-player-addon-volume-sync-dual.yaml
+      # Optional addon to adjust subwoofer gain based on the main volume slider - loudness effect
+      # - firmware/esphome/packages/media-player-addon-dynamic-gain-dual.yaml
+
+      # Optional display configuration for TFT SPI display
+      # - firmware/esphome/packages/sendspin-addon-tft.yaml
+
+      # - firmware/esphome/packages/fan.yaml <- only if you have it installed
+      - firmware/esphome/packages/light.yaml
+      - firmware/esphome/packages/monitoring.yaml
+      - firmware/esphome/packages/monitoring-wifi.yaml

@@ -45,14 +45,33 @@
                 ],
                 "title": "HiFi Esparagus (S3)",
                 "description": "<a href=\"https://www.tindie.com/products/sonocotta/hifi-esparagus-media-center/\">HiFi Esparagus S3</a> is a ESP32-S3 version of the board. It has the same features and capabilities as the ESP32 version, but with a more powerful processor and more RAM. This gives little more headroom in audio streaming tasks.",
-                "manifests": [
+                "firmwares": [
                     {
-                        "label": "16-bit (Standard)",
-                        "path": "artifacts/manifest-hifi-esparagus-s3-16-latest.json"
+                        "id": "esphome",
+                        "label": "ESPHome",
+                        "badge": "Recommended",
+                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards.",
+                        "manifests": [
+                            {
+                                "label": "Install ESPHome (Sendspin multi-room)",
+                                "path": "artifacts/manifest-hifi-esparagus-s3-sendspin-esphome-latest.json"
+                            }
+                        ]
                     },
                     {
-                        "label": "32-bit (High Quality)",
-                        "path": "artifacts/manifest-hifi-esparagus-s3-32-latest.json"
+                        "id": "squeezelite",
+                        "label": "Squeezelite-ESP32",
+                        "note": "Classic Logitech Media Server / Squeezelite client firmware.",
+                        "manifests": [
+                            {
+                                "label": "16-bit (Standard)",
+                                "path": "artifacts/manifest-hifi-esparagus-s3-16-latest.json"
+                            },
+                            {
+                                "label": "32-bit (High Quality)",
+                                "path": "artifacts/manifest-hifi-esparagus-s3-32-latest.json"
+                            }
+                        ]
                     }
                 ]
             },
@@ -62,14 +81,33 @@
                 ],
                 "title": "Loud Esparagus",
                 "description": "<a href=\"https://www.tindie.com/products/sonocotta/loud-esparagus-media-center/\">Loud Esparagus</a> is aimed to be paired with small-to-medium sized speakers in a small room. It uses a dual MAX98357 Hi-Fi DAC that will output 3W per speaker. Admittedly not much, but well enough for a kid's room or work place. Due to the D-class amp, it barely uses power and can be paired with a standard USB wall charger.",
-                "manifests": [
+                "firmwares": [
                     {
-                        "label": "16-bit (Standard)",
-                        "path": "artifacts/manifest-loud-esparagus-16-latest.json"
+                        "id": "esphome",
+                        "label": "ESPHome",
+                        "badge": "Recommended",
+                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards.",
+                        "manifests": [
+                            {
+                                "label": "Install ESPHome (Sendspin multi-room)",
+                                "path": "artifacts/manifest-loud-esparagus-sendspin-esphome-latest.json"
+                            }
+                        ]
                     },
                     {
-                        "label": "32-bit (High Quality)",
-                        "path": "artifacts/manifest-loud-esparagus-32-latest.json"
+                        "id": "squeezelite",
+                        "label": "Squeezelite-ESP32",
+                        "note": "Classic Logitech Media Server / Squeezelite client firmware.",
+                        "manifests": [
+                            {
+                                "label": "16-bit (Standard)",
+                                "path": "artifacts/manifest-loud-esparagus-16-latest.json"
+                            },
+                            {
+                                "label": "32-bit (High Quality)",
+                                "path": "artifacts/manifest-loud-esparagus-32-latest.json"
+                            }
+                        ]
                     }
                 ]
             }
@@ -85,14 +123,33 @@
                 ],
                 "title": "Louder Esparagus",
                 "description": "<a href=\"https://www.tindie.com/products/sonocotta/louder-esparagus-media-center/\">Louder Esparagus</a> is a top-of-the-range model that uses modern highly capable TAS5805M DAC and is aimed to be paired with medium-to-large speaker systems. With 25W per channel stereo output it packs a punch and can easily enliven living quarters or dorm rooms.  It can be used both with Wi-Fi and Ethernet (to make sure bad Wi-Fi would not interrupt the stream)",
-                "manifests": [
+                "firmwares": [
                     {
-                        "label": "16-bit (Standard)",
-                        "path": "artifacts/manifest-louder-esparagus-16-latest.json"
+                        "id": "esphome",
+                        "label": "ESPHome",
+                        "badge": "Recommended",
+                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards.",
+                        "manifests": [
+                            {
+                                "label": "Install ESPHome (Sendspin multi-room)",
+                                "path": "artifacts/manifest-louder-esparagus-sendspin-esphome-latest.json"
+                            }
+                        ]
                     },
                     {
-                        "label": "32-bit (High Quality)",
-                        "path": "artifacts/manifest-louder-esparagus-32-latest.json"
+                        "id": "squeezelite",
+                        "label": "Squeezelite-ESP32",
+                        "note": "Classic Logitech Media Server / Squeezelite client firmware.",
+                        "manifests": [
+                            {
+                                "label": "16-bit (Standard)",
+                                "path": "artifacts/manifest-louder-esparagus-16-latest.json"
+                            },
+                            {
+                                "label": "32-bit (High Quality)",
+                                "path": "artifacts/manifest-louder-esparagus-32-latest.json"
+                            }
+                        ]
                     }
                 ]
             }
@@ -108,14 +165,33 @@
                 ],
                 "title": "Amped Esparagus (Rev E→H, TPA3110)",
                 "description": "<a href=\"https://www.tindie.com/products/sonocotta/amped-esparagus-media-center/\">Amped Esparagus</a> is a device based on PCM5100 HiFi DAC (just like HiFi Esparagus) but adds a powerful and efficient D-class amp (TPA3110D2) so it can drive speakers directly. It has similar power capabilities to the Louder Esparagus, but it is much simpler to setup and use, since this DAC doesn't need any configuration steps to get going, just a valid I2S audio stream.",
-                "manifests": [
+                "firmwares": [
                     {
-                        "label": "TPA3110, 16-bit (Standard)",
-                        "path": "artifacts/manifest-amped-esparagus-16-latest.json"
+                        "id": "esphome",
+                        "label": "ESPHome",
+                        "badge": "Recommended",
+                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards.",
+                        "manifests": [
+                            {
+                                "label": "Install ESPHome (Sendspin multi-room)",
+                                "path": "artifacts/manifest-amped-esparagus-sendspin-esphome-latest.json"
+                            }
+                        ]
                     },
                     {
-                        "label": "TPA3110, 32-bit (High Quality)",
-                        "path": "artifacts/manifest-amped-esparagus-32-latest.json"
+                        "id": "squeezelite",
+                        "label": "Squeezelite-ESP32",
+                        "note": "Classic Logitech Media Server / Squeezelite client firmware.",
+                        "manifests": [
+                            {
+                                "label": "TPA3110, 16-bit (Standard)",
+                                "path": "artifacts/manifest-amped-esparagus-16-latest.json"
+                            },
+                            {
+                                "label": "TPA3110, 32-bit (High Quality)",
+                                "path": "artifacts/manifest-amped-esparagus-32-latest.json"
+                            }
+                        ]
                     }
                 ]
             },
@@ -124,15 +200,55 @@
                     "images/amped-esparagus.jpg"
                 ],
                 "title": "Amped Esparagus (rev J→K, TPA3128)",
-                "description": "<a href=\"https://www.tindie.com/products/sonocotta/amped-esparagus-media-center/\">Amped Esparagus</a> is a next revision of the Amped Esparagus board that uses TPA3128D2 amp. It can work from 5V power source and adds GPIO controlled MUTE pin, that allows toc ompletely show down output drivers when audio is not playing.",
-                "manifests": [
+                "description": "<a href=\"https://www.tindie.com/products/sonocotta/amped-esparagus-media-center/\">Amped Esparagus</a> is a next revision of the Amped Esparagus board that uses TPA3128D2 amp. It can work from 5V power source and adds GPIO controlled MUTE pin, that allows to completely shut down output drivers when audio is not playing.",
+                "firmwares": [
                     {
-                        "label": "TPA3128, 16-bit (Standard)",
-                        "path": "artifacts/manifest-amped-esparagus-j-16-latest.json"
+                        "id": "esphome",
+                        "label": "ESPHome",
+                        "badge": "Recommended",
+                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards.",
+                        "manifests": [
+                            {
+                                "label": "Install ESPHome (Sendspin multi-room)",
+                                "path": "artifacts/manifest-amped-esparagus-j-sendspin-esphome-latest.json"
+                            }
+                        ]
                     },
                     {
-                        "label": "TPA3128, 32-bit (High Quality)",
-                        "path": "artifacts/manifest-amped-esparagus-j-32-latest.json"
+                        "id": "squeezelite",
+                        "label": "Squeezelite-ESP32",
+                        "note": "Classic Logitech Media Server / Squeezelite client firmware.",
+                        "manifests": [
+                            {
+                                "label": "TPA3128, 16-bit (Standard)",
+                                "path": "artifacts/manifest-amped-esparagus-j-16-latest.json"
+                            },
+                            {
+                                "label": "TPA3128, 32-bit (High Quality)",
+                                "path": "artifacts/manifest-amped-esparagus-j-32-latest.json"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "images": [
+                    "images/amped-esparagus.jpg"
+                ],
+                "title": "Amped Esparagus (rev M, TPA3118)",
+                "description": "Amped Esparagus rev M replaces the TPA3128 amp used on rev J/K with a TPA3118, fixing the audible pop/static on playback start (see <a href=\"https://github.com/sonocotta/esparagus-media-center/blob/main/errata/tpa3128-1spw-pop-noise.md\">TPA3128 1SPW pop-noise errata</a>) via a slower MUTE ramp, fixed BD modulation, and an added input band-pass filter. Placeholder listing: not yet available for purchase, and this image is shared with the earlier revisions pending a rev-M-specific photo.",
+                "firmwares": [
+                    {
+                        "id": "esphome",
+                        "label": "ESPHome",
+                        "badge": "Recommended",
+                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards.",
+                        "manifests": [
+                            {
+                                "label": "Install ESPHome (Sendspin multi-room)",
+                                "path": "artifacts/manifest-amped-esparagus-m-sendspin-esphome-latest.json"
+                            }
+                        ]
                     }
                 ]
             }
@@ -148,14 +264,33 @@
                 ],
                 "title": "Esparagus Audio Brick (ESP32)",
                 "description": "<a href=\"https://www.crowdsupply.com/sonocotta/esparagus-audio-brick\">Esparagus Audio Brick</a> is a compact, Hi-Fi-grade DAC with built-in amplifier. Designed for seamless integration with Home Assistant, it transforms any speaker into a smart, synchronized, and fully customizable audio system. With a built-in powerful DSP (15-band EQ, fault management, precise gain control to match given speaker, and more), and sustainable hardware built to last, the Esparagus Audio Brick grows with your smart home instead of becoming obsolete.",
-                "manifests": [
+                "firmwares": [
                     {
-                        "label": "16-bit (Standard)",
-                        "path": "artifacts/manifest-esparagus-audio-brick-16-latest.json"
+                        "id": "esphome",
+                        "label": "ESPHome",
+                        "badge": "Recommended",
+                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards.",
+                        "manifests": [
+                            {
+                                "label": "Install ESPHome (Sendspin multi-room)",
+                                "path": "artifacts/manifest-audio-brick-sendspin-esphome-latest.json"
+                            }
+                        ]
                     },
                     {
-                        "label": "32-bit (High Quality)",
-                        "path": "artifacts/manifest-esparagus-audio-brick-32-latest.json"
+                        "id": "squeezelite",
+                        "label": "Squeezelite-ESP32",
+                        "note": "Classic Logitech Media Server / Squeezelite client firmware.",
+                        "manifests": [
+                            {
+                                "label": "16-bit (Standard)",
+                                "path": "artifacts/manifest-esparagus-audio-brick-16-latest.json"
+                            },
+                            {
+                                "label": "32-bit (High Quality)",
+                                "path": "artifacts/manifest-esparagus-audio-brick-32-latest.json"
+                            }
+                        ]
                     }
                 ]
             },
@@ -165,14 +300,75 @@
                 ],
                 "title": "Esparagus Audio Brick (ESP32-S3)",
                 "description": "<a href=\"https://www.crowdsupply.com/sonocotta/esparagus-audio-brick\">Esparagus Audio Brick (ESP32-S3)</a> is ESP32-S3 version of the board. It has the same features and capabilities as the ESP32 version, but with a more powerful processor and more RAM. This gives little more headroom in audio streaming tasks.",
-                "manifests": [
+                "firmwares": [
                     {
-                        "label": "16-bit (Standard)",
-                        "path": "artifacts/manifest-esparagus-audio-brick-s3-16-latest.json"
+                        "id": "esphome",
+                        "label": "ESPHome",
+                        "badge": "Recommended",
+                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards.",
+                        "manifests": [
+                            {
+                                "label": "Install ESPHome (Sendspin multi-room)",
+                                "path": "artifacts/manifest-audio-brick-s3-sendspin-esphome-latest.json"
+                            }
+                        ]
                     },
                     {
-                        "label": "32-bit (High Quality)",
-                        "path": "artifacts/manifest-esparagus-audio-brick-s3-32-latest.json"
+                        "id": "squeezelite",
+                        "label": "Squeezelite-ESP32",
+                        "note": "Classic Logitech Media Server / Squeezelite client firmware.",
+                        "manifests": [
+                            {
+                                "label": "16-bit (Standard)",
+                                "path": "artifacts/manifest-esparagus-audio-brick-s3-16-latest.json"
+                            },
+                            {
+                                "label": "32-bit (High Quality)",
+                                "path": "artifacts/manifest-esparagus-audio-brick-s3-32-latest.json"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "images": [
+                    "https://github.com/user-attachments/assets/df78090e-6869-4d63-a812-e7a53d5559a0"
+                ],
+                "title": "Esparagus Audio Brick Dual S3 (2.1)",
+                "description": "Esparagus Audio Brick Dual S3 packs two TAS5825M DACs on one ESP32-S3 board. In this 2.1 wiring, the main DAC runs in BTL (stereo mains) and the secondary DAC runs in PBTL (a single, harder-driven mono channel) - i.e. a stereo pair plus a powered subwoofer. Placeholder listing: referred to as \"Esparagus Audio Brick Daul DAC\" in the project README, not yet listed for sale on Tindie/CrowdSupply.",
+                "firmwares": [
+                    {
+                        "id": "esphome",
+                        "label": "ESPHome",
+                        "badge": "Recommended",
+                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards.",
+                        "manifests": [
+                            {
+                                "label": "Install ESPHome (Sendspin multi-room)",
+                                "path": "artifacts/manifest-audio-brick-dual-s3-2.1-sendspin-esphome-latest.json"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "images": [
+                    "https://github.com/user-attachments/assets/df78090e-6869-4d63-a812-e7a53d5559a0"
+                ],
+                "title": "Esparagus Audio Brick Dual S3 (4.0)",
+                "description": "Esparagus Audio Brick Dual S3 packs two TAS5825M DACs on one ESP32-S3 board. In this 4.0 wiring, both DACs run in BTL - 4 independent full-range stereo channels for driving four speakers directly. Placeholder listing: referred to as \"Esparagus Audio Brick Daul DAC\" in the project README, not yet listed for sale on Tindie/CrowdSupply.",
+                "firmwares": [
+                    {
+                        "id": "esphome",
+                        "label": "ESPHome",
+                        "badge": "Recommended",
+                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards.",
+                        "manifests": [
+                            {
+                                "label": "Install ESPHome (Sendspin multi-room)",
+                                "path": "artifacts/manifest-audio-brick-dual-s3-4.0-sendspin-esphome-latest.json"
+                            }
+                        ]
                     }
                 ]
             }
@@ -188,14 +384,33 @@
                 ],
                 "title": "Esparagus Echo Solo (ESP32-S3)",
                 "description": "<a href=\"https://www.tindie.com/products/sonocotta/esparagus-echo/\">Esparagus Echo Solo</a> has all the basic necessities, a Mic on the front panel, a couple of feedback LEDs, and a single speaker at the back. Onboard is a simple and well-known MAX98357 DAC with a reasonable 5W output audio.",
-                "manifests": [
+                "firmwares": [
                     {
-                        "label": "16-bit (Standard)",
-                        "path": "artifacts/manifest-esparagus-echo-solo-16-latest.json"
+                        "id": "esphome",
+                        "label": "ESPHome",
+                        "badge": "Recommended",
+                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards.",
+                        "manifests": [
+                            {
+                                "label": "Install ESPHome (Sendspin multi-room)",
+                                "path": "artifacts/manifest-echo-solo-sendspin-esphome-latest.json"
+                            }
+                        ]
                     },
                     {
-                        "label": "32-bit (High Quality)",
-                        "path": "artifacts/manifest-esparagus-echo-solo-32-latest.json"
+                        "id": "squeezelite",
+                        "label": "Squeezelite-ESP32",
+                        "note": "Classic Logitech Media Server / Squeezelite client firmware.",
+                        "manifests": [
+                            {
+                                "label": "16-bit (Standard)",
+                                "path": "artifacts/manifest-esparagus-echo-solo-16-latest.json"
+                            },
+                            {
+                                "label": "32-bit (High Quality)",
+                                "path": "artifacts/manifest-esparagus-echo-solo-32-latest.json"
+                            }
+                        ]
                     }
                 ]
             },
@@ -205,14 +420,33 @@
                 ],
                 "title": "Esparagus Echo Duo (ESP32-S3)",
                 "description": "<a href=\"https://www.tindie.com/products/sonocotta/esparagus-echo/\">Esparagus Echo Duo</a> uses a dual Mic setup, extra LED, and most importantly 2-channels MAX98357 channels to deliver quality stereo-audio (and thus can be used as a media player device). To make sure it would stream audio without a hiccup it has SPI Ethernet for the most robust networking",
-                "manifests": [
+                "firmwares": [
                     {
-                        "label": "16-bit (Standard)",
-                        "path": "artifacts/manifest-esparagus-echo-duo-16-latest.json"
+                        "id": "esphome",
+                        "label": "ESPHome",
+                        "badge": "Recommended",
+                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards.",
+                        "manifests": [
+                            {
+                                "label": "Install ESPHome (Sendspin multi-room)",
+                                "path": "artifacts/manifest-echo-duo-sendspin-esphome-latest.json"
+                            }
+                        ]
                     },
                     {
-                        "label": "32-bit (High Quality)",
-                        "path": "artifacts/manifest-esparagus-echo-duo-32-latest.json"
+                        "id": "squeezelite",
+                        "label": "Squeezelite-ESP32",
+                        "note": "Classic Logitech Media Server / Squeezelite client firmware.",
+                        "manifests": [
+                            {
+                                "label": "16-bit (Standard)",
+                                "path": "artifacts/manifest-esparagus-echo-duo-16-latest.json"
+                            },
+                            {
+                                "label": "32-bit (High Quality)",
+                                "path": "artifacts/manifest-esparagus-echo-duo-32-latest.json"
+                            }
+                        ]
                     }
                 ]
             }

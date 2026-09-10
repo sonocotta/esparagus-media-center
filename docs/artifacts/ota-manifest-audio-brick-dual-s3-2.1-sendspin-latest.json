@@ -1,0 +1,16 @@
+{
+  "name": "audio-brick-dual-s3-2.1-sendspin",
+  "version": "dev",
+  "builds": [
+    {
+      "chipFamily": "ESP32-S3",
+      "ota": {
+        "md5": "4c81f0bd3ec9ff4573c3d60abc400183",
+        "path": "https://sonocotta.github.io/esparagus-media-center/artifacts/binaries/esphome/audio-brick-dual-s3-2.1-sendspin/firmware.ota.bin",
+        "release_url": "https://github.com/sonocotta/esparagus-media-center/commit/763529a1",
+        "summary": "Audio Brick Dual S3 (2.1: stereo + sub) Sendspin firmware dev"
+      }
+    }
+  ],
+  "manifest_name": "ota-manifest-audio-brick-dual-s3-2.1-sendspin-latest.json"
+}

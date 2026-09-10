@@ -1,0 +1,16 @@
+{
+  "name": "echo-duo-sendspin",
+  "version": "dev",
+  "builds": [
+    {
+      "chipFamily": "ESP32-S3",
+      "ota": {
+        "md5": "f3836897903ec3755a7a8ca516df84dc",
+        "path": "https://sonocotta.github.io/esparagus-media-center/artifacts/binaries/esphome/echo-duo-sendspin/firmware.ota.bin",
+        "release_url": "https://github.com/sonocotta/esparagus-media-center/commit/763529a1",
+        "summary": "Esparagus Echo Duo Sendspin firmware dev"
+      }
+    }
+  ],
+  "manifest_name": "ota-manifest-echo-duo-sendspin-latest.json"
+}
