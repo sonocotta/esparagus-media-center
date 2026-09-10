@@ -9,27 +9,36 @@ name: Build ESPHome Factory Firmware
 # artifacts served from docs/: the ESP Web Tools flash manifest +
 # firmware.factory.bin, and the OTA manifest + firmware.ota.bin that
 # already-provisioned devices poll for updates. It only runs for
-# configs that live under firmware/esphome/distribution/*.factory.yaml.
+# configs that live under firmware/esphome/distribution/*.factory.yaml,
+# one matrix entry per shippable device - add a new board by adding a
+# row to the matrix below plus its distribution/*.yaml + *.factory.yaml
+# pair and docs/artifacts/templates/esphome/*-template.json pair.
 #
-# On a pull_request it still compiles the real factory config end to
-# end (catching breakage the excluded-from-the-matrix distribution/*.yaml
-# would otherwise slip through with), but skips the final commit step -
-# only a push to main writes to docs/artifacts, the GitHub Pages source.
+# The matrix job only compiles + uploads artifacts (never commits
+# directly - a dozen matrix legs racing to push to the same branch via
+# git-auto-commit-action would drop or conflict with each other's
+# commits); a single `finalize` job downloads every leg's output and
+# makes one combined commit, mirroring build-squeezelite-binaries.yml's
+# prepare/build*/finalize shape.
+#
+# On a pull_request the build matrix still compiles every real factory
+# config end to end (catching breakage the excluded-from-the-matrix
+# distribution/*.yaml would otherwise slip through with, see
+# build-esphome-configs.yml), but `finalize` never runs - only a push to
+# main writes to docs/artifacts, the GitHub Pages source.
 
 on:
   push:
     branches:
       - main
     paths:
-      - 'firmware/esphome/distribution/**.factory.yaml'
-      - 'firmware/esphome/distribution/hifi-esparagus-idf-sendspin.yaml'
+      - 'firmware/esphome/distribution/**'
       - 'firmware/esphome/packages/**'
       - 'docs/artifacts/templates/esphome/**'
       - '.github/workflows/build-esphome-factory-firmware.yml'
   pull_request:
     paths:
-      - 'firmware/esphome/distribution/**.factory.yaml'
-      - 'firmware/esphome/distribution/hifi-esparagus-idf-sendspin.yaml'
+      - 'firmware/esphome/distribution/**'
       - 'firmware/esphome/packages/**'
       - 'docs/artifacts/templates/esphome/**'
       - '.github/workflows/build-esphome-factory-firmware.yml'
@@ -40,15 +49,43 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build-hifi-esparagus-sendspin:
-    name: Build hifi-esparagus (Sendspin)
+  build:
+    name: Build ${{ matrix.device.slug }}
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
+    strategy:
+      fail-fast: false
+      matrix:
+        device:
+          - slug: hifi-esparagus-sendspin
+            config_file: hifi-esparagus-idf-sendspin.factory.yaml
+          - slug: loud-esparagus-sendspin
+            config_file: loud-esparagus-idf-sendspin.factory.yaml
+          - slug: louder-esparagus-sendspin
+            config_file: louder-esparagus-idf-sendspin.factory.yaml
+          - slug: amped-esparagus-sendspin
+            config_file: amped-esparagus-idf-sendspin.factory.yaml
+          - slug: amped-esparagus-j-sendspin
+            config_file: amped-esparagus-idf-j-sendspin.factory.yaml
+          - slug: amped-esparagus-m-sendspin
+            config_file: amped-esparagus-idf-m-sendspin.factory.yaml
+          - slug: audio-brick-sendspin
+            config_file: audio-brick-idf-sendspin.factory.yaml
+          - slug: audio-brick-s3-sendspin
+            config_file: audio-brick-s3-idf-sendspin.factory.yaml
+          - slug: hifi-esparagus-s3-sendspin
+            config_file: hifi-esparagus-s3-idf-sendspin.factory.yaml
+          - slug: audio-brick-dual-s3-2.1-sendspin
+            config_file: audio-brick-dual-s3-sendspin-2.1.factory.yaml
+          - slug: audio-brick-dual-s3-4.0-sendspin
+            config_file: audio-brick-dual-s3-sendspin-4.0.factory.yaml
+          - slug: echo-duo-sendspin
+            config_file: echo-duo-idf-sendspin.factory.yaml
+          - slug: echo-solo-sendspin
+            config_file: echo-solo-idf-sendspin.factory.yaml
     env:
-      DEVICE_SLUG: hifi-esparagus-sendspin
+      DEVICE_SLUG: ${{ matrix.device.slug }}
       CONFIG_DIR: firmware/esphome/distribution
-      CONFIG_FILE: hifi-esparagus-idf-sendspin.factory.yaml
+      CONFIG_FILE: ${{ matrix.device.config_file }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -91,7 +128,7 @@ jobs:
             exit 1
           }
 
-          OUT_DIR="docs/artifacts/binaries/esphome/${DEVICE_SLUG}"
+          OUT_DIR="staging/binaries/esphome/${DEVICE_SLUG}"
           mkdir -p "$OUT_DIR"
           cp "$FACTORY_BIN" "$OUT_DIR/firmware.factory.bin"
           cp "$OTA_BIN" "$OUT_DIR/firmware.ota.bin"
@@ -105,14 +142,12 @@ jobs:
           set -euo pipefail
           # Deliberately its own subdirectory, not docs/artifacts/templates/
           # directly: build-squeezelite-binaries.yml globs every *.json in
-          # that directory and only substitutes $commitid, so anything of
-          # ours living there gets silently reprocessed (and half-clobbered,
-          # since it doesn't know about our $version/$md5 placeholders) by
-          # its own "finalize" job whenever docs/artifacts/templates/**
-          # changes. See git history of ota-manifest-hifi-esparagus-sendspin-latest.json
-          # for what that looked like in practice.
+          # its own templates/squeezelite/ subdirectory only these days, but
+          # this was scoped defensively from day one to avoid the same class
+          # of cross-pipeline clobbering bug that hit ota-manifest-hifi-esparagus-sendspin-latest.json
+          # (see git history) before that fix.
           TEMPLATE_DIR=docs/artifacts/templates/esphome
-          OUT_DIR=docs/artifacts
+          OUT_DIR=staging
 
           render() {
             local tpl="$1"
@@ -133,11 +168,42 @@ jobs:
           render "$TEMPLATE_DIR/manifest-${DEVICE_SLUG}-esphome-template.json"
           render "$TEMPLATE_DIR/ota-manifest-${DEVICE_SLUG}-template.json"
 
-      # Pull requests only validate that the factory config still compiles
-      # end to end (steps above); they never touch docs/artifacts.
+      - name: Upload staged artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: esphome-${{ matrix.device.slug }}
+          path: staging/
+
+  finalize:
+    name: Publish to docs/artifacts
+    needs: build
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Download all staged artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: esphome-*
+          path: staging
+          merge-multiple: true
+
+      - name: Copy staged output into docs/artifacts
+        run: |
+          set -euo pipefail
+          echo "--- Debug: staged output ---"
+          find staging -maxdepth 4
+          cp -r staging/binaries docs/artifacts/
+          find staging -maxdepth 1 -name "*.json" -exec cp {} docs/artifacts/ \;
+
       - name: Commit artifacts
-        if: github.event_name == 'push'
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "Build hifi-esparagus (Sendspin) ESPHome factory firmware ${{ steps.version.outputs.version }}"
+          commit_message: "Build ESPHome factory firmware"
           file_pattern: "docs/artifacts/**"
