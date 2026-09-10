@@ -56,7 +56,7 @@ Esparagus Media Center is a series of ESP32-based media center devices. They all
   - [Squeezelite-ESP32](#squeezelite-esp32)
     - [How to flash and configure](#how-to-flash-and-configure)
     - [Squeezelite-esp32 reboots and connection drops](#squeezelite-esp32-reboots-and-connection-drops)
-  - [AirPlay 1 & 2](#airplay-1--2)
+  - [AirPlay 1 \& 2](#airplay-1--2)
     - [TAS58xx DSP: full parametric EQ and crossover control](#tas58xx-dsp-full-parametric-eq-and-crossover-control)
     - [How to Get Started](#how-to-get-started)
   - [Standalone Snapclient](#standalone-snapclient)
@@ -565,7 +565,9 @@ On Louder Esparagus and the Esparagus Audio Brick, AirPlay's web UI exposes the 
 - **Low-pass filtering for subwoofer tuning and bass enhancement**
 - **Generic filters for speaker and room equalization** — peaking filters, shelf filters, and EQ sections with a configurable Q-factor, applied per channel individually or to both at once
 
-*(screenshots coming soon)*
+| A | B |
+|------|------------|
+| <img width="1876" height="1294" alt="image" src="https://github.com/user-attachments/assets/c5d6fd74-e1ad-4bee-bc38-02b2b4a6d051" /> | <img width="1818" height="1636" alt="image" src="https://github.com/user-attachments/assets/d6ad9d34-c694-41f6-bd89-6deab1791fcf" /> |
 
 **Work in progress:** REW (Room EQ Wizard) integration, to drive automatic room-correction algorithms directly from a measured response.
 
