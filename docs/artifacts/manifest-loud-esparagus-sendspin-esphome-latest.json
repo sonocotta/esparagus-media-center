@@ -1,5 +1,5 @@
 {
-  "name": "echo-solo-sendspin",
+  "name": "loud-esparagus-sendspin",
   "version": "2026.09.11-9fa1e9d2",
   "home_assistant_domain": "esphome",
   "funding_url": "https://esphome.io/guides/supporters.html",
@@ -7,14 +7,14 @@
   "new_install_improv_wait_time": 20,
   "builds": [
     {
-      "chipFamily": "ESP32-S3",
+      "chipFamily": "ESP32",
       "parts": [
         {
-          "path": "binaries/esphome/echo-solo-sendspin/firmware.factory.bin",
+          "path": "binaries/esphome/loud-esparagus-sendspin/firmware.factory.bin",
           "offset": 0
         }
       ]
     }
   ],
-  "manifest_name": "manifest-echo-solo-sendspin-esphome-latest.json"
+  "manifest_name": "manifest-loud-esparagus-sendspin-esphome-latest.json"
 }

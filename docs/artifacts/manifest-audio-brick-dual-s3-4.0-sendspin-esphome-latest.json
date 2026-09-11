@@ -1,5 +1,5 @@
 {
-  "name": "echo-solo-sendspin",
+  "name": "audio-brick-dual-s3-4.0-sendspin",
   "version": "2026.09.11-9fa1e9d2",
   "home_assistant_domain": "esphome",
   "funding_url": "https://esphome.io/guides/supporters.html",
@@ -10,11 +10,11 @@
       "chipFamily": "ESP32-S3",
       "parts": [
         {
-          "path": "binaries/esphome/echo-solo-sendspin/firmware.factory.bin",
+          "path": "binaries/esphome/audio-brick-dual-s3-4.0-sendspin/firmware.factory.bin",
           "offset": 0
         }
       ]
     }
   ],
-  "manifest_name": "manifest-echo-solo-sendspin-esphome-latest.json"
+  "manifest_name": "manifest-audio-brick-dual-s3-4.0-sendspin-esphome-latest.json"
 }
