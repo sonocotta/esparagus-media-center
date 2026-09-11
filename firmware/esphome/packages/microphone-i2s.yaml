@@ -1,0 +1,17 @@
+# ============================================================
+# Microphone - I2S Bus Configuration
+# ============================================================
+# Configures the I2S bus the onboard microphone is wired to
+# Requires substitutions:
+#   - i2s_mic_lrclk_pin
+#   - i2s_mic_bclk_pin
+# ============================================================
+
+substitutions:
+  # I2S microphone bus
+  i2s_mic_bus_id: i2s_in
+
+i2s_audio:
+- id: ${i2s_mic_bus_id}
+  i2s_lrclk_pin: ${i2s_mic_lrclk_pin}
+  i2s_bclk_pin: ${i2s_mic_bclk_pin}

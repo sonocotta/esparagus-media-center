@@ -1,11 +1,15 @@
 # ============================================================
-# Esparagus-Echo-Solo (Sendspin) - Factory / shippable firmware
+# Esparagus-Echo-Solo (Voice-Assist Sendspin) - Factory / shippable firmware
 # ============================================================
 # Layers the "shippable product" concerns on top of the plain
-# device config (echo-solo-idf-sendspin.yaml, in this same
-# directory): pull-based OTA updates, an Improv Wi-Fi onboarding
+# device config (echo-solo-idf-voice-assist-sendspin.yaml, in this
+# same directory): pull-based OTA updates, an Improv Wi-Fi onboarding
 # flow, and a project identity used by the update entity + the
 # ESPHome Dashboard "adopt" flow.
+#
+# Voice assist (wake word + Home Assistant pipeline) is Echo's
+# headline feature, so this - not plain Sendspin - is the flagship
+# factory build for this board.
 #
 # `version` is substituted by CI at build time (see
 # .github/workflows/build-esphome-factory-firmware.yml); "dev" is
@@ -16,7 +20,7 @@ substitutions:
   version: dev
 
 packages:
-  echo-solo-idf-sendspin: !include echo-solo-idf-sendspin.yaml
+  echo-solo-idf-voice-assist-sendspin: !include echo-solo-idf-voice-assist-sendspin.yaml
 
 esphome:
   name_add_mac_suffix: true
@@ -51,11 +55,11 @@ update:
 # Lets anyone running their own ESPHome Dashboard "adopt" this device
 # from the real (non-factory) config that actually matches its hardware.
 dashboard_import:
-  package_import_url: github://sonocotta/esparagus-media-center/firmware/esphome/10-echo-solo/echo-solo-idf-sendspin.yaml@main
+  package_import_url: github://sonocotta/esparagus-media-center/firmware/esphome/10-echo-solo/echo-solo-idf-voice-assist-sendspin.yaml@main
   import_full_config: false
 
 # ===== Wi-Fi onboarding (Improv) =====
-# No Wi-Fi network is baked into the image (see echo-solo-idf-sendspin.yaml);
+# No Wi-Fi network is baked into the image (see echo-solo-idf-voice-assist-sendspin.yaml);
 # each unit is provisioned individually over Improv, either via the
 # ESP Web Tools install page (BLE or the same USB/serial session used
 # to flash it) or any Improv-compatible phone app.
@@ -87,9 +91,9 @@ esp32_improv:
 
 # ===== Status LED =====
 # Reuses the board's RGB LED (light-x.yaml) to surface onboarding
-# state. Only touches the LED for these transient states; normal
-# playback/announcement LED behavior (sendspin.yaml) takes over the
-# rest of the time.
+# state before Wi-Fi is up. Once the API client (Home Assistant)
+# connects, voice-assist-sendspin.yaml's own LED handlers
+# (on_listening/on_tts_start/reset_led/etc.) take over.
 script:
   - id: control_leds
     then:

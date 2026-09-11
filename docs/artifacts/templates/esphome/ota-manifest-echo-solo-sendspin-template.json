@@ -8,7 +8,7 @@
                 "md5": "$md5",
                 "path": "https://sonocotta.github.io/esparagus-media-center/artifacts/binaries/esphome/echo-solo-sendspin/firmware.ota.bin",
                 "release_url": "https://github.com/sonocotta/esparagus-media-center/commit/$commitid",
-                "summary": "Esparagus Echo Solo Sendspin firmware $version"
+                "summary": "Esparagus Echo Solo Voice Assistant + Sendspin firmware $version"
             }
         }
     ],

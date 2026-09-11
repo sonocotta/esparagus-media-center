@@ -1,13 +1,14 @@
 # ============================================================
-# Esparagus-Echo-Solo - Sendspin Configuration (Factory-shippable copy)
+# Esparagus-Echo-Duo - Voice-Assistant Configuration (Factory-shippable copy)
 # ============================================================
-# ESP32-S3 audio board with single MAX98357A DAC and onboard I2S microphone
-# Configured with Sendspin for synchronized multi-room audio
+# ESP32-S3 audio board with dual MAX98357A DAC and onboard I2S microphone
+# Configured as a Voice-Assistant (wake word detection, media player with
+# ducking, RGB LED status) on top of a Sendspin media player
 #
 # This is a factory-shippable copy of
-# ../10-echo-solo/echo-solo-idf-sendspin.yaml, kept in sync by hand.
-# It differs from the dev config in the ways a binary that ships to
-# strangers must:
+# ../6-echo-duo/echo-duo-idf-voice-assist-sendspin.yaml, kept in sync
+# by hand. It differs from the dev config in the ways a binary that
+# ships to strangers must:
 #   - No `!secret` Wi-Fi credentials or OTA password baked in (those
 #     only exist on the developer's own machine) — Wi-Fi is instead
 #     provisioned per-unit via Improv (see the sibling .factory.yaml).
@@ -18,8 +19,8 @@
 # ============================================================
 
 substitutions:
-  name: echo-solo
-  friendly_name: Esparagus-Echo-Solo
+  name: echo-duo
+  friendly_name: Esparagus-Echo-Duo
   task_stack_in_psram: "true"
 
   # ===== Board-Specific Pinouts =====
@@ -35,11 +36,21 @@ substitutions:
 
   # DAC enable pins
   dac_enable_pin: GPIO9
-  dac_enable_restore_mode: ALWAYS_OFF
+  dac_enable_restore_mode: ALWAYS_ON
 
   # RGB LED
   rgb_led_pin: GPIO42
-  num_leds: 2
+  num_leds: 3
+
+  # SPI pins (for ethernet)
+  spi_clk_pin: GPIO12
+  spi_mosi_pin: GPIO11
+  spi_miso_pin: GPIO13
+
+  # Ethernet pins (if using ethernet instead of wifi)
+  eth_cs_pin: GPIO10
+  eth_interrupt_pin: GPIO6
+  eth_reset_pin: GPIO5
 
 esphome:
   name: ${name}
@@ -70,6 +81,18 @@ esp32:
       CONFIG_MBEDTLS_EXTERNAL_MEM_ALLOC: "y"
       CONFIG_MBEDTLS_SSL_PROTO_TLS1_3: "y"
 
+      CONFIG_ESP32_S3_BOX_BOARD: "y"
+      # OPTIMIZED WiFi buffers for streaming
+      CONFIG_ESP32_WIFI_STATIC_RX_BUFFER_NUM: "16"
+      CONFIG_ESP32_WIFI_DYNAMIC_RX_BUFFER_NUM: "32"
+      CONFIG_TCPIP_RECVMBOX_SIZE: "512"
+      CONFIG_TCP_SND_BUF_DEFAULT: "65535"
+      CONFIG_TCP_WND_DEFAULT: "512000"
+      CONFIG_TCP_RECVMBOX_SIZE: "512"
+      # Audio priority
+      CONFIG_FREERTOS_UNICORE: "n"
+      CONFIG_ESP_TASK_WDT_TIMEOUT_S: "10"
+
 logger:
   level: DEBUG
 
@@ -95,11 +118,14 @@ packages:
     url: https://github.com/sonocotta/esparagus-media-center
     ref: main
     files:
-      - firmware/esphome/packages/audio.yaml
-      - firmware/esphome/packages/sendspin.yaml
-      - firmware/esphome/packages/sendspin-addon-dac-enable.yaml
-
       - firmware/esphome/packages/dac-switch.yaml
       - firmware/esphome/packages/light-x.yaml
       - firmware/esphome/packages/monitoring.yaml
       - firmware/esphome/packages/monitoring-wifi.yaml
+
+      - firmware/esphome/packages/microphone-i2s.yaml
+      - firmware/esphome/packages/microphone.yaml
+      - firmware/esphome/packages/audio.yaml
+      - firmware/esphome/packages/sendspin.yaml
+      - firmware/esphome/packages/voice-assist-sendspin.yaml
+      - firmware/esphome/packages/sendspin-addon-voice-assist.yaml

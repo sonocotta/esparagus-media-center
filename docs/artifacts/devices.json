@@ -233,7 +233,7 @@
             },
             {
                 "images": [
-                    "images/amped-esparagus.jpg"
+                    "https://github.com/user-attachments/assets/b8242491-d2fd-4464-aeb8-ef797190a4ba"
                 ],
                 "title": "Amped Esparagus (rev M, TPA3118)",
                 "description": "Amped Esparagus rev M replaces the TPA3128 amp used on rev J/K with a TPA3118, fixing the audible pop/static on playback start (see <a href=\"https://github.com/sonocotta/esparagus-media-center/blob/main/errata/tpa3128-1spw-pop-noise.md\">TPA3128 1SPW pop-noise errata</a>) via a slower MUTE ramp, fixed BD modulation, and an added input band-pass filter. Placeholder listing: not yet available for purchase, and this image is shared with the earlier revisions pending a rev-M-specific photo.",
@@ -389,10 +389,10 @@
                         "id": "esphome",
                         "label": "ESPHome",
                         "badge": "Recommended",
-                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards.",
+                        "note": "Native Home Assistant integration with wake-word voice assistant (the board's mic and LEDs are put to use) on top of Sendspin multi-room playback. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards.",
                         "manifests": [
                             {
-                                "label": "Install ESPHome (Sendspin multi-room)",
+                                "label": "Install ESPHome (Voice Assistant + Sendspin)",
                                 "path": "artifacts/manifest-echo-solo-sendspin-esphome-latest.json"
                             }
                         ]
@@ -425,10 +425,10 @@
                         "id": "esphome",
                         "label": "ESPHome",
                         "badge": "Recommended",
-                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards.",
+                        "note": "Native Home Assistant integration with wake-word voice assistant (the board's mics and LEDs are put to use) on top of Sendspin multi-room playback. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards.",
                         "manifests": [
                             {
-                                "label": "Install ESPHome (Sendspin multi-room)",
+                                "label": "Install ESPHome (Voice Assistant + Sendspin)",
                                 "path": "artifacts/manifest-echo-duo-sendspin-esphome-latest.json"
                             }
                         ]

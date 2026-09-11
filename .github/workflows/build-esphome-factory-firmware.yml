@@ -79,9 +79,9 @@ jobs:
           - slug: audio-brick-dual-s3-4.0-sendspin
             config_file: audio-brick-dual-s3-sendspin-4.0.factory.yaml
           - slug: echo-duo-sendspin
-            config_file: echo-duo-idf-sendspin.factory.yaml
+            config_file: echo-duo-idf-voice-assist-sendspin.factory.yaml
           - slug: echo-solo-sendspin
-            config_file: echo-solo-idf-sendspin.factory.yaml
+            config_file: echo-solo-idf-voice-assist-sendspin.factory.yaml
     env:
       DEVICE_SLUG: ${{ matrix.device.slug }}
       CONFIG_DIR: firmware/esphome/distribution

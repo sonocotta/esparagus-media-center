@@ -1,0 +1,16 @@
+{
+  "name": "echo-solo-sendspin",
+  "version": "dev",
+  "builds": [
+    {
+      "chipFamily": "ESP32-S3",
+      "ota": {
+        "md5": "4cf7c21970aa2837883915e6120d271d",
+        "path": "https://sonocotta.github.io/esparagus-media-center/artifacts/binaries/esphome/echo-solo-sendspin/firmware.ota.bin",
+        "release_url": "https://github.com/sonocotta/esparagus-media-center/commit/98fd2509",
+        "summary": "Esparagus Echo Solo Voice Assistant + Sendspin firmware dev"
+      }
+    }
+  ],
+  "manifest_name": "ota-manifest-echo-solo-sendspin-latest.json"
+}

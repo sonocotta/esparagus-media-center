@@ -1,0 +1,26 @@
+# ============================================================
+# Microphone - Voice Assistant Mic Configuration
+# ============================================================
+# Configures the onboard I2S microphone for voice assistant use
+# Requires substitutions:
+#   - i2s_mic_din_pin
+# Requires the I2S bus from microphone-i2s.yaml to be configured
+# ============================================================
+
+substitutions:
+  # I2S microphone bus
+  i2s_mic_bus_id: i2s_in
+  i2s_mic_channel: right
+
+microphone:
+  - platform: i2s_audio
+    adc_type: external
+    id: voice_assistant_mic
+    i2s_audio_id: ${i2s_mic_bus_id}
+    i2s_din_pin: ${i2s_mic_din_pin}
+    pdm: false
+    channel: ${i2s_mic_channel}
+    sample_rate: 16000
+    bits_per_sample: 32bit
+    use_apll: true              # Better clock accuracy
+    i2s_mode: primary
