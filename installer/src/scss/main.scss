@@ -89,6 +89,12 @@ html {
     border-radius: 50rem;
     padding: 0.25rem 0.85rem;
     font-size: 0.85rem;
+    background: var(--bs-tertiary-bg);
+    color: var(--bs-body-color);
+}
+
+.firmware-tabs .nav-link:hover {
+    background: var(--bs-secondary-bg);
 }
 
 .firmware-note {

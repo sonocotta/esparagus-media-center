@@ -1,0 +1,16 @@
+{
+    "name": "hifi-esparagus-s3-sendspin",
+    "version": "$version",
+    "builds": [
+        {
+            "chipFamily": "ESP32-S3",
+            "ota": {
+                "md5": "$md5",
+                "path": "https://sonocotta.github.io/esparagus-media-center/artifacts/binaries/esphome/hifi-esparagus-s3-sendspin/firmware.ota.bin",
+                "release_url": "https://github.com/sonocotta/esparagus-media-center/commit/$commitid",
+                "summary": "HiFi-Esparagus-S3 Sendspin firmware $version"
+            }
+        }
+    ],
+    "manifest_name": "ota-manifest-hifi-esparagus-s3-sendspin-latest.json"
+}

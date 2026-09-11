@@ -1,0 +1,50 @@
+# ============================================================
+# Voice Assist extensions for the Sendspin Media Player component
+# ============================================================
+# Configures media player with announcement ducking logic and the
+# local sound-effect files voice-assist-sendspin.yaml plays (wake
+# word chime, timer finished).
+# Requires substitutions:
+#   - friendly_name
+#   - task_stack_in_psram
+# Dependencies: sendspin.yaml
+# Ported from the esparagus-echo repo's
+# firmware/esphome/packages/sendspin-addon-voice-assist.yaml, kept in
+# sync by hand.
+# ============================================================
+
+media_player:
+  - id: !extend external_media_player
+    announcement_pipeline:
+      sources:
+      - announcement_audio_file_source
+    media_pipeline:
+      sources:
+      - audio_file_source
+
+    on_state:
+      if:
+        condition:
+          and:
+            - switch.is_off: timer_ringing
+            - not:
+                voice_assistant.is_running:
+            - not:
+                media_player.is_announcing: external_media_player
+        then:
+          - mixer_speaker.apply_ducking:
+              id: media_mixer_input
+              decibel_reduction: 0
+              duration: 1.0s
+
+media_source:
+  - platform: audio_file
+    id: audio_file_source
+  - platform: audio_file
+    id: announcement_audio_file_source
+
+audio_file:
+  - id: timer_finished_sound
+    file: https://github.com/esphome/home-assistant-voice-pe/raw/dev/sounds/timer_finished.flac
+  - id: wake_word_triggered_sound
+    file: https://github.com/esphome/home-assistant-voice-pe/raw/dev/sounds/wake_word_triggered.flac

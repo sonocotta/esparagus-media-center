@@ -1,0 +1,121 @@
+# ============================================================
+# Esparagus-Echo-Solo - Voice-Assistant Configuration (Factory-shippable copy)
+# ============================================================
+# ESP32-S3 audio board with single MAX98357A DAC and onboard I2S microphone
+# Configured as a Voice-Assistant (wake word detection, media player with
+# ducking, RGB LED status) on top of a Sendspin media player
+#
+# This is a factory-shippable copy of
+# ../10-echo-solo/echo-solo-idf-voice-assist-sendspin.yaml, kept in
+# sync by hand. It differs from the dev config in the ways a binary
+# that ships to strangers must:
+#   - No `!secret` Wi-Fi credentials or OTA password baked in (those
+#     only exist on the developer's own machine) — Wi-Fi is instead
+#     provisioned per-unit via Improv (see the sibling .factory.yaml).
+#   - `esphome.ota` is provided by the .factory.yaml overlay
+#     (platform: http_request) instead of platform: esphome.
+# Board-specific pinouts defined in substitutions
+# Functional blocks imported from /packages
+# ============================================================
+
+substitutions:
+  name: echo-solo
+  friendly_name: Esparagus-Echo-Solo
+  task_stack_in_psram: "true"
+
+  # ===== Board-Specific Pinouts =====
+  # I2S audio pins
+  i2s_lrclk_pin: GPIO8
+  i2s_bclk_pin: GPIO18
+  i2s_dout_pin: GPIO17
+
+  # I2S microphone pins
+  i2s_mic_lrclk_pin: GPIO7
+  i2s_mic_bclk_pin: GPIO16
+  i2s_mic_din_pin: GPIO15
+
+  # DAC enable pins
+  dac_enable_pin: GPIO9
+  dac_enable_restore_mode: ALWAYS_ON
+
+  # RGB LED
+  rgb_led_pin: GPIO42
+  num_leds: 2
+
+esphome:
+  name: ${name}
+  friendly_name: ${friendly_name}
+  min_version: 2026.5.0
+  name_add_mac_suffix: false
+  platformio_options:
+    board_build.flash_mode: dio
+
+esp32:
+  variant: ESP32S3
+  flash_size: 8MB
+  cpu_frequency: 240MHz
+  framework:
+    type: esp-idf
+    version: recommended
+    sdkconfig_options:
+      CONFIG_ESP32S3_DATA_CACHE_64KB: "y"
+      CONFIG_ESP32S3_DATA_CACHE_LINE_64B: "y"
+      CONFIG_ESP32S3_INSTRUCTION_CACHE_32KB: "y"
+      # Moves instructions and read only data from flash into PSRAM on boot.
+      # Both enabled allows instructions to execute while a flash operation is in progress without needing to be placed in IRAM.
+      # Considerably speeds up mWW at the cost of using more PSRAM.
+      CONFIG_SPIRAM_RODATA: "y"
+      CONFIG_SPIRAM_FETCH_INSTRUCTIONS: "y"
+      CONFIG_BT_ALLOCATION_FROM_SPIRAM_FIRST: "y"
+      CONFIG_BT_BLE_DYNAMIC_ENV_MEMORY: "y"
+      CONFIG_MBEDTLS_EXTERNAL_MEM_ALLOC: "y"
+      CONFIG_MBEDTLS_SSL_PROTO_TLS1_3: "y"
+
+      CONFIG_ESP32_S3_BOX_BOARD: "y"
+      # OPTIMIZED WiFi buffers for streaming
+      CONFIG_ESP32_WIFI_STATIC_RX_BUFFER_NUM: "16"
+      CONFIG_ESP32_WIFI_DYNAMIC_RX_BUFFER_NUM: "32"
+      CONFIG_TCPIP_RECVMBOX_SIZE: "512"
+      CONFIG_TCP_SND_BUF_DEFAULT: "65535"
+      CONFIG_TCP_WND_DEFAULT: "512000"
+      CONFIG_TCP_RECVMBOX_SIZE: "512"
+      # Audio priority
+      CONFIG_FREERTOS_UNICORE: "n"
+      CONFIG_ESP_TASK_WDT_TIMEOUT_S: "10"
+
+logger:
+  level: DEBUG
+
+api:
+
+# Wi-Fi credentials are never baked in: this image ships with no
+# configured network and is provisioned per-unit over Improv
+# (BLE + Serial), wired up in the .factory.yaml overlay.
+wifi:
+  id: wifi_id
+
+psram:
+  mode: octal
+  speed: 80MHz
+  ignore_not_found: false
+
+network:
+  enable_ipv6: true
+
+# ===== Packages =====
+packages:
+  esparagus_remote:
+    url: https://github.com/sonocotta/esparagus-media-center
+    ref: main
+    files:
+      - firmware/esphome/packages/dac-switch.yaml
+      - firmware/esphome/packages/light-x.yaml
+      - firmware/esphome/packages/monitoring.yaml
+      - firmware/esphome/packages/monitoring-wifi.yaml
+
+      - firmware/esphome/packages/microphone-i2s.yaml
+      - firmware/esphome/packages/microphone.yaml
+      - firmware/esphome/packages/audio.yaml
+      - firmware/esphome/packages/sendspin.yaml
+      - firmware/esphome/packages/voice-assist-sendspin.yaml
+      - firmware/esphome/packages/sendspin-addon-voice-assist.yaml
