@@ -12,7 +12,7 @@
                 "firmwares": [
                     {
                         "id": "esphome",
-                        "label": "ESPHome",
+                        "label": "Sendspin",
                         "badge": "Recommended",
                         "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards.",
                         "manifests": [
@@ -48,7 +48,7 @@
                 "firmwares": [
                     {
                         "id": "esphome",
-                        "label": "ESPHome",
+                        "label": "Sendspin",
                         "badge": "Recommended",
                         "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards.",
                         "manifests": [
@@ -84,7 +84,7 @@
                 "firmwares": [
                     {
                         "id": "esphome",
-                        "label": "ESPHome",
+                        "label": "Sendspin",
                         "badge": "Recommended",
                         "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards.",
                         "manifests": [
@@ -126,7 +126,7 @@
                 "firmwares": [
                     {
                         "id": "esphome",
-                        "label": "ESPHome",
+                        "label": "Sendspin",
                         "badge": "Recommended",
                         "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards.",
                         "manifests": [
@@ -168,7 +168,7 @@
                 "firmwares": [
                     {
                         "id": "esphome",
-                        "label": "ESPHome",
+                        "label": "Sendspin",
                         "badge": "Recommended",
                         "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards.",
                         "manifests": [
@@ -204,7 +204,7 @@
                 "firmwares": [
                     {
                         "id": "esphome",
-                        "label": "ESPHome",
+                        "label": "Sendspin",
                         "badge": "Recommended",
                         "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards.",
                         "manifests": [
@@ -240,7 +240,7 @@
                 "firmwares": [
                     {
                         "id": "esphome",
-                        "label": "ESPHome",
+                        "label": "Sendspin",
                         "badge": "Recommended",
                         "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards.",
                         "manifests": [
@@ -267,7 +267,7 @@
                 "firmwares": [
                     {
                         "id": "esphome",
-                        "label": "ESPHome",
+                        "label": "Sendspin",
                         "badge": "Recommended",
                         "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards.",
                         "manifests": [
@@ -303,7 +303,7 @@
                 "firmwares": [
                     {
                         "id": "esphome",
-                        "label": "ESPHome",
+                        "label": "Sendspin",
                         "badge": "Recommended",
                         "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards.",
                         "manifests": [
@@ -339,7 +339,7 @@
                 "firmwares": [
                     {
                         "id": "esphome",
-                        "label": "ESPHome",
+                        "label": "Sendspin",
                         "badge": "Recommended",
                         "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards.",
                         "manifests": [
@@ -360,7 +360,7 @@
                 "firmwares": [
                     {
                         "id": "esphome",
-                        "label": "ESPHome",
+                        "label": "Sendspin",
                         "badge": "Recommended",
                         "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards.",
                         "manifests": [
@@ -387,7 +387,7 @@
                 "firmwares": [
                     {
                         "id": "esphome",
-                        "label": "ESPHome",
+                        "label": "Sendspin",
                         "badge": "Recommended",
                         "note": "Native Home Assistant integration with wake-word voice assistant (the board's mic and LEDs are put to use) on top of Sendspin multi-room playback. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards.",
                         "manifests": [
@@ -423,7 +423,7 @@
                 "firmwares": [
                     {
                         "id": "esphome",
-                        "label": "ESPHome",
+                        "label": "Sendspin",
                         "badge": "Recommended",
                         "note": "Native Home Assistant integration with wake-word voice assistant (the board's mics and LEDs are put to use) on top of Sendspin multi-room playback. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards.",
                         "manifests": [
