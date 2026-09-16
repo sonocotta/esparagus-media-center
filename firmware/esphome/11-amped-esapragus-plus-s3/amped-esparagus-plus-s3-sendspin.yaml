@@ -1,78 +1,82 @@
 # ============================================================
 # Amped-Esparagus - Sendspin Configuration
 # ============================================================
-# ESP32 audio board with PCM5100 DAC (I2S) and TPA3110/TPA3128 AMP
+# ESP32 audio board with PCM5122 DAC (I2S) and TPA3118 AMP
 # Configured with Sendspin for synchronized multi-room audio
 # Board-specific pinouts defined in substitutions
 # Functional blocks imported from /packages
 # ============================================================
 
 substitutions:
-  name: esphome-web-db7ea8
+  name: esphome-web-e1b258
   friendly_name: Amped-Esparagus
-  task_stack_in_psram: "false" 
+  task_stack_in_psram: "true"
 
   # ===== Board-Specific Pinouts =====
-  # I2S Audio (PCM5100 DAC)
-  i2s_lrclk_pin: GPIO25
-  i2s_bclk_pin: GPIO26
-  i2s_dout_pin: GPIO22
+  # I2S audio pins
+  i2s_lrclk_pin: GPIO15
+  i2s_bclk_pin: GPIO14
+  i2s_dout_pin: GPIO16
 
-  # AMP Enable Pin
-  dac_enable_pin: GPIO13
-  dac_enable_restore_mode: ALWAYS_OFF
+  # I2C pins for DAC control
+  i2c_sda_pin: GPIO42               # I2C pins are swapped on the rev H  
+  i2c_scl_pin: GPIO41               # These are correct for Rev H1 and later
+  pcm5122_i2c_address: 0x4D         # I2C address of the DAC, it is 0x4C n the HiFi-ESP32 Rev H, and 0x4D on the rev H1+ and later
 
-  # RGB LED
-  rgb_led_pin: GPIO12
-  num_leds: 8
+  # Amp UNMUTE pin
+  amp_enable_pin: GPIO4
+  amp_enable_restore_mode: ALWAYS_ON
   
+  # RGB LED
+  rgb_led_pin: GPIO9
+  num_leds: 8
+
   # IR Receiver
-  ir_rx_pin: GPIO39
+  ir_rx_pin: GPIO7
 
   # Rotary Encoder
-  rotary_pin_a: GPIO33
-  rotary_pin_b: GPIO27
-  rotary_btn_pin: GPIO34
+  rotary_pin_a: GPIO47
+  rotary_pin_b: GPIO21
+  rotary_btn_pin: GPIO48
 
   # SPI pins (for display and ethernet)
-  spi_clk_pin: GPIO18
-  spi_mosi_pin: GPIO23
-  spi_miso_pin: GPIO19
-
-  # Ethernet (W5500)
-  eth_cs_pin: GPIO05
-  eth_interrupt_pin: GPIO35
-  eth_reset_pin: GPIO14
-
-  # TFT (SPI)
-  display_cs_pin: GPIO15
-  display_dc_pin: GPIO04
-  display_reset_pin: GPIO32
-  display_backlight_pin: GPIO21
+  spi_clk_pin: GPIO12
+  spi_mosi_pin: GPIO11
+  spi_miso_pin: GPIO13
+  
+  # Display control pins
+  display_cs_pin: GPIO39
+  display_dc_pin: GPIO40
+  display_reset_pin: GPIO38
+  display_backlight_pin: GPIO1
   display_rotation: 0
   display_model: ILI9342
 
-  # ESP32 optimal settings for Sendspin
-  media_source_buffer_size: 100000
+  # Ethernet pins (if using ethernet instead of wifi)
+  eth_cs_pin: GPIO10
+  eth_interrupt_pin: GPIO6
+  eth_reset_pin: GPIO5
 
 esphome:
   name: ${name}
   friendly_name: ${friendly_name}
   min_version: 2026.5.0
+  name_add_mac_suffix: false
   platformio_options:
     board_build.flash_mode: dio
 
 esp32:
   id: esp32_id
-  variant: esp32
+  variant: ESP32S3
   flash_size: 8MB
   cpu_frequency: 240MHz
   framework:
     type: esp-idf
-    version: 5.5.4 # recommended
-    advanced:
-      minimum_chip_revision: "3.1" 
+    version: recommended
     sdkconfig_options:
+      CONFIG_ESP32S3_DATA_CACHE_64KB: "y"
+      CONFIG_ESP32S3_DATA_CACHE_LINE_64B: "y"
+      CONFIG_ESP32S3_INSTRUCTION_CACHE_32KB: "y"
       # Moves instructions and read only data from flash into PSRAM on boot.
       # Both enabled allows instructions to execute while a flash operation is in progress without needing to be placed in IRAM.
       # Considerably speeds up mWW at the cost of using more PSRAM.
@@ -81,7 +85,7 @@ esp32:
       CONFIG_BT_ALLOCATION_FROM_SPIRAM_FIRST: "y"
       CONFIG_BT_BLE_DYNAMIC_ENV_MEMORY: "y"
       CONFIG_MBEDTLS_EXTERNAL_MEM_ALLOC: "y"
-      CONFIG_MBEDTLS_SSL_PROTO_TLS1_3: "y"
+      CONFIG_MBEDTLS_SSL_PROTO_TLS1_3: "y" 
 
 logger:
   level: DEBUG
@@ -97,10 +101,14 @@ wifi:
   password: !secret esphome_wifi_password
 
 psram:
+  mode: octal
   speed: 80MHz
+  ignore_not_found: false
 
 network:
   enable_ipv6: true
+  
+http_request:
 
 # ===== Packages =====
 packages:
@@ -108,18 +116,22 @@ packages:
     url: https://github.com/sonocotta/esparagus-media-center
     ref: main
     files:
+      # - firmware/esphome/packages/dac-pcm5122.yaml
+      
+      - firmware/esphome/packages/amp-switch.yaml
+
       - firmware/esphome/packages/audio.yaml
+      - firmware/esphome/packages/audio-addon-external-dac.yaml
+
       - firmware/esphome/packages/sendspin.yaml
-      - firmware/esphome/packages/sendspin-addon-dac-enable.yaml
-      # Optional : OLED displays clock when idling, and track/artist info when playing
-      # - firmware/esphome/packages/sendspin-addon-oled.yaml
-      - firmware/esphome/packages/sendspin-addon-esp32.yaml
+      # - firmware/esphome/packages/sendspin-addon-dac-enable.yaml
+      # - firmware/esphome/packages/sendspin-addon-amp-unmute.yaml
       - firmware/esphome/packages/sendspin-addon-rotary.yaml
 
-      - firmware/esphome/packages/dac-switch.yaml
       - firmware/esphome/packages/light-x.yaml
       - firmware/esphome/packages/ir-receiver.yaml
       - firmware/esphome/packages/rotary-encoder.yaml
+
       - firmware/esphome/packages/monitoring.yaml
       - firmware/esphome/packages/monitoring-wifi.yaml
 
@@ -129,19 +141,11 @@ packages:
       # - firmware/esphome/packages/weather-sensors.yaml
       # - firmware/esphome/packages/sendspin-addon-tft-weather-vertical.yaml
 
-  # sendspin_rotary_light_addon: !include ../packages/sendspin-addon-rotary.yaml
-  # sendspin_tft_addon: !include ../packages/sendspin-addon-tft.yaml
-  # weather_sensors: !include ../packages/weather-sensors.yaml
-  # sendspin_tft_addon: !include ../packages/sendspin-addon-tft-weather-vertical.yaml
-  # Debug/local development fallback:
+  # # Debug/local development fallback:
+  external_dac: !include ../packages/dac-pcm5122.yaml
+
+  # sendspin_audio: !include packages/audio.yaml
+  # sendspin_external_dac: !include packages/audio-addon-external-dac.yaml
   # sendspin: !include packages/sendspin.yaml
-  # dac_switch: !include packages/dac-switch.yaml
-  # dac_enable: !include packages/sendspin-addon-dac-enable.yaml
-  # oled: !include packages/sendspin-addon-oled.yaml
-  # audio: !include packages/audio.yaml
-  # light: !include packages/light-x.yaml
-  # ir_receiver: !include packages/ir-receiver.yaml
-  # rotary_encoder: !include packages/rotary-encoder.yaml
-  # monitoring: !include packages/monitoring.yaml
-  # monitoring_wifi: !include packages/monitoring-wifi.yaml
-  # ethernet: !include packages/ethernet-w5500.yaml
+  sendspin_enable_dac: !include ../packages/sendspin-addon-dac-enable.yaml 
+  sendspin_unmute_amp: !include ../packages/sendspin-addon-amp-unmute.yaml
