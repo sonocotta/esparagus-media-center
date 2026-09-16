@@ -1,8 +1,9 @@
 # ============================================================
-# Amped-Esparagus - Sendspin Configuration
+# Amped-Esparagus-Plus-S3 - Voice-Assistant + Sendspin Configuration
 # ============================================================
-# ESP32 audio board with PCM5122 DAC (I2S) and TPA3118 AMP
-# Configured with Sendspin for synchronized multi-room audio
+# ESP32-S3 audio board with PCM5122 DAC (I2S) and TPA3118 AMP
+# Configured with Sendspin for synchronized multi-room audio, plus
+# wake word / voice assist on top
 # Board-specific pinouts defined in substitutions
 # Functional blocks imported from /packages
 # ============================================================
@@ -18,15 +19,22 @@ substitutions:
   i2s_bclk_pin: GPIO14
   i2s_dout_pin: GPIO16
 
+  # I2S microphone pins
+  i2s_mic_lrclk_pin: GPIO18
+  i2s_mic_bclk_pin: GPIO17
+  i2s_mic_din_pin: GPIO8
+  i2s_mic_channel: left
+
   # I2C pins for DAC control
-  i2c_sda_pin: GPIO42               # I2C pins are swapped on the rev H  
+  i2c_sda_pin: GPIO42               # I2C pins are swapped on the rev H
   i2c_scl_pin: GPIO41               # These are correct for Rev H1 and later
   pcm5122_i2c_address: 0x4D         # I2C address of the DAC, it is 0x4C n the HiFi-ESP32 Rev H, and 0x4D on the rev H1+ and later
+  pcm5122_dac_restore_mode: ALWAYS_ON  # DAC stays powered for instant voice-assist response, instead of enabling on-demand
 
   # Amp UNMUTE pin
   amp_enable_pin: GPIO4
   amp_enable_restore_mode: ALWAYS_ON
-  
+
   # RGB LED
   rgb_led_pin: GPIO9
   num_leds: 8
@@ -43,7 +51,7 @@ substitutions:
   spi_clk_pin: GPIO12
   spi_mosi_pin: GPIO11
   spi_miso_pin: GPIO13
-  
+
   # Display control pins
   display_cs_pin: GPIO39
   display_dc_pin: GPIO40
@@ -85,10 +93,22 @@ esp32:
       CONFIG_BT_ALLOCATION_FROM_SPIRAM_FIRST: "y"
       CONFIG_BT_BLE_DYNAMIC_ENV_MEMORY: "y"
       CONFIG_MBEDTLS_EXTERNAL_MEM_ALLOC: "y"
-      CONFIG_MBEDTLS_SSL_PROTO_TLS1_3: "y" 
+      CONFIG_MBEDTLS_SSL_PROTO_TLS1_3: "y"
+
+      CONFIG_ESP32_S3_BOX_BOARD: "y"
+      # OPTIMIZED WiFi buffers for streaming
+      CONFIG_ESP32_WIFI_STATIC_RX_BUFFER_NUM: "16"
+      CONFIG_ESP32_WIFI_DYNAMIC_RX_BUFFER_NUM: "32"
+      CONFIG_TCPIP_RECVMBOX_SIZE: "512"
+      CONFIG_TCP_SND_BUF_DEFAULT: "65535"
+      CONFIG_TCP_WND_DEFAULT: "512000"
+      CONFIG_TCP_RECVMBOX_SIZE: "512"
+      # Audio priority
+      CONFIG_FREERTOS_UNICORE: "n"
+      CONFIG_ESP_TASK_WDT_TIMEOUT_S: "10"
 
 logger:
-  level: DEBUG
+  level: INFO  # Changed from DEBUG to reduce overhead
 
 api:
 
@@ -107,7 +127,7 @@ psram:
 
 network:
   enable_ipv6: true
-  
+
 http_request:
 
 # ===== Packages =====
@@ -117,15 +137,13 @@ packages:
     ref: features/amped-esparagus-s3
     files:
       - firmware/esphome/packages/dac-pcm5122.yaml
-      
       - firmware/esphome/packages/amp-switch.yaml
 
       - firmware/esphome/packages/audio.yaml
       - firmware/esphome/packages/audio-addon-external-dac.yaml
 
       - firmware/esphome/packages/sendspin.yaml
-      - firmware/esphome/packages/sendspin-addon-dac-enable.yaml
-      - firmware/esphome/packages/sendspin-addon-amp-unmute.yaml
+      # - firmware/esphome/packages/sendspin-addon-dac-enable.yaml  # DAC/amp left always-on instead (see *_restore_mode above), for instant voice-assist response
       - firmware/esphome/packages/sendspin-addon-rotary.yaml
 
       - firmware/esphome/packages/light-x.yaml
@@ -134,18 +152,37 @@ packages:
 
       - firmware/esphome/packages/monitoring.yaml
       - firmware/esphome/packages/monitoring-wifi.yaml
-
       # Optional ethernet (replace wifi config if you use this, you need to exclude OLED package if you do this to free up SPI bus)
       # - firmware/esphome/packages/ethernet-w5500.yaml
-      # Optional display configuration for TFT SPI display
-      - firmware/esphome/packages/weather-sensors.yaml
-      - firmware/esphome/packages/sendspin-addon-tft-weather-vertical.yaml
+
+  esparagus_echo:
+    url: https://github.com/sonocotta/esparagus-echo
+    ref: main
+    files:
+      - firmware/esphome/packages/microphone-i2s.yaml
+      - firmware/esphome/packages/microphone.yaml
+
+      - firmware/esphome/packages/voice-assist-sendspin.yaml
+      - firmware/esphome/packages/sendspin-addon-voice-assist.yaml
 
   # # Debug/local development fallback:
-  # external_dac: !include ../packages/dac-pcm5122.yaml
-
-  # sendspin_audio: !include packages/audio.yaml
-  # sendspin_external_dac: !include packages/audio-addon-external-dac.yaml
+  # amp_switch: !include packages/amp-switch.yaml
+  # audio: !include packages/audio.yaml
+  # audio_external_dac: !include packages/audio-addon-external-dac.yaml
   # sendspin: !include packages/sendspin.yaml
-  # sendspin_enable_dac: !include ../packages/sendspin-addon-dac-enable.yaml 
-  # sendspin_unmute_amp: !include ../packages/sendspin-addon-amp-unmute.yaml
+  # sendspin_rotary: !include packages/sendspin-addon-rotary.yaml
+  # light: !include packages/light-x.yaml
+  # ir_receiver: !include packages/ir-receiver.yaml
+  # rotary_encoder: !include packages/rotary-encoder.yaml
+  # monitoring: !include packages/monitoring.yaml
+  # monitoring_wifi: !include packages/monitoring-wifi.yaml
+  # microphone_i2s: !include packages/microphone-i2s.yaml
+  # microphone: !include packages/microphone.yaml
+  # voice_assist: !include packages/voice-assist-sendspin.yaml
+  # sendspin_voice_assist: !include packages/sendspin-addon-voice-assist.yaml
+  # # ethernet: !include packages/ethernet-w5500.yaml
+
+  # dac-pcm5122.yaml isn't published to origin/main yet (added alongside
+  # this board), so it can't be pulled through the esparagus_remote block
+  # above - included locally for now, same as the sibling *-sendspin.yaml.
+  # external_dac: !include ../packages/dac-pcm5122.yaml
