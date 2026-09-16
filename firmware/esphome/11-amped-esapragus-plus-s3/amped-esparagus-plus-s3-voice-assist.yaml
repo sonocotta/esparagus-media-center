@@ -23,7 +23,7 @@ substitutions:
   i2s_mic_lrclk_pin: GPIO18
   i2s_mic_bclk_pin: GPIO17
   i2s_mic_din_pin: GPIO8
-  i2s_mic_channel: left
+  i2s_mic_channel: right
 
   # I2C pins for DAC control
   i2c_sda_pin: GPIO42               # I2C pins are swapped on the rev H
@@ -138,9 +138,10 @@ packages:
       - firmware/esphome/packages/amp-switch.yaml
 
       - firmware/esphome/packages/audio.yaml
-      - firmware/esphome/packages/audio-addon-external-dac.yaml
       - firmware/esphome/packages/media-player.yaml
+      - firmware/esphome/packages/audio-addon-external-dac.yaml
       # - firmware/esphome/packages/media-player-addon-dac-enable.yaml  # DAC/amp left always-on instead (see *_restore_mode above), for instant voice-assist response
+      # - firmware/esphome/packages/media-player-addon-amp-unmute.yaml
 
       - firmware/esphome/packages/light-x.yaml
       - firmware/esphome/packages/ir-receiver.yaml
@@ -150,6 +151,8 @@ packages:
       - firmware/esphome/packages/monitoring-wifi.yaml
       # Optional ethernet (replace wifi config if you use this, you need to exclude OLED package if you do this to free up SPI bus)
       # - firmware/esphome/packages/ethernet-w5500.yaml
+      # Optional display configuration for TFT SPI display
+      # - firmware/esphome/packages/tft-spi.yaml
 
   esparagus_echo:
     url: https://github.com/sonocotta/esparagus-echo

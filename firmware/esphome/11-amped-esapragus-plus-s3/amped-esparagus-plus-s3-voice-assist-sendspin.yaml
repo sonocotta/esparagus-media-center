@@ -23,7 +23,7 @@ substitutions:
   i2s_mic_lrclk_pin: GPIO18
   i2s_mic_bclk_pin: GPIO17
   i2s_mic_din_pin: GPIO8
-  i2s_mic_channel: left
+  i2s_mic_channel: right
 
   # I2C pins for DAC control
   i2c_sda_pin: GPIO42               # I2C pins are swapped on the rev H

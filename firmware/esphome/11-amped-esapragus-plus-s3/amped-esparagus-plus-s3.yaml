@@ -122,6 +122,7 @@ packages:
       - firmware/esphome/packages/audio-addon-external-dac.yaml
       - firmware/esphome/packages/media-player.yaml
       - firmware/esphome/packages/media-player-addon-dac-enable.yaml
+      - firmware/esphome/packages/media-player-addon-amp-unmute.yaml
 
       - firmware/esphome/packages/light-x.yaml
       - firmware/esphome/packages/ir-receiver.yaml
@@ -133,8 +134,7 @@ packages:
       # Optional ethernet (replace wifi config if you use this, you need to exclude OLED package if you do this to free up SPI bus)
       # - firmware/esphome/packages/ethernet-w5500.yaml
       # Optional display configuration for TFT SPI display
-      # - firmware/esphome/packages/weather-sensors.yaml
-      # - firmware/esphome/packages/sendspin-addon-tft-weather-vertical.yaml
+      # - firmware/esphome/packages/tft-spi.yaml
 
   # # Debug/local development fallback:
   # amp_switch: !include packages/amp-switch.yaml
@@ -142,6 +142,7 @@ packages:
   # audio_external_dac: !include packages/audio-addon-external-dac.yaml
   # media_player: !include packages/media-player.yaml
   # media_player_dac_enable: !include packages/media-player-addon-dac-enable.yaml
+  # media_player_amp_unmute: !include ../packages/media-player-addon-amp-unmute.yaml
   # light: !include packages/light-x.yaml
   # ir_receiver: !include packages/ir-receiver.yaml
   # rotary_encoder: !include packages/rotary-encoder.yaml
