@@ -1,0 +1,16 @@
+{
+    "name": "amped-esparagus-plus-s3-sendspin",
+    "version": "$version",
+    "builds": [
+        {
+            "chipFamily": "ESP32-S3",
+            "ota": {
+                "md5": "$md5",
+                "path": "https://sonocotta.github.io/esparagus-media-center/artifacts/binaries/esphome/amped-esparagus-plus-s3-sendspin/firmware.ota.bin",
+                "release_url": "https://github.com/sonocotta/esparagus-media-center/commit/$commitid",
+                "summary": "Amped-Esparagus-Plus-S3 Sendspin firmware $version"
+            }
+        }
+    ],
+    "manifest_name": "ota-manifest-amped-esparagus-plus-s3-sendspin-latest.json"
+}

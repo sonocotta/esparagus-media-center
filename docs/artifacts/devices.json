@@ -251,6 +251,27 @@
                         ]
                     }
                 ]
+            },
+            {
+                "images": [
+                    "images/amped-esparagus.jpg"
+                ],
+                "title": "Amped-Esparagus-Plus-S3",
+                "description": "Amped-Esparagus-Plus-S3 is a new ESP32-S3 variant of Amped Esparagus, pairing the PCM5122 DAC + TPA3118 amp with a front-facing I2S microphone, rotary encoder, IR receiver, and an optional SPI TFT display, for use cases that call for voice assist or an on-device display in addition to synchronized multi-room playback.",
+                "firmwares": [
+                    {
+                        "id": "esphome",
+                        "label": "Sendspin",
+                        "badge": "Recommended",
+                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards.",
+                        "manifests": [
+                            {
+                                "label": "Install ESPHome (Sendspin multi-room)",
+                                "path": "artifacts/manifest-amped-esparagus-plus-s3-sendspin-esphome-latest.json"
+                            }
+                        ]
+                    }
+                ]
             }
         ]
     },
