@@ -254,8 +254,16 @@ jobs:
         mkdir -p "$OUT_DIR"
         for file in flash-tools/settings/*.csv; do
           name=$(basename "$file" .csv)
-          echo "Generating $file -> $OUT_DIR/$name.bin"
-          python "$NVS_GEN" generate "$file" "$OUT_DIR/$name.bin" 0x10000
+          # common-esp-nvs.csv targets the shared "nvs" partition (0x9000,
+          # size 0x4000); every other file here targets the per-device
+          # "settings" partition (size 0x10000). Sizes must match partitions.csv.
+          if [ "$name" == "common-esp-nvs" ]; then
+            size=0x4000
+          else
+            size=0x10000
+          fi
+          echo "Generating $file -> $OUT_DIR/$name.bin (size $size)"
+          python "$NVS_GEN" generate "$file" "$OUT_DIR/$name.bin" $size
         done
         ls -la "$OUT_DIR"
 
