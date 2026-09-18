@@ -270,6 +270,21 @@
                                 "path": "artifacts/manifest-amped-esparagus-plus-s3-sendspin-esphome-latest.json"
                             }
                         ]
+                    },
+                    {
+                        "id": "squeezelite",
+                        "label": "Squeezelite-ESP32",
+                        "note": "Classic Logitech Media Server / Squeezelite client firmware.",
+                        "manifests": [
+                            {
+                                "label": "16-bit (Standard)",
+                                "path": "artifacts/manifest-amped-esparagus-plus-s3-16-latest.json"
+                            },
+                            {
+                                "label": "32-bit (High Quality)",
+                                "path": "artifacts/manifest-amped-esparagus-plus-s3-32-latest.json"
+                            }
+                        ]
                     }
                 ]
             }
