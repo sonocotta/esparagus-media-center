@@ -1,6 +1,6 @@
 {
   "name": "audio-brick-dual-s3-4.0-sendspin",
-  "version": "2026.09.17-792e881d",
+  "version": "2026.09.18-ee050096",
   "home_assistant_domain": "esphome",
   "funding_url": "https://esphome.io/guides/supporters.html",
   "new_install_prompt_erase": true,
