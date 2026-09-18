@@ -126,7 +126,7 @@ packages:
     # origin/main yet - this points at the feature branch so the remote
     # pull resolves. Flip back to `main` once that branch merges, same
     # as the dev config this is a factory copy of.
-    ref: features/amped-esparagus-s3
+    ref: main
     files:
       - firmware/esphome/packages/dac-pcm5122.yaml
 

@@ -254,7 +254,7 @@
             },
             {
                 "images": [
-                    "images/amped-esparagus.jpg"
+                    "https://github.com/user-attachments/assets/b8242491-d2fd-4464-aeb8-ef797190a4ba"
                 ],
                 "title": "Amped-Esparagus-Plus-S3",
                 "description": "Amped-Esparagus-Plus-S3 is a new ESP32-S3 variant of Amped Esparagus, pairing the PCM5122 DAC + TPA3118 amp with a front-facing I2S microphone, rotary encoder, IR receiver, and an optional SPI TFT display, for use cases that call for voice assist or an on-device display in addition to synchronized multi-room playback.",

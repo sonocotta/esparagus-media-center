@@ -134,7 +134,7 @@ http_request:
 packages:
   esparagus_remote:
     url: https://github.com/sonocotta/esparagus-media-center
-    ref: features/amped-esparagus-s3
+    ref: main
     files:
       - firmware/esphome/packages/dac-pcm5122.yaml
       - firmware/esphome/packages/amp-switch.yaml
