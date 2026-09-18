@@ -10,6 +10,7 @@ on:
       - '.github/workflows/build-squeezelite-binaries.yml'
       - 'squeezelite-configs/**'
       - 'docs/artifacts/templates/squeezelite/**'
+      - 'flash-tools/settings/**'
 
 jobs:
   prepare:
@@ -229,8 +230,51 @@ jobs:
         name: esp32s3-binaries-${{ matrix.depth }}bit
         path: docs/artifacts/binaries/
 
+  build-settings:
+    runs-on: ubuntu-latest
+    container:
+      image: espressif/idf:v4.4.7
+    permissions:
+      contents: write
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Mark repo safe for git
+      run: git config --global --add safe.directory $GITHUB_WORKSPACE
+
+    - name: Generate settings NVS binaries from flash-tools/settings/*.csv
+      shell: bash
+      run: |
+        set -euo pipefail
+        . $IDF_PATH/export.sh
+        NVS_GEN=$IDF_PATH/components/nvs_flash/nvs_partition_generator/nvs_partition_gen.py
+        OUT_DIR=docs/artifacts/binaries/settings
+        mkdir -p "$OUT_DIR"
+        for file in flash-tools/settings/*.csv; do
+          name=$(basename "$file" .csv)
+          # common-esp-nvs.csv targets the shared "nvs" partition (0x9000,
+          # size 0x4000); every other file here targets the per-device
+          # "settings" partition (size 0x10000). Sizes must match partitions.csv.
+          if [ "$name" == "common-esp-nvs" ]; then
+            size=0x4000
+          else
+            size=0x10000
+          fi
+          echo "Generating $file -> $OUT_DIR/$name.bin (size $size)"
+          python "$NVS_GEN" generate "$file" "$OUT_DIR/$name.bin" $size
+        done
+        ls -la "$OUT_DIR"
+
+    - name: Upload settings artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: settings-binaries
+        path: docs/artifacts/binaries/settings/
+
   finalize:
-    needs: [prepare, build-esp32, build-esp32s3]
+    needs: [prepare, build-esp32, build-esp32s3, build-settings]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -240,6 +284,12 @@ jobs:
       uses: actions/checkout@v3
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Download settings artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: settings-binaries
+        path: docs/artifacts/binaries/settings/
 
     - name: Download ESP32 16-bit artifacts
       uses: actions/download-artifact@v4
