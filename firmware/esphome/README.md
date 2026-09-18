@@ -18,6 +18,7 @@ This directory contains ESPHome firmware configurations for all Esparagus Media 
       - [Audio Brick TAS58XX driver](#audio-brick-tas58xx-driver)
     - [8. HiFi-Esparagus-S3](#8-hifi-esparagus-s3)
     - [9. Esparagus Audio Brick Dual S3](#9-esparagus-audio-brick-dual-s3)
+    - [11. Amped-Esparagus-Plus-S3](#11-amped-esparagus-plus-s3)
   - [Configuration Variants](#configuration-variants)
     - [Standard Media Player](#standard-media-player)
     - [Snapclient](#snapclient)
@@ -218,6 +219,24 @@ See [Home Assistant: HiFi-Esparagus-S3](../../README.md#home-assistant-hifi-espa
 - `audio-brick-dual-s3-media-player.yaml` - Standard media player, selectable 2.1 (PBTL subwoofer + BTL stereo) or 4.0 (four BTL channels) DAC layout
 - `audio-brick-dual-s3-sendspin-2.1.yaml` - Sendspin synchronized playback, 2.1 DAC layout
 - `audio-brick-dual-s3-sendspin-4.0.yaml` - Sendspin synchronized playback, 4.0 DAC layout
+
+---
+
+### 11. Amped-Esparagus-Plus-S3
+
+**MCU**: ESP32-S3 with PSRAM
+**DAC**: PCM5122 (I2C + I2S), TPA3118 amp
+**Target**: Amped-Esparagus grows an S3 front-facing I2S microphone, rotary encoder, and optional SPI TFT display, for setups that want voice assist or an on-device display alongside synchronized multi-room playback
+**Features**: RGB LED, IR receiver, rotary encoder, I2S microphone, optional SPI TFT display
+
+**Configurations:**
+- `amped-esparagus-plus-s3.yaml` - Standard media player with mixer/resampler
+- `amped-esparagus-plus-s3-snapclient.yaml` - Snapcast client
+- `amped-esparagus-plus-s3-sendspin.yaml` - Sendspin synchronized playback
+- `amped-esparagus-plus-s3-voice-assist.yaml` - Local voice assistant (wake word + media player with ducking)
+- `amped-esparagus-plus-s3-voice-assist-sendspin.yaml` - Voice assistant combined with Sendspin multi-room playback
+
+Only the Sendspin configuration ships as a factory/OTA image today (see the web installer); the other variants are dev configs, flashed and adopted via the ESPHome Dashboard.
 
 ---
 

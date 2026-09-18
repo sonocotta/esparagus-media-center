@@ -82,6 +82,8 @@ jobs:
             config_file: echo-duo-idf-voice-assist-sendspin.factory.yaml
           - slug: echo-solo-sendspin
             config_file: echo-solo-idf-voice-assist-sendspin.factory.yaml
+          - slug: amped-esparagus-plus-s3-sendspin
+            config_file: amped-esparagus-plus-s3-sendspin.factory.yaml
     env:
       DEVICE_SLUG: ${{ matrix.device.slug }}
       CONFIG_DIR: firmware/esphome/distribution
