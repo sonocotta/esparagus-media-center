@@ -137,5 +137,5 @@ packages:
       # Optional ethernet (replace wifi config if you use this, you need to exclude OLED package if you do this to free up SPI bus)
       # - firmware/esphome/packages/ethernet-w5500.yaml
       # Optional display configuration for TFT SPI display
-      - firmware/esphome/packages/weather-sensors.yaml
-      - firmware/esphome/packages/sendspin-addon-tft-weather-vertical.yaml
+      # - firmware/esphome/packages/weather-sensors.yaml
+      # - firmware/esphome/packages/sendspin-addon-tft-weather-vertical.yaml

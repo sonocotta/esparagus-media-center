@@ -12,13 +12,12 @@ binary_sensor:
   - platform: gpio
     id: rotary_btn
     name: "${friendly_name} Rotary button"
-    pin: ${rotary_btn_pin}
-    filters:
-      invert: # idle state must be 'off' to support click actions
-    on_click:
-      - logger.log: "Rotary Single Click"
-    on_double_click:
-      - logger.log: "Rotary Double Click"
+    pin: 
+      number: ${rotary_btn_pin}
+      mode:
+        input: true
+        pullup: true
+      inverted: true
 
 sensor:
   - platform: rotary_encoder
@@ -26,7 +25,4 @@ sensor:
     name: "${friendly_name} Rotary Encoder"
     pin_a: ${rotary_pin_a}
     pin_b: ${rotary_pin_b}
-    on_clockwise:
-      - logger.log: "Rotary Turned Clockwise"
-    on_anticlockwise:
-      - logger.log: "Rotary Turned Anticlockwise"
+
