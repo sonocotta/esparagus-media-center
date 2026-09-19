@@ -135,22 +135,3 @@ packages:
       # - firmware/esphome/packages/ethernet-w5500.yaml
       # Optional display configuration for TFT SPI display
       # - firmware/esphome/packages/tft-spi.yaml
-
-  # # Debug/local development fallback:
-  # amp_switch: !include packages/amp-switch.yaml
-  # audio: !include packages/audio.yaml
-  # audio_external_dac: !include packages/audio-addon-external-dac.yaml
-  # media_player: !include packages/media-player.yaml
-  # media_player_dac_enable: !include packages/media-player-addon-dac-enable.yaml
-  # media_player_amp_unmute: !include ../packages/media-player-addon-amp-unmute.yaml
-  # light: !include packages/light-x.yaml
-  # ir_receiver: !include packages/ir-receiver.yaml
-  # rotary_encoder: !include packages/rotary-encoder.yaml
-  # monitoring: !include packages/monitoring.yaml
-  # monitoring_wifi: !include packages/monitoring-wifi.yaml
-  # # ethernet: !include packages/ethernet-w5500.yaml
-
-  # dac-pcm5122.yaml isn't published to origin/main yet (added alongside
-  # this board), so it can't be pulled through the esparagus_remote block
-  # above - included locally for now, same as the sibling *-sendspin.yaml.
-  # external_dac: !include ../packages/dac-pcm5122.yaml

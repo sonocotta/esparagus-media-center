@@ -138,21 +138,3 @@ packages:
       # Optional display configuration for TFT SPI display
       # - firmware/esphome/packages/weather-sensors.yaml
       # - firmware/esphome/packages/sendspin-addon-tft-weather-vertical.yaml
-
-  # # Debug/local development fallback:
-  # amp_switch: !include packages/amp-switch.yaml
-  # snapclient: !include packages/snapclient-new.yaml
-  # snapclient_external_dac: !include packages/snapclient-addon-external-dac.yaml
-  # snapclient_dac_enable: !include packages/snapclient-addon-dac-enable.yaml
-  # snapclient_amp_enable: !include packages/snapclient-addon-amp-enable.yaml
-  # light: !include packages/light-x.yaml
-  # ir_receiver: !include packages/ir-receiver.yaml
-  # rotary_encoder: !include packages/rotary-encoder.yaml
-  # monitoring: !include packages/monitoring.yaml
-  # monitoring_wifi: !include packages/monitoring-wifi.yaml
-  # # ethernet: !include packages/ethernet-w5500.yaml
-
-  # dac-pcm5122.yaml isn't published to origin/main yet (added alongside
-  # this board), so it can't be pulled through the esparagus_remote block
-  # above - included locally for now, same as the sibling *-sendspin.yaml.
-  # external_dac: !include ../packages/dac-pcm5122.yaml

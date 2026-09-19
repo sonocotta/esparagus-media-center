@@ -117,7 +117,6 @@ packages:
     ref: main
     files:
       - firmware/esphome/packages/dac-pcm5122.yaml
-      
       - firmware/esphome/packages/amp-switch.yaml
 
       - firmware/esphome/packages/audio.yaml
@@ -140,12 +139,3 @@ packages:
       # Optional display configuration for TFT SPI display
       - firmware/esphome/packages/weather-sensors.yaml
       - firmware/esphome/packages/sendspin-addon-tft-weather-vertical.yaml
-
-  # # Debug/local development fallback:
-  # external_dac: !include ../packages/dac-pcm5122.yaml
-
-  # sendspin_audio: !include packages/audio.yaml
-  # sendspin_external_dac: !include packages/audio-addon-external-dac.yaml
-  # sendspin: !include packages/sendspin.yaml
-  # sendspin_enable_dac: !include ../packages/sendspin-addon-dac-enable.yaml 
-  # sendspin_unmute_amp: !include ../packages/sendspin-addon-amp-unmute.yaml
