@@ -122,14 +122,9 @@ http_request:
 packages:
   esparagus_remote:
     url: https://github.com/sonocotta/esparagus-media-center
-    # NOTE: dac-pcm5122.yaml is new alongside this board and isn't on
-    # origin/main yet - this points at the feature branch so the remote
-    # pull resolves. Flip back to `main` once that branch merges, same
-    # as the dev config this is a factory copy of.
     ref: main
     files:
       - firmware/esphome/packages/dac-pcm5122.yaml
-
       - firmware/esphome/packages/amp-switch.yaml
 
       - firmware/esphome/packages/audio.yaml
@@ -150,5 +145,5 @@ packages:
       # Optional ethernet (replace wifi config if you use this, you need to exclude OLED package if you do this to free up SPI bus)
       # - firmware/esphome/packages/ethernet-w5500.yaml
       # Optional display configuration for TFT SPI display
-      - firmware/esphome/packages/weather-sensors.yaml
-      - firmware/esphome/packages/sendspin-addon-tft-weather-vertical.yaml
+      # - firmware/esphome/packages/weather-sensors.yaml
+      # - firmware/esphome/packages/sendspin-addon-tft-weather-vertical.yaml

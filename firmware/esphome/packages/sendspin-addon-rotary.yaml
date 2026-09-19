@@ -1,4 +1,6 @@
-#================== based on tmuWolverine Changes
+# ================== based on tmuWolverine project: 
+# https://github.com/TemuWolverine/LouderESP32_Case_And_Firmware
+
 substitutions:
   max_brightness: 128
   num_leds: 8
@@ -36,10 +38,22 @@ globals:
 
 script:
   - id: update_volume_leds
+    mode: restart
+
     then:
       - light.turn_on:
           id: rgb_front_led
           effect: "Volume Display"
+
+      - if:
+          condition:
+            switch.is_on: auto_hide_volume_leds
+          then:
+            - delay: 2s
+
+            - light.turn_off:
+                id: rgb_front_led
+                transition_length: 1s
 
 interval:
   - interval: 50ms
@@ -76,10 +90,60 @@ sensor:
           id: external_media_player
           volume: !lambda "return id(current_volume);"
 
+  - platform: template
+    id: media_player_volume_sync
+    internal: true
+    update_interval: 100ms
+    accuracy_decimals: 2
+
+    lambda: |-
+      return id(external_media_player).volume;
+
+    filters:
+      - delta: 0.001
+
+    on_value:
+      then:
+        - lambda: |-
+            id(current_volume) = x;
+        - script.execute: update_volume_leds 
+     
+
+# ============================================================
+# Rotary encoder button: 
+#   Single Click: Play/Pause
+#   Double Click: Next Track
+# ============================================================
+
 binary_sensor:
   - id: !extend rotary_btn
+  
+    filters:
+      - delayed_on_off: 20ms
+        
+    on_multi_click:
+    - timing:
+        - ON for at most 1s
+        - OFF for at most 1s
+        - ON for at most 1s
+        - OFF for at least 0.2s
+      then:
+        - media_player.next:
+            id: external_media_player
+        - logger.log: "Double-Clicked"
+    - timing:
+        - ON for at most 1s
+        - OFF for at least 0.5s
+      then:
+        - media_player.toggle:
+            id: external_media_player
+        - logger.log: "Single-Clicked"
 
-    on_click:
-      - media_player.toggle:
-          id: external_media_player
+switch:
+  - platform: template
+    name: "Auto-hide Volume LEDs"
+    id: auto_hide_volume_leds
+    icon: "mdi:timer-off-outline"
+    optimistic: true
+    restore_mode: RESTORE_DEFAULT_ON
 
