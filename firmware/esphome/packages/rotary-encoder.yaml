@@ -16,7 +16,6 @@ binary_sensor:
       number: ${rotary_btn_pin}
       mode:
         input: true
-        pullup: true
       inverted: true
 
 sensor:
