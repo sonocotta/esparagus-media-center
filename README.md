@@ -80,7 +80,9 @@ Esparagus Media Center is a series of ESP32-based media center devices. They all
       - [OLED models](#oled-models)
     - [OLED screen (solder-less)](#oled-screen-solder-less)
       - [OLED models](#oled-models-1)
-      - [Software side](#software-side)
+      - [Squeezelite display configuration](#squeezelite-display-configuration)
+    - [TFT screen (solder-less)](#tft-screen-solder-less)
+      - [TFT models](#tft-models)
     - [Audio Brick details](#audio-brick-details)
     - [Relay Driver](#relay-driver)
     - [Errata](#errata)
@@ -921,7 +923,7 @@ Most of the 64x128 pixel OLED screen models that are very common among hobbyists
 |---|---|
 | [1.3" OLED Screen 128x64 SH1106 30Pin](https://www.aliexpress.com/item/1005003801387081.html) | ![image](https://github.com/user-attachments/assets/78b44c8d-484a-4c07-9f9f-fb1f86689fac)
 
-#### Software side
+#### Squeezelite display configuration
 
 Although you're free to use it your way, using the pinout above, I'd expect the most common case to be squeezelite, thus here are the steps you'd need to do
 
@@ -930,6 +932,17 @@ Although you're free to use it your way, using the pinout above, I'd expect the 
 | 1 | Update NVS settings in the Web UI (switch to recovery mode first) <br/> `display_config` = `SPI,width=128,height=64,cs=15,reset=32,driver=SH1106,HFlip,VFlip` <br/> `spi_config` = `mosi=23,clk=18,host=2,miso=19,dc=4` <br/> You may need to replace `SH1106` with `SSD1306` depending on your model. | ![image](https://github.com/user-attachments/assets/f42af7a5-2fda-42b4-80b6-4ca025bac29b)
 | 2 | In the LMS settings install the `SqueezeESP32` plugin | ![image](https://github.com/user-attachments/assets/5e32f271-cb66-4ea4-8a94-aaf1d0a73c5e)
 | 3 | Update each speaker's settings in the LMS, and navigate to `Display` settings | ![image](https://github.com/user-attachments/assets/ac970067-8b98-4294-af9a-80d0274e0558)
+
+### TFT screen (solder-less)
+
+Newer boards (starting from Audio Brick DUAL DAC, next new generation of Louder and Amped Esparagus) started using a TFT screen instead of OLED. The main motivation for this change is Sendspin support for album art display, which is a great addition to the media center. The TFT panels are 2.0" and 2.4" models, both with 14-pin SPI solderless connectors. The 2.0" models fit almost perfectly into the new aluminum case for Amped/Louder Esparagus. The 2.4" model is a bit larger and can be used with an Audio Brick DUAL DAC or Louder-ESP32-Pro board (while the 2.0" model also fits).
+
+#### TFT models
+
+|  Model | Image |
+|---|---|
+| [2.0" IPS TFT Display 240x320 ST7789 14Pin](https://pl.aliexpress.com/item/1005008463441614.html) | <img width="262" height="454" alt="image" src="https://github.com/user-attachments/assets/cddbee55-9d7e-453f-bff9-bd429d7628fa" />
+| [2.4" IPS TFT Display 320x240 ST7789 14Pin](https://pl.aliexpress.com/item/1005008472996411.html) | <img width="315" height="456" alt="image" src="https://github.com/user-attachments/assets/1132ab45-c893-47e8-82b9-8b71f94e3bcf" />
 
 ### Audio Brick details
 
