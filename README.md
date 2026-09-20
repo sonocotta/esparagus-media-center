@@ -935,14 +935,14 @@ Although you're free to use it your way, using the pinout above, I'd expect the 
 
 ### TFT screen (solder-less)
 
-Newer boards (starting from Audio Brick DUAL DAC, next new generation of Louder and Amped Esparagus) started using a TFT screen instead of OLED. Main motivation for this change is a Sendspin support for album art diaply, that maker is a great addition to media center. The TFT panels are 2.0" and 2.4" inch models, both 14-pin SPI solder-less connectors. The 2.0" models fit almost perfectly the new aluminum case for Amped/Louder Esparagus. The 2.4" model is a bit larger and can be used with a Audio Brick DUAL DAC, or Louder-ESP32-Pro board (while 2.0" model also fits).
+Newer boards (starting from Audio Brick DUAL DAC, next new generation of Louder and Amped Esparagus) started using a TFT screen instead of OLED. The main motivation for this change is Sendspin support for album art display, which is a great addition to the media center. The TFT panels are 2.0" and 2.4" models, both with 14-pin SPI solderless connectors. The 2.0" models fit almost perfectly into the new aluminum case for Amped/Louder Esparagus. The 2.4" model is a bit larger and can be used with an Audio Brick DUAL DAC or Louder-ESP32-Pro board (while the 2.0" model also fits).
 
 #### TFT models
 
 |  Model | Image |
 |---|---|
-| [2.0" IPS TFT Display 240x320 ST7789 14Pin](https://pl.aliexpress.com/item/1005008463441614.html) | *image*
-| [2.4" IPS TFT Display 320x240 ST7789 14Pin](https://pl.aliexpress.com/item/1005008472996411.html) | *image*
+| [2.0" IPS TFT Display 240x320 ST7789 14Pin](https://pl.aliexpress.com/item/1005008463441614.html) | <img width="262" height="454" alt="image" src="https://github.com/user-attachments/assets/cddbee55-9d7e-453f-bff9-bd429d7628fa" />
+| [2.4" IPS TFT Display 320x240 ST7789 14Pin](https://pl.aliexpress.com/item/1005008472996411.html) | <img width="315" height="456" alt="image" src="https://github.com/user-attachments/assets/1132ab45-c893-47e8-82b9-8b71f94e3bcf" />
 
 ### Audio Brick details
 
