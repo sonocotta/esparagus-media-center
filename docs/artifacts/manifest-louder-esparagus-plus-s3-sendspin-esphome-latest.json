@@ -1,5 +1,5 @@
 {
-  "name": "echo-duo-sendspin",
+  "name": "louder-esparagus-plus-s3-sendspin",
   "version": "2026.09.23-f6699d0f",
   "home_assistant_domain": "esphome",
   "funding_url": "https://esphome.io/guides/supporters.html",
@@ -10,11 +10,11 @@
       "chipFamily": "ESP32-S3",
       "parts": [
         {
-          "path": "binaries/esphome/echo-duo-sendspin/firmware.factory.bin",
+          "path": "binaries/esphome/louder-esparagus-plus-s3-sendspin/firmware.factory.bin",
           "offset": 0
         }
       ]
     }
   ],
-  "manifest_name": "manifest-echo-duo-sendspin-esphome-latest.json"
+  "manifest_name": "manifest-louder-esparagus-plus-s3-sendspin-esphome-latest.json"
 }
