@@ -19,6 +19,8 @@ This directory contains ESPHome firmware configurations for all Esparagus Media 
     - [8. HiFi-Esparagus-S3](#8-hifi-esparagus-s3)
     - [9. Esparagus Audio Brick Dual S3](#9-esparagus-audio-brick-dual-s3)
     - [11. Amped-Esparagus-Plus-S3](#11-amped-esparagus-plus-s3)
+    - [12. Louder-Esparagus-Plus-S3](#12-louder-esparagus-plus-s3)
+    - [13. Amped-Esparagus (rev M)](#13-amped-esparagus-rev-m)
   - [Configuration Variants](#configuration-variants)
     - [Standard Media Player](#standard-media-player)
     - [Snapclient](#snapclient)
@@ -119,7 +121,8 @@ Each hardware variant has 2-3 firmware options depending on your use case.
 - `amped-esparagus-idf-j-snapclient.yaml` - Snapcast client (Revision J/TPA3128 with MUTE amp control)
 - `amped-esparagus-idf-sendspin.yaml` - Sendspin synchronized playback
 - `amped-esparagus-idf-j-sendspin.yaml` - Sendspin with Ethernet/OLED (Revision J/TPA3128 with MUTE amp control)
-- `amped-esparagus-idf-m-sendspin.yaml` - Sendspin synchronized playback (Revision M/TPA3118 with USB-PD, optional Ethernet/TFT display)
+
+Revision M (TPA3118) moved to its own directory — see [13. Amped-Esparagus (rev M)](#13-amped-esparagus-rev-m) below.
 
 <img width="923" height="1224" alt="image" src="https://github.com/user-attachments/assets/2b68df50-4e4d-4217-b161-adc9de40eb6e" />
 
@@ -240,6 +243,39 @@ Only the Sendspin configuration ships as a factory/OTA image today (see the web 
 
 ---
 
+### 12. Louder-Esparagus-Plus-S3
+
+**MCU**: ESP32-S3 with PSRAM
+**DAC**: TAS5825M (I2C + I2S) with built-in DSP
+**Target**: Sister board to Amped-Esparagus-Plus-S3, sharing the same S3 front-facing I2S microphone, rotary encoder, and optional SPI TFT display, but built around Louder-Esparagus's TAS5825M DSP DAC instead, for setups that want DSP capabilities alongside voice assist or an on-device display
+**Features**: RGB LED, IR receiver, rotary encoder, I2S microphone, optional SPI TFT display
+
+**Configurations:**
+- `louder-esparagus-plus-s3.yaml` - Standard media player with mixer/resampler
+- `louder-esparagus-plus-s3-snapclient.yaml` - Snapcast client
+- `louder-esparagus-plus-s3-sendspin.yaml` - Sendspin synchronized playback
+- `louder-esparagus-plus-s3-voice-assist.yaml` - Local voice assistant (wake word + media player with ducking)
+- `louder-esparagus-plus-s3-voice-assist-sendspin.yaml` - Voice assistant combined with Sendspin multi-room playback
+
+Only the Sendspin configuration ships as a factory/OTA ESPHome image today (see the web installer); the other ESPHome variants are dev configs, flashed and adopted via the ESPHome Dashboard. A Squeezelite-ESP32 build (16-bit and 32-bit) is also available from the web installer.
+
+---
+
+### 13. Amped-Esparagus (rev M)
+
+**DAC**: PCM5100 (I2S) + TPA3118 amplifier (rev M)
+**Target**: Latest classic-ESP32 revision of Amped-Esparagus — fixes the TPA3128 pop/static errata and swaps the OLED for a SPI TFT display, kept in its own directory since its pinout and display hardware diverge from the rev E-K boards in [4. Amped-Esparagus](#4-amped-esparagus)
+**Features**: RGB LED, IR receiver, rotary encoder, optional Ethernet (W5500), optional SPI TFT display
+
+**Configurations:**
+- `amped-esparagus-idf-m.yaml` - Standard media player with amplifier
+- `amped-esparagus-idf-m-snapclient.yaml` - Snapcast client, 2 variations - basic once and with software DSP controls
+- `amped-esparagus-idf-m-sendspin.yaml` - Sendspin synchronized playback
+
+Only the Sendspin configuration ships as a factory/OTA ESPHome image today (see the web installer); the other ESPHome variants are dev configs, flashed and adopted via the ESPHome Dashboard. A Squeezelite-ESP32 build (16-bit and 32-bit) is also available from the web installer.
+
+---
+
 ## Configuration Variants
 
 ### Standard Media Player
@@ -338,6 +374,9 @@ Local, off-grid voice assistant implementation for Home Assistant's Assist pipel
    - `5-audio-brick/` or `5-audio-brick-s3/`
    - `8-hifi-esparagus-s3/`
    - `9-audio-brick-dual-s3/`
+   - `11-amped-esapragus-plus-s3/`
+   - `12-louder-esparagus-plus-s3/`
+   - `13-amped-esapragus-m/`
 
 2. **Choose your configuration variant**:
    - Standard: `*-idf.yaml`

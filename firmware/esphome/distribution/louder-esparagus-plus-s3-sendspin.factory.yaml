@@ -1,8 +1,8 @@
 # ============================================================
-# Amped-Esparagus rev M (TPA3118, Sendspin) - Factory / shippable firmware
+# Louder Esparagus Plus S3 (Sendspin) - Factory / shippable firmware
 # ============================================================
 # Layers the "shippable product" concerns on top of the plain
-# device config (amped-esparagus-idf-m-sendspin.yaml, in this same
+# device config (louder-esparagus-plus-s3-sendspin.yaml, in this same
 # directory): pull-based OTA updates, an Improv Wi-Fi onboarding
 # flow, and a project identity used by the update entity + the
 # ESPHome Dashboard "adopt" flow.
@@ -16,12 +16,12 @@ substitutions:
   version: dev
 
 packages:
-  amped-esparagus-idf-m-sendspin: !include amped-esparagus-idf-m-sendspin.yaml
+  louder-esparagus-plus-s3-sendspin: !include louder-esparagus-plus-s3-sendspin.yaml
 
 esphome:
   name_add_mac_suffix: true
   project:
-    name: sonocotta.amped-esparagus-m-sendspin
+    name: sonocotta.louder-esparagus-plus-s3-sendspin
     version: "${version}"
   on_boot:
     priority: 600
@@ -35,8 +35,6 @@ globals:
     restore_value: no
     initial_value: "false"
 
-http_request:
-
 ota:
   - platform: http_request
     id: ota_http_request
@@ -45,17 +43,17 @@ update:
   - platform: http_request
     name: Firmware Update
     id: update_http_request
-    source: https://sonocotta.github.io/esparagus-media-center/artifacts/ota-manifest-amped-esparagus-m-sendspin-latest.json
+    source: https://sonocotta.github.io/esparagus-media-center/artifacts/ota-manifest-louder-esparagus-plus-s3-sendspin-latest.json
     update_interval: 6h
 
 # Lets anyone running their own ESPHome Dashboard "adopt" this device
 # from the real (non-factory) config that actually matches its hardware.
 dashboard_import:
-  package_import_url: github://sonocotta/esparagus-media-center/firmware/esphome/13-amped-esapragus-m/amped-esparagus-idf-m-sendspin.yaml@main
+  package_import_url: github://sonocotta/esparagus-media-center/firmware/esphome/12-louder-esparagus-plus-s3/louder-esparagus-plus-s3-sendspin.yaml@main
   import_full_config: false
 
 # ===== Wi-Fi onboarding (Improv) =====
-# No Wi-Fi network is baked into the image (see amped-esparagus-idf-m-sendspin.yaml);
+# No Wi-Fi network is baked into the image (see louder-esparagus-plus-s3-sendspin.yaml);
 # each unit is provisioned individually over Improv, either via the
 # ESP Web Tools install page (BLE or the same USB/serial session used
 # to flash it) or any Improv-compatible phone app.
@@ -68,7 +66,7 @@ wifi:
 improv_serial:
 
 esp32_ble:
-  name: amped-espa-m
+  name: louder-plus3
 
 esp32_improv:
   # No dedicated onboarding button on this board - physical possession

@@ -1,15 +1,16 @@
 # ============================================================
-# Amped-Esparagus - Sendspin Configuration
+# Louder Esparagus Plus S3 - Voice-Assistant + Sendspin Configuration
 # ============================================================
-# ESP32 audio board with PCM5122 DAC (I2S) and TPA3118 AMP
-# Configured with Sendspin for synchronized multi-room audio
+# ESP32-S3 audio board with TAS5825M DAC (I2C+I2S) with built-in DSP
+# Configured with Sendspin for synchronized multi-room audio, plus
+# wake word / voice assist on top
 # Board-specific pinouts defined in substitutions
 # Functional blocks imported from /packages
 # ============================================================
 
 substitutions:
-  name: esphome-web-e1b258
-  friendly_name: Amped-Esparagus
+  name: esphome-web-e1b35c
+  friendly_name: Louder-Esparagus-Plus-S3
   task_stack_in_psram: "true"
 
   # ===== Board-Specific Pinouts =====
@@ -18,15 +19,26 @@ substitutions:
   i2s_bclk_pin: GPIO14
   i2s_dout_pin: GPIO16
 
-  # I2C pins for DAC control
+  # I2S microphone pins
+  i2s_mic_lrclk_pin: GPIO18
+  i2s_mic_bclk_pin: GPIO17
+  i2s_mic_din_pin: GPIO8
+  i2s_mic_channel: right
+
+  # TAS5825M
+  tas58xx_variant: TAS5825M
+  tas58xx_enable_pin: GPIO4
   i2c_sda_pin: GPIO42
   i2c_scl_pin: GPIO41
-  pcm5122_i2c_address: 0x4D
+  tas58xx_dac_restore_mode: ALWAYS_ON  # DAC stays powered for instant voice-assist response, instead of enabling on-demand
 
-  # Amp UNMUTE pin
-  amp_enable_pin: GPIO4
-  amp_enable_restore_mode: ALWAYS_ON
-  
+  # ===== DAC Overrides (optional) =====
+  # tas58xx_dac_mode: PBTL
+  # tas58xx_mixer_mode: MONO
+  # tas58xx_analog_gain: 0db
+  # tas58xx_volume_max: 0dB
+  # tas58xx_volume_min: -60dB
+
   # RGB LED
   rgb_led_pin: GPIO9
   num_leds: 8
@@ -39,11 +51,11 @@ substitutions:
   rotary_pin_b: GPIO21
   rotary_btn_pin: GPIO48
 
-  # SPI pins (for display and ethernet)
+  # SPI pins (for display)
   spi_clk_pin: GPIO12
   spi_mosi_pin: GPIO11
   spi_miso_pin: GPIO13
-  
+
   # Display control pins
   display_cs_pin: GPIO39
   display_dc_pin: GPIO40
@@ -85,10 +97,22 @@ esp32:
       CONFIG_BT_ALLOCATION_FROM_SPIRAM_FIRST: "y"
       CONFIG_BT_BLE_DYNAMIC_ENV_MEMORY: "y"
       CONFIG_MBEDTLS_EXTERNAL_MEM_ALLOC: "y"
-      CONFIG_MBEDTLS_SSL_PROTO_TLS1_3: "y" 
+      CONFIG_MBEDTLS_SSL_PROTO_TLS1_3: "y"
+
+      CONFIG_ESP32_S3_BOX_BOARD: "y"
+      # OPTIMIZED WiFi buffers for streaming
+      CONFIG_ESP32_WIFI_STATIC_RX_BUFFER_NUM: "16"
+      CONFIG_ESP32_WIFI_DYNAMIC_RX_BUFFER_NUM: "32"
+      CONFIG_TCPIP_RECVMBOX_SIZE: "512"
+      CONFIG_TCP_SND_BUF_DEFAULT: "65535"
+      CONFIG_TCP_WND_DEFAULT: "512000"
+      CONFIG_TCP_RECVMBOX_SIZE: "512"
+      # Audio priority
+      CONFIG_FREERTOS_UNICORE: "n"
+      CONFIG_ESP_TASK_WDT_TIMEOUT_S: "10"
 
 logger:
-  level: DEBUG
+  level: INFO  # Changed from DEBUG to reduce overhead
 
 api:
 
@@ -107,8 +131,6 @@ psram:
 
 network:
   enable_ipv6: true
-  
-http_request:
 
 # ===== Packages =====
 packages:
@@ -116,15 +138,19 @@ packages:
     url: https://github.com/sonocotta/esparagus-media-center
     ref: main
     files:
-      - firmware/esphome/packages/dac-pcm5122.yaml
-      - firmware/esphome/packages/amp-switch.yaml
+      # Option A: TAS58xx configured with ganged 15-band EQ
+      - firmware/esphome/packages/dac-tas58xx.yaml
+      # Option B: TAS58xx configured with individual 15-band EQ per channel
+      # - firmware/esphome/packages/dac-tas58xx-biamp.yaml
+      # Option C: TAS58xx configured with bi-amp mode, with filters applied to both channels (HF or LF)
+      # - firmware/esphome/packages/dac-tas58xx-presets.yaml
 
       - firmware/esphome/packages/audio.yaml
       - firmware/esphome/packages/audio-addon-external-dac.yaml
 
       - firmware/esphome/packages/sendspin.yaml
-      - firmware/esphome/packages/sendspin-addon-dac-enable.yaml
-      - firmware/esphome/packages/sendspin-addon-amp-unmute.yaml
+      # - firmware/esphome/packages/sendspin-addon-dac-enable.yaml  # DAC left always-on instead (see tas58xx_dac_restore_mode above), for instant voice-assist response
+      - firmware/esphome/packages/sendspin-addon-voice-assist-tas58xx.yaml
       - firmware/esphome/packages/sendspin-addon-rotary.yaml
 
       - firmware/esphome/packages/light-x.yaml
@@ -133,9 +159,15 @@ packages:
 
       - firmware/esphome/packages/monitoring.yaml
       - firmware/esphome/packages/monitoring-wifi.yaml
-
       # Optional ethernet (replace wifi config if you use this, you need to exclude OLED package if you do this to free up SPI bus)
       # - firmware/esphome/packages/ethernet-w5500.yaml
-      # Optional display configuration for TFT SPI display
-      # - firmware/esphome/packages/weather-sensors.yaml
-      # - firmware/esphome/packages/sendspin-addon-tft-weather-vertical.yaml
+
+  esparagus_echo:
+    url: https://github.com/sonocotta/esparagus-echo
+    ref: main
+    files:
+      - firmware/esphome/packages/microphone-i2s.yaml
+      - firmware/esphome/packages/microphone.yaml
+
+      - firmware/esphome/packages/voice-assist-sendspin.yaml
+      - firmware/esphome/packages/sendspin-addon-voice-assist.yaml

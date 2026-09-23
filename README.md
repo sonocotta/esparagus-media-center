@@ -30,9 +30,9 @@ Esparagus Media Center is a series of ESP32-based media center devices. They all
   - [Board Pinout](#board-pinout)
     - [Common to every board](#common-to-every-board)
     - [Peripheral](#peripheral)
-    - [Rotary encoder (Amped Esparagus)](#rotary-encoder-amped-esparagus)
+    - [Rotary encoder (Amped Esparagus, and the Plus S3 boards)](#rotary-encoder-amped-esparagus-and-the-plus-s3-boards)
     - [TAS5805M/TAS5825M DAC (Louder Esparagus, Audio Brick)](#tas5805mtas5825m-dac-louder-esparagus-audio-brick)
-    - [Peripheral - OLED Screen and W5500 Ethernet (Louder Esparagus)](#peripheral---oled-screen-and-w5500-ethernet-louder-esparagus)
+    - [Peripheral - Display and W5500 Ethernet (Louder Esparagus)](#peripheral---display-and-w5500-ethernet-louder-esparagus)
     - [Other Peripheral (Louder Esparagus)](#other-peripheral-louder-esparagus)
     - [Mic header](#mic-header)
   - [Which software is right for me](#which-software-is-right-for-me)
@@ -122,6 +122,8 @@ The latest update allows direct power through the barrel jack as an alternative 
 
 ![DSC_0009](https://github.com/user-attachments/assets/538e0165-d973-4222-81e7-64d4013869d6)
 
+**Early access: Louder Esparagus Plus (S3)** is a sister board to Amped Esparagus Plus (S3), sharing the same look and feel — front-facing I2S microphone, SPI TFT display, and rotary encoder — but keeps Louder Esparagus's TAS5825M DAC with built-in DSP. It's not yet available for purchase, reach out for early access to prototypes.
+
 ## Amped Esparagus
 
 The last in the family, **Amped Esparagus**, is a device based on PCM5100 HiFi DAC (just like HiFi Esparagus) but adds a powerful and efficient D-class amp (TPA3110D2/TPA3118D2/TPA3128D2 depending on the version) so it can drive speakers directly. It has similar power capabilities to the Louder Esparagus, but it is much simpler to set up and use, since this DAC doesn't need any configuration steps to get going, just a valid I2S audio stream. Simplicity comes at a price; it doesn't have a DSP unit either. Since it has an analog stage, you can use it either with a built-in amp or with an external amp, if you prefer.
@@ -158,20 +160,20 @@ Software was a little problematic at the beginning, as most open source projects
 
 ## Features
 
-|  | [HiFi Esparagus](https://www.tindie.com/products/sonocotta/esparagus-hifi-medialink/) | [Loud Esparagus](https://www.tindie.com/products/sonocotta/loud-esparagus-media-center/) | [Louder Esparagus](https://www.tindie.com/products/sonocotta/louder-esparagus-media-center/) | [Amped Esparagus](https://www.tindie.com/products/sonocotta/amped-esparagus-media-center/) | [Esparagus Audio Brick](https://www.crowdsupply.com/sonocotta/esparagus-audio-brick) | Esparagus Audio Brick Daul DAC |
-|---|---|---|---|---|---|---|
-| Image | ![DSC_0709](https://github.com/sonocotta/esparagus-hifi-medialink/assets/98712315/ea45f1d2-32b5-4f12-a63c-a8e403cb22db) | ![DSC_0706](https://github.com/sonocotta/esparagus-hifi-medialink/assets/5459747/2556b8ff-1827-4e03-8e28-31e40199943c) | ![DSC_0713](https://github.com/sonocotta/esparagus-media-center/assets/5459747/14d54647-2b7e-4b1a-9a8e-135a1598eb02) | ![DSC_0022](https://github.com/user-attachments/assets/b8242491-d2fd-4464-aeb8-ef797190a4ba) | ![image](https://github.com/user-attachments/assets/89792e6c-e530-4c2b-8e8a-6ce86c9a98dc) | ![image](https://github.com/user-attachments/assets/df78090e-6869-4d63-a812-e7a53d5559a0)
-| MCU | ESP32-WROVER-N8R8 or ESP32-S3-WROOM-N8R8 | ESP32-WROVER-N8R8 | ESP32-WROVER-N16R8 (S3 is coming soon) | ESP32-WROVER-N16R8, or ESP32-S3 (8MB flash + octal PSRAM) on the Plus variant (early access) | ESP32-WROVER-N8R8 or ESP32-S3-WROOM-N8R8 | ESP32-S3-WROOM-N8R8 |
-| DAC | PCM5100A 32bit Stereo DAC -100 dB typical noise level | Dual I2S DAC ([MAX98357](https://www.analog.com/en/products/max98357a.html)) with built in D-Class amp | Stereo I2S DAC ( [TAS5805M](https://www.ti.com/product/TAS5805M) ) with built in D-Class amp | [PCM5100A](https://www.ti.com/product/PCM5100A) 32bit Stereo DAC (I2C-controlled [PCM5122](https://www.ti.com/product/PCM5122) on the Plus variant) working with [TPA3118D2](https://www.ti.com/product/TPA3118D2) D-Class amp | Stereo I2S DAC (  [TAS5825M](https://www.ti.com/product/TAS5825M)  ) with a built-in D-Class amp | Dual Stereo I2S DAC (  <br>[TAS5825M](https://www.ti.com/product/TAS5825M)<br>  ) with a built-in D-Class amp |
-| Power | 5V over USB-C, 2x [LP5907](https://www.ti.com/lit/ds/symlink/lp5907.pdf) 3.3 V Ultra-Low-Noise LDO for analog section | 5V from USB-C | Up to 20V from USB-C PD or up to 26V from generic power adapter | Up to 20V from USB-C PD or up to 26V from generic power adapter | Up to 26V from a generic power adapter | Up to 26V from a generic power adapter |
-| Output, 4Ω | Non-amplified stereo output | 2x 3W | 2x 32W (4Ω, 1% THD+N) | 2x 40W (4Ω, 1% THD+N)   1x 60W (4Ω, 1% THD+N) | 2x 10W at 12V at 4Ω, THD+N = 1% (Efficiency mode) 1x 20W at 12V at 3Ω, THD+N = 1% (Efficiency mode) 1x 65W at 24V at 4Ω, THD+N = 1% (Power mode) | 4x 10W at 12V at 4Ω, THD+N = 1% (Efficiency mode) 2x 20W at 12V at 3Ω, THD+N = 1% (Efficiency mode) 2x 65W at 24V at 4Ω, THD+N = 1% (Power mode) |
-| Output, 8Ω | - | 2x 5W | 2x 22W (8Ω, 1% THD+N) | 2x 25W (8Ω, 1% THD+N) at 22V | 2x 30W at 24V at 8Ω, THD+N = 1% (Power mode) | 4x 30W at 24V at 8Ω, THD+N = 1% (Power mode) |
-| PSRAM | 8MB PSRAM | 8MB PSRAM | 8MB PSRAM | 8MB PSRAM | 8MB PSRAM | 8MB PSRAM |
-| Peripheral | WS2812B RGB Led, I2S microphone (S3 only) | WS2812B RGB Led | 8x WS2812B RGB Led, SSD1306 128x64 OLED screen (optional) | 8x WS2812B RGB Led, SSD1306 128x64 OLED screen (optional), Rotary encoder with push button — Plus variant swaps the OLED for an optional SPI TFT and adds a front-facing I2S microphone | 1xWS2812B RGB Led, SSD1306 128x64 OLED screen (optional) | 1xWS2812B RGB LED, ILI9341 320x240px TFT screen (optional) |
-| Connectivity | WiFi   BT4.2   BLE | WiFi   BT4.2   BLE | WiFi   BT4.2   BLE   W5500 Ethernet | WiFi   BT4.2   BLE   W5500 Ethernet | WiFi   BT4.2   BLE   W5500 Ethernet | WiFi   BLE   W5500 Ethernet |
-| Size | 80 x 50 x 20mm | 80 x 50 x 20mm | 100 x 80 x 38mm | 100 x 80 x 38mm | 90 x 90 x 40mm | 125 x 90 x 40mm |
-| Software support | Arduino samples, squeezelite-esp32, snapcast, ESPhome config | Arduino samples, squeezelite-esp32, snapcast, ESPhome config | Arduino samples, squeezelite-esp32, snapcast, ESPhome config | Arduino samples, squeezelite-esp32, snapcast, ESPhome config — Plus variant (early access): ESPHome Sendspin and squeezelite-esp32 so far, no standalone snapcast/AirPlay yet | Arduino samples, squeezelite-esp32, snapcast, ESPhome configs (Sendspin included) | Arduino samples, squeezelite-esp32, snapcast, ESPhome configs (Sendspin included) |
-| [AirPlay 1 & 2](https://github.com/rbouteiller/airplay-esp32)* | ✅ | ✅ | ✅ | ✅ (classic ESP32 only — not yet on the Plus S3 variant) | ✅ | ✅ |
+|  | [HiFi Esparagus](https://www.tindie.com/products/sonocotta/esparagus-hifi-medialink/) | [Loud Esparagus](https://www.tindie.com/products/sonocotta/loud-esparagus-media-center/) | [Louder Esparagus](https://www.tindie.com/products/sonocotta/louder-esparagus-media-center/) | Louder Esparagus Plus (S3) | [Amped Esparagus](https://www.tindie.com/products/sonocotta/amped-esparagus-media-center/) | Amped Esparagus Plus (S3) | [Esparagus Audio Brick](https://www.crowdsupply.com/sonocotta/esparagus-audio-brick) | Esparagus Audio Brick Daul DAC |
+|---|---|---|---|---|---|---|---|---|
+| Image | ![DSC_0709](https://github.com/sonocotta/esparagus-hifi-medialink/assets/98712315/ea45f1d2-32b5-4f12-a63c-a8e403cb22db) | ![DSC_0706](https://github.com/sonocotta/esparagus-hifi-medialink/assets/5459747/2556b8ff-1827-4e03-8e28-31e40199943c) | ![DSC_0713](https://github.com/sonocotta/esparagus-media-center/assets/5459747/14d54647-2b7e-4b1a-9a8e-135a1598eb02) | ![DSC_0022](https://github.com/user-attachments/assets/b8242491-d2fd-4464-aeb8-ef797190a4ba) | ![DSC_0022](https://github.com/user-attachments/assets/b8242491-d2fd-4464-aeb8-ef797190a4ba) | ![DSC_0022](https://github.com/user-attachments/assets/b8242491-d2fd-4464-aeb8-ef797190a4ba) | ![image](https://github.com/user-attachments/assets/89792e6c-e530-4c2b-8e8a-6ce86c9a98dc) | ![image](https://github.com/user-attachments/assets/df78090e-6869-4d63-a812-e7a53d5559a0)
+| MCU | ESP32-WROVER-N8R8 or ESP32-S3-WROOM-N8R8 | ESP32-WROVER-N8R8 | ESP32-WROVER-N16R8 | ESP32-S3 (8MB flash + octal PSRAM) | ESP32-WROVER-N16R8 | ESP32-S3 (8MB flash + octal PSRAM) | ESP32-WROVER-N8R8 or ESP32-S3-WROOM-N8R8 | ESP32-S3-WROOM-N8R8 |
+| DAC | PCM5100A 32bit Stereo DAC -100 dB typical noise level | Dual I2S DAC ([MAX98357](https://www.analog.com/en/products/max98357a.html)) with built in D-Class amp | Stereo I2S DAC ( [TAS5805M](https://www.ti.com/product/TAS5805M) ) with built in D-Class amp | Stereo I2S DAC ( [TAS5825M](https://www.ti.com/product/TAS5825M) ) with built-in DSP and D-Class amp | [PCM5100A](https://www.ti.com/product/PCM5100A) 32bit Stereo DAC working with [TPA3110D2](https://www.ti.com/product/TPA3110D2)/[TPA3128D2](https://www.ti.com/product/TPA3128D2) D-Class amp (rev E-K) — rev M switches to [TPA3118D2](https://www.ti.com/product/TPA3118D2) | I2C-controlled [PCM5122](https://www.ti.com/product/PCM5122) 32bit Stereo DAC working with [TPA3118D2](https://www.ti.com/product/TPA3118D2) D-Class amp | Stereo I2S DAC (  [TAS5825M](https://www.ti.com/product/TAS5825M)  ) with a built-in D-Class amp | Dual Stereo I2S DAC (  <br>[TAS5825M](https://www.ti.com/product/TAS5825M)<br>  ) with a built-in D-Class amp |
+| Power | 5V over USB-C, 2x [LP5907](https://www.ti.com/lit/ds/symlink/lp5907.pdf) 3.3 V Ultra-Low-Noise LDO for analog section | 5V from USB-C | Up to 20V from USB-C PD or up to 26V from generic power adapter | Up to 20V from USB-C PD or up to 26V from generic power adapter | Up to 20V from USB-C PD or up to 26V from generic power adapter | Up to 20V from USB-C PD or up to 26V from generic power adapter | Up to 26V from a generic power adapter | Up to 26V from a generic power adapter |
+| Output, 4Ω | Non-amplified stereo output | 2x 3W | 2x 32W (4Ω, 1% THD+N) | 2x 32W (4Ω, 1% THD+N) | 2x 40W (4Ω, 1% THD+N)   1x 60W (4Ω, 1% THD+N) | 2x 40W (4Ω, 1% THD+N)   1x 60W (4Ω, 1% THD+N) | 2x 10W at 12V at 4Ω, THD+N = 1% (Efficiency mode) 1x 20W at 12V at 3Ω, THD+N = 1% (Efficiency mode) 1x 65W at 24V at 4Ω, THD+N = 1% (Power mode) | 4x 10W at 12V at 4Ω, THD+N = 1% (Efficiency mode) 2x 20W at 12V at 3Ω, THD+N = 1% (Efficiency mode) 2x 65W at 24V at 4Ω, THD+N = 1% (Power mode) |
+| Output, 8Ω | - | 2x 5W | 2x 22W (8Ω, 1% THD+N) | 2x 22W (8Ω, 1% THD+N) | 2x 25W (8Ω, 1% THD+N) at 22V | 2x 25W (8Ω, 1% THD+N) at 22V | 2x 30W at 24V at 8Ω, THD+N = 1% (Power mode) | 4x 30W at 24V at 8Ω, THD+N = 1% (Power mode) |
+| PSRAM | 8MB PSRAM | 8MB PSRAM | 8MB PSRAM | 8MB PSRAM | 8MB PSRAM | 8MB PSRAM | 8MB PSRAM | 8MB PSRAM |
+| Peripheral | WS2812B RGB Led, I2S microphone (S3 only) | WS2812B RGB Led | 8x WS2812B RGB Led, SSD1306 128x64 OLED screen (optional) | 8x WS2812B RGB Led, optional SPI TFT screen, front-facing I2S microphone, rotary encoder with push button | 8x WS2812B RGB Led, Rotary encoder with push button, SSD1306 128x64 OLED screen (optional, rev E-K) — rev M replaces it with an optional SPI TFT screen instead | 8x WS2812B RGB Led, optional SPI TFT screen, front-facing I2S microphone, rotary encoder with push button | 1xWS2812B RGB Led, SSD1306 128x64 OLED screen (optional) | 1xWS2812B RGB LED, ILI9341 320x240px TFT screen (optional) |
+| Connectivity | WiFi   BT4.2   BLE | WiFi   BT4.2   BLE | WiFi   BT4.2   BLE   W5500 Ethernet | WiFi   BLE   W5500 Ethernet | WiFi   BT4.2   BLE   W5500 Ethernet | WiFi   BLE   W5500 Ethernet | WiFi   BT4.2   BLE   W5500 Ethernet | WiFi   BLE   W5500 Ethernet |
+| Size | 80 x 50 x 20mm | 80 x 50 x 20mm | 100 x 80 x 38mm | 110 x 40 x 100mm | 100 x 80 x 38mm (rev E-K), 110 x 40 x 100m (rev M) | 110 x 40 x 100 | 90 x 90 x 40mm | 125 x 90 x 40mm |
+| Software support | Arduino samples, squeezelite-esp32, snapcast, ESPhome config | Arduino samples, squeezelite-esp32, snapcast, ESPhome config | Arduino samples, squeezelite-esp32, snapcast, ESPhome config | ESPHome Sendspin and squeezelite-esp32 (unofficial S3 support) — early access, no standalone snapcast/AirPlay yet | Arduino samples, squeezelite-esp32, snapcast, ESPhome config (all revisions, rev M included) | ESPHome Sendspin only — early access, no squeezelite-esp32/standalone snapcast/AirPlay yet | Arduino samples, squeezelite-esp32, snapcast, ESPhome configs (Sendspin included) | Arduino samples, squeezelite-esp32, snapcast, ESPhome configs (Sendspin included) |
+| [AirPlay 1 & 2](https://github.com/rbouteiller/airplay-esp32)* | ✅ | ✅ | ✅ | ⏳ *(early access, not yet built)* | ✅ | ⏳ *(early access, not yet built)* | ✅ | ✅ |
 
 \* See [AirPlay 1 & 2](#airplay-1--2) below for chip-specific caveats (Bluetooth, USB audio, DSP).
 
@@ -199,7 +201,7 @@ Some Esparagus boards are already available in both the 'classic' ESP32 and the 
 
 If none of that applies to you and you just want the safe default, pick **ESP32-S3** — it's the newer chip. Only choose classic ESP32 if you specifically need Bluetooth A2DP, or plan to run Squeezelite-ESP32/Snapclient today.
 
-**Louder Esparagus** is currently **ESP32-only** — an ESP32-S3 revision is still work in progress. **Amped Esparagus** now has an early-access ESP32-S3 revision, **Amped Esparagus Plus (S3)**, but it isn't available for purchase yet and currently only ships an ESPHome Sendspin image (no Squeezelite-ESP32 or AirPlay firmware yet), so the use-case guidance above doesn't fully apply to it until those catch up. **Loud Esparagus** (ESP32) and the **Esparagus Audio Brick Dual DAC** (ESP32-S3) are single-chip designs, so there's no choice on those either.
+**Louder Esparagus** and **Amped Esparagus** now both have early-access ESP32-S3 revisions — **Louder Esparagus Plus (S3)** and **Amped Esparagus Plus (S3)** — but Louder is not available for purchase yet, and AirPlay firmware support for both is a work in progress.  **Loud Esparagus** (ESP32) and the **Esparagus Audio Brick Dual DAC** (ESP32-S3) are single-chip designs, so there's no choice on those either.
 
 ## Board Pinout
 
@@ -217,7 +219,7 @@ If none of that applies to you and you just want the safe default, pick **ESP32-
 | ESP32    |    2    |  18      |  23    |   19     |   4          | 5         | 32           |     33          |  21       |
 | ESP32-S3 |    2    |  12      |  11    |   13     |   38         | 47        | 48           |     21          |  --       |
 
-### Rotary encoder (Amped Esparagus)
+### Rotary encoder (Amped Esparagus, and the Plus S3 boards)
 
 |                  | A   | B   |  SW  |  
 |------------------|-----|-----|------|
@@ -230,14 +232,15 @@ If none of that applies to you and you just want the safe default, pick **ESP32-
 |          | I2C CLK  | I2C DATA |  PWDN  |  FAULT (TAS5805M)   | FAULTZ (TAS5825M) | WARNZ (TAS5825M)
 |----------|----------|----------|--------|---------------------|-------------------|-------------------|
 | ESP32    |    27    |  21      |  33    |  34                 |  39               |  36 
-| ESP32-S3 |    9     |  8       |  17    |  --                 |  18               |  04
+| ESP32-S3 (Audio Brick) |    9     |  8       |  17    |  --                 |  18               |  04
+| ESP32-S3 (Louder Plus) |    41    |  42      |  4     |  --                 |  --               |  --
 
-### Peripheral - OLED Screen and W5500 Ethernet (Louder Esparagus)
+### Peripheral - Display and W5500 Ethernet (Louder Esparagus)
 
-|       | SPI HOST| SPI CLK  |SPI MOSI| SPI MISO | LAN RES   | LAN CS    | LAN INT   | OLED DC   | OLED CS   | OLED RST  |
-|-------|---------|----------|--------|----------|-----------|-----------|-----------|-----------|-----------|-----------|
-| ESP32 |    2    |  18      |  23    |   19     |  14       |  05       |  35       |   04      |   15      |    32     |
-| ESP32 |    2    |  12      |  11    |   13     |  05       |  10       |  06       |   38      |   47      |    48     |
+|                 | SPI HOST| SPI CLK  |SPI MOSI| SPI MISO | LAN RES   | LAN CS    | LAN INT   | DISPLAY DC | DISPLAY CS | DISPLAY RST |
+|-----------------|---------|----------|--------|----------|-----------|-----------|-----------|-----------|-----------|-----------|
+| ESP32 (OLED)    |    2    |  18      |  23    |   19     |  14       |  05       |  35       |   04      |   15      |    32     |
+| ESP32-S3 (Louder Plus, TFT) |    2    |  12      |  11    |   13     |  05       |  10       |  06       |   40      |   39      |    38     |
 
 ### Other Peripheral (Louder Esparagus)
 
@@ -367,6 +370,7 @@ All configurations use the ESP-IDF framework (preferred over Arduino) for better
 - [8-hifi-esparagus-s3](/firmware/esphome/8-hifi-esparagus-s3/) - PCM5100 DAC with mic and RGB LED (ESP32-S3)
 - [9-audio-brick-dual-s3](/firmware/esphome/9-audio-brick-dual-s3/) - Dual TAS5825M DAC on the DIN-rail enclosure (ESP32-S3)
 - [11-amped-esapragus-plus-s3](/firmware/esphome/11-amped-esapragus-plus-s3/) - PCM5122 DAC + TPA3118 amp, with mic, rotary encoder, and optional TFT (ESP32-S3, early access)
+- [12-louder-esparagus-plus-s3](/firmware/esphome/12-louder-esparagus-plus-s3/) - TAS5825M DAC with built-in DSP, with mic, rotary encoder, and optional TFT (ESP32-S3, early access)
 
 #### Snapclient multi-room playback (experimental)
 
@@ -386,7 +390,7 @@ Available in all hardware variant directories:
 
 Local, off-grid voice assistant configurations bring on-device wake-word detection and Home Assistant's Assist pipeline directly to the device, without depending on cloud services. See the [ESPHome Firmware Guide](/firmware/esphome/README.md#voice-assistant) for detailed information.
 
-Available on ESP32-S3 boards with an I2S microphone (currently [8-hifi-esparagus-s3](/firmware/esphome/8-hifi-esparagus-s3/), [5-audio-brick-s3](/firmware/esphome/5-audio-brick-s3/), and [11-amped-esapragus-plus-s3](/firmware/esphome/11-amped-esapragus-plus-s3/)):
+Available on ESP32-S3 boards with an I2S microphone (currently [8-hifi-esparagus-s3](/firmware/esphome/8-hifi-esparagus-s3/), [5-audio-brick-s3](/firmware/esphome/5-audio-brick-s3/), [11-amped-esapragus-plus-s3](/firmware/esphome/11-amped-esapragus-plus-s3/), and [12-louder-esparagus-plus-s3](/firmware/esphome/12-louder-esparagus-plus-s3/)):
 - `*-voice-assist.yaml` - Voice assistant with local media player
 - `*-voice-assist-sendspin.yaml` - Voice assistant combined with Sendspin multi-room playback
 
@@ -560,7 +564,7 @@ Every Esparagus board is supported: HiFi Esparagus, Loud Esparagus, Louder Espar
 - **USB audio (UAC)** — ESP32-S3 revisions can be built as a USB sound card; the Audio Brick Dual already ships a ready-to-flash UAC build
 - **Full DSP control** on Louder Esparagus and the Audio Brick — the TAS5805M/TAS5825M's on-chip EQ is fully exposed: 15 cascaded biquad sections per channel/amplifier, each an arbitrary peaking filter, shelf, high/low pass, band pass, notch, phase shift, or raw coefficients, plus a crossover builder (and, on TAS5825M units, full PurePath Console 3 tuning replay)
 
-**Louder Esparagus** ESP32-S3 revision is still work in progress on the hardware side; the firmware side is largely ready, so once it ships, the same AirPlay/Bluetooth/DSP behavior described above applies to it too. **Amped Esparagus Plus (S3)** is now real, early-access hardware, but AirPlay firmware for it doesn't exist yet — today it only ships an ESPHome Sendspin image (see [Amped Esparagus](#amped-esparagus) above).
+**Louder Esparagus Plus (S3)** and **Amped Esparagus Plus (S3)** are now real, early-access hardware, but AirPlay firmware doesn't exist for either yet — today they ship an ESPHome Sendspin image (both) and a Squeezelite-ESP32 build.
 
 ### TAS58xx DSP: full parametric EQ and crossover control
 

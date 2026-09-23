@@ -152,6 +152,42 @@
                         ]
                     }
                 ]
+            },
+            {
+                "images": [
+                    "https://github.com/user-attachments/assets/b8242491-d2fd-4464-aeb8-ef797190a4ba"
+                ],
+                "title": "Louder Esparagus Plus S3",
+                "description": "Louder Esparagus Plus S3 is a sister board to Amped Esparagus Plus (S3), sharing the same ESP32-S3 look and feel — front-facing I2S microphone, SPI TFT display, and rotary encoder — but built around the TAS5825M DAC with built-in DSP instead, for setups that want Louder Esparagus's DSP capabilities alongside voice assist or an on-device display.",
+                "firmwares": [
+                    {
+                        "id": "esphome",
+                        "label": "Sendspin",
+                        "badge": "Recommended",
+                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards.",
+                        "manifests": [
+                            {
+                                "label": "Install ESPHome (Sendspin multi-room)",
+                                "path": "artifacts/manifest-louder-esparagus-plus-s3-sendspin-esphome-latest.json"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "squeezelite",
+                        "label": "Squeezelite-ESP32",
+                        "note": "Classic Logitech Media Server / Squeezelite client firmware.",
+                        "manifests": [
+                            {
+                                "label": "16-bit (Standard)",
+                                "path": "artifacts/manifest-louder-esparagus-plus-s3-16-latest.json"
+                            },
+                            {
+                                "label": "32-bit (High Quality)",
+                                "path": "artifacts/manifest-louder-esparagus-plus-s3-32-latest.json"
+                            }
+                        ]
+                    }
+                ]
             }
         ]
     },
@@ -236,7 +272,7 @@
                     "https://github.com/user-attachments/assets/b8242491-d2fd-4464-aeb8-ef797190a4ba"
                 ],
                 "title": "Amped Esparagus (rev M, TPA3118)",
-                "description": "Amped Esparagus rev M replaces the TPA3128 amp used on rev J/K with a TPA3118, fixing the audible pop/static on playback start (see <a href=\"https://github.com/sonocotta/esparagus-media-center/blob/main/errata/tpa3128-1spw-pop-noise.md\">TPA3128 1SPW pop-noise errata</a>) via a slower MUTE ramp, fixed BD modulation, and an added input band-pass filter. Placeholder listing: not yet available for purchase, and this image is shared with the earlier revisions pending a rev-M-specific photo.",
+                "description": "Amped Esparagus rev M replaces the TPA3128 amp used on rev J/K with a TPA3118, fixing the audible pop/static on playback start (see <a href=\"https://github.com/sonocotta/esparagus-media-center/blob/main/errata/tpa3128-1spw-pop-noise.md\">TPA3128 1SPW pop-noise errata</a>) via a slower MUTE ramp, fixed BD modulation, and an added input band-pass filter.",
                 "firmwares": [
                     {
                         "id": "esphome",
@@ -247,6 +283,21 @@
                             {
                                 "label": "Install ESPHome (Sendspin multi-room)",
                                 "path": "artifacts/manifest-amped-esparagus-m-sendspin-esphome-latest.json"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "squeezelite",
+                        "label": "Squeezelite-ESP32",
+                        "note": "Classic Logitech Media Server / Squeezelite client firmware.",
+                        "manifests": [
+                            {
+                                "label": "TPA3118, 16-bit (Standard)",
+                                "path": "artifacts/manifest-amped-esparagus-m-16-latest.json"
+                            },
+                            {
+                                "label": "TPA3118, 32-bit (High Quality)",
+                                "path": "artifacts/manifest-amped-esparagus-m-32-latest.json"
                             }
                         ]
                     }
@@ -371,7 +422,7 @@
                     "https://github.com/user-attachments/assets/df78090e-6869-4d63-a812-e7a53d5559a0"
                 ],
                 "title": "Esparagus Audio Brick Dual S3 (2.1)",
-                "description": "Esparagus Audio Brick Dual S3 packs two TAS5825M DACs on one ESP32-S3 board. In this 2.1 wiring, the main DAC runs in BTL (stereo mains) and the secondary DAC runs in PBTL (a single, harder-driven mono channel) - i.e. a stereo pair plus a powered subwoofer. Placeholder listing: referred to as \"Esparagus Audio Brick Daul DAC\" in the project README, not yet listed for sale on Tindie/CrowdSupply.",
+                "description": "Esparagus Audio Brick Dual S3 packs two TAS5825M DACs on one ESP32-S3 board. In this 2.1 wiring, the main DAC runs in BTL (stereo mains) and the secondary DAC runs in PBTL (a single, harder-driven mono channel) - i.e. a stereo pair plus a powered subwoofer.",
                 "firmwares": [
                     {
                         "id": "esphome",
@@ -392,7 +443,7 @@
                     "https://github.com/user-attachments/assets/df78090e-6869-4d63-a812-e7a53d5559a0"
                 ],
                 "title": "Esparagus Audio Brick Dual S3 (4.0)",
-                "description": "Esparagus Audio Brick Dual S3 packs two TAS5825M DACs on one ESP32-S3 board. In this 4.0 wiring, both DACs run in BTL - 4 independent full-range stereo channels for driving four speakers directly. Placeholder listing: referred to as \"Esparagus Audio Brick Daul DAC\" in the project README, not yet listed for sale on Tindie/CrowdSupply.",
+                "description": "Esparagus Audio Brick Dual S3 packs two TAS5825M DACs on one ESP32-S3 board. In this 4.0 wiring, both DACs run in BTL - 4 independent full-range stereo channels for driving four speakers directly.",
                 "firmwares": [
                     {
                         "id": "esphome",

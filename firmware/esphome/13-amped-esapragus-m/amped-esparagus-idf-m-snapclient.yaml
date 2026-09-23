@@ -1,24 +1,20 @@
 # ============================================================
-# Amped-Esparagus - Sendspin Configuration (Factory-shippable copy)
+# Amped-Esparagus (rev M) - Snapclient Configuration
 # ============================================================
 # ESP32 audio board with PCM5100 DAC (I2S) and TPA3118 AMP (rev M)
-# Configured with Sendspin for synchronized multi-room audio
-#
-# This is a factory-shippable copy of
-# ../13-amped-esapragus-m/amped-esparagus-idf-m-sendspin.yaml, kept in
-# sync by hand. It differs from the dev config in the ways a binary
-# that ships to strangers must:
-#   - No `!secret` Wi-Fi credentials or OTA password baked in (those
-#     only exist on the developer's own machine) — Wi-Fi is instead
-#     provisioned per-unit via Improv (see the sibling .factory.yaml).
-#   - `esphome.ota` is provided by the .factory.yaml overlay
-#     (platform: http_request) instead of platform: esphome.
+# Configured as a Snapcast client for synchronized audio
+# There are two implementations available:
+# 1) Basic snapclient without DSP controls (c-MM original port)
+# 2) snapclient with added DSP controls (farmed-switch fork of c-MM port)
+#     Frequencies: 40, 50, 60, 70, 80, 90, 100, 110, 120, 130,
+#                 140, 200, 315, 500, 800, 1250, 2000, 5000 Hz
+#     Range: -15dB to +15dB per band
 # Board-specific pinouts defined in substitutions
 # Functional blocks imported from /packages
 # ============================================================
 
 substitutions:
-  name: amped-esparagus-m
+  name: esphome-web-db7ea8
   friendly_name: Amped-Esparagus
   task_stack_in_psram: "false"
 
@@ -27,8 +23,6 @@ substitutions:
   i2s_lrclk_pin: GPIO25
   i2s_bclk_pin: GPIO26
   i2s_dout_pin: GPIO22
-
-  # DAC Enable Pin
   dac_enable_pin: GPIO13
   dac_enable_restore_mode: ALWAYS_OFF
 
@@ -62,8 +56,9 @@ substitutions:
   display_rotation: 0
   display_model: ILI9342
 
-  # ESP32 optimal settings for Sendspin
-  media_source_buffer_size: 100000
+  # ===== Snapcast Server Configuration =====
+  snapcast_server_ip: "192.168.1.48"
+  snapcast_server_port: "1704"
 
 esphome:
   name: ${name}
@@ -98,11 +93,13 @@ logger:
 
 api:
 
-# Wi-Fi credentials are never baked in: this image ships with no
-# configured network and is provisioned per-unit over Improv
-# (BLE + Serial), wired up in the .factory.yaml overlay.
+ota:
+  platform: esphome
+  password: !secret esphome_ota_password
+
 wifi:
-  id: wifi_id
+  ssid: !secret esphome_wifi_ssid
+  password: !secret esphome_wifi_password
 
 psram:
   speed: 80MHz
@@ -116,23 +113,21 @@ packages:
     url: https://github.com/sonocotta/esparagus-media-center
     ref: main
     files:
-      - firmware/esphome/packages/audio.yaml
-      - firmware/esphome/packages/sendspin.yaml
-      - firmware/esphome/packages/sendspin-addon-dac-enable.yaml
-      # Optional : OLED displays clock when idling, and track/artist info when playing
-      # - firmware/esphome/packages/sendspin-addon-oled.yaml
-      - firmware/esphome/packages/sendspin-addon-esp32.yaml
-      - firmware/esphome/packages/sendspin-addon-rotary.yaml
-
-      - firmware/esphome/packages/dac-switch.yaml
       - firmware/esphome/packages/light-x.yaml
       - firmware/esphome/packages/ir-receiver.yaml
-      - firmware/esphome/packages/rotary-encoder.yaml
       - firmware/esphome/packages/monitoring.yaml
       - firmware/esphome/packages/monitoring-wifi.yaml
+      - firmware/esphome/packages/rotary-encoder.yaml
+      - firmware/esphome/packages/dac-switch.yaml
+      # Option A: @c-MM original port of esp32-snapclient client
+      # Basic implementation without DSP controls
+      - firmware/esphome/packages/snapclient-new.yaml
+      - firmware/esphome/packages/snapclient-addon-dac-enable.yaml
+      # Option B: @farmed-switch fork of the c-MM snapclient with added DSP controls
+      # Implements software BQ-filters for basic DACs and controls hardware DSP for DSP-enabled DACs like TAS5805M
+      # - firmware/esphome/packages/snapclient-with-dsp.yaml
 
-      # Optional ethernet (replace wifi config if you use this, you need to exclude OLED package if you do this to free up SPI bus)
+      # Optional Ethernet (replace wifi config if you use this, you need to exclude the TFT package if you do this to free up SPI bus)
       # - firmware/esphome/packages/ethernet-w5500.yaml
       # Optional display configuration for TFT SPI display
-      # - firmware/esphome/packages/weather-sensors.yaml
-      # - firmware/esphome/packages/sendspin-addon-tft-weather-vertical.yaml
+      # - firmware/esphome/packages/tft-spi.yaml
