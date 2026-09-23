@@ -19,6 +19,7 @@ This directory contains ESPHome firmware configurations for all Esparagus Media 
     - [8. HiFi-Esparagus-S3](#8-hifi-esparagus-s3)
     - [9. Esparagus Audio Brick Dual S3](#9-esparagus-audio-brick-dual-s3)
     - [11. Amped-Esparagus-Plus-S3](#11-amped-esparagus-plus-s3)
+    - [12. Louder-Esparagus-Plus-S3](#12-louder-esparagus-plus-s3)
   - [Configuration Variants](#configuration-variants)
     - [Standard Media Player](#standard-media-player)
     - [Snapclient](#snapclient)
@@ -235,6 +236,24 @@ See [Home Assistant: HiFi-Esparagus-S3](../../README.md#home-assistant-hifi-espa
 - `amped-esparagus-plus-s3-sendspin.yaml` - Sendspin synchronized playback
 - `amped-esparagus-plus-s3-voice-assist.yaml` - Local voice assistant (wake word + media player with ducking)
 - `amped-esparagus-plus-s3-voice-assist-sendspin.yaml` - Voice assistant combined with Sendspin multi-room playback
+
+Only the Sendspin configuration ships as a factory/OTA image today (see the web installer); the other variants are dev configs, flashed and adopted via the ESPHome Dashboard.
+
+---
+
+### 12. Louder-Esparagus-Plus-S3
+
+**MCU**: ESP32-S3 with PSRAM
+**DAC**: TAS5825M (I2C + I2S) with built-in DSP
+**Target**: Sister board to Amped-Esparagus-Plus-S3, sharing the same S3 front-facing I2S microphone, rotary encoder, and optional SPI TFT display, but built around Louder-Esparagus's TAS5825M DSP DAC instead, for setups that want DSP capabilities alongside voice assist or an on-device display
+**Features**: RGB LED, IR receiver, rotary encoder, I2S microphone, optional SPI TFT display
+
+**Configurations:**
+- `louder-esparagus-plus-s3.yaml` - Standard media player with mixer/resampler
+- `louder-esparagus-plus-s3-snapclient.yaml` - Snapcast client
+- `louder-esparagus-plus-s3-sendspin.yaml` - Sendspin synchronized playback
+- `louder-esparagus-plus-s3-voice-assist.yaml` - Local voice assistant (wake word + media player with ducking)
+- `louder-esparagus-plus-s3-voice-assist-sendspin.yaml` - Voice assistant combined with Sendspin multi-room playback
 
 Only the Sendspin configuration ships as a factory/OTA image today (see the web installer); the other variants are dev configs, flashed and adopted via the ESPHome Dashboard.
 

@@ -152,6 +152,27 @@
                         ]
                     }
                 ]
+            },
+            {
+                "images": [
+                    "https://github.com/user-attachments/assets/b8242491-d2fd-4464-aeb8-ef797190a4ba"
+                ],
+                "title": "Louder Esparagus Plus S3",
+                "description": "Louder Esparagus Plus S3 is a sister board to Amped Esparagus Plus (S3), sharing the same ESP32-S3 look and feel — front-facing I2S microphone, SPI TFT display, and rotary encoder — but built around the TAS5825M DAC with built-in DSP instead, for setups that want Louder Esparagus's DSP capabilities alongside voice assist or an on-device display.",
+                "firmwares": [
+                    {
+                        "id": "esphome",
+                        "label": "Sendspin",
+                        "badge": "Recommended",
+                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards.",
+                        "manifests": [
+                            {
+                                "label": "Install ESPHome (Sendspin multi-room)",
+                                "path": "artifacts/manifest-louder-esparagus-plus-s3-sendspin-esphome-latest.json"
+                            }
+                        ]
+                    }
+                ]
             }
         ]
     },
