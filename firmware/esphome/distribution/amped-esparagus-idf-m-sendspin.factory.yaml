@@ -51,7 +51,7 @@ update:
 # Lets anyone running their own ESPHome Dashboard "adopt" this device
 # from the real (non-factory) config that actually matches its hardware.
 dashboard_import:
-  package_import_url: github://sonocotta/esparagus-media-center/firmware/esphome/4-amped-esapragus/amped-esparagus-idf-m-sendspin.yaml@main
+  package_import_url: github://sonocotta/esparagus-media-center/firmware/esphome/13-amped-esapragus-m/amped-esparagus-idf-m-sendspin.yaml@main
   import_full_config: false
 
 # ===== Wi-Fi onboarding (Improv) =====
