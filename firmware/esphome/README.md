@@ -255,7 +255,7 @@ Only the Sendspin configuration ships as a factory/OTA image today (see the web 
 - `louder-esparagus-plus-s3-voice-assist.yaml` - Local voice assistant (wake word + media player with ducking)
 - `louder-esparagus-plus-s3-voice-assist-sendspin.yaml` - Voice assistant combined with Sendspin multi-room playback
 
-Only the Sendspin configuration ships as a factory/OTA image today (see the web installer); the other variants are dev configs, flashed and adopted via the ESPHome Dashboard.
+Only the Sendspin configuration ships as a factory/OTA ESPHome image today (see the web installer); the other ESPHome variants are dev configs, flashed and adopted via the ESPHome Dashboard. A Squeezelite-ESP32 build (16-bit and 32-bit) is also available from the web installer.
 
 ---
 
