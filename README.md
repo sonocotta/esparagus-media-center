@@ -992,4 +992,5 @@ You may support our work by ordering this product at Tindie
 - HiFi Esparagus at [Lectronz](https://lectronz.com/products/hifi-esparagus), [Elecrow](https://www.elecrow.com/hifi-esparagus.html), and [Tindie](https://www.tindie.com/products/sonocotta/esparagus-hifi-medialink/)
 - Loud Esparagus at [Lectronz](https://lectronz.com/products/loud-esparagus), [Elecrow](https://www.elecrow.com/loud-esparagus.html), and [Tindie](https://www.tindie.com/products/sonocotta/loud-esparagus-media-center/)
 - Louder Esparagus at [Lectronz](https://lectronz.com/products/louder-esparagus), [Elecrow](https://www.elecrow.com/louder-esparagus-media-center.html), and [Tindie](https://www.tindie.com/products/sonocotta/louder-esparagus-media-center/)
-- Amped Esparagus at [Lectronz](https://lectronz.com/products/amped-esparagus) and [Tindie](https://www.tindie.com/products/sonocotta/amped-esparagus-media-center/) 
+- Amped Esparagus at [Lectronz](https://lectronz.com/products/amped-esparagus) and [Tindie](https://www.tindie.com/products/sonocotta/amped-esparagus-media-center/)
+- Esparagus Audio Brick at [Lectronz](https://lectronz.com/products/esparagus-audio-brick) and [Tindie](https://www.tindie.com/products/sonocotta/esparagus-audio-brick/)
