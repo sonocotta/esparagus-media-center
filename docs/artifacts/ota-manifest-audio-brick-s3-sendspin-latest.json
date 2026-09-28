@@ -1,14 +1,14 @@
 {
   "name": "audio-brick-s3-sendspin",
-  "version": "2026.09.23-f6699d0f",
+  "version": "2026.09.28-e27d8fc0",
   "builds": [
     {
       "chipFamily": "ESP32-S3",
       "ota": {
-        "md5": "b21e28a1b67672530c2d7d20eb97523c",
+        "md5": "1c2695d657162cd570d8bc0fc06ba488",
         "path": "https://sonocotta.github.io/esparagus-media-center/artifacts/binaries/esphome/audio-brick-s3-sendspin/firmware.ota.bin",
-        "release_url": "https://github.com/sonocotta/esparagus-media-center/commit/f6699d0f",
-        "summary": "Esparagus Audio Brick (ESP32-S3) Sendspin firmware 2026.09.23-f6699d0f"
+        "release_url": "https://github.com/sonocotta/esparagus-media-center/commit/e27d8fc0",
+        "summary": "Esparagus Audio Brick (ESP32-S3) Sendspin firmware 2026.09.28-e27d8fc0"
       }
     }
   ],
