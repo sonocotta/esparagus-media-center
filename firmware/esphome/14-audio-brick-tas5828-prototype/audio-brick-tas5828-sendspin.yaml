@@ -1,0 +1,133 @@
+substitutions:
+  name: esphome-web-88e0f0
+  friendly_name: Audio-Brick-Brazil
+  task_stack_in_psram: "false"
+
+  # ===== Board-Specific Pinouts =====
+  # I2S Audio
+  i2s_lrclk_pin: GPIO25
+  i2s_bclk_pin: GPIO26
+  i2s_dout_pin: GPIO22
+
+  # TAS5825M
+  tas58xx_variant: TAS5825M
+  tas58xx_enable_pin: GPIO33
+  # tas58xx_dac_mode: PBTL
+  # tas58xx_mixer_mode: MONO
+  tas58xx_address: 0x60
+  tas58xx_modulation: BD_MODE
+  tas58xx_analog_gain: 0db
+  tas58xx_volume_max: 24dB
+  tas58xx_volume_min: -60dB
+  tas58xx_refresh_eq: AUTO
+  tas58xx_branch: dev        
+  tas58xx_dac_restore_mode: ALWAYS_OFF
+
+  i2c_sda_pin: GPIO21
+  i2c_scl_pin: GPIO27
+
+  # SPI pins (for display and ethernet)
+  spi_clk_pin: GPIO18
+  spi_mosi_pin: GPIO23
+  spi_miso_pin: GPIO19
+
+  # Ethernet (W5500)
+  eth_cs_pin: GPIO05
+  eth_interrupt_pin: GPIO35
+  eth_reset_pin: GPIO14
+
+  # Fan pin
+  fan_pwn_pin: GPIO4 
+
+  # ESP32 optimal settings for Sendspin
+  media_source_buffer_size: 100000
+  
+esphome:
+  name: ${name}
+  friendly_name: ${friendly_name}
+  min_version: 2026.5.0
+  name_add_mac_suffix: false
+  platformio_options:
+    board_build.flash_mode: dio
+
+esp32:
+  id: esp32_id
+  variant: esp32
+  flash_size: 8MB
+  cpu_frequency: 240MHz
+  framework:
+    type: esp-idf
+    version: recommended
+    advanced:
+      minimum_chip_revision: "3.1" 
+    sdkconfig_options:
+      # Moves instructions and read only data from flash into PSRAM on boot.
+      # Both enabled allows instructions to execute while a flash operation is in progress without needing to be placed in IRAM.
+      # Considerably speeds up mWW at the cost of using more PSRAM.
+      CONFIG_SPIRAM_RODATA: "y"
+      CONFIG_SPIRAM_FETCH_INSTRUCTIONS: "y"
+      CONFIG_BT_ALLOCATION_FROM_SPIRAM_FIRST: "y"
+      CONFIG_BT_BLE_DYNAMIC_ENV_MEMORY: "y"
+      CONFIG_MBEDTLS_EXTERNAL_MEM_ALLOC: "y"
+      CONFIG_MBEDTLS_SSL_PROTO_TLS1_3: "y"
+      # Unnecessary on an ESP32-S3; uses more internal memory
+      CONFIG_ESP_WIFI_RX_IRAM_OPT: "y"
+      CONFIG_ESP_WIFI_IRAM_OPT: "y" 
+      CONFIG_ESP_WIFI_EXTRA_IRAM_OPT: "y"
+      CONFIG_LWIP_IRAM_OPTIMIZATION: "y" 
+
+logger:
+  level: DEBUG
+
+api:
+
+ota:
+  platform: esphome
+  password: !secret esphome_ota_password
+
+wifi:
+  ssid: !secret esphome_wifi_ssid
+  password: !secret esphome_wifi_password
+
+psram:
+  speed: 80MHz
+
+network:
+  enable_ipv6: false
+  
+http_request:
+
+# ===== Packages =====
+packages:
+  esparagus_remote:
+    url: https://github.com/sonocotta/esparagus-media-center
+    ref: features/test-tas5828-prototype
+    files:
+      # Option A: TAS58xx configured with ganged 15-band EQ
+      # - firmware/esphome/packages/dac-tas58xx.yaml
+      # Option B: TAS58xx configured with individual 15-band EQ per channel
+      # - firmware/esphome/packages/dac-tas58xx-biamp.yaml
+      # Option C: TAS58xx configured with bi-amp mode, with filters applied to both channels (HF or LF)
+      - firmware/esphome/packages/dac-tas58xx-presets.yaml
+      - firmware/esphome/packages/dac-tas58xx-addon-address.yaml
+      - firmware/esphome/packages/dac-tas58xx-addon-fan.yaml
+      
+      - firmware/esphome/packages/fan-dumb.yaml
+
+      - firmware/esphome/packages/audio.yaml
+      - firmware/esphome/packages/audio-addon-external-dac.yaml
+      - firmware/esphome/packages/sendspin-no-light.yaml
+      - firmware/esphome/packages/sendspin-addon-dac-enable.yaml
+      - firmware/esphome/packages/sendspin-addon-tas58xx.yaml
+      - firmware/esphome/packages/sendspin-addon-esp32.yaml
+
+      - firmware/esphome/packages/monitoring.yaml
+      - firmware/esphome/packages/monitoring-wifi.yaml
+
+  # fan: !include ../packages/fan-dumb.yaml
+  # sendspin: !include ../packages/sendspin-no-light.yaml
+  # This board straps the DAC to 0x60 instead of the TAS5825M default 0x4C.
+  # Requires tas58xx_branch: dev - 'main' discards an explicit address.
+  # dac_address: !include ../packages/dac-tas58xx-addon-address.yaml
+  # Force the cooling fan on while the DAC reports over-temperature
+  # dac_fan: !include ../packages/dac-tas58xx-addon-fan.yaml

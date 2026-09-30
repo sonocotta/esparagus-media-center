@@ -21,6 +21,7 @@ This directory contains ESPHome firmware configurations for all Esparagus Media 
     - [11. Amped-Esparagus-Plus-S3](#11-amped-esparagus-plus-s3)
     - [12. Louder-Esparagus-Plus-S3](#12-louder-esparagus-plus-s3)
     - [13. Amped-Esparagus (rev M)](#13-amped-esparagus-rev-m)
+    - [14. Esparagus Audio Brick TAS5828M (prototype)](#14-esparagus-audio-brick-tas5828m-prototype)
   - [Configuration Variants](#configuration-variants)
     - [Standard Media Player](#standard-media-player)
     - [Snapclient](#snapclient)
@@ -276,6 +277,26 @@ Only the Sendspin configuration ships as a factory/OTA ESPHome image today (see 
 
 ---
 
+### 14. Esparagus Audio Brick TAS5828M (prototype)
+
+**MCU**: ESP32 (rev 3.1) with PSRAM
+**DAC**: TAS5828M (I2C + I2S) with built-in DSP, strapped to I2C address `0x60`, wired PBTL for single-channel mono
+**Target**: Prototype mono brick — one high-power PBTL channel plus active cooling, driven by the DAC's own over-temperature flags
+**Features**: PWM cooling fan, filter-preset DSP
+
+**Configurations:**
+- `audio-brick-tas5828-sendspin.yaml` - Sendspin synchronized playback, no RGB LED
+
+Prototype board, so a few things differ from the shipping bricks:
+
+- The TAS5828M is driven by the `tas58xx` component as a `TAS5825M`; the two are register-compatible for this init sequence and DSP path.
+- Because the DAC is not on the part's default address, this config needs `tas58xx_branch: dev`. On the component's `main` branch an explicit `address:` is silently replaced with the variant default (`0x4C`), and the DAC then NACKs every register access — the symptom is `Error setup failed: 2` right after a successful I2C bus scan at `0x60`.
+- `dac_mode: PBTL` with `mixer_mode: MONO`, so only the left-channel DSP entities are configured. The `dev` branch rejects `channel_volume_right` and `eq_preset_right_channel` in PBTL mode, which is also why this board keeps its `audio_dac:` block inline instead of pulling in one of the shared `dac-tas58xx*.yaml` packages — those declare the right-channel entities unconditionally.
+- The cooling fan is driven from the DAC's over-temperature flags via `dac-tas58xx-addon-fan.yaml`.
+- Ethernet pins are present in the substitutions but no `ethernet:` block is enabled; the board runs on Wi-Fi.
+
+---
+
 ## Configuration Variants
 
 ### Standard Media Player
@@ -377,6 +398,7 @@ Local, off-grid voice assistant implementation for Home Assistant's Assist pipel
    - `11-amped-esapragus-plus-s3/`
    - `12-louder-esparagus-plus-s3/`
    - `13-amped-esapragus-m/`
+   - `14-audio-brick-tas5828-prototype/`
 
 2. **Choose your configuration variant**:
    - Standard: `*-idf.yaml`
@@ -515,16 +537,26 @@ The package system promotes code reusability across different hardware variants:
 
 ### DAC-Specific Packages
 
-- **`audio-external-dac.yaml`**: TAS5805M I2C DAC configuration
-- **`audio-external-dac.yaml`**: Generic TAS58xx family DAC support
-- **`dac-tas58xx.yaml`**: TAS58xx with basic DAC config
-- **`dac-tas58xx-biamp.yaml`**: TAS58xx with bi-amp configuration
+- **`audio-addon-external-dac.yaml`**: Wires an external I2C DAC into the shared audio pipeline
+- **`dac-tas58xx.yaml`**: TAS58xx with 15-band EQ in ganged mode (both channels share settings)
+- **`dac-tas58xx-biamp.yaml`**: TAS58xx with individual 15-band EQ per channel
+- **`dac-tas58xx-presets.yaml`**: TAS58xx with 4th-order high/low filter presets for bi-amp setups
+- **`dac-tas58xx-dual-2.1.yaml`** / **`dac-tas58xx-dual-4.0.yaml`**: Two TAS58xx DACs on one I2S bus, at `0x4c` and `0x4d`
+- **`dac-pcm5122.yaml`** / **`dac-pcm5122-dsp.yaml`**: PCM5122 I2C DAC, with and without software DSP controls
+- **`dac-switch.yaml`**: DAC enable/disable switch
+
+TAS58xx addons, each layered on top of one of the `dac-tas58xx*.yaml` packages:
+
+- **`dac-tas58xx-addon-address.yaml`**: Overrides the DAC's I2C address from the `tas58xx_address` substitution, for a board strapped to something other than the part's default (`0x2D` for TAS5805M, `0x4C` for TAS5825M). Leave it out and the component keeps picking the address from `tas58xx_variant`, so existing configs are unaffected. Requires `tas58xx_branch: dev` — the `main` branch discards an explicit address.
+- **`dac-tas58xx-addon-fan.yaml`**: Runs the `fan_pwm` output at `tas58xx_fan_level` (default `100%`) while the DAC reports an over-temperature warning or shutdown, and stops it once both clear. Needs one of the fan packages, and the board's `binary_sensor` block must give both fault sensors ids (`over_temperature_warning` and `over_temperature_shutdown` — the `dac-tas58xx*.yaml` packages already set the first).
 
 ### Feature Packages
 
 - **`ethernet-w5500.yaml`**: W5500 Ethernet module support
 - **`oled.yaml`**: SSD1306 OLED display
 - **`sendspin-*.yaml`**: Sendspin multi-room audio variants
+- **`fan.yaml`**: PWM cooling fan on `fan_pwm` plus a tacho RPM sensor
+- **`fan-dumb.yaml`**: PWM cooling fan on `fan_pwm` only, for boards with no tacho feedback
 
 ### Using Packages
 
