@@ -101,18 +101,22 @@ http_request:
 packages:
   esparagus_remote:
     url: https://github.com/sonocotta/esparagus-media-center
-    ref: main
+    ref: features/test-tas5828-prototype
     files:
       # Option A: TAS58xx configured with ganged 15-band EQ
       # - firmware/esphome/packages/dac-tas58xx.yaml
       # Option B: TAS58xx configured with individual 15-band EQ per channel
       # - firmware/esphome/packages/dac-tas58xx-biamp.yaml
       # Option C: TAS58xx configured with bi-amp mode, with filters applied to both channels (HF or LF)
-      # - firmware/esphome/packages/dac-tas58xx-presets.yaml
+      - firmware/esphome/packages/dac-tas58xx-presets.yaml
+      - firmware/esphome/packages/dac-tas58xx-addon-address.yaml
+      - firmware/esphome/packages/dac-tas58xx-addon-fan.yaml
+      
+      - firmware/esphome/packages/fan-dumb.yaml
 
       - firmware/esphome/packages/audio.yaml
       - firmware/esphome/packages/audio-addon-external-dac.yaml
-      # - firmware/esphome/packages/sendspin-no-light.yaml
+      - firmware/esphome/packages/sendspin-no-light.yaml
       - firmware/esphome/packages/sendspin-addon-dac-enable.yaml
       - firmware/esphome/packages/sendspin-addon-tas58xx.yaml
       - firmware/esphome/packages/sendspin-addon-esp32.yaml
@@ -120,100 +124,10 @@ packages:
       - firmware/esphome/packages/monitoring.yaml
       - firmware/esphome/packages/monitoring-wifi.yaml
 
-  tas5825m: !include ../packages/dac-tas58xx-presets.yaml
-  fan: !include ../packages/fan-dumb.yaml
-  sendspin: !include ../packages/sendspin-no-light.yaml
+  # fan: !include ../packages/fan-dumb.yaml
+  # sendspin: !include ../packages/sendspin-no-light.yaml
   # This board straps the DAC to 0x60 instead of the TAS5825M default 0x4C.
   # Requires tas58xx_branch: dev - 'main' discards an explicit address.
-  dac_address: !include ../packages/dac-tas58xx-addon-address.yaml
+  # dac_address: !include ../packages/dac-tas58xx-addon-address.yaml
   # Force the cooling fan on while the DAC reports over-temperature
-  dac_fan: !include ../packages/dac-tas58xx-addon-fan.yaml
-
-# Copied from dac-tas58xx-presets.yaml due to incompatibility of dev and main branch configs
-# external_components:
-#   - source: github://mrtoy-me/esphome-tas58xx@${tas58xx_branch}
-#     components: [tas58xx]
-#     refresh: 48h
-
-# i2c:
-#   sda: ${i2c_sda_pin}
-#   scl: ${i2c_scl_pin}
-#   frequency: 400kHz
-#   scan: true
-#   id: i2c_bus
-
-# ### TAS5805M/TAS5825M DAC configuration
-# audio_dac:
-#   - platform: tas58xx
-#     id: external_dac
-#     i2c_id: i2c_bus
-#     # I2C address is applied by packages/dac-tas58xx-addon-address.yaml
-#     tas58xx_dac: ${tas58xx_variant}     # 'TAS5805M' or 'TAS5825M'
-#     enable_pin: ${tas58xx_enable_pin}   # Physical pin connected to PWDN pin
-#     modulation: ${tas58xx_modulation}   # 'BD_MODE' default and for VCC 12V or less, or '1SPW_MODE' consider more power efficiency for VCC >12V
-#     dac_mode: ${tas58xx_dac_mode}       # 'BTL' / Bridge Tied Load - 2Ch Stereo, or 'PBTL' / Parallel Bridge Tied Load - 1Ch Mono (double power)
-#     mixer_mode: ${tas58xx_mixer_mode}   # STEREO, STEREO_INVERSE, MONO, LEFT, RIGHT
-#     analog_gain: ${tas58xx_analog_gain} # Startup Gain or Output voltage swing - pick based on the power supply voltage: https://github.com/sonocotta/esp32-tas5805m-dac?tab=readme-ov-file#digital-volume-and-analog-gain
-#     volume_max: ${tas58xx_volume_max}   # Max HA volume mapping to Digital Volume control, goes as high as +24dB, but not recommend going much above 0 dB, risking to cause clipping on high volume
-#     volume_min: ${tas58xx_volume_min}   # Min HA volume mapping to Digital Volume control, goes as low as -103dB, but prefer to set higher to have a reasonable volume range
-#     refresh_eq: ${tas58xx_refresh_eq}
-#     update_interval: 5s                 # How often fault registers are read and cleared
-
-# switch:
-#   - platform: tas58xx
-#     enable_dac:
-#       name: Enable DAC
-#       id: enable_dac
-#       restore_mode: ${tas58xx_dac_restore_mode}
-
-# select:
-#   - platform: tas58xx
-#     mixer_mode:
-#       name: _Mixer Mode
-#     # eq_mode required if Number left_eq_gains/Right_eq_gains or eq_preset_left_channel/eq_preset_right_channel are configured
-#     eq_mode:
-#       name: EQ Mode
-#       id: tas58xx_eq_mode_select
-#     # new eq presets - both must be defined and cannot be used with left_eq_gains and right_eq_gains
-#     eq_preset_left_channel:
-#       name: EQ Preset Cutoff Left Channel
-#     # dev branch: invalid for dac_mode PBTL (mono) - rejected at validation
-#     # eq_preset_right_channel:
-#     #   name: EQ Preset Cutoff Right Channel
-      
-# number:
-#   - platform: tas58xx
-#     channel_volume_left:
-#       name: _Volume Left
-#     # dev branch: invalid for dac_mode PBTL (mono) - rejected at validation
-#     # channel_volume_right:
-#     #   name: _Volume Right
-
-# ### Faults registers read directly from TAS58XX
-# binary_sensor:
-#   - platform: tas58xx
-#     have_fault:
-#       name: Any Faults
-#       exclude: CLOCK_FAULT
-#     left_channel_dc_fault:
-#       name: Left Channel DC Fault
-#     right_channel_dc_fault:
-#       name: Right Channel DC Fault
-#     left_channel_over_current:
-#       name: Left Channel Over Current
-#     right_channel_over_current:
-#       name: Right Channel Over Current
-#     otp_crc_check:
-#       name: CRC Check Fault
-#     bq_write_failed:
-#       name: BQ Write Failure
-#     pcdd_over_voltage:
-#       name: PCDD Over Voltage
-#     pcdd_under_voltage:
-#       name: PCDD Under Voltage
-#     over_temp_shutdown:
-#       name: Over Temperature Shutdown Fault
-#       id: over_temperature_shutdown
-#     over_temp_warning:
-#       name: Over Temperature Warning
-#       id: over_temperature_warning
+  # dac_fan: !include ../packages/dac-tas58xx-addon-fan.yaml
