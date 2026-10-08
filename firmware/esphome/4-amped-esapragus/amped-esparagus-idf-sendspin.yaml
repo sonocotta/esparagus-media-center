@@ -110,7 +110,7 @@ packages:
       # - firmware/esphome/packages/sendspin-addon-oled.yaml
       - firmware/esphome/packages/sendspin-addon-esp32.yaml
 
-      - firmware/esphome/packages/light-x.yaml
+      - firmware/esphome/packages/light.yaml
       - firmware/esphome/packages/ir-receiver.yaml
       - firmware/esphome/packages/rotary-encoder.yaml
       - firmware/esphome/packages/pd-enable.yaml
@@ -123,7 +123,7 @@ packages:
   # sendspin: !include packages/sendspin.yaml
   # oled: !include packages/sendspin-addon-oled.yaml
   # audio: !include packages/audio.yaml
-  # light: !include packages/light-x.yaml
+  # light: !include packages/light.yaml
   # ir_receiver: !include packages/ir-receiver.yaml
   # rotary_encoder: !include packages/rotary-encoder.yaml
   # pd_enable: !include packages/pd-enable.yaml

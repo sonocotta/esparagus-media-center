@@ -146,7 +146,7 @@ packages:
       - firmware/esphome/packages/weather-sensors.yaml
       - firmware/esphome/packages/sendspin-addon-tft-weather-vertical.yaml
 
-      - firmware/esphome/packages/light-x.yaml
+      - firmware/esphome/packages/light.yaml
       - firmware/esphome/packages/ir-receiver.yaml
       - firmware/esphome/packages/rotary-encoder.yaml
 

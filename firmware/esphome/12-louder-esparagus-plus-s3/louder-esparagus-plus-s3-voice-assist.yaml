@@ -151,7 +151,7 @@ packages:
       # - firmware/esphome/packages/media-player-addon-dac-enable.yaml  # DAC left always-on instead (see tas58xx_dac_restore_mode above), for instant voice-assist response
       - firmware/esphome/packages/media-player-addon-tas58xx.yaml
 
-      - firmware/esphome/packages/light-x.yaml
+      - firmware/esphome/packages/light.yaml
       - firmware/esphome/packages/ir-receiver.yaml
       - firmware/esphome/packages/rotary-encoder.yaml
 

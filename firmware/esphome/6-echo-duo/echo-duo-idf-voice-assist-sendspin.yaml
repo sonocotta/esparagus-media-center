@@ -116,7 +116,7 @@ packages:
     ref: main
     files:
       - firmware/esphome/packages/dac-switch.yaml
-      - firmware/esphome/packages/light-x.yaml
+      - firmware/esphome/packages/light.yaml
       - firmware/esphome/packages/monitoring.yaml
       - firmware/esphome/packages/monitoring-wifi.yaml
       # Optional ethernet (replace wifi config if you use this, you need to exclude OLED package if you do this to free up SPI bus)
@@ -133,7 +133,7 @@ packages:
 
   # Debug/local development fallback:
   # dac_switch: !include packages/dac-switch.yaml
-  # light: !include packages/light-x.yaml
+  # light: !include packages/light.yaml
   # monitoring: !include packages/monitoring.yaml
   # monitoring_wifi: !include packages/monitoring-wifi.yaml
   # microphone_i2s: !include packages/microphone-i2s.yaml
