@@ -125,7 +125,7 @@ packages:
       - firmware/esphome/packages/sendspin-addon-rotary.yaml
 
       - firmware/esphome/packages/dac-switch.yaml
-      - firmware/esphome/packages/light-x.yaml
+      - firmware/esphome/packages/light.yaml
       - firmware/esphome/packages/ir-receiver.yaml
       - firmware/esphome/packages/rotary-encoder.yaml
       - firmware/esphome/packages/monitoring.yaml

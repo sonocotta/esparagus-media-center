@@ -86,7 +86,7 @@ esp32_improv:
     - script.execute: control_leds
 
 # ===== Status LED =====
-# Reuses the board's RGB LED (light-x.yaml) to surface onboarding
+# Reuses the board's RGB LED (light.yaml) to surface onboarding
 # state. Only touches the LED for these transient states; normal
 # playback/announcement LED behavior (sendspin.yaml) takes over the
 # rest of the time.

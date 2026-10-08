@@ -109,7 +109,7 @@ packages:
     ref: main
     files:
       - firmware/esphome/packages/dac-switch.yaml
-      - firmware/esphome/packages/light-x.yaml
+      - firmware/esphome/packages/light.yaml
       - firmware/esphome/packages/monitoring.yaml
       - firmware/esphome/packages/monitoring-wifi.yaml
 

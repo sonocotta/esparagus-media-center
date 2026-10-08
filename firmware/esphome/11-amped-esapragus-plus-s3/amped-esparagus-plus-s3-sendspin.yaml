@@ -127,7 +127,7 @@ packages:
       - firmware/esphome/packages/sendspin-addon-amp-unmute.yaml
       - firmware/esphome/packages/sendspin-addon-rotary.yaml
 
-      - firmware/esphome/packages/light-x.yaml
+      - firmware/esphome/packages/light.yaml
       - firmware/esphome/packages/ir-receiver.yaml
       - firmware/esphome/packages/rotary-encoder.yaml
 

@@ -532,7 +532,7 @@ The package system promotes code reusability across different hardware variants:
 ### Core Packages (all devices)
 
 - **`audio.yaml`**: Base audio configuration, media player, mixer, resampler
-- **`light-x.yaml`**: RGB LED support (WS2812)
+- **`light.yaml`**: RGB LED support (WS2812)
 - **`ir_receiver.yaml`**: Infrared remote control
 
 ### DAC-Specific Packages
@@ -565,7 +565,7 @@ Packages are imported at the top of each config file:
 ```yaml
 packages:
   audio: !include ../packages/audio.yaml
-  light: !include ../packages/light-x.yaml
+  light: !include ../packages/light.yaml
 ```
 
 This keeps device-specific configs clean and maintainable.

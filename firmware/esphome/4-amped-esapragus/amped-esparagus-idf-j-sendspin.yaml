@@ -113,7 +113,7 @@ packages:
       - firmware/esphome/packages/sendspin-addon-esp32.yaml
 
       - firmware/esphome/packages/dac-switch.yaml
-      - firmware/esphome/packages/light-x.yaml
+      - firmware/esphome/packages/light.yaml
       - firmware/esphome/packages/ir-receiver.yaml
       - firmware/esphome/packages/rotary-encoder.yaml
       - firmware/esphome/packages/monitoring.yaml
@@ -127,7 +127,7 @@ packages:
   # dac_enable: !include packages/sendspin-addon-dac-enable.yaml
   # oled: !include packages/sendspin-addon-oled.yaml
   # audio: !include packages/audio.yaml
-  # light: !include packages/light-x.yaml
+  # light: !include packages/light.yaml
   # ir_receiver: !include packages/ir-receiver.yaml
   # rotary_encoder: !include packages/rotary-encoder.yaml
   # monitoring: !include packages/monitoring.yaml
