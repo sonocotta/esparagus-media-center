@@ -6,7 +6,7 @@
 # Requires substitutions:
 #   - friendly_name
 # Requires: sendspin.yaml (external_media_player, mixer_speaker_id),
-#           microphone.yaml (voice_assistant_mic), light.yaml/light-x.yaml
+#           microphone.yaml (voice_assistant_mic), light.yaml
 #           (rgb_front_led)
 # Ported from the esparagus-echo repo's
 # firmware/esphome/packages/voice-assist-sendspin.yaml, kept in sync
