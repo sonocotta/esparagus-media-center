@@ -1,14 +1,14 @@
 {
   "name": "audio-brick-dual-s3-4.0-sendspin",
-  "version": "2026.10.08-1a684f68",
+  "version": "2026.10.08-a845c2c3",
   "builds": [
     {
       "chipFamily": "ESP32-S3",
       "ota": {
-        "md5": "843677b6ab5e01c0fdec343b7e3947ee",
+        "md5": "dd188c9e6aa924a04bfc6ac76e8357f1",
         "path": "https://sonocotta.github.io/esparagus-media-center/artifacts/binaries/esphome/audio-brick-dual-s3-4.0-sendspin/firmware.ota.bin",
-        "release_url": "https://github.com/sonocotta/esparagus-media-center/commit/1a684f68",
-        "summary": "Audio Brick Dual S3 (4.0: four channels) Sendspin firmware 2026.10.08-1a684f68"
+        "release_url": "https://github.com/sonocotta/esparagus-media-center/commit/a845c2c3",
+        "summary": "Audio Brick Dual S3 (4.0: four channels) Sendspin firmware 2026.10.08-a845c2c3"
       }
     }
   ],
