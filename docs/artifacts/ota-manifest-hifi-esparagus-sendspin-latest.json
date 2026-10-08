@@ -1,14 +1,14 @@
 {
   "name": "hifi-esparagus-sendspin",
-  "version": "2026.09.28-e27d8fc0",
+  "version": "2026.10.08-1a684f68",
   "builds": [
     {
       "chipFamily": "ESP32",
       "ota": {
-        "md5": "b0f2c3283d352421e9cd7870e382b9d4",
+        "md5": "8228f373f5c1403bde2604e113c6f0ad",
         "path": "https://sonocotta.github.io/esparagus-media-center/artifacts/binaries/esphome/hifi-esparagus-sendspin/firmware.ota.bin",
-        "release_url": "https://github.com/sonocotta/esparagus-media-center/commit/e27d8fc0",
-        "summary": "HiFi-Esparagus Sendspin firmware 2026.09.28-e27d8fc0"
+        "release_url": "https://github.com/sonocotta/esparagus-media-center/commit/1a684f68",
+        "summary": "HiFi-Esparagus Sendspin firmware 2026.10.08-1a684f68"
       }
     }
   ],

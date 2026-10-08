@@ -1,6 +1,6 @@
 {
   "name": "audio-brick-s3-sendspin",
-  "version": "2026.09.28-e27d8fc0",
+  "version": "2026.10.08-1a684f68",
   "home_assistant_domain": "esphome",
   "funding_url": "https://esphome.io/guides/supporters.html",
   "new_install_prompt_erase": true,

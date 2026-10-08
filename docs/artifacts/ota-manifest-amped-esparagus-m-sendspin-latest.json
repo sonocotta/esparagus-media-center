@@ -1,14 +1,14 @@
 {
   "name": "amped-esparagus-m-sendspin",
-  "version": "2026.09.28-e27d8fc0",
+  "version": "2026.10.08-1a684f68",
   "builds": [
     {
       "chipFamily": "ESP32",
       "ota": {
-        "md5": "674ebe868c2d62e4d77b2765e552fad1",
+        "md5": "d741f96e2ca5c04fc0f3e2d10d8825eb",
         "path": "https://sonocotta.github.io/esparagus-media-center/artifacts/binaries/esphome/amped-esparagus-m-sendspin/firmware.ota.bin",
-        "release_url": "https://github.com/sonocotta/esparagus-media-center/commit/e27d8fc0",
-        "summary": "Amped-Esparagus (rev M, TPA3118) Sendspin firmware 2026.09.28-e27d8fc0"
+        "release_url": "https://github.com/sonocotta/esparagus-media-center/commit/1a684f68",
+        "summary": "Amped-Esparagus (rev M, TPA3118) Sendspin firmware 2026.10.08-1a684f68"
       }
     }
   ],
