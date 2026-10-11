@@ -143,8 +143,8 @@ packages:
       - firmware/esphome/packages/sendspin-addon-tas58xx.yaml
       - firmware/esphome/packages/sendspin-addon-rotary.yaml
       # Optional display configuration for TFT SPI display
-      - firmware/esphome/packages/weather-sensors.yaml
-      - firmware/esphome/packages/sendspin-addon-tft-weather-vertical.yaml
+      # - firmware/esphome/packages/weather-sensors.yaml
+      # - firmware/esphome/packages/sendspin-addon-tft-weather-vertical.yaml
 
       - firmware/esphome/packages/light.yaml
       - firmware/esphome/packages/ir-receiver.yaml

@@ -128,11 +128,15 @@
                         "id": "esphome",
                         "label": "Sendspin",
                         "badge": "Recommended",
-                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards.",
+                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards. Pick the OLED screen build only if a display is connected.",
                         "manifests": [
                             {
-                                "label": "Install ESPHome (Sendspin multi-room)",
+                                "label": "Install ESPHome (Sendspin, no screen)",
                                 "path": "artifacts/manifest-louder-esparagus-sendspin-esphome-latest.json"
+                            },
+                            {
+                                "label": "Install ESPHome (Sendspin + OLED screen)",
+                                "path": "artifacts/manifest-louder-esparagus-sendspin-oled-esphome-latest.json"
                             }
                         ]
                     },
@@ -164,11 +168,15 @@
                         "id": "esphome",
                         "label": "Sendspin",
                         "badge": "Recommended",
-                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards.",
+                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards. Pick the TFT screen build only if a display is connected.",
                         "manifests": [
                             {
-                                "label": "Install ESPHome (Sendspin multi-room)",
+                                "label": "Install ESPHome (Sendspin, no screen)",
                                 "path": "artifacts/manifest-louder-esparagus-plus-s3-sendspin-esphome-latest.json"
+                            },
+                            {
+                                "label": "Install ESPHome (Sendspin + TFT screen)",
+                                "path": "artifacts/manifest-louder-esparagus-plus-s3-sendspin-tft-esphome-latest.json"
                             }
                         ]
                     },
@@ -206,11 +214,15 @@
                         "id": "esphome",
                         "label": "Sendspin",
                         "badge": "Recommended",
-                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards.",
+                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards. Pick the OLED screen build only if a display is connected.",
                         "manifests": [
                             {
-                                "label": "Install ESPHome (Sendspin multi-room)",
+                                "label": "Install ESPHome (Sendspin, no screen)",
                                 "path": "artifacts/manifest-amped-esparagus-sendspin-esphome-latest.json"
+                            },
+                            {
+                                "label": "Install ESPHome (Sendspin + OLED screen)",
+                                "path": "artifacts/manifest-amped-esparagus-sendspin-oled-esphome-latest.json"
                             }
                         ]
                     },
@@ -242,11 +254,15 @@
                         "id": "esphome",
                         "label": "Sendspin",
                         "badge": "Recommended",
-                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards.",
+                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards. Pick the OLED screen build only if a display is connected.",
                         "manifests": [
                             {
-                                "label": "Install ESPHome (Sendspin multi-room)",
+                                "label": "Install ESPHome (Sendspin, no screen)",
                                 "path": "artifacts/manifest-amped-esparagus-j-sendspin-esphome-latest.json"
+                            },
+                            {
+                                "label": "Install ESPHome (Sendspin + OLED screen)",
+                                "path": "artifacts/manifest-amped-esparagus-j-sendspin-oled-esphome-latest.json"
                             }
                         ]
                     },
@@ -278,11 +294,15 @@
                         "id": "esphome",
                         "label": "Sendspin",
                         "badge": "Recommended",
-                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards.",
+                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards. Pick the TFT screen build only if a display is connected.",
                         "manifests": [
                             {
-                                "label": "Install ESPHome (Sendspin multi-room)",
+                                "label": "Install ESPHome (Sendspin, no screen)",
                                 "path": "artifacts/manifest-amped-esparagus-m-sendspin-esphome-latest.json"
+                            },
+                            {
+                                "label": "Install ESPHome (Sendspin + TFT screen)",
+                                "path": "artifacts/manifest-amped-esparagus-m-sendspin-tft-esphome-latest.json"
                             }
                         ]
                     },
@@ -314,11 +334,15 @@
                         "id": "esphome",
                         "label": "Sendspin",
                         "badge": "Recommended",
-                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards.",
+                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards. Pick the TFT screen build only if a display is connected.",
                         "manifests": [
                             {
-                                "label": "Install ESPHome (Sendspin multi-room)",
+                                "label": "Install ESPHome (Sendspin, no screen)",
                                 "path": "artifacts/manifest-amped-esparagus-plus-s3-sendspin-esphome-latest.json"
+                            },
+                            {
+                                "label": "Install ESPHome (Sendspin + TFT screen)",
+                                "path": "artifacts/manifest-amped-esparagus-plus-s3-sendspin-tft-esphome-latest.json"
                             }
                         ]
                     },
@@ -356,11 +380,15 @@
                         "id": "esphome",
                         "label": "Sendspin",
                         "badge": "Recommended",
-                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards.",
+                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards. Pick the OLED screen build only if a display is connected.",
                         "manifests": [
                             {
-                                "label": "Install ESPHome (Sendspin multi-room)",
+                                "label": "Install ESPHome (Sendspin, no screen)",
                                 "path": "artifacts/manifest-audio-brick-sendspin-esphome-latest.json"
+                            },
+                            {
+                                "label": "Install ESPHome (Sendspin + OLED screen)",
+                                "path": "artifacts/manifest-audio-brick-sendspin-oled-esphome-latest.json"
                             }
                         ]
                     },
@@ -392,11 +420,15 @@
                         "id": "esphome",
                         "label": "Sendspin",
                         "badge": "Recommended",
-                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards.",
+                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards. Pick the OLED screen build only if a display is connected.",
                         "manifests": [
                             {
-                                "label": "Install ESPHome (Sendspin multi-room)",
+                                "label": "Install ESPHome (Sendspin, no screen)",
                                 "path": "artifacts/manifest-audio-brick-s3-sendspin-esphome-latest.json"
+                            },
+                            {
+                                "label": "Install ESPHome (Sendspin + OLED screen)",
+                                "path": "artifacts/manifest-audio-brick-s3-sendspin-oled-esphome-latest.json"
                             }
                         ]
                     },
@@ -428,11 +460,15 @@
                         "id": "esphome",
                         "label": "Sendspin",
                         "badge": "Recommended",
-                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards.",
+                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards. Pick the TFT screen build only if a display is connected.",
                         "manifests": [
                             {
-                                "label": "Install ESPHome (Sendspin multi-room)",
+                                "label": "Install ESPHome (Sendspin, no screen)",
                                 "path": "artifacts/manifest-audio-brick-dual-s3-2.1-sendspin-esphome-latest.json"
+                            },
+                            {
+                                "label": "Install ESPHome (Sendspin + TFT screen)",
+                                "path": "artifacts/manifest-audio-brick-dual-s3-2.1-sendspin-tft-esphome-latest.json"
                             }
                         ]
                     }
@@ -449,11 +485,15 @@
                         "id": "esphome",
                         "label": "Sendspin",
                         "badge": "Recommended",
-                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards.",
+                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards. Pick the TFT screen build only if a display is connected.",
                         "manifests": [
                             {
-                                "label": "Install ESPHome (Sendspin multi-room)",
+                                "label": "Install ESPHome (Sendspin, no screen)",
                                 "path": "artifacts/manifest-audio-brick-dual-s3-4.0-sendspin-esphome-latest.json"
+                            },
+                            {
+                                "label": "Install ESPHome (Sendspin + TFT screen)",
+                                "path": "artifacts/manifest-audio-brick-dual-s3-4.0-sendspin-tft-esphome-latest.json"
                             }
                         ]
                     }

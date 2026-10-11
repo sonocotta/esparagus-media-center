@@ -14,6 +14,13 @@ name: Build ESPHome Factory Firmware
 # row to the matrix below plus its distribution/*.yaml + *.factory.yaml
 # pair and docs/artifacts/templates/esphome/*-template.json pair.
 #
+# Base images ship with no display configured (driving a display that
+# isn't connected wastes CPU/RAM the audio pipeline needs). Boards with
+# a screen connector get an extra *-oled / *-tft matrix row: a thin
+# <base>-<oled|tft>.factory.yaml that includes the base .factory.yaml,
+# adds the display package and overrides the project name + OTA
+# manifest, so each image only ever auto-updates to its own kind.
+#
 # The matrix job only compiles + uploads artifacts (never commits
 # directly - a dozen matrix legs racing to push to the same branch via
 # git-auto-commit-action would drop or conflict with each other's
@@ -62,30 +69,50 @@ jobs:
             config_file: loud-esparagus-idf-sendspin.factory.yaml
           - slug: louder-esparagus-sendspin
             config_file: louder-esparagus-idf-sendspin.factory.yaml
+          - slug: louder-esparagus-sendspin-oled
+            config_file: louder-esparagus-idf-sendspin-oled.factory.yaml
           - slug: amped-esparagus-sendspin
             config_file: amped-esparagus-idf-sendspin.factory.yaml
+          - slug: amped-esparagus-sendspin-oled
+            config_file: amped-esparagus-idf-sendspin-oled.factory.yaml
           - slug: amped-esparagus-j-sendspin
             config_file: amped-esparagus-idf-j-sendspin.factory.yaml
+          - slug: amped-esparagus-j-sendspin-oled
+            config_file: amped-esparagus-idf-j-sendspin-oled.factory.yaml
           - slug: amped-esparagus-m-sendspin
             config_file: amped-esparagus-idf-m-sendspin.factory.yaml
+          - slug: amped-esparagus-m-sendspin-tft
+            config_file: amped-esparagus-idf-m-sendspin-tft.factory.yaml
           - slug: audio-brick-sendspin
             config_file: audio-brick-idf-sendspin.factory.yaml
+          - slug: audio-brick-sendspin-oled
+            config_file: audio-brick-idf-sendspin-oled.factory.yaml
           - slug: audio-brick-s3-sendspin
             config_file: audio-brick-s3-idf-sendspin.factory.yaml
+          - slug: audio-brick-s3-sendspin-oled
+            config_file: audio-brick-s3-idf-sendspin-oled.factory.yaml
           - slug: hifi-esparagus-s3-sendspin
             config_file: hifi-esparagus-s3-idf-sendspin.factory.yaml
           - slug: audio-brick-dual-s3-2.1-sendspin
             config_file: audio-brick-dual-s3-sendspin-2.1.factory.yaml
+          - slug: audio-brick-dual-s3-2.1-sendspin-tft
+            config_file: audio-brick-dual-s3-sendspin-2.1-tft.factory.yaml
           - slug: audio-brick-dual-s3-4.0-sendspin
             config_file: audio-brick-dual-s3-sendspin-4.0.factory.yaml
+          - slug: audio-brick-dual-s3-4.0-sendspin-tft
+            config_file: audio-brick-dual-s3-sendspin-4.0-tft.factory.yaml
           - slug: echo-duo-sendspin
             config_file: echo-duo-idf-voice-assist-sendspin.factory.yaml
           - slug: echo-solo-sendspin
             config_file: echo-solo-idf-voice-assist-sendspin.factory.yaml
           - slug: amped-esparagus-plus-s3-sendspin
             config_file: amped-esparagus-plus-s3-sendspin.factory.yaml
+          - slug: amped-esparagus-plus-s3-sendspin-tft
+            config_file: amped-esparagus-plus-s3-sendspin-tft.factory.yaml
           - slug: louder-esparagus-plus-s3-sendspin
             config_file: louder-esparagus-plus-s3-sendspin.factory.yaml
+          - slug: louder-esparagus-plus-s3-sendspin-tft
+            config_file: louder-esparagus-plus-s3-sendspin-tft.factory.yaml
     env:
       DEVICE_SLUG: ${{ matrix.device.slug }}
       CONFIG_DIR: firmware/esphome/distribution

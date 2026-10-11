@@ -1,0 +1,36 @@
+# ============================================================
+# Amped-Esparagus rev E->H (TPA3110, Sendspin) - Factory / shippable firmware, OLED screen
+# ============================================================
+# Screen-enabled sibling of amped-esparagus-idf-sendspin.factory.yaml: the very same image
+# plus the sendspin-addon-oled.yaml display package, for
+# boards that have a OLED screen connected. The plain image ships
+# without a display because driving one with nothing connected
+# just burns CPU/RAM that audio needs.
+#
+# Published as its own build (own project name + OTA manifest) so
+# screen-less units never auto-update into the display build or
+# vice versa.
+#
+# `version` is substituted by CI at build time (see
+# .github/workflows/build-esphome-factory-firmware.yml); "dev" is
+# only used for local/manual compiles.
+# ============================================================
+
+substitutions:
+  version: dev
+
+packages:
+  amped-esparagus-idf-sendspin-factory: !include amped-esparagus-idf-sendspin.factory.yaml
+  display_remote:
+    url: https://github.com/sonocotta/esparagus-media-center
+    ref: main
+    files:
+      - firmware/esphome/packages/sendspin-addon-oled.yaml
+
+esphome:
+  project:
+    name: sonocotta.amped-esparagus-sendspin-oled
+
+update:
+  - id: !extend update_http_request
+    source: https://sonocotta.github.io/esparagus-media-center/artifacts/ota-manifest-amped-esparagus-sendspin-oled-latest.json
