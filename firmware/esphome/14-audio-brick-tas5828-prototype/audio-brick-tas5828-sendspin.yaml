@@ -118,11 +118,3 @@ packages:
 
       - firmware/esphome/packages/monitoring.yaml
       - firmware/esphome/packages/monitoring-wifi.yaml
-
-  # fan: !include ../packages/fan-dumb.yaml
-  # sendspin: !include ../packages/sendspin-no-light.yaml
-  # This board straps the DAC to 0x60 instead of the TAS5825M default 0x4C.
-  # Requires tas58xx_branch: dev - 'main' discards an explicit address.
-  # dac_address: !include ../packages/dac-tas58xx-addon-address.yaml
-  # Force the cooling fan on while the DAC reports over-temperature
-  # dac_fan: !include ../packages/dac-tas58xx-addon-fan.yaml

@@ -128,20 +128,3 @@ packages:
       # Optional display configuration for TFT SPI display
       # - firmware/esphome/packages/weather-sensors.yaml
       # - firmware/esphome/packages/sendspin-addon-tft-weather-vertical.yaml
-
-  # sendspin_rotary_light_addon: !include ../packages/sendspin-addon-rotary.yaml
-  # sendspin_tft_addon: !include ../packages/sendspin-addon-tft.yaml
-  # weather_sensors: !include ../packages/weather-sensors.yaml
-  # sendspin_tft_addon: !include ../packages/sendspin-addon-tft-weather-vertical.yaml
-  # Debug/local development fallback:
-  # sendspin: !include packages/sendspin.yaml
-  # dac_switch: !include packages/dac-switch.yaml
-  # dac_enable: !include packages/sendspin-addon-dac-enable.yaml
-  # oled: !include packages/sendspin-addon-oled.yaml
-  # audio: !include packages/audio.yaml
-  # light: !include packages/light.yaml
-  # ir_receiver: !include packages/ir-receiver.yaml
-  # rotary_encoder: !include packages/rotary-encoder.yaml
-  # monitoring: !include packages/monitoring.yaml
-  # monitoring_wifi: !include packages/monitoring-wifi.yaml
-  # ethernet: !include packages/ethernet-w5500.yaml
