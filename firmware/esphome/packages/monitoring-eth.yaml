@@ -1,0 +1,18 @@
+# ============================================================
+# Monitoring - Ethernet Metrics (Optional)
+# ============================================================
+# Ethernet-specific sensors, the counterpart to monitoring-wifi.yaml.
+# Include this alongside monitoring-wifi.yaml when both `wifi:` and
+# `ethernet:` are configured (see `network: priority:`): only the
+# interface that actually came up reports an address, so the other
+# sensor simply stays empty.
+# Requires substitutions:
+#   - friendly_name
+# ============================================================
+
+text_sensor:
+  - platform: ethernet_info
+    ip_address:
+      name: "${friendly_name} Ethernet IP"
+    mac_address:
+      name: "${friendly_name} Ethernet MAC"

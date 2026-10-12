@@ -21,14 +21,20 @@ sensor:
     update_interval: 60s
     
   - platform: debug
-    # free:
-    #   name: "Heap Free"
+    # Internal (non-PSRAM) heap. "Free PSRAM" below does not cover it, and this is the
+    # heap the Wi-Fi and Ethernet drivers must take their DMA-capable buffers from, so
+    # it is what explains "no mem for receive buffer" style failures — especially on
+    # plain ESP32 boards running both network stacks at once (see network: priority:).
+    free:
+      name: "Heap Free"
+    min_free:
+      name: "Heap Min Free"
+    fragmentation:
+      name: "Heap Fragmentation"
+    # Largest single free block. Worth enabling when a buffer allocation fails while
+    # "Heap Free" still looks healthy — that gap is fragmentation.
     # block:
     #   name: "Heap Max Block"
-    # min_free:
-    #   name: "Heap Min Free"
-    # fragmentation:
-    #   name: "Heap Fragmentation"
     loop_time:
       name: "Loop Time"
     psram:
