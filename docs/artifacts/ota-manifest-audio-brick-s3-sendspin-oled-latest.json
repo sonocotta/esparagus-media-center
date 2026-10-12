@@ -1,14 +1,14 @@
 {
   "name": "audio-brick-s3-sendspin-oled",
-  "version": "2026.10.12-72cd4f7b",
+  "version": "2026.10.12-c0a2fde2",
   "builds": [
     {
       "chipFamily": "ESP32-S3",
       "ota": {
-        "md5": "c81a1460ca569c81809530fd651c38bb",
+        "md5": "07631e96912395d7b182f4d1ea7190f9",
         "path": "https://sonocotta.github.io/esparagus-media-center/artifacts/binaries/esphome/audio-brick-s3-sendspin-oled/firmware.ota.bin",
-        "release_url": "https://github.com/sonocotta/esparagus-media-center/commit/72cd4f7b",
-        "summary": "Esparagus Audio Brick (ESP32-S3) Sendspin firmware (OLED screen) 2026.10.12-72cd4f7b"
+        "release_url": "https://github.com/sonocotta/esparagus-media-center/commit/c0a2fde2",
+        "summary": "Esparagus Audio Brick (ESP32-S3) Sendspin firmware (OLED screen) 2026.10.12-c0a2fde2"
       }
     }
   ],

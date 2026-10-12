@@ -1,6 +1,6 @@
 {
   "name": "echo-solo-sendspin",
-  "version": "2026.10.12-72cd4f7b",
+  "version": "2026.10.12-c0a2fde2",
   "home_assistant_domain": "esphome",
   "funding_url": "https://esphome.io/guides/supporters.html",
   "new_install_prompt_erase": true,
