@@ -87,20 +87,28 @@ jobs:
             config_file: audio-brick-idf-sendspin.factory.yaml
           - slug: audio-brick-sendspin-oled
             config_file: audio-brick-idf-sendspin-oled.factory.yaml
+          - slug: audio-brick-sendspin-eth
+            config_file: audio-brick-idf-sendspin-eth.factory.yaml
           - slug: audio-brick-s3-sendspin
             config_file: audio-brick-s3-idf-sendspin.factory.yaml
           - slug: audio-brick-s3-sendspin-oled
             config_file: audio-brick-s3-idf-sendspin-oled.factory.yaml
+          - slug: audio-brick-s3-sendspin-eth
+            config_file: audio-brick-s3-idf-sendspin-eth.factory.yaml
           - slug: hifi-esparagus-s3-sendspin
             config_file: hifi-esparagus-s3-idf-sendspin.factory.yaml
           - slug: audio-brick-dual-s3-2.1-sendspin
             config_file: audio-brick-dual-s3-sendspin-2.1.factory.yaml
           - slug: audio-brick-dual-s3-2.1-sendspin-tft
             config_file: audio-brick-dual-s3-sendspin-2.1-tft.factory.yaml
+          - slug: audio-brick-dual-s3-2.1-sendspin-eth
+            config_file: audio-brick-dual-s3-sendspin-2.1-eth.factory.yaml
           - slug: audio-brick-dual-s3-4.0-sendspin
             config_file: audio-brick-dual-s3-sendspin-4.0.factory.yaml
           - slug: audio-brick-dual-s3-4.0-sendspin-tft
             config_file: audio-brick-dual-s3-sendspin-4.0-tft.factory.yaml
+          - slug: audio-brick-dual-s3-4.0-sendspin-eth
+            config_file: audio-brick-dual-s3-sendspin-4.0-eth.factory.yaml
           - slug: echo-duo-sendspin
             config_file: echo-duo-idf-voice-assist-sendspin.factory.yaml
           - slug: echo-solo-sendspin

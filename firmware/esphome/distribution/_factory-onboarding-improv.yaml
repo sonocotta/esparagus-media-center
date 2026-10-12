@@ -1,0 +1,99 @@
+# ============================================================
+# Factory onboarding - Improv Wi-Fi provisioning + status LED
+# ============================================================
+# The Wi-Fi onboarding layer shared by every *-sendspin.factory.yaml
+# image. Factored out of the individual factory configs because the
+# Ethernet siblings (*-sendspin-eth.factory.yaml) must ship WITHOUT
+# it: they have no Wi-Fi to provision, and ESPHome's package merge
+# appends lists rather than replacing them (see merge_config in
+# esphome/config_helpers.py), so an overlay cannot drop the
+# `control_leds` script or re-key its `wifi.connected` condition
+# after the fact. Opting in by include is the only clean way to have
+# both shapes.
+#
+# This fragment lives in distribution/ rather than packages/ because
+# the factory configs compose each other with local `!include`
+# (packages/ is consumed over the network via `esparagus_remote`).
+#
+# Requires substitutions:
+#   - improv_ble_name   BLE advertising name shown during onboarding
+# Requires, from the board config:
+#   - a `light:` with id `rgb_front_led` (packages/light.yaml)
+# ============================================================
+
+esphome:
+  on_boot:
+    priority: 600
+    then:
+      - script.execute: control_leds
+
+globals:
+  # Drives the LED status script while Improv BLE onboarding is active.
+  - id: improv_ble_in_progress
+    type: bool
+    restore_value: no
+    initial_value: "false"
+
+# ===== Wi-Fi onboarding (Improv) =====
+# No Wi-Fi network is baked into the image; each unit is provisioned
+# individually over Improv, either via the ESP Web Tools install page
+# (BLE or the same USB/serial session used to flash it) or any
+# Improv-compatible phone app.
+wifi:
+  on_connect:
+    - delay: 5s # gives time for improv results to be transmitted
+    - ble.disable:
+    - script.execute: control_leds
+
+improv_serial:
+
+esp32_ble:
+  name: ${improv_ble_name}
+
+esp32_improv:
+  # No dedicated onboarding button on these boards - physical possession
+  # of the device during the flash/provisioning session is the
+  # authorization boundary here.
+  authorizer: none
+  on_start:
+    - lambda: id(improv_ble_in_progress) = true;
+    - script.execute: control_leds
+  on_provisioned:
+    - lambda: id(improv_ble_in_progress) = false;
+    - script.execute: control_leds
+  on_stop:
+    - lambda: id(improv_ble_in_progress) = false;
+    - script.execute: control_leds
+
+# ===== Status LED =====
+# Reuses the board's RGB LED (light.yaml) to surface onboarding
+# state. Only touches the LED for these transient states; normal
+# playback/announcement LED behavior (sendspin.yaml) takes over the
+# rest of the time.
+script:
+  - id: control_leds
+    then:
+      - if:
+          condition:
+            lambda: return id(improv_ble_in_progress);
+          then:
+            - light.turn_on:
+                id: rgb_front_led
+                red: 0%
+                green: 40%
+                blue: 100%
+                brightness: 60%
+          else:
+            - if:
+                condition:
+                  wifi.connected:
+                then:
+                  - light.turn_off:
+                      id: rgb_front_led
+                else:
+                  - light.turn_on:
+                      id: rgb_front_led
+                      red: 100%
+                      green: 25%
+                      blue: 0%
+                      brightness: 40%
