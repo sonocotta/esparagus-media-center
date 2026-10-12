@@ -1,14 +1,14 @@
 {
   "name": "echo-duo-sendspin",
-  "version": "2026.10.08-a845c2c3",
+  "version": "2026.10.12-72cd4f7b",
   "builds": [
     {
       "chipFamily": "ESP32-S3",
       "ota": {
-        "md5": "7b51d37d17f21259f0fe8f74e91def28",
+        "md5": "6bdfcbecc1619db7ea2d493fabdb620f",
         "path": "https://sonocotta.github.io/esparagus-media-center/artifacts/binaries/esphome/echo-duo-sendspin/firmware.ota.bin",
-        "release_url": "https://github.com/sonocotta/esparagus-media-center/commit/a845c2c3",
-        "summary": "Esparagus Echo Duo Voice Assistant + Sendspin firmware 2026.10.08-a845c2c3"
+        "release_url": "https://github.com/sonocotta/esparagus-media-center/commit/72cd4f7b",
+        "summary": "Esparagus Echo Duo Voice Assistant + Sendspin firmware 2026.10.12-72cd4f7b"
       }
     }
   ],
