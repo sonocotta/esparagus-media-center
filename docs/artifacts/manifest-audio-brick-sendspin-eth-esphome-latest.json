@@ -1,0 +1,19 @@
+{
+  "name": "audio-brick-sendspin-eth",
+  "version": "2026.10.13-b7970208",
+  "home_assistant_domain": "esphome",
+  "funding_url": "https://esphome.io/guides/supporters.html",
+  "new_install_prompt_erase": true,
+  "builds": [
+    {
+      "chipFamily": "ESP32",
+      "parts": [
+        {
+          "path": "binaries/esphome/audio-brick-sendspin-eth/firmware.factory.bin",
+          "offset": 0
+        }
+      ]
+    }
+  ],
+  "manifest_name": "manifest-audio-brick-sendspin-eth-esphome-latest.json"
+}
