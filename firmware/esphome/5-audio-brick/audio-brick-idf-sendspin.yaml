@@ -8,7 +8,7 @@
 # ============================================================
 
 substitutions:
-  name: esphome-web-26b490
+  name: esphome-web-26a3c0
   friendly_name: Esparagus-Audio-Brick
   task_stack_in_psram: "false"
 
@@ -48,7 +48,7 @@ substitutions:
 esphome:
   name: ${name}
   friendly_name: ${friendly_name}
-  min_version: 2026.5.0
+  min_version: 2026.8.1
   name_add_mac_suffix: false
   platformio_options:
     board_build.flash_mode: dio
@@ -92,14 +92,23 @@ psram:
 
 network:
   enable_ipv6: true
-  
+  enable_high_performance: false
+  # Both `wifi:` and `ethernet:` are configured in this file. On the ESP32 family the two
+  # stacks can run side by side, but then the priority list is mandatory (ESPHome 2026.8.1+).
+  # It decides which interface is brought up first, whose IP is reported, and which one
+  # carries the default route. Failover is automatic: unplug the cable and traffic moves
+  # to Wi-Fi, plug it back in and Ethernet takes over again.
+  priority:
+    - ethernet
+    - wifi
+
 http_request:
 
 # ===== Packages =====
 packages:
   esparagus_remote:
     url: https://github.com/sonocotta/esparagus-media-center
-    ref: main
+    ref: features/wifi-and-ethernet-on-esphome
     files:
       # Option A: TAS58xx configured with ganged 15-band EQ
       - firmware/esphome/packages/dac-tas58xx.yaml
@@ -120,5 +129,7 @@ packages:
       - firmware/esphome/packages/light.yaml
       - firmware/esphome/packages/monitoring.yaml
       - firmware/esphome/packages/monitoring-wifi.yaml
-      # Optional ethernet (replace wifi config if you use this, you need to exclude OLED package if you do this to free up SPI bus)
-      # - firmware/esphome/packages/ethernet-w5500.yaml
+      - firmware/esphome/packages/monitoring-eth.yaml
+      # Ethernet (W5500), running alongside `wifi:` via the network priority list above.
+      # Shares the SPI pins with the OLED, so the OLED package must stay excluded.
+      - firmware/esphome/packages/ethernet-w5500.yaml

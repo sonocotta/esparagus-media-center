@@ -145,6 +145,11 @@ Two hardware versions available:
 - `audio-brick-snapclient.yaml` - Snapcast client
 - `audio-brick-idf-sendspin.yaml` - Sendspin synchronized playback
 
+All three configs bring up Ethernet (W5500) and Wi-Fi together, with Ethernet preferred
+via `network: priority:` and automatic failover to Wi-Fi when the cable is unplugged.
+This needs ESPHome 2026.8.1 or newer, and the OLED packages must stay excluded because
+the W5500 shares the board's SPI pins with the display.
+
 All examples allow 3 DSP configurations:
 
 - 15-band EQ in ganged mode (both channels share DSP settings)
