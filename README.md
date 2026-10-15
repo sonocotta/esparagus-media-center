@@ -108,11 +108,19 @@ Over the last few years, I have seen a few amazing software products created to 
 
 Recent addition - ESP32-S3 version - adds front-facing microphone and RGB LED, so it can also be used as a voice-assist device, providing an off-grid Alexa-like experience for your Home Assistant setup.
 
+**Where to buy:**
+
+- HiFi Esparagus at [Lectronz](https://lectronz.com/products/hifi-esparagus), [Elecrow](https://www.elecrow.com/hifi-esparagus.html), and [Tindie](https://www.tindie.com/products/sonocotta/esparagus-hifi-medialink/)
+
 ## Loud Esparagus
 
 **Loud Esparagus** is aimed to be paired with small-to-medium-sized speakers in a small room. It uses a dual MAX98357 Hi-Fi DAC that will output 3W per speaker. Admittedly not much, but well enough for a kid's room or workplace. Due to the D-class amp, it barely uses power and can be paired with a standard USB wall charger.   
 
 ![DSC_0689](https://github.com/sonocotta/esparagus-hifi-medialink/assets/5459747/7635cb2a-6ef1-43e8-8396-c27ef5387a25)
+
+**Where to buy:**
+
+- Loud Esparagus at [Lectronz](https://lectronz.com/products/loud-esparagus), [Elecrow](https://www.elecrow.com/loud-esparagus.html), and [Tindie](https://www.tindie.com/products/sonocotta/loud-esparagus-media-center/)
 
 ## Louder Esparagus
 
@@ -124,6 +132,10 @@ The latest update allows direct power through the barrel jack as an alternative 
 
 **Early access: Louder Esparagus Plus (S3)** is a sister board to Amped Esparagus Plus (S3), sharing the same look and feel — front-facing I2S microphone, SPI TFT display, and rotary encoder — but keeps Louder Esparagus's TAS5825M DAC with built-in DSP. It's not yet available for purchase, reach out for early access to prototypes.
 
+**Where to buy:**
+
+- Louder Esparagus at [Lectronz](https://lectronz.com/products/louder-esparagus), [Elecrow](https://www.elecrow.com/louder-esparagus-media-center.html), and [Tindie](https://www.tindie.com/products/sonocotta/louder-esparagus-media-center/)
+
 ## Amped Esparagus
 
 The last in the family, **Amped Esparagus**, is a device based on PCM5100 HiFi DAC (just like HiFi Esparagus) but adds a powerful and efficient D-class amp (TPA3110D2/TPA3118D2/TPA3128D2 depending on the version) so it can drive speakers directly. It has similar power capabilities to the Louder Esparagus, but it is much simpler to set up and use, since this DAC doesn't need any configuration steps to get going, just a valid I2S audio stream. Simplicity comes at a price; it doesn't have a DSP unit either. Since it has an analog stage, you can use it either with a built-in amp or with an external amp, if you prefer.
@@ -133,6 +145,10 @@ The last in the family, **Amped Esparagus**, is a device based on PCM5100 HiFi D
 With the Amped Esparagus, I'm implementing and testing a new updated look with every board equipped with a semi-transparent front face as standard. Behind it, there is a front-facing IR reader and an 8-LED RGB strip (that can be used for audio visualization or power state). Most noticeably, there is a rotary encoder with a push-button that allows quick change of volume or play/pause action.  
 
 **Early access: Amped Esparagus Plus (S3)** swaps in an ESP32-S3 and an I2C-controlled PCM5122 DAC (versus the static-configuration PCM5100A on the classic ESP32 board), keeping the same TPA3118 amp, RGB LED, IR receiver, and rotary encoder. It adds a front-facing I2S microphone for local voice-assist use cases and an optional SPI TFT display for on-device status/now-playing.
+
+**Where to buy:**
+
+- Amped Esparagus at [Lectronz](https://lectronz.com/products/amped-esparagus) and [Tindie](https://www.tindie.com/products/sonocotta/amped-esparagus-media-center/)
 
 ## Esparagus Audio Brick
 
@@ -147,6 +163,10 @@ Unlike previous boards, which were mostly intended for table-top use, the Audio 
 Our [Crowd Supply campaign](https://www.crowdsupply.com/sonocotta/esparagus-audio-brick) to back the manufacturing of the Audio Brick was successfully funded, and I'm working hard to make sure all orders are shipped to backers in  July.  Thanks to everyone who made that possible.
 
 Here you can find a [video overview](https://www.youtube.com/watch?v=Ft5_anhSEE8) of the board.
+
+**Where to buy:**
+
+- Esparagus Audio Brick at [Lectronz](https://lectronz.com/products/esparagus-audio-brick), [Tindie](https://www.tindie.com/products/sonocotta/esparagus-audio-brick/) and [Elecrow](https://www.elecrow.com/esparagus-audio-brick.html)
 
 ### Dual DAC model (prototype)
 
