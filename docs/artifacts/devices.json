@@ -128,7 +128,7 @@
                         "id": "esphome",
                         "label": "Sendspin",
                         "badge": "Recommended",
-                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards. Pick the OLED screen build only if a display is connected.",
+                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards. Pick the OLED screen build only if a display is connected. The wired Ethernet build has no Wi-Fi at all — it needs a cable and DHCP, and cannot be set up over the air.",
                         "manifests": [
                             {
                                 "label": "Install ESPHome (Sendspin, no screen)",
@@ -137,6 +137,10 @@
                             {
                                 "label": "Install ESPHome (Sendspin + OLED screen)",
                                 "path": "artifacts/manifest-louder-esparagus-sendspin-oled-esphome-latest.json"
+                            },
+                            {
+                                "label": "Install ESPHome (Sendspin, wired Ethernet)",
+                                "path": "artifacts/manifest-louder-esparagus-sendspin-eth-esphome-latest.json"
                             }
                         ]
                     },
@@ -168,7 +172,7 @@
                         "id": "esphome",
                         "label": "Sendspin",
                         "badge": "Recommended",
-                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards. Pick the TFT screen build only if a display is connected.",
+                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards. Pick the TFT screen build only if a display is connected. The wired Ethernet build has no Wi-Fi at all — it needs a cable and DHCP, and cannot be set up over the air.",
                         "manifests": [
                             {
                                 "label": "Install ESPHome (Sendspin, no screen)",
@@ -177,6 +181,10 @@
                             {
                                 "label": "Install ESPHome (Sendspin + TFT screen)",
                                 "path": "artifacts/manifest-louder-esparagus-plus-s3-sendspin-tft-esphome-latest.json"
+                            },
+                            {
+                                "label": "Install ESPHome (Sendspin, wired Ethernet)",
+                                "path": "artifacts/manifest-louder-esparagus-plus-s3-sendspin-eth-esphome-latest.json"
                             }
                         ]
                     },
@@ -214,7 +222,7 @@
                         "id": "esphome",
                         "label": "Sendspin",
                         "badge": "Recommended",
-                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards. Pick the OLED screen build only if a display is connected.",
+                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards. Pick the OLED screen build only if a display is connected. The wired Ethernet build has no Wi-Fi at all — it needs a cable and DHCP, and cannot be set up over the air.",
                         "manifests": [
                             {
                                 "label": "Install ESPHome (Sendspin, no screen)",
@@ -223,6 +231,10 @@
                             {
                                 "label": "Install ESPHome (Sendspin + OLED screen)",
                                 "path": "artifacts/manifest-amped-esparagus-sendspin-oled-esphome-latest.json"
+                            },
+                            {
+                                "label": "Install ESPHome (Sendspin, wired Ethernet)",
+                                "path": "artifacts/manifest-amped-esparagus-sendspin-eth-esphome-latest.json"
                             }
                         ]
                     },
@@ -254,7 +266,7 @@
                         "id": "esphome",
                         "label": "Sendspin",
                         "badge": "Recommended",
-                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards. Pick the OLED screen build only if a display is connected.",
+                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards. Pick the OLED screen build only if a display is connected. The wired Ethernet build has no Wi-Fi at all — it needs a cable and DHCP, and cannot be set up over the air.",
                         "manifests": [
                             {
                                 "label": "Install ESPHome (Sendspin, no screen)",
@@ -263,6 +275,10 @@
                             {
                                 "label": "Install ESPHome (Sendspin + OLED screen)",
                                 "path": "artifacts/manifest-amped-esparagus-j-sendspin-oled-esphome-latest.json"
+                            },
+                            {
+                                "label": "Install ESPHome (Sendspin, wired Ethernet)",
+                                "path": "artifacts/manifest-amped-esparagus-j-sendspin-eth-esphome-latest.json"
                             }
                         ]
                     },
@@ -294,7 +310,7 @@
                         "id": "esphome",
                         "label": "Sendspin",
                         "badge": "Recommended",
-                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards. Pick the TFT screen build only if a display is connected.",
+                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards. Pick the TFT screen build only if a display is connected. The wired Ethernet build has no Wi-Fi at all — it needs a cable and DHCP, and cannot be set up over the air.",
                         "manifests": [
                             {
                                 "label": "Install ESPHome (Sendspin, no screen)",
@@ -303,6 +319,10 @@
                             {
                                 "label": "Install ESPHome (Sendspin + TFT screen)",
                                 "path": "artifacts/manifest-amped-esparagus-m-sendspin-tft-esphome-latest.json"
+                            },
+                            {
+                                "label": "Install ESPHome (Sendspin, wired Ethernet)",
+                                "path": "artifacts/manifest-amped-esparagus-m-sendspin-eth-esphome-latest.json"
                             }
                         ]
                     },
@@ -334,7 +354,7 @@
                         "id": "esphome",
                         "label": "Sendspin",
                         "badge": "Recommended",
-                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards. Pick the TFT screen build only if a display is connected.",
+                        "note": "Native Home Assistant integration. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards. Pick the TFT screen build only if a display is connected. The wired Ethernet build has no Wi-Fi at all — it needs a cable and DHCP, and cannot be set up over the air.",
                         "manifests": [
                             {
                                 "label": "Install ESPHome (Sendspin, no screen)",
@@ -343,6 +363,10 @@
                             {
                                 "label": "Install ESPHome (Sendspin + TFT screen)",
                                 "path": "artifacts/manifest-amped-esparagus-plus-s3-sendspin-tft-esphome-latest.json"
+                            },
+                            {
+                                "label": "Install ESPHome (Sendspin, wired Ethernet)",
+                                "path": "artifacts/manifest-amped-esparagus-plus-s3-sendspin-eth-esphome-latest.json"
                             }
                         ]
                     },
@@ -568,11 +592,15 @@
                         "id": "esphome",
                         "label": "Sendspin",
                         "badge": "Recommended",
-                        "note": "Native Home Assistant integration with wake-word voice assistant (the board's mics and LEDs are put to use) on top of Sendspin multi-room playback. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards.",
+                        "note": "Native Home Assistant integration with wake-word voice assistant (the board's mics and LEDs are put to use) on top of Sendspin multi-room playback. Wi-Fi is set up on-device right after flashing (no editing files), and it updates itself automatically afterwards. The wired Ethernet build has no Wi-Fi at all — it needs a cable and DHCP, and cannot be set up over the air.",
                         "manifests": [
                             {
                                 "label": "Install ESPHome (Voice Assistant + Sendspin)",
                                 "path": "artifacts/manifest-echo-duo-sendspin-esphome-latest.json"
+                            },
+                            {
+                                "label": "Install ESPHome (Sendspin, wired Ethernet)",
+                                "path": "artifacts/manifest-echo-duo-sendspin-eth-esphome-latest.json"
                             }
                         ]
                     },

@@ -121,7 +121,12 @@ packages:
       - firmware/esphome/packages/dac-switch.yaml
       - firmware/esphome/packages/light.yaml
       - firmware/esphome/packages/monitoring.yaml
-      - firmware/esphome/packages/monitoring-wifi.yaml
+      # Per-interface monitoring is added by the factory overlay that knows which
+      # interface this image actually ships with: monitoring-wifi.yaml in
+      # echo-duo-idf-voice-assist-sendspin.factory.yaml, monitoring-eth.yaml in
+      # echo-duo-idf-voice-assist-sendspin-eth.factory.yaml.
+      # Keeping it out of here is what lets the Ethernet image `wifi: !remove`
+      # without stranding a wifi_signal sensor that then fails validation.
 
       - firmware/esphome/packages/microphone-i2s.yaml
       - firmware/esphome/packages/microphone.yaml
