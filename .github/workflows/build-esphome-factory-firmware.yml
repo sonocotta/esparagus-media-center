@@ -71,18 +71,26 @@ jobs:
             config_file: louder-esparagus-idf-sendspin.factory.yaml
           - slug: louder-esparagus-sendspin-oled
             config_file: louder-esparagus-idf-sendspin-oled.factory.yaml
+          - slug: louder-esparagus-sendspin-eth
+            config_file: louder-esparagus-idf-sendspin-eth.factory.yaml
           - slug: amped-esparagus-sendspin
             config_file: amped-esparagus-idf-sendspin.factory.yaml
           - slug: amped-esparagus-sendspin-oled
             config_file: amped-esparagus-idf-sendspin-oled.factory.yaml
+          - slug: amped-esparagus-sendspin-eth
+            config_file: amped-esparagus-idf-sendspin-eth.factory.yaml
           - slug: amped-esparagus-j-sendspin
             config_file: amped-esparagus-idf-j-sendspin.factory.yaml
           - slug: amped-esparagus-j-sendspin-oled
             config_file: amped-esparagus-idf-j-sendspin-oled.factory.yaml
+          - slug: amped-esparagus-j-sendspin-eth
+            config_file: amped-esparagus-idf-j-sendspin-eth.factory.yaml
           - slug: amped-esparagus-m-sendspin
             config_file: amped-esparagus-idf-m-sendspin.factory.yaml
           - slug: amped-esparagus-m-sendspin-tft
             config_file: amped-esparagus-idf-m-sendspin-tft.factory.yaml
+          - slug: amped-esparagus-m-sendspin-eth
+            config_file: amped-esparagus-idf-m-sendspin-eth.factory.yaml
           - slug: audio-brick-sendspin
             config_file: audio-brick-idf-sendspin.factory.yaml
           - slug: audio-brick-sendspin-oled
@@ -111,16 +119,22 @@ jobs:
             config_file: audio-brick-dual-s3-sendspin-4.0-eth.factory.yaml
           - slug: echo-duo-sendspin
             config_file: echo-duo-idf-voice-assist-sendspin.factory.yaml
+          - slug: echo-duo-sendspin-eth
+            config_file: echo-duo-idf-voice-assist-sendspin-eth.factory.yaml
           - slug: echo-solo-sendspin
             config_file: echo-solo-idf-voice-assist-sendspin.factory.yaml
           - slug: amped-esparagus-plus-s3-sendspin
             config_file: amped-esparagus-plus-s3-sendspin.factory.yaml
           - slug: amped-esparagus-plus-s3-sendspin-tft
             config_file: amped-esparagus-plus-s3-sendspin-tft.factory.yaml
+          - slug: amped-esparagus-plus-s3-sendspin-eth
+            config_file: amped-esparagus-plus-s3-sendspin-eth.factory.yaml
           - slug: louder-esparagus-plus-s3-sendspin
             config_file: louder-esparagus-plus-s3-sendspin.factory.yaml
           - slug: louder-esparagus-plus-s3-sendspin-tft
             config_file: louder-esparagus-plus-s3-sendspin-tft.factory.yaml
+          - slug: louder-esparagus-plus-s3-sendspin-eth
+            config_file: louder-esparagus-plus-s3-sendspin-eth.factory.yaml
     env:
       DEVICE_SLUG: ${{ matrix.device.slug }}
       CONFIG_DIR: firmware/esphome/distribution
