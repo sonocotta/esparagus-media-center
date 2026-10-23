@@ -131,7 +131,7 @@ micro_wake_word:
                                   - script.execute:
                                       id: play_sound
                                       priority: true
-                                      sound_file: !lambda return id(wake_word_triggered_sound);
+                                      sound_file: "wake_word_triggered_sound"
                                   - delay: 300ms
                             - voice_assistant.start:
 
@@ -246,7 +246,12 @@ script:
   - id: play_sound
     parameters:
       priority: bool
-      sound_file: "audio::AudioFile*"
+      # The audio_file id, as a string. ESPHome builds each audio_file into flash
+      # behind a `const audio::AudioFile *`, and a script parameter cannot name that
+      # type (its type string may not contain a space), so the id travels instead of
+      # the pointer. The audio-file:// media source looks the id up in the same
+      # registry and logs an unknown one.
+      sound_file: string
     then:
       - lambda: |-
           if (priority) {
@@ -257,16 +262,11 @@ script:
               .perform();
           }
           if ( (id(external_media_player).state != media_player::MediaPlayerState::MEDIA_PLAYER_STATE_ANNOUNCING ) || priority) {
-            for (const auto &named_file : audio_file::get_named_audio_files()) {
-              if (named_file.file == sound_file) {
-                id(external_media_player)
-                  ->make_call()
-                  .set_media_url(std::string("audio-file://") + named_file.file_id)
-                  .set_announcement(true)
-                  .perform();
-                break;
-              }
-            }
+            id(external_media_player)
+              ->make_call()
+              .set_media_url("audio-file://" + sound_file)
+              .set_announcement(true)
+              .perform();
           }
 
   - id: enable_repeat_one
@@ -285,7 +285,7 @@ script:
       - script.execute:
           id: play_sound
           priority: true
-          sound_file: !lambda return id(timer_finished_sound);
+          sound_file: "timer_finished_sound"
 
   - id: disable_repeat
     then:
