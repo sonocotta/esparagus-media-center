@@ -1,0 +1,587 @@
+# ============================================================
+# Sendspin display: playback screen on a 320x240 SPI TFT (LVGL)
+# ============================================================
+# Shows what the Sendspin group is playing: cover art, title and artist,
+# progress, playback state, clock and volume. A volume ring appears for a
+# moment whenever the volume changes (rotary encoder or Home Assistant).
+#
+# Layout follows the rotation, set with the "Display Rotation" select in Home
+# Assistant (changes apply right away; display_rotation is the default):
+#   0 / 180  -> horizontal (320x240): cover art on the left, status column on
+#               the right, track info over the bottom of the cover
+#   90 / 270 -> vertical (240x320): cover art on top, track info and a status
+#               row below it
+#
+# Add exactly one idle screen package next to this one, shown while nothing
+# plays. It provides the idle_page and an idle_apply_layout script (parameter
+# landscape: bool), run after every rotation change:
+#   - sendspin-display-clock.yaml    clock only (no extra setup)
+#   - sendspin-display-weather.yaml  clock, weather and forecast
+#                                    (needs weather-sensors.yaml)
+#
+# Requires:
+#   - sendspin.yaml (sendspin_group_media_player, external_media_player)
+#   - substitutions: spi_clk_pin, spi_mosi_pin, spi_miso_pin, display_cs_pin,
+#     display_dc_pin, display_reset_pin, display_backlight_pin
+#   - ESPHome 2026.9.0 or newer (built-in Sendspin cover art)
+#
+# The display shares the SPI pins with the W5500 Ethernet on some boards; it
+# cannot be used together with ethernet-w5500.yaml there.
+# ============================================================
+
+defaults:
+  font_family: Roboto
+  font_glyphsets: "GF_Latin_Core"
+
+substitutions:
+  display_model: ILI9342
+  display_rotation: "0"
+  display_invert_colors: "true"
+
+  mdi_pause_glyph: "\U000F03E4"
+  mdi_play_glyph: "\U000F040A"
+  mdi_stop_glyph: "\U000F04DB"
+  mdi_volume_off_glyph: "\U000F0581"
+  mdi_volume_low_glyph: "\U000F057F"
+  mdi_volume_medium_glyph: "\U000F0580"
+  mdi_volume_high_glyph: "\U000F057E"
+
+  # Cross-fade between the old and the new cover art, in ms
+  cover_art_fade_time: "400"
+  # How long the volume ring stays after the last volume change
+  volume_overlay_time: 1500ms
+  # LVGL draw buffer, as a share of the screen
+  lvgl_buffer_size: 25%
+
+# ===== Hardware =====
+
+spi:
+  id: spi_bus_display
+  clk_pin: ${spi_clk_pin}
+  mosi_pin: ${spi_mosi_pin}
+  miso_pin: ${spi_miso_pin}
+
+display:
+  - platform: mipi_spi
+    id: tft_display
+    model: ${display_model}
+    color_order: RGB
+    invert_colors: ${display_invert_colors}
+    spi_id: spi_bus_display
+    cs_pin: ${display_cs_pin}
+    dc_pin: ${display_dc_pin}
+    reset_pin: ${display_reset_pin}
+    # How much time the ESP32 spends driving the display, taken away from audio
+    data_rate: 10MHz
+    auto_clear_enabled: false
+    update_interval: never
+
+output:
+  - platform: ledc
+    pin: ${display_backlight_pin}
+    id: display_backlight_output
+
+light:
+  - platform: monochromatic
+    id: display_backlight
+    name: Screen
+    icon: "mdi:television"
+    entity_category: config
+    output: display_backlight_output
+    restore_mode: RESTORE_DEFAULT_ON
+    default_transition_length: 250ms
+
+time:
+  - platform: sntp
+    id: sntp_time
+
+select:
+  - platform: template
+    id: display_rotation_select
+    name: "Display Rotation"
+    icon: mdi:screen-rotation
+    entity_category: config
+    options: ["0°", "90°", "180°", "270°"]
+    initial_option: "${display_rotation}°"
+    optimistic: true
+    restore_value: true
+    on_value:
+      - script.execute: display_apply_rotation
+
+# ===== Playback state =====
+
+esphome:
+  on_boot:
+    - priority: -100
+      then:
+        - script.execute: display_apply_rotation
+        - lvgl.page.show: idle_page
+        - script.execute: update_status_panel
+
+media_player:
+  - id: !extend sendspin_group_media_player
+    on_state:
+      - script.execute: update_status_panel
+    on_play:
+      - if:
+          condition:
+            lvgl.page.is_showing: idle_page
+          then:
+            - lvgl.page.show: sendspin_page
+    on_idle:
+      - if:
+          condition:
+            lvgl.page.is_showing: sendspin_page
+          then:
+            - lvgl.page.show: idle_page
+
+text_sensor:
+  - platform: sendspin
+    id: track_title
+    type: title
+    internal: true
+    on_value:
+      - component.update: now_playing_text
+  - platform: sendspin
+    id: track_artist
+    type: artist
+    internal: true
+    on_value:
+      - component.update: now_playing_text
+  - platform: template
+    id: now_playing_text
+    internal: true
+    update_interval: never
+    lambda: |-
+      std::string text = id(track_title).get_state();
+      if (!id(track_artist).get_state().empty()) {
+        if (!text.empty())
+          text += " - ";
+        text += id(track_artist).get_state();
+      }
+      return text;
+    on_value:
+      - lvgl.label.update:
+          id: now_playing_label
+          text: !lambda return x;
+
+sensor:
+  # Both report milliseconds
+  - platform: sendspin
+    type: track_duration
+    id: track_duration
+    internal: true
+    on_value:
+      - lvgl.label.update:
+          id: track_duration_label
+          text: !lambda |-
+            if (std::isnan(x) || x <= 0) return std::string("");
+            int s = (int) (x / 1000.0f);
+            char buf[12];
+            snprintf(buf, sizeof(buf), "%d:%02d", s / 60, s % 60);
+            return std::string(buf);
+
+  - platform: sendspin
+    type: track_progress
+    id: track_progress
+    internal: true
+    on_value:
+      - lvgl.label.update:
+          id: track_progress_label
+          text: !lambda |-
+            if (std::isnan(x) || x < 0) return std::string("");
+            int s = (int) (x / 1000.0f);
+            char buf[12];
+            snprintf(buf, sizeof(buf), "%d:%02d", s / 60, s % 60);
+            return std::string(buf);
+      - lvgl.bar.update:
+          id: track_progress_bar
+          value: !lambda |-
+            float d = id(track_duration).state;
+            if (std::isnan(x) || std::isnan(d) || d <= 0) return 0;
+            return (int) std::min(1000.0f, x * 1000.0f / d);
+
+  # Speaker volume, polled: covers the rotary encoder, Home Assistant and Sendspin
+  - platform: template
+    id: display_volume
+    internal: true
+    update_interval: 200ms
+    accuracy_decimals: 2
+    lambda: |-
+      auto *mp = id(external_media_player);
+      return mp->is_muted() ? 0.0f : mp->volume;
+    filters:
+      - delta: 0.001
+    on_value:
+      - script.execute: update_status_panel
+      # Not for the first reading at boot
+      - if:
+          condition:
+            lambda: return millis() > 10000;
+          then:
+            - script.execute: volume_overlay_show
+
+image:
+  # Cover art at the display's full height. The slot keeps the outgoing frame in
+  # transition_image until transition_finished, which allows a cross-fade.
+  - platform: sendspin
+    id: cover_art_slot
+    source: ALBUM
+    format: JPEG
+    type: RGB565
+    resize: 240x240
+    current_image:
+      id: cover_art
+    transition_image:
+      id: cover_art_prev
+    on_image_display:
+      - lvgl.widget.show: [album_art_prev_widget, album_art_widget]
+      # Views don't invalidate LVGL widgets; the source must be set again on every display
+      - lvgl.image.update:
+          id: album_art_prev_widget
+          src: cover_art_prev
+      - lvgl.image.update:
+          id: album_art_widget
+          src: cover_art
+          image_opa: TRANSP
+      - if:
+          condition:
+            lvgl.page.is_showing: sendspin_page
+          then:
+            # Fade the new cover in over the outgoing one
+            - lambda: |-
+                lv_anim_t a;
+                lv_anim_init(&a);
+                lv_anim_set_var(&a, id(album_art_widget));
+                lv_anim_set_values(&a, LV_OPA_TRANSP, LV_OPA_COVER);
+                lv_anim_set_duration(&a, ${cover_art_fade_time});
+                lv_anim_set_exec_cb(&a, [](void *obj, int32_t v) {
+                  lv_obj_set_style_image_opa((lv_obj_t *) obj, v, 0);
+                });
+                lv_anim_start(&a);
+            - delay: ${cover_art_fade_time}ms
+          else:
+            - lvgl.image.update:
+                id: album_art_widget
+                image_opa: COVER
+      # Releases the outgoing frame so the next cover can be decoded into it
+      - sendspin.image.transition_finished: cover_art_slot
+    on_image_clear:
+      - lvgl.widget.hide: [album_art_prev_widget, album_art_widget]
+    on_image_error:
+      - logger.log:
+          level: WARN
+          format: "Failed to decode cover art image"
+
+interval:
+  - interval: 1s
+    then:
+      - lambda: |-
+          // Clock in the status panel; only redraw when the minute changes
+          static int last_minute = -1;
+          auto now = id(sntp_time).now();
+          if (!now.is_valid() || now.minute == last_minute)
+            return;
+          last_minute = now.minute;
+          char buf[8];
+          snprintf(buf, sizeof(buf), "%02d:%02d", now.hour, now.minute);
+          lv_label_set_text(id(panel_clock_label), buf);
+
+script:
+  # Rotate the display to the selected angle and lay the playback screen out for it
+  - id: display_apply_rotation
+    then:
+      - lvgl.display.set_rotation: !lambda |-
+          auto index = id(display_rotation_select).active_index();
+          return index.has_value() ? (int) index.value() * 90 : ${display_rotation};
+      - lambda: |-
+          lv_display_t *disp = lv_display_get_default();
+          const bool landscape = lv_display_get_horizontal_resolution(disp) >= lv_display_get_vertical_resolution(disp);
+
+          // Track info band: over the bottom of the cover, or below it
+          lv_obj_t *band = id(track_info_band);
+          lv_obj_set_pos(band, 0, landscape ? 184 : 240);
+          lv_obj_set_height(band, landscape ? 56 : 50);
+          lv_obj_set_style_bg_opa(band, landscape ? LV_OPA_60 : LV_OPA_COVER, 0);
+
+          // Status: a column right of the cover, or a row at the bottom
+          lv_obj_t *panel = id(status_panel);
+          lv_obj_set_pos(panel, landscape ? 240 : 0, landscape ? 0 : 290);
+          lv_obj_set_size(panel, landscape ? 80 : 240, landscape ? 240 : 30);
+          lv_obj_set_flex_flow(panel, landscape ? LV_FLEX_FLOW_COLUMN : LV_FLEX_FLOW_ROW);
+          const lv_font_t *glyphs = landscape ? id(font_mdi_medium)->get_lv_font() : id(font_mdi_small)->get_lv_font();
+          lv_obj_set_style_text_font(id(panel_state_icon), glyphs, 0);
+          lv_obj_set_style_text_font(id(panel_volume_icon), glyphs, 0);
+      # Each idle screen package lays itself out for the orientation
+      - script.execute:
+          id: idle_apply_layout
+          landscape: !lambda |-
+            lv_display_t *disp = lv_display_get_default();
+            return lv_display_get_horizontal_resolution(disp) >= lv_display_get_vertical_resolution(disp);
+
+  - id: update_status_panel
+    then:
+      - lvgl.label.update:
+          id: panel_state_icon
+          text: !lambda |-
+            switch (id(sendspin_group_media_player)->state) {
+              case media_player::MEDIA_PLAYER_STATE_PLAYING: return std::string("${mdi_play_glyph}");
+              case media_player::MEDIA_PLAYER_STATE_PAUSED: return std::string("${mdi_pause_glyph}");
+              default: return std::string("${mdi_stop_glyph}");
+            }
+      - lvgl.label.update:
+          id: panel_volume_icon
+          text: !lambda |-
+            float v = id(display_volume).state;
+            if (std::isnan(v) || v <= 0.0f) return std::string("${mdi_volume_off_glyph}");
+            if (v < 0.34f) return std::string("${mdi_volume_low_glyph}");
+            if (v < 0.67f) return std::string("${mdi_volume_medium_glyph}");
+            return std::string("${mdi_volume_high_glyph}");
+      - lvgl.label.update:
+          id: panel_volume_label
+          text: !lambda |-
+            float v = id(display_volume).state;
+            char buf[8];
+            snprintf(buf, sizeof(buf), "%d%%", std::isnan(v) ? 0 : (int) roundf(v * 100.0f));
+            return std::string(buf);
+
+  # Volume ring: shown on every volume change, hidden a moment after the last one
+  - id: volume_overlay_show
+    mode: restart
+    then:
+      - lvgl.arc.update:
+          id: volume_arc
+          value: !lambda |-
+            float v = id(display_volume).state;
+            return std::isnan(v) ? 0 : (int) roundf(v * 100.0f);
+      - lvgl.label.update:
+          id: volume_overlay_label
+          text: !lambda |-
+            float v = id(display_volume).state;
+            char buf[8];
+            snprintf(buf, sizeof(buf), "%d%%", std::isnan(v) ? 0 : (int) roundf(v * 100.0f));
+            return std::string(buf);
+      - lvgl.label.update:
+          id: volume_overlay_icon
+          text: !lambda return std::string(lv_label_get_text(id(panel_volume_icon)));
+      - lvgl.widget.show: volume_overlay
+      - delay: ${volume_overlay_time}
+      - lvgl.widget.hide: volume_overlay
+
+# ===== Fonts =====
+
+font:
+  - file:
+      type: gfonts
+      family: ${font_family}
+      weight: 300
+    id: font_display
+    size: 20
+    glyphsets:
+      - ${font_glyphsets}
+
+  # Mono font, so numbers that change in place don't shift
+  - file:
+      type: gfonts
+      family: Roboto Mono
+      weight: 400
+    id: font_time
+    size: 14
+    glyphs: [' ', ':', '%', '/', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+
+  - file: https://github.com/Templarian/MaterialDesign-Webfont/raw/refs/heads/master/fonts/materialdesignicons-webfont.ttf
+    id: font_mdi_medium
+    size: 36
+    glyphs: &status_glyphs [
+      "${mdi_pause_glyph}",
+      "${mdi_play_glyph}",
+      "${mdi_stop_glyph}",
+      "${mdi_volume_off_glyph}",
+      "${mdi_volume_low_glyph}",
+      "${mdi_volume_medium_glyph}",
+      "${mdi_volume_high_glyph}",
+    ]
+
+  - file: https://github.com/Templarian/MaterialDesign-Webfont/raw/refs/heads/master/fonts/materialdesignicons-webfont.ttf
+    id: font_mdi_small
+    size: 18
+    glyphs: *status_glyphs
+
+# ===== Screens =====
+
+lvgl:
+  displays:
+    - tft_display
+  rotation: ${display_rotation}
+  buffer_size: ${lvgl_buffer_size}
+  color_depth: 16
+  bg_color: 0x000000
+  default_font: font_display
+  # Above every page
+  top_layer:
+    widgets:
+      - obj:
+          id: volume_overlay
+          align: CENTER
+          width: 140
+          height: 140
+          radius: 70
+          bg_color: 0x000000
+          bg_opa: 70%
+          border_width: 0
+          pad_all: 0
+          scrollable: false
+          clickable: false
+          hidden: true
+          widgets:
+            - arc:
+                id: volume_arc
+                align: CENTER
+                width: 120
+                height: 120
+                min_value: 0
+                max_value: 100
+                value: 0
+                clickable: false
+                arc_color: 0x404040
+                arc_width: 10
+                indicator:
+                  arc_color: 0xFFFFFF
+                  arc_width: 10
+                knob:
+                  bg_opa: TRANSP
+                  pad_all: 0
+            - label:
+                id: volume_overlay_label
+                align: CENTER
+                y: -6
+                text_color: 0xFFFFFF
+                text_font: font_display
+                text: ""
+            - label:
+                id: volume_overlay_icon
+                align: CENTER
+                y: 18
+                text_color: 0xAAAAAA
+                text_font: font_mdi_small
+                text: "${mdi_volume_high_glyph}"
+  pages:
+    - id: sendspin_page
+      bg_color: 0x000000
+      scrollbar_mode: "OFF"
+      widgets:
+        # Outgoing cover underneath, new cover fades in on top of it
+        - image:
+            id: album_art_prev_widget
+            x: 0
+            y: 0
+            src: cover_art_prev
+            hidden: true
+            clickable: false
+        - image:
+            id: album_art_widget
+            x: 0
+            y: 0
+            src: cover_art
+            hidden: true
+            clickable: false
+
+        # Positions here are for the horizontal layout; display_apply_rotation
+        # moves the track band and status panel for the vertical one.
+        # Track info: scrolling "title - artist", then elapsed / progress / length
+        - obj:
+            id: track_info_band
+            x: 0
+            y: 184
+            width: 240
+            height: 56
+            bg_color: 0x000000
+            bg_opa: 60%
+            border_width: 0
+            radius: 0
+            pad_all: 0
+            scrollbar_mode: "OFF"
+            scrollable: false
+            clickable: false
+            widgets:
+              - label:
+                  id: now_playing_label
+                  align: TOP_MID
+                  y: 4
+                  width: 228
+                  text_align: CENTER
+                  text_color: 0xFFFFFF
+                  text_font: font_display
+                  text: ""
+                  long_mode: SCROLL_CIRCULAR
+              - label:
+                  id: track_progress_label
+                  align: BOTTOM_LEFT
+                  x: 6
+                  y: -4
+                  text_color: 0xAAAAAA
+                  text_font: font_time
+                  text: ""
+              - bar:
+                  id: track_progress_bar
+                  align: BOTTOM_MID
+                  y: -9
+                  width: 132
+                  height: 4
+                  min_value: 0
+                  max_value: 1000
+                  value: 0
+                  bg_color: 0x404040
+                  bg_opa: COVER
+                  indicator:
+                    bg_color: 0xFFFFFF
+              - label:
+                  id: track_duration_label
+                  align: BOTTOM_RIGHT
+                  x: -6
+                  y: -4
+                  text_color: 0xAAAAAA
+                  text_font: font_time
+                  text: ""
+
+        # Status: playback state, clock, volume
+        - obj:
+            id: status_panel
+            x: 240
+            y: 0
+            width: 80
+            height: 240
+            bg_opa: TRANSP
+            border_width: 0
+            radius: 0
+            pad_all: 4
+            scrollbar_mode: "OFF"
+            scrollable: false
+            clickable: false
+            layout:
+              type: FLEX
+              flex_flow: COLUMN
+              flex_align_main: SPACE_EVENLY
+              flex_align_cross: CENTER
+              flex_align_track: CENTER
+            widgets:
+              - label:
+                  id: panel_state_icon
+                  text_color: 0xFFFFFF
+                  text_font: font_mdi_medium
+                  text: "${mdi_stop_glyph}"
+              - label:
+                  id: panel_clock_label
+                  text_color: 0xFFFFFF
+                  text_font: font_display
+                  text: "--:--"
+              - label:
+                  id: panel_volume_icon
+                  text_color: 0xAAAAAA
+                  text_font: font_mdi_medium
+                  text: "${mdi_volume_high_glyph}"
+              - label:
+                  id: panel_volume_label
+                  text_color: 0xAAAAAA
+                  text_font: font_time
+                  text: ""

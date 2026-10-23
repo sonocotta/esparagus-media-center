@@ -1,0 +1,565 @@
+# ============================================================
+# Sendspin display idle screen: clock, current weather and 4-day forecast
+# ============================================================
+# Shown while nothing plays. Horizontal: the layout from
+# sendspin-addon-tft-weather-vertical.yaml. Vertical: the same, narrowed to
+# 240 px, with the clock between the current weather and the forecast.
+#
+# Needs the weather sensors from weather-sensors.yaml, which in turn needs a
+# forecast template set up in Home Assistant (see that file).
+#
+# Use instead of sendspin-display-clock.yaml, next to sendspin-display.yaml.
+# ============================================================
+
+defaults:
+  font_family: Roboto
+  font_glyphsets: "GF_Latin_Core"
+
+globals:
+  # Weather icon colours
+  - id: sun_color
+    type: int
+    restore_value: no
+    initial_value: '0xFFFF00'  # Yellow
+  - id: water_color
+    type: int
+    restore_value: no
+    initial_value: '0x00BFFF'  # DeepSkyBlue
+  - id: greenish_color
+    type: int
+    restore_value: no
+    initial_value: '0x90EE90'  # LightGreen
+  - id: night_color
+    type: int
+    restore_value: no
+    initial_value: '0x2E2EFF'  # DarkBlue
+  - id: sunset_color
+    type: int
+    restore_value: no
+    initial_value: '0xFFA500'  # Orange
+
+interval:
+  - interval: 0.5s
+    then:
+      - lambda: |-
+          auto now = id(sntp_time).now();
+          if (!now.is_valid()) return;
+
+          // Update hours
+          char hours_buf[8];
+          snprintf(hours_buf, sizeof(hours_buf), "%d", now.hour);
+          lv_label_set_text(id(clock_hours_label), hours_buf);
+
+          // Update minutes
+          char minutes_buf[8];
+          snprintf(minutes_buf, sizeof(minutes_buf), "%02d", now.minute);
+          lv_label_set_text(id(clock_minutes_label), minutes_buf);
+
+          // Update flashing separator (toggles every second)
+          if (now.second % 2 == 0) {
+            lv_label_set_text(id(clock_separator_label), ".");
+          } else {
+            lv_label_set_text(id(clock_separator_label), " ");
+          }
+
+          // Update small clock on the sendspin page info line
+
+          // Rainbow color cycling based on current timestamp
+          auto colorFunc = [](int seq) -> int {
+            seq = seq % 0xff;
+            if (seq < 85)
+              return seq * 3;
+            else if (seq < 170)
+              return 255 - (seq - 85) * 3;
+            return 0;
+          };
+          auto seq = now.timestamp;
+          auto r = colorFunc(seq), g = colorFunc(seq + 85), b = colorFunc(seq + 170);
+          auto textColor = lv_color_make(r, g, b);
+
+          lv_obj_set_style_text_color(id(clock_hours_label), textColor, 0);
+          lv_obj_set_style_text_color(id(clock_separator_label), textColor, 0);
+          lv_obj_set_style_text_color(id(clock_minutes_label), textColor, 0);
+
+          // Weather icon map
+          static std::map<std::string, std::pair<std::string, int>> weather_icon_map = {
+            {"cloudy", {"\U000F0590", id(sun_color)}},
+            {"cloudy-alert", {"\U000F0F2F", id(water_color)}},
+            {"cloudy-arrow-right", {"\U000F0E6E", id(water_color)}},
+            {"fog", {"\U000F0591", 0xFFFFFF}},
+            {"hail", {"\U000F0592", 0xFFFFFF}},
+            {"hazy", {"\U000F0F30", 0xFFFFFF}},
+            {"hurricane", {"\U000F0898", id(water_color)}},
+            {"lightning", {"\U000F0593", 0xFFFFFF}},
+            {"lightning-rainy", {"\U000F067E", 0xFFFFFF}},
+            {"night", {"\U000F0594", id(night_color)}},
+            {"night-partly-cloudy", {"\U000F0F31", id(night_color)}},
+            {"partlycloudy", {"\U000F0595", id(sun_color)}},
+            {"partly-lightning", {"\U000F0F32", id(water_color)}},
+            {"partly-rainy", {"\U000F0F33", id(water_color)}},
+            {"partly-snowy", {"\U000F0F34", id(greenish_color)}},
+            {"partly-snowy-rainy", {"\U000F0F35", id(greenish_color)}},
+            {"pouring", {"\U000F0596", id(water_color)}},
+            {"rainy", {"\U000F0597", id(water_color)}},
+            {"snowy", {"\U000F0598", id(greenish_color)}},
+            {"snowy-heavy", {"\U000F0F36", id(greenish_color)}},
+            {"snowy-rainy", {"\U000F067F", id(greenish_color)}},
+            {"sunny", {"\U000F0599", id(sun_color)}},
+            {"sunny-alert", {"\U000F0F37", id(sun_color)}},
+            {"sunny-off", {"\U000F14E4", id(sun_color)}},
+            {"sunset", {"\U000F059A", id(sunset_color)}},
+            {"sunset-down", {"\U000F059B", id(sunset_color)}},
+            {"sunset-up", {"\U000F059C", id(sunset_color)}},
+            {"tornado", {"\U000F0F38", id(greenish_color)}},
+            {"windy", {"\U000F059D", id(greenish_color)}},
+            {"windy-variant", {"\U000F059E", id(greenish_color)}},
+          };
+
+          // --- Weather display update ---
+          if (id(weather).has_state()) {
+            std::string weather_state = id(weather).get_state();
+            auto it = weather_icon_map.find(weather_state);
+            if (it != weather_icon_map.end()) {
+              lv_label_set_text(id(weather_icon_label), it->second.first.c_str());
+              lv_obj_set_style_text_color(id(weather_icon_label), lv_color_hex(it->second.second), 0);
+            }
+          }
+          if (id(temperature).has_state()) {
+            char temp_buf[8];
+            snprintf(temp_buf, sizeof(temp_buf), "%d", int(id(temperature).state));
+            lv_label_set_text(id(temperature_label), temp_buf);
+          }
+          if (id(temperature_unit).has_state()) {
+            lv_label_set_text(id(temp_unit_label), id(temperature_unit).get_state().c_str());
+          }
+
+          // --- 4-day forecast update ---
+          if (id(forecast_1d_weather).has_state()) {
+            auto date_temp = now;
+            date_temp.increment_day();
+            char date_buf[16];
+            snprintf(date_buf, sizeof(date_buf), "%02d/%02d", date_temp.day_of_month, date_temp.month);
+            lv_label_set_text(id(forecast_1d_date_label), date_buf);
+
+            std::string f1_weather = id(forecast_1d_weather).get_state();
+            auto f1_it = weather_icon_map.find(f1_weather);
+            if (f1_it != weather_icon_map.end()) {
+              lv_label_set_text(id(forecast_1d_icon_label), f1_it->second.first.c_str());
+              lv_obj_set_style_text_color(id(forecast_1d_icon_label), lv_color_hex(f1_it->second.second), 0);
+            }
+            if (id(forecast_1d_temperature_low).has_state() && id(forecast_1d_temperature_high).has_state()) {
+              char temp_buf[32];
+              snprintf(temp_buf, sizeof(temp_buf), "%d..%d%s", int(id(forecast_1d_temperature_low).state), int(id(forecast_1d_temperature_high).state), id(temperature_unit).get_state().c_str());
+              lv_label_set_text(id(forecast_1d_temp_label), temp_buf);
+            }
+            if (id(forecast_1d_precipitation).has_state()) {
+              char precip_buf[16];
+              snprintf(precip_buf, sizeof(precip_buf), "%d%%", int(id(forecast_1d_precipitation).state));
+              lv_label_set_text(id(forecast_1d_precip_label), precip_buf);
+            }
+          }
+
+          if (id(forecast_2d_weather).has_state()) {
+            auto date_temp = now;
+            date_temp.increment_day();
+            date_temp.increment_day();
+            char date_buf[16];
+            snprintf(date_buf, sizeof(date_buf), "%02d/%02d", date_temp.day_of_month, date_temp.month + 1);
+            lv_label_set_text(id(forecast_2d_date_label), date_buf);
+
+            std::string f2_weather = id(forecast_2d_weather).get_state();
+            auto f2_it = weather_icon_map.find(f2_weather);
+            if (f2_it != weather_icon_map.end()) {
+              lv_label_set_text(id(forecast_2d_icon_label), f2_it->second.first.c_str());
+              lv_obj_set_style_text_color(id(forecast_2d_icon_label), lv_color_hex(f2_it->second.second), 0);
+            }
+            if (id(forecast_2d_temperature_low).has_state() && id(forecast_2d_temperature_high).has_state()) {
+              char temp_buf[32];
+              snprintf(temp_buf, sizeof(temp_buf), "%d..%d%s", int(id(forecast_2d_temperature_low).state), int(id(forecast_2d_temperature_high).state), id(temperature_unit).get_state().c_str());
+              lv_label_set_text(id(forecast_2d_temp_label), temp_buf);
+            }
+            if (id(forecast_2d_precipitation).has_state()) {
+              char precip_buf[16];
+              snprintf(precip_buf, sizeof(precip_buf), "%d%%", int(id(forecast_2d_precipitation).state));
+              lv_label_set_text(id(forecast_2d_precip_label), precip_buf);
+            }
+          }
+
+          if (id(forecast_3d_weather).has_state()) {
+            auto date_temp = now;
+            date_temp.increment_day();
+            date_temp.increment_day();
+            date_temp.increment_day();
+            char date_buf[16];
+            snprintf(date_buf, sizeof(date_buf), "%02d/%02d", date_temp.day_of_month, date_temp.month + 1);
+            lv_label_set_text(id(forecast_3d_date_label), date_buf);
+
+            std::string f3_weather = id(forecast_3d_weather).get_state();
+            auto f3_it = weather_icon_map.find(f3_weather);
+            if (f3_it != weather_icon_map.end()) {
+              lv_label_set_text(id(forecast_3d_icon_label), f3_it->second.first.c_str());
+              lv_obj_set_style_text_color(id(forecast_3d_icon_label), lv_color_hex(f3_it->second.second), 0);
+            }
+            if (id(forecast_3d_temperature_low).has_state() && id(forecast_3d_temperature_high).has_state()) {
+              char temp_buf[32];
+              snprintf(temp_buf, sizeof(temp_buf), "%d..%d%s", int(id(forecast_3d_temperature_low).state), int(id(forecast_3d_temperature_high).state), id(temperature_unit).get_state().c_str());
+              lv_label_set_text(id(forecast_3d_temp_label), temp_buf);
+            }
+            if (id(forecast_3d_precipitation).has_state()) {
+              char precip_buf[16];
+              snprintf(precip_buf, sizeof(precip_buf), "%d%%", int(id(forecast_3d_precipitation).state));
+              lv_label_set_text(id(forecast_3d_precip_label), precip_buf);
+            }
+          }
+
+          if (id(forecast_4d_weather).has_state()) {
+            auto date_temp = now;
+            date_temp.increment_day();
+            date_temp.increment_day();
+            date_temp.increment_day();
+            date_temp.increment_day();
+            char date_buf[16];
+            snprintf(date_buf, sizeof(date_buf), "%02d/%02d", date_temp.day_of_month, date_temp.month + 1);
+            lv_label_set_text(id(forecast_4d_date_label), date_buf);
+
+            std::string f4_weather = id(forecast_4d_weather).get_state();
+            auto f4_it = weather_icon_map.find(f4_weather);
+            if (f4_it != weather_icon_map.end()) {
+              lv_label_set_text(id(forecast_4d_icon_label), f4_it->second.first.c_str());
+              lv_obj_set_style_text_color(id(forecast_4d_icon_label), lv_color_hex(f4_it->second.second), 0);
+            }
+            if (id(forecast_4d_temperature_low).has_state() && id(forecast_4d_temperature_high).has_state()) {
+              char temp_buf[32];
+              snprintf(temp_buf, sizeof(temp_buf), "%d..%d%s", int(id(forecast_4d_temperature_low).state), int(id(forecast_4d_temperature_high).state), id(temperature_unit).get_state().c_str());
+              lv_label_set_text(id(forecast_4d_temp_label), temp_buf);
+            }
+            if (id(forecast_4d_precipitation).has_state()) {
+              char precip_buf[16];
+              snprintf(precip_buf, sizeof(precip_buf), "%d%%", int(id(forecast_4d_precipitation).state));
+              lv_label_set_text(id(forecast_4d_precip_label), precip_buf);
+            }
+          }
+
+font:
+  - file:
+      type: gfonts
+      family: ${font_family}
+      weight: regular
+    id: weather_clock_big
+    size: 96
+    glyphs: ['.', ' ', ':', '-', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+  - file:
+      type: gfonts
+      family: ${font_family}
+      weight: 300
+    id: weather_font_small
+    size: 14
+    glyphsets:
+      - ${font_glyphsets}
+  - file:
+      type: gfonts
+      family: ${font_family}
+      weight: 500
+    id: weather_font_thick
+    size: 64
+    glyphsets:
+      - ${font_glyphsets}
+  - file:
+      type: gfonts
+      family: ${font_family}
+      weight: 300
+    id: weather_font_thin
+    size: 64
+    glyphsets:
+      - ${font_glyphsets}
+  # Weather icons, large (current weather)
+  - file: https://github.com/Templarian/MaterialDesign-Webfont/raw/refs/heads/master/fonts/materialdesignicons-webfont.ttf
+    id: weather_icons_large
+    size: 72
+    glyphs: [
+      "\U000F0590", # cloudy
+      "\U000F0F2F", # cloudy-alert
+      "\U000F0E6E", # cloudy-arrow-right
+      "\U000F0591", # fog
+      "\U000F0592", # hail
+      "\U000F0F30", # hazy
+      "\U000F0898", # hurricane
+      "\U000F0593", # lightning
+      "\U000F067E", # lightning-rainy
+      "\U000F0594", # night
+      "\U000F0F31", # night-partly-cloudy
+      "\U000F0595", # partlycloudy
+      "\U000F0F32", # partly-lightning
+      "\U000F0F33", # partly-rainy
+      "\U000F0F34", # partly-snowy
+      "\U000F0F35", # partly-snowy-rainy
+      "\U000F0596", # pouring
+      "\U000F0597", # rainy
+      "\U000F0598", # snowy
+      "\U000F0F36", # snowy-heavy
+      "\U000F067F", # snowy-rainy
+      "\U000F0599", # sunny
+      "\U000F0F37", # sunny-alert
+      "\U000F14E4", # sunny-off
+      "\U000F059A", # sunset
+      "\U000F059B", # sunset-down
+      "\U000F059C", # sunset-up
+      "\U000F0F38", # tornado
+      "\U000F059D", # windy
+      "\U000F059E", # windy-variant
+    ]
+  # Weather icons, medium (forecast)
+  - file: https://github.com/Templarian/MaterialDesign-Webfont/raw/refs/heads/master/fonts/materialdesignicons-webfont.ttf
+    id: weather_icons_medium
+    size: 40
+    glyphs: [
+      "\U000F0590", # cloudy
+      "\U000F0F2F", # cloudy-alert
+      "\U000F0E6E", # cloudy-arrow-right
+      "\U000F0591", # fog
+      "\U000F0592", # hail
+      "\U000F0F30", # hazy
+      "\U000F0898", # hurricane
+      "\U000F0593", # lightning
+      "\U000F067E", # lightning-rainy
+      "\U000F0594", # night
+      "\U000F0F31", # night-partly-cloudy
+      "\U000F0595", # partlycloudy
+      "\U000F0F32", # partly-lightning
+      "\U000F0F33", # partly-rainy
+      "\U000F0F34", # partly-snowy
+      "\U000F0F35", # partly-snowy-rainy
+      "\U000F0596", # pouring
+      "\U000F0597", # rainy
+      "\U000F0598", # snowy
+      "\U000F0F36", # snowy-heavy
+      "\U000F067F", # snowy-rainy
+      "\U000F0599", # sunny
+      "\U000F0F37", # sunny-alert
+      "\U000F14E4", # sunny-off
+      "\U000F059A", # sunset
+      "\U000F059B", # sunset-down
+      "\U000F059C", # sunset-up
+      "\U000F0F38", # tornado
+      "\U000F059D", # windy
+      "\U000F059E", # windy-variant
+    ]
+
+script:
+  # Called by sendspin-display.yaml after a rotation change
+  - id: idle_apply_layout
+    parameters:
+      landscape: bool
+    then:
+      - lambda: |-
+          // Current weather along the top
+          const int icon_x = landscape ? -80 : -72;
+          const int unit_x = landscape ? 70 : 62;
+          const int top_y = landscape ? -5 : 8;
+          lv_obj_align(id(weather_icon_label), LV_ALIGN_TOP_MID, icon_x, top_y);
+          lv_obj_align(id(temperature_label), LV_ALIGN_TOP_MID, 0, top_y);
+          lv_obj_align(id(temp_unit_label), LV_ALIGN_TOP_MID, unit_x, top_y);
+
+          // Clock in the middle
+          const int clock_y = landscape ? -15 : -30;
+          lv_obj_align(id(clock_hours_label), LV_ALIGN_CENTER, -60, clock_y);
+          lv_obj_align(id(clock_separator_label), LV_ALIGN_CENTER, 0, clock_y);
+          lv_obj_align(id(clock_minutes_label), LV_ALIGN_CENTER, 60, clock_y);
+
+          // Four forecast columns along the bottom: 80 px apart, or 60 px in 240 px width
+          const int spacing = landscape ? 80 : 60;
+          const int bottom = landscape ? 0 : -6;
+          lv_obj_t *days[4][4] = {
+              {id(forecast_1d_date_label), id(forecast_1d_icon_label), id(forecast_1d_temp_label), id(forecast_1d_precip_label)},
+              {id(forecast_2d_date_label), id(forecast_2d_icon_label), id(forecast_2d_temp_label), id(forecast_2d_precip_label)},
+              {id(forecast_3d_date_label), id(forecast_3d_icon_label), id(forecast_3d_temp_label), id(forecast_3d_precip_label)},
+              {id(forecast_4d_date_label), id(forecast_4d_icon_label), id(forecast_4d_temp_label), id(forecast_4d_precip_label)},
+          };
+          const int row_y[4] = {-80, -40, -20, 0};
+          for (int d = 0; d < 4; d++) {
+            const int x = (2 * d - 3) * spacing / 2;
+            for (int r = 0; r < 4; r++)
+              lv_obj_align(days[d][r], LV_ALIGN_BOTTOM_MID, x, row_y[r] + bottom);
+          }
+
+lvgl:
+  pages:
+    - id: idle_page
+      bg_color: 0x000000
+      widgets:
+        - label:
+            id: weather_icon_label
+            align: TOP_MID
+            x: -80
+            y: -5
+            text_color: 0xFFFFFF
+            text_font: weather_icons_large
+            text: ""
+        - label:
+            id: temperature_label
+            align: TOP_MID
+            x: 0
+            y: -5
+            text_color: 0xFFFFFF
+            text_font: weather_font_thick
+            text: ""
+        - label:
+            id: temp_unit_label
+            align: TOP_MID
+            x: 70
+            y: -5
+            text_color: 0xFFFFFF
+            text_font: weather_font_thin
+            text: ""
+        - label:
+            id: clock_hours_label
+            align: CENTER
+            x: -60
+            y: -15
+            text_color: 0xFFFFFF
+            text_font: weather_clock_big
+            text: "--"
+        - label:
+            id: clock_separator_label
+            align: CENTER
+            x: 0
+            y: -15
+            text_color: 0xFFFFFF
+            text_font: weather_clock_big
+            text: "."
+        - label:
+            id: clock_minutes_label
+            align: CENTER
+            x: 60
+            y: -15
+            text_color: 0xFFFFFF
+            text_font: weather_clock_big
+            text: "--"
+        - label:
+            id: forecast_1d_date_label
+            align: BOTTOM_MID
+            x: -120
+            y: -80
+            text_color: 0xAAAAAA
+            text_font: weather_font_small
+            text: ""
+        - label:
+            id: forecast_1d_icon_label
+            align: BOTTOM_MID
+            x: -120
+            y: -40
+            text_color: 0xFFFFFF
+            text_font: weather_icons_medium
+            text: ""
+        - label:
+            id: forecast_1d_temp_label
+            align: BOTTOM_MID
+            x: -120
+            y: -20
+            text_color: 0xFFFF00
+            text_font: weather_font_small
+            text: ""
+        - label:
+            id: forecast_1d_precip_label
+            align: BOTTOM_MID
+            x: -120
+            y: 0
+            text_color: 0x00BFFF
+            text_font: weather_font_small
+            text: ""
+        - label:
+            id: forecast_2d_date_label
+            align: BOTTOM_MID
+            x: -40
+            y: -80
+            text_color: 0xAAAAAA
+            text_font: weather_font_small
+            text: ""
+        - label:
+            id: forecast_2d_icon_label
+            align: BOTTOM_MID
+            x: -40
+            y: -40
+            text_color: 0xFFFFFF
+            text_font: weather_icons_medium
+            text: ""
+        - label:
+            id: forecast_2d_temp_label
+            align: BOTTOM_MID
+            x: -40
+            y: -20
+            text_color: 0xFFFF00
+            text_font: weather_font_small
+            text: ""
+        - label:
+            id: forecast_2d_precip_label
+            align: BOTTOM_MID
+            x: -40
+            y: 0
+            text_color: 0x00BFFF
+            text_font: weather_font_small
+            text: ""
+        - label:
+            id: forecast_3d_date_label
+            align: BOTTOM_MID
+            x: 40
+            y: -80
+            text_color: 0xAAAAAA
+            text_font: weather_font_small
+            text: ""
+        - label:
+            id: forecast_3d_icon_label
+            align: BOTTOM_MID
+            x: 40
+            y: -40
+            text_color: 0xFFFFFF
+            text_font: weather_icons_medium
+            text: ""
+        - label:
+            id: forecast_3d_temp_label
+            align: BOTTOM_MID
+            x: 40
+            y: -20
+            text_color: 0xFFFF00
+            text_font: weather_font_small
+            text: ""
+        - label:
+            id: forecast_3d_precip_label
+            align: BOTTOM_MID
+            x: 40
+            y: 0
+            text_color: 0x00BFFF
+            text_font: weather_font_small
+            text: ""
+        - label:
+            id: forecast_4d_date_label
+            align: BOTTOM_MID
+            x: 120
+            y: -80
+            text_color: 0xAAAAAA
+            text_font: weather_font_small
+            text: ""
+        - label:
+            id: forecast_4d_icon_label
+            align: BOTTOM_MID
+            x: 120
+            y: -40
+            text_color: 0xFFFFFF
+            text_font: weather_icons_medium
+            text: ""
+        - label:
+            id: forecast_4d_temp_label
+            align: BOTTOM_MID
+            x: 120
+            y: -20
+            text_color: 0xFFFF00
+            text_font: weather_font_small
+            text: ""
+        - label:
+            id: forecast_4d_precip_label
+            align: BOTTOM_MID
+            x: 120
+            y: 0
+            text_color: 0x00BFFF
+            text_font: weather_font_small
+            text: ""

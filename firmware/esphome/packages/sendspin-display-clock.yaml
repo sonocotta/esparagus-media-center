@@ -1,0 +1,88 @@
+# ============================================================
+# Sendspin display idle screen: clock only
+# ============================================================
+# Shown while nothing plays. Large clock with slowly cycling rainbow colours,
+# centred, so it fits both the horizontal and the vertical layout. Needs no
+# setup beyond Wi-Fi (time comes from SNTP).
+#
+# Use instead of sendspin-display-weather.yaml, next to sendspin-display.yaml.
+# ============================================================
+
+font:
+  - file:
+      type: gfonts
+      family: Roboto
+      weight: regular
+    id: font_clock_big
+    size: 96
+    glyphs: ['.', ' ', '-', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+
+interval:
+  - interval: 0.5s
+    then:
+      - lambda: |-
+          auto now = id(sntp_time).now();
+          if (!now.is_valid())
+            return;
+
+          char buf[8];
+          snprintf(buf, sizeof(buf), "%d", now.hour);
+          lv_label_set_text(id(clock_hours_label), buf);
+          snprintf(buf, sizeof(buf), "%02d", now.minute);
+          lv_label_set_text(id(clock_minutes_label), buf);
+          // Flashing separator
+          lv_label_set_text(id(clock_separator_label), now.second % 2 == 0 ? "." : " ");
+
+          // Rainbow colour cycling based on the current time
+          auto colour = [](int seq) -> int {
+            seq = seq % 0xff;
+            if (seq < 85)
+              return seq * 3;
+            else if (seq < 170)
+              return 255 - (seq - 85) * 3;
+            return 0;
+          };
+          auto seq = now.timestamp;
+          auto text_colour = lv_color_make(colour(seq), colour(seq + 85), colour(seq + 170));
+          lv_obj_set_style_text_color(id(clock_hours_label), text_colour, 0);
+          lv_obj_set_style_text_color(id(clock_separator_label), text_colour, 0);
+          lv_obj_set_style_text_color(id(clock_minutes_label), text_colour, 0);
+
+script:
+  # Called by sendspin-display.yaml after a rotation change. The clock is
+  # centred, so it fits both orientations as is.
+  - id: idle_apply_layout
+    parameters:
+      landscape: bool
+    then:
+      - lambda: (void) landscape;
+
+lvgl:
+  pages:
+    - id: idle_page
+      bg_color: 0x000000
+      widgets:
+        - label:
+            id: clock_hours_label
+            align: CENTER
+            x: -62
+            y: -6
+            text_color: 0xFFFFFF
+            text_font: font_clock_big
+            text: "--"
+        - label:
+            id: clock_separator_label
+            align: CENTER
+            x: 0
+            y: -6
+            text_color: 0xFFFFFF
+            text_font: font_clock_big
+            text: "."
+        - label:
+            id: clock_minutes_label
+            align: CENTER
+            x: 62
+            y: -6
+            text_color: 0xFFFFFF
+            text_font: font_clock_big
+            text: "--"
