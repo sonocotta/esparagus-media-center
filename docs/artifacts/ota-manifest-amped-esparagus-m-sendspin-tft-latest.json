@@ -1,14 +1,14 @@
 {
   "name": "amped-esparagus-m-sendspin-tft",
-  "version": "2026.10.16-018c70fb",
+  "version": "2026.10.23-46164647",
   "builds": [
     {
       "chipFamily": "ESP32",
       "ota": {
-        "md5": "a7e6a604521a57a7582c4c43cb5fb950",
+        "md5": "4b15f83ee90c2f57453d3f58f50dc5f7",
         "path": "https://sonocotta.github.io/esparagus-media-center/artifacts/binaries/esphome/amped-esparagus-m-sendspin-tft/firmware.ota.bin",
-        "release_url": "https://github.com/sonocotta/esparagus-media-center/commit/018c70fb",
-        "summary": "Amped-Esparagus (rev M, TPA3118) Sendspin firmware (TFT screen) 2026.10.16-018c70fb"
+        "release_url": "https://github.com/sonocotta/esparagus-media-center/commit/46164647",
+        "summary": "Amped-Esparagus (rev M, TPA3118) Sendspin firmware (TFT screen) 2026.10.23-46164647"
       }
     }
   ],
