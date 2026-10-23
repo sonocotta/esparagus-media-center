@@ -147,6 +147,12 @@ packages:
       # Keeping it out of here is what lets the Ethernet image `wifi: !remove`
       # without stranding a wifi_signal sensor that then fails validation.
 
-      # Optional display configuration for TFT SPI display
+      # Optional display for a TFT SPI screen (ESPHome 2026.9.0+). Not together with
+      # ethernet-w5500.yaml: they share the SPI pins. Playback screen plus one idle screen:
+      # - firmware/esphome/packages/sendspin-display.yaml
+      # Option A: clock only
+      # - firmware/esphome/packages/sendspin-display-clock.yaml
+      # Option B: clock, weather and 4-day forecast (needs weather sensors in Home
+      # Assistant, see weather-sensors.yaml); replaces Option A
       # - firmware/esphome/packages/weather-sensors.yaml
-      # - firmware/esphome/packages/sendspin-addon-tft-weather-vertical.yaml
+      # - firmware/esphome/packages/sendspin-display-weather.yaml

@@ -224,10 +224,16 @@ sensor:
 image:
   # Cover art at the display's full height. The slot keeps the outgoing frame in
   # transition_image until transition_finished, which allows a cross-fade.
+  #
+  # PNG rather than JPEG: the server re-encodes the cover at a quality that is
+  # not negotiable, and its blocking and ringing show up on sleeve text. PNG is
+  # lossless, at the cost of a payload several times larger and a slower decode
+  # (pngle, no SIMD path) on every track change. The slot advertises one format
+  # only, so if a server will not serve PNG no artwork arrives at all.
   - platform: sendspin
     id: cover_art_slot
     source: ALBUM
-    format: JPEG
+    format: PNG
     type: RGB565
     resize: 240x240
     current_image:

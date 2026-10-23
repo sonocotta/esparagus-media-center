@@ -44,6 +44,7 @@ substitutions:
   display_dc_pin: GPIO38
   display_reset_pin: GPIO48
   display_backlight_pin: GPIO2
+  display_model: ILI9341
 
   # Ethernet (W5500) - identical pinout to Audio Brick S3
   eth_cs_pin: GPIO10
@@ -134,8 +135,15 @@ packages:
       - firmware/esphome/packages/media-player-addon-dac-enable-dual.yaml
       - firmware/esphome/packages/media-player-addon-volume-sync-dual.yaml
 
-      # Optional display configuration for TFT SPI display
-      # - firmware/esphome/packages/sendspin-addon-tft.yaml
+      # Optional display for a TFT SPI screen (ESPHome 2026.9.0+). Not together with
+      # ethernet-w5500.yaml: they share the SPI pins. Playback screen plus one idle screen:
+      # - firmware/esphome/packages/sendspin-display.yaml
+      # Option A: clock only
+      # - firmware/esphome/packages/sendspin-display-clock.yaml
+      # Option B: clock, weather and 4-day forecast (needs weather sensors in Home
+      # Assistant, see weather-sensors.yaml); replaces Option A
+      # - firmware/esphome/packages/weather-sensors.yaml
+      # - firmware/esphome/packages/sendspin-display-weather.yaml
 
       # - firmware/esphome/packages/fan.yaml <- only if you have it installed
       - firmware/esphome/packages/light.yaml
