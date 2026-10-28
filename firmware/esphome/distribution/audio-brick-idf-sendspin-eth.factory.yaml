@@ -35,6 +35,7 @@
 
 substitutions:
   version: dev
+  sendspin_firmware_version: "${version}"
 
 packages:
   audio-brick-idf-sendspin: !include audio-brick-idf-sendspin.yaml

@@ -20,6 +20,7 @@
 
 substitutions:
   version: dev
+  sendspin_firmware_version: "${version}"
 
 packages:
   hifi-esparagus-idf-sendspin: !include hifi-esparagus-idf-sendspin.yaml

@@ -18,6 +18,7 @@
 
 substitutions:
   version: dev
+  sendspin_firmware_version: "${version}"
 
 packages:
   audio-brick-idf-sendspin-factory: !include audio-brick-idf-sendspin.factory.yaml

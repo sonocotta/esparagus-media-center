@@ -20,6 +20,7 @@
 
 substitutions:
   version: dev
+  sendspin_firmware_version: "${version}"
   # BLE advertising name used during Improv onboarding.
   improv_ble_name: amped-plus-s3
 

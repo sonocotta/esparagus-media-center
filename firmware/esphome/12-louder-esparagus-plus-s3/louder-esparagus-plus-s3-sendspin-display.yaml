@@ -68,7 +68,7 @@ esphome:
   name: ${name}
   friendly_name: ${friendly_name}
   # Built-in Sendspin cover art for the display
-  min_version: 2026.9.0
+  min_version: 2026.10.0
   name_add_mac_suffix: false
   platformio_options:
     board_build.flash_mode: dio

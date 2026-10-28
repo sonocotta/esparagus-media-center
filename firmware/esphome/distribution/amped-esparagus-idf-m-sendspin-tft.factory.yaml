@@ -20,6 +20,7 @@
 
 substitutions:
   version: dev
+  sendspin_firmware_version: "${version}"
 
 packages:
   amped-esparagus-idf-m-sendspin-factory: !include amped-esparagus-idf-m-sendspin.factory.yaml
