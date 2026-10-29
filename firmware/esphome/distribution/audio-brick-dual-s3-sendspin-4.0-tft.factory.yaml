@@ -20,6 +20,7 @@
 
 substitutions:
   version: dev
+  sendspin_firmware_version: "${version}"
 
 packages:
   audio-brick-dual-s3-sendspin-4.0-factory: !include audio-brick-dual-s3-sendspin-4.0.factory.yaml

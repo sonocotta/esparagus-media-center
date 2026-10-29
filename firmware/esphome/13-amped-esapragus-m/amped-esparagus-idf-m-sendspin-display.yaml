@@ -62,7 +62,7 @@ esphome:
   name: ${name}
   friendly_name: ${friendly_name}
   # Built-in Sendspin cover art for the display
-  min_version: 2026.9.0
+  min_version: 2026.10.0
   platformio_options:
     board_build.flash_mode: dio
 
@@ -130,8 +130,9 @@ packages:
       # Display: playback screen, plus one idle screen for while nothing plays
       - firmware/esphome/packages/sendspin-display.yaml
       # Option A: clock only
-      - firmware/esphome/packages/sendspin-display-clock.yaml
+      # - firmware/esphome/packages/sendspin-display-clock.yaml
       # Option B: clock, weather and 4-day forecast. Needs weather sensors in
       # Home Assistant (see weather-sensors.yaml); replaces Option A.
-      # - firmware/esphome/packages/weather-sensors.yaml
-      # - firmware/esphome/packages/sendspin-display-weather.yaml
+      - firmware/esphome/packages/weather-sensors.yaml
+      - firmware/esphome/packages/sendspin-display-weather.yaml
+

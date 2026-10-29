@@ -32,6 +32,7 @@
 
 substitutions:
   version: dev
+  sendspin_firmware_version: "${version}"
 
 packages:
   louder-esparagus-idf-sendspin: !include louder-esparagus-idf-sendspin.yaml

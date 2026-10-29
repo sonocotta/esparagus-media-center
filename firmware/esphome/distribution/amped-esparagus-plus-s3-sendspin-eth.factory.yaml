@@ -32,6 +32,7 @@
 
 substitutions:
   version: dev
+  sendspin_firmware_version: "${version}"
 
 packages:
   amped-esparagus-plus-s3-sendspin: !include amped-esparagus-plus-s3-sendspin.yaml

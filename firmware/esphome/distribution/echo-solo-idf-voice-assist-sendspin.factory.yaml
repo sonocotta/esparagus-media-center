@@ -18,6 +18,7 @@
 
 substitutions:
   version: dev
+  sendspin_firmware_version: "${version}"
 
 packages:
   echo-solo-idf-voice-assist-sendspin: !include echo-solo-idf-voice-assist-sendspin.yaml
