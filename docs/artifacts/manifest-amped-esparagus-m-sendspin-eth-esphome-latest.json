@@ -1,6 +1,6 @@
 {
   "name": "amped-esparagus-m-sendspin-eth",
-  "version": "2026.10.23-facea00a",
+  "version": "2026.10.29-175a1f47",
   "home_assistant_domain": "esphome",
   "funding_url": "https://esphome.io/guides/supporters.html",
   "new_install_prompt_erase": true,
