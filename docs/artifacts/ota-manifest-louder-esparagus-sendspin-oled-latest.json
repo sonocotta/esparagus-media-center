@@ -1,14 +1,14 @@
 {
   "name": "louder-esparagus-sendspin-oled",
-  "version": "2026.10.29-175a1f47",
+  "version": "2026.11.01-c27213f9",
   "builds": [
     {
       "chipFamily": "ESP32",
       "ota": {
-        "md5": "5848d4e1bf9f7366143bbc231c656db0",
+        "md5": "efb7f7862177745d9df7dd214fa58758",
         "path": "https://sonocotta.github.io/esparagus-media-center/artifacts/binaries/esphome/louder-esparagus-sendspin-oled/firmware.ota.bin",
-        "release_url": "https://github.com/sonocotta/esparagus-media-center/commit/175a1f47",
-        "summary": "Louder-Esparagus Sendspin firmware (OLED screen) 2026.10.29-175a1f47"
+        "release_url": "https://github.com/sonocotta/esparagus-media-center/commit/c27213f9",
+        "summary": "Louder-Esparagus Sendspin firmware (OLED screen) 2026.11.01-c27213f9"
       }
     }
   ],
