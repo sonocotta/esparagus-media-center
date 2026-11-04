@@ -10,7 +10,7 @@
 # ============================================================
 
 substitutions:
-  name: esphome-web-e0de84
+  name: louder-esparagus
   friendly_name: Louder-Esparagus
   task_stack_in_psram: "false"
 

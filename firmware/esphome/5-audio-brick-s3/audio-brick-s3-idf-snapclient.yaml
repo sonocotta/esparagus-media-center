@@ -14,7 +14,7 @@
 # ============================================================
 
 substitutions:
-  name: esphome-web-2cbffc
+  name: audio-brick-s3
   friendly_name: Esparagus-Audio-Brick
   task_stack_in_psram: "true"
 

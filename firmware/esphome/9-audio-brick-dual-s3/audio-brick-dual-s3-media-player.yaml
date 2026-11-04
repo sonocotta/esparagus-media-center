@@ -5,7 +5,7 @@
 # ============================================================
 
 substitutions:
-  name: esphome-web-e349e4
+  name: audio-brick-dual-s3
   friendly_name: Audio-Brick-Dual-S3
   task_stack_in_psram: "true" 
 

@@ -8,7 +8,7 @@
 # ============================================================
 
 substitutions:
-  name: esphome-web-47b85c
+  name: amped-esparagus-j
   friendly_name: Amped-Esparagus
   task_stack_in_psram: "false" 
 

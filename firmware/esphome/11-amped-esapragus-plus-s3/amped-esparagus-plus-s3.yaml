@@ -9,7 +9,7 @@
 # ============================================================
 
 substitutions:
-  name: esphome-web-e1b258
+  name: amped-esparagus-plus-s3
   friendly_name: Amped-Esparagus
   task_stack_in_psram: "true"
 
@@ -135,3 +135,4 @@ packages:
       # - firmware/esphome/packages/ethernet-w5500.yaml
       # Optional display configuration for TFT SPI display
       # - firmware/esphome/packages/tft-spi.yaml
+

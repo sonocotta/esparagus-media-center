@@ -14,7 +14,7 @@
 # ============================================================
 
 substitutions:
-  name: esphome-web-dc95a8
+  name: hifi-esparagus
   friendly_name: Hifi-Esparagus
   task_stack_in_psram: "false"
 

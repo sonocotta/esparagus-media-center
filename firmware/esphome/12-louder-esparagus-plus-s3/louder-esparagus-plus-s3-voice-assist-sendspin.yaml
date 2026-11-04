@@ -9,7 +9,7 @@
 # ============================================================
 
 substitutions:
-  name: esphome-web-e1b35c
+  name: louder-esparagus-plus-s3
   friendly_name: Louder-Esparagus-Plus-S3
   task_stack_in_psram: "true"
 
