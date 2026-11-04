@@ -1,14 +1,14 @@
 {
   "name": "louder-esparagus-plus-s3-sendspin-tft",
-  "version": "2026.11.01-c27213f9",
+  "version": "2026.11.04-880f0941",
   "builds": [
     {
       "chipFamily": "ESP32-S3",
       "ota": {
-        "md5": "c53da60e1f73ab380c0b40a01749d51a",
+        "md5": "7de5e7b1be8987215ef09e77bc5ac9e6",
         "path": "https://sonocotta.github.io/esparagus-media-center/artifacts/binaries/esphome/louder-esparagus-plus-s3-sendspin-tft/firmware.ota.bin",
-        "release_url": "https://github.com/sonocotta/esparagus-media-center/commit/c27213f9",
-        "summary": "Louder-Esparagus-Plus-S3 Sendspin firmware (TFT screen) 2026.11.01-c27213f9"
+        "release_url": "https://github.com/sonocotta/esparagus-media-center/commit/880f0941",
+        "summary": "Louder-Esparagus-Plus-S3 Sendspin firmware (TFT screen) 2026.11.04-880f0941"
       }
     }
   ],
