@@ -192,10 +192,10 @@ Software was a little problematic at the beginning, as most open source projects
 | Peripheral | WS2812B RGB Led, I2S microphone (S3 only) | WS2812B RGB Led | 8x WS2812B RGB Led, SSD1306 128x64 OLED screen (optional) | 8x WS2812B RGB Led, optional SPI TFT screen, front-facing I2S microphone, rotary encoder with push button | 8x WS2812B RGB Led, Rotary encoder with push button, SSD1306 128x64 OLED screen (optional, rev E-K) — rev M replaces it with an optional SPI TFT screen instead | 8x WS2812B RGB Led, optional SPI TFT screen, front-facing I2S microphone, rotary encoder with push button | 1xWS2812B RGB Led, SSD1306 128x64 OLED screen (optional) | 1xWS2812B RGB LED, ILI9341 320x240px TFT screen (optional) |
 | Connectivity | WiFi   BT4.2   BLE | WiFi   BT4.2   BLE | WiFi   BT4.2   BLE   W5500 Ethernet | WiFi   BLE   W5500 Ethernet | WiFi   BT4.2   BLE   W5500 Ethernet | WiFi   BLE   W5500 Ethernet | WiFi   BT4.2   BLE   W5500 Ethernet | WiFi   BLE   W5500 Ethernet |
 | Size | 80 x 50 x 20mm | 80 x 50 x 20mm | 100 x 80 x 38mm | 110 x 40 x 100mm | 100 x 80 x 38mm (rev E-K), 110 x 40 x 100m (rev M) | 110 x 40 x 100 | 90 x 90 x 40mm | 125 x 90 x 40mm |
-| Software support | Arduino samples, squeezelite-esp32, snapcast, ESPhome config | Arduino samples, squeezelite-esp32, snapcast, ESPhome config | Arduino samples, squeezelite-esp32, snapcast, ESPhome config | ESPHome Sendspin and squeezelite-esp32 (unofficial S3 support) — early access, no standalone snapcast/AirPlay yet | Arduino samples, squeezelite-esp32, snapcast, ESPhome config (all revisions, rev M included) | ESPHome Sendspin and AirPlay 1 & 2 — early access, no squeezelite-esp32/standalone snapcast yet | Arduino samples, squeezelite-esp32, snapcast, ESPhome configs (Sendspin included) | Arduino samples, squeezelite-esp32, snapcast, ESPhome configs (Sendspin included) |
-| [AirPlay 1 & 2](https://github.com/rbouteiller/airplay-esp32)* | ✅ | ✅ | ✅ | ⏳ *(early access, not yet built)* | ✅ | ✅ *(build from source, no web-installer image yet)* | ✅ | ✅ |
+| Software support | Arduino samples, squeezelite-esp32, snapcast, ESPhome config | Arduino samples, squeezelite-esp32, snapcast, ESPhome config | Arduino samples, squeezelite-esp32, snapcast, ESPhome config | ESPHome Sendspin, AirPlay 1 & 2 and squeezelite-esp32 (unofficial S3 support) — early access, no standalone snapcast yet | Arduino samples, squeezelite-esp32, snapcast, ESPhome config (all revisions, rev M included) | ESPHome Sendspin and AirPlay 1 & 2 — early access, no squeezelite-esp32/standalone snapcast yet | Arduino samples, squeezelite-esp32, snapcast, ESPhome configs (Sendspin included) | Arduino samples, squeezelite-esp32, snapcast, ESPhome configs (Sendspin included) |
+| [AirPlay 1 & 2](https://github.com/rbouteiller/airplay-esp32)* | ✅ | ✅ | ✅ | ✅ | ✅ *(rev M only)* | ✅ *(build from source, no web-installer image yet)* | ✅ | ✅ |
 
-\* See [AirPlay 1 & 2](#airplay-1--2) below for chip-specific caveats (Bluetooth, USB audio, DSP).
+\* See [AirPlay 1 & 2](#airplay-1--2) below for chip-specific caveats (Bluetooth, USB audio, DSP) and board revisions.
 
 ### Onboard PSRAM
 
@@ -221,7 +221,7 @@ Some Esparagus boards are already available in both the 'classic' ESP32 and the 
 
 If none of that applies to you and you just want the safe default, pick **ESP32-S3** — it's the newer chip. Only choose classic ESP32 if you specifically need Bluetooth A2DP, or plan to run Squeezelite-ESP32/Snapclient today.
 
-**Louder Esparagus** and **Amped Esparagus** now both have early-access ESP32-S3 revisions — **Louder Esparagus Plus (S3)** and **Amped Esparagus Plus (S3)** — but Louder is not available for purchase yet. AirPlay firmware now supports Amped Esparagus Plus (S3); Louder Esparagus Plus (S3) support is still a work in progress.  **Loud Esparagus** (ESP32) and the **Esparagus Audio Brick Dual DAC** (ESP32-S3) are single-chip designs, so there's no choice on those either.
+**Louder Esparagus** and **Amped Esparagus** now both have early-access ESP32-S3 revisions — **Louder Esparagus Plus (S3)** and **Amped Esparagus Plus (S3)** — but Louder is not available for purchase yet. AirPlay firmware supports both: Louder Esparagus Plus (S3) from the web-installer, and Amped Esparagus Plus (S3) as a build from source for now.  **Loud Esparagus** (ESP32) and the **Esparagus Audio Brick Dual DAC** (ESP32-S3) are single-chip designs, so there's no choice on those either.
 
 ## Board Pinout
 
@@ -575,23 +575,26 @@ squeezelite -o i2s -s -disable -b 500:2000 -C 30 -d all=sdebug
 
 Squeezelite's built-in AirPlay is a first-generation implementation. [rbouteiller/airplay-esp32](https://github.com/rbouteiller/airplay-esp32) is a standalone, open-source **AirPlay 1 & 2** receiver for the ESP32 family — actively developed, with great work done by the community despite the lack of help from Apple.
 
-Every Esparagus board is supported: HiFi Esparagus, Loud Esparagus, Louder Esparagus, Amped Esparagus, Amped Esparagus Plus (S3), and the Esparagus Audio Brick (both the single-DAC ESP32/ESP32-S3 revisions and the Dual DAC), all flashable straight from a browser — no toolchain required (Amped Esparagus Plus (S3) is build-from-source for now, see below). Current features:
+Every Esparagus board is supported: HiFi Esparagus (ESP32 and ESP32-S3), Loud Esparagus, Louder Esparagus, Louder Esparagus Plus (S3), Amped Esparagus, Amped Esparagus Plus (S3), and the Esparagus Audio Brick (both the single-DAC ESP32/ESP32-S3 revisions and the Dual DAC). All of them except Amped Esparagus Plus (S3) are flashable straight from a browser, with no toolchain required; that one is build-from-source for now, see below. Current features:
 
 - **AirPlay 1 & 2** — appears natively in Control Center and any AirPlay app, with PTP-based multi-room sync
 - **Sendspin** (experimental) — an open multi-room protocol renderer sharing the same output path, DSP, and volume control as AirPlay
 - **Bluetooth A2DP** on classic ESP32 revisions — phones and laptops can stream directly whenever AirPlay is idle (ESP32-S3 revisions have no Bluetooth Classic radio)
-- **On-device display** — the OLED on Louder Esparagus and the Audio Brick, or the color TFT on the Audio Brick Dual and Amped Esparagus Plus (S3), shows track metadata and progress for AirPlay, Bluetooth, and Sendspin alike
+- **On-device display** — the OLED on Louder Esparagus and the Audio Brick, or the color TFT on the Audio Brick Dual, Louder Esparagus Plus (S3) and Amped Esparagus Plus (S3), shows track metadata and progress for AirPlay, Bluetooth, and Sendspin alike
+- **Rotary encoder** on Amped Esparagus, Louder Esparagus Plus (S3) and Amped Esparagus Plus (S3) — turn for volume, click for play/pause
 - **USB audio (UAC)** — ESP32-S3 revisions can be built as a USB sound card; the Audio Brick Dual already ships a ready-to-flash UAC build
 - **PCM5122 hardware volume** on Amped Esparagus Plus (S3) — the I2C-controlled DAC is configured at boot and volume is applied by the DAC's own digital attenuator instead of software scaling; the amplifier is unmuted only while audio is playing
-- **Full DSP control** on Louder Esparagus and the Audio Brick — the TAS5805M/TAS5825M's on-chip EQ is fully exposed: 15 cascaded biquad sections per channel/amplifier, each an arbitrary peaking filter, shelf, high/low pass, band pass, notch, phase shift, or raw coefficients, plus a crossover builder (and, on TAS5825M units, full PurePath Console 3 tuning replay)
+- **Full DSP control** on Louder Esparagus, Louder Esparagus Plus (S3) and the Audio Brick — the TAS5805M/TAS5825M's on-chip EQ is fully exposed: 15 cascaded biquad sections per channel/amplifier, each an arbitrary peaking filter, shelf, high/low pass, band pass, notch, phase shift, or raw coefficients, plus a crossover builder (and, on TAS5825M units, full PurePath Console 3 tuning replay)
 
-**Amped Esparagus Plus (S3)** is now supported via the `amped-esparagus-plus-s3` build: AirPlay 1 & 2 and Sendspin through the PCM5122 DAC with hardware volume, rotary encoder for volume (turn) and play/pause (click), RGB LED, W5500 Ethernet, and the 320×240 ST7789 TFT for now-playing. There's no prebuilt web-installer image yet, so build it with PlatformIO as described below. The firmware targets the rev H1+ pinout (the DAC's I2C pins are swapped on rev H). The PCM5122's own DSP (EQ/DRC) isn't exposed in the web UI, and the onboard microphone isn't used by the AirPlay firmware.
+**Louder Esparagus Plus (S3)** is supported via the `esparagus-louder-s3` build, which has a ready-to-flash image in the web-installer (the **Esparagus Louder S3** card). It covers AirPlay 1 & 2 and Sendspin through the TAS5825M with full DSP control, the 320×240 ST7789 TFT for now-playing, the rotary encoder, RGB LED and W5500 Ethernet. The onboard microphone isn't used by the AirPlay firmware.
 
-**Louder Esparagus Plus (S3)** is early-access hardware without AirPlay firmware yet — today it ships an ESPHome Sendspin image and a Squeezelite-ESP32 build.
+**Amped Esparagus Plus (S3)** is supported via the `amped-esparagus-plus-s3` build: AirPlay 1 & 2 and Sendspin through the PCM5122 DAC with hardware volume, rotary encoder for volume (turn) and play/pause (click), RGB LED, W5500 Ethernet, and the 320×240 ST7789 TFT for now-playing. There's no prebuilt web-installer image yet, so build it with PlatformIO as described below. The firmware targets the rev H1+ pinout (the DAC's I2C pins are swapped on rev H). The PCM5122's own DSP (EQ/DRC) isn't exposed in the web UI, and the onboard microphone isn't used by the AirPlay firmware.
+
+**Amped Esparagus** (ESP32) is supported on **rev M only**. Earlier revisions (E–K) use a different pinout, and there's no build for them. On rev M, the TFT isn't driven by the AirPlay firmware; the rotary encoder works.
 
 ### TAS58xx DSP: full parametric EQ and crossover control
 
-On Louder Esparagus and the Esparagus Audio Brick, AirPlay's web UI exposes the TAS5805M/TAS5825M's on-chip DSP in full, not just a basic tone control:
+On Louder Esparagus, Louder Esparagus Plus (S3) and the Esparagus Audio Brick, AirPlay's web UI exposes the TAS5805M/TAS5825M's on-chip DSP in full, not just a basic tone control:
 
 - **15 biquad (BQ) filters per channel**, usable as a full 15-band parametric equalizer
 - **Bi-amp filter configuration** for 2-way speaker systems — split the signal between tweeter and woofer with independent filter chains per amplifier (and, on the Audio Brick Dual, per DAC)
@@ -606,7 +609,7 @@ On Louder Esparagus and the Esparagus Audio Brick, AirPlay's web UI exposes the 
 
 ### How to Get Started
 
-The easiest way is the browser-based [web-installer](https://rbouteiller.github.io/airplay-esp32/getting-started/flashing/) — plug your board in over USB and flash it directly from Chrome, Edge, or Opera. No toolchain, no downloads, no command line.
+The easiest way is the browser-based [web-installer](https://rbouteiller.github.io/airplay-esp32/getting-started/flashing/) — plug your board in over USB and flash it directly from desktop Chrome, Edge, or Opera. No toolchain, no downloads, no command line. Pick the card that matches your board exactly, because the pinouts differ. Once it's installed, unplug and re-plug the board so it boots into setup mode. Each card also has an **Install beta** button that tracks the project's `staging` branch; beta builds are untested on hardware, and reinstalling the release build restores the board.
 
 If you want to build it yourself — to try a board without a prebuilt image yet, or to change build settings — you can use [PlatformIO](https://platformio.org/). Install [vscode](https://code.visualstudio.com/) and the [platformio plugin](https://docs.platformio.org/en/latest/integration/ide/vscode.html), then pull the code:
 
@@ -614,7 +617,27 @@ If you want to build it yourself — to try a board without a prebuilt image yet
 git clone --recursive https://github.com/rbouteiller/airplay-esp32 && code airplay-esp32
 ```
 
-When VSCode loads, find the PlatformIO tab in the left navigation, select the environment matching your board (e.g. `esparagus-audio-brick-bt`, `esparagus-audio-brick-s3`, `esparagus-audio-brick-dual-dac`, `esparagus-louder-bt`, `esparagus-louder-s3`, `hifi-esparagus-bt`, `hifi-esparagus-s3`, `loud-esparagus-bt`, `amped-esparagus-bt`, `amped-esparagus-plus-s3` — see the project's [build environments](https://rbouteiller.github.io/airplay-esp32/reference/build-environments/) for the full list) and run the `Upload Filesystem Image` and `Upload and Monitor` tasks (assuming your board is connected over USB).
+When VSCode loads, find the PlatformIO tab in the left navigation and select the environment matching your board. Then run the `Upload Filesystem Image` and `Upload and Monitor` tasks, with the board connected over USB. The filesystem step is required: without it, the web UI and the setup access point are missing.
+
+| Board | Environment | Web-installer card |
+|---|---|---|
+| HiFi Esparagus (ESP32) | `hifi-esparagus-bt` | HiFi-Esparagus |
+| HiFi Esparagus (ESP32-S3) | `hifi-esparagus-s3` | HiFi-Esparagus-S3 |
+| Loud Esparagus | `loud-esparagus-bt` | Loud-Esparagus |
+| Louder Esparagus | `esparagus-louder-bt` | Esparagus Louder |
+| Louder Esparagus Plus (S3) | `esparagus-louder-s3` | Esparagus Louder S3 |
+| Amped Esparagus (rev M) | `amped-esparagus-bt` | Amped-Esparagus |
+| Amped Esparagus Plus (S3) | `amped-esparagus-plus-s3` | none yet, build from source |
+| Esparagus Audio Brick (ESP32) | `esparagus-audio-brick-bt` | Esparagus Audio Brick |
+| Esparagus Audio Brick (ESP32-S3) | `esparagus-audio-brick-s3` | Esparagus Audio Brick S3 |
+| Esparagus Audio Brick Dual | `esparagus-audio-brick-dual-dac` (or `esparagus-audio-brick-dual-uac` for USB audio) | Esparagus Audio Brick Dual (+ USB audio) |
+
+The `-bt` environments include Bluetooth A2DP; drop the suffix for a build without it. See the project's [build environments](https://rbouteiller.github.io/airplay-esp32/reference/build-environments/) page for the full list. From the command line, the same two steps are:
+
+```sh
+pio run -e amped-esparagus-plus-s3 -t upload
+pio run -e amped-esparagus-plus-s3 -t uploadfs
+```
 
 The PlatformIO magic happens now, pulling all the dependencies, platform files, and frameworks, and building a binary for your board. Once it is flashed, all that is left to do is configure WiFi credentials using the built-in access point or connect Ethernet, if you're looking for lower latency.
 
