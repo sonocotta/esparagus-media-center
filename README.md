@@ -406,6 +406,8 @@ Starting December 2025, the new [Sendspin protocol](https://www.music-assistant.
 Available in all hardware variant directories:
 - `*-sendspin.yaml` configurations in each device folder
 
+**Pairing with Music Assistant:** Music Assistant 2.11 and newer can pair with a Sendspin player and may ask for a pairing code. The code appears in Home Assistant as the device's **Sendspin Pairing Code** sensor. Pairing is optional: unpaired (guest) playback keeps working as before. See [Pairing with Music Assistant](/firmware/esphome/README.md#pairing-with-music-assistant) for the steps.
+
 #### Voice Assistant (ESP32-S3 only)
 
 Local, off-grid voice assistant configurations bring on-device wake-word detection and Home Assistant's Assist pipeline directly to the device, without depending on cloud services. See the [ESPHome Firmware Guide](/firmware/esphome/README.md#voice-assistant) for detailed information.
