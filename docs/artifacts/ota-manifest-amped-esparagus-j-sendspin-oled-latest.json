@@ -1,14 +1,14 @@
 {
   "name": "amped-esparagus-j-sendspin-oled",
-  "version": "2026.11.13-8833eff0",
+  "version": "2026.11.13-bc1128cb",
   "builds": [
     {
       "chipFamily": "ESP32",
       "ota": {
-        "md5": "65530938f7c7af26aa5a4a48cd2e8154",
+        "md5": "a7b1ee99ff6ec5a95333b9943c1e6539",
         "path": "https://sonocotta.github.io/esparagus-media-center/artifacts/binaries/esphome/amped-esparagus-j-sendspin-oled/firmware.ota.bin",
-        "release_url": "https://github.com/sonocotta/esparagus-media-center/commit/8833eff0",
-        "summary": "Amped-Esparagus (rev J->K, TPA3128) Sendspin firmware (OLED screen) 2026.11.13-8833eff0"
+        "release_url": "https://github.com/sonocotta/esparagus-media-center/commit/bc1128cb",
+        "summary": "Amped-Esparagus (rev J->K, TPA3128) Sendspin firmware (OLED screen) 2026.11.13-bc1128cb"
       }
     }
   ],
