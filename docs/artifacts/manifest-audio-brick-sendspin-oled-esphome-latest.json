@@ -1,6 +1,6 @@
 {
   "name": "audio-brick-sendspin-oled",
-  "version": "2026.11.13-bc1128cb",
+  "version": "2026.11.13-a413f679",
   "home_assistant_domain": "esphome",
   "funding_url": "https://esphome.io/guides/supporters.html",
   "new_install_prompt_erase": true,
