@@ -1,14 +1,14 @@
 {
   "name": "audio-brick-sendspin-eth",
-  "version": "2026.11.04-880f0941",
+  "version": "2026.11.13-8833eff0",
   "builds": [
     {
       "chipFamily": "ESP32",
       "ota": {
-        "md5": "51072b48826e9918eef8ee8607a69ec7",
+        "md5": "38b56c24ca21ab7ab749183563dd2f41",
         "path": "https://sonocotta.github.io/esparagus-media-center/artifacts/binaries/esphome/audio-brick-sendspin-eth/firmware.ota.bin",
-        "release_url": "https://github.com/sonocotta/esparagus-media-center/commit/880f0941",
-        "summary": "Esparagus Audio Brick (ESP32) Sendspin Ethernet firmware 2026.11.04-880f0941"
+        "release_url": "https://github.com/sonocotta/esparagus-media-center/commit/8833eff0",
+        "summary": "Esparagus Audio Brick (ESP32) Sendspin Ethernet firmware 2026.11.13-8833eff0"
       }
     }
   ],
