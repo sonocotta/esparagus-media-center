@@ -153,6 +153,7 @@ packages:
       # Ethernet (W5500), running alongside `wifi:` via the network priority list above.
       # Shares the SPI pins with the display, so the display package must stay excluded.
       - firmware/esphome/packages/ethernet-w5500.yaml
+      - firmware/esphome/packages/ethernet-w5500-esp32.yaml
       # Optional OLED display (uncomment to enable, requires SPI bus)
       # - firmware/esphome/packages/oled.yaml
       
