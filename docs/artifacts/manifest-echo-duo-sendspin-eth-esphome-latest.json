@@ -1,6 +1,6 @@
 {
   "name": "echo-duo-sendspin-eth",
-  "version": "2026.11.28-f03c1e0b",
+  "version": "2026.11.28-ceafabd9",
   "home_assistant_domain": "esphome",
   "funding_url": "https://esphome.io/guides/supporters.html",
   "new_install_prompt_erase": true,

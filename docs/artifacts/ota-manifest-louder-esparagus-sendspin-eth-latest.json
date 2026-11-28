@@ -1,14 +1,14 @@
 {
   "name": "louder-esparagus-sendspin-eth",
-  "version": "2026.11.28-f03c1e0b",
+  "version": "2026.11.28-ceafabd9",
   "builds": [
     {
       "chipFamily": "ESP32",
       "ota": {
-        "md5": "74cf925e03b1c618f036d76153fe3276",
+        "md5": "93fb54f75c56e4f9e9a8dcce11c986fd",
         "path": "https://sonocotta.github.io/esparagus-media-center/artifacts/binaries/esphome/louder-esparagus-sendspin-eth/firmware.ota.bin",
-        "release_url": "https://github.com/sonocotta/esparagus-media-center/commit/f03c1e0b",
-        "summary": "Louder-Esparagus Sendspin Ethernet firmware 2026.11.28-f03c1e0b"
+        "release_url": "https://github.com/sonocotta/esparagus-media-center/commit/ceafabd9",
+        "summary": "Louder-Esparagus Sendspin Ethernet firmware 2026.11.28-ceafabd9"
       }
     }
   ],

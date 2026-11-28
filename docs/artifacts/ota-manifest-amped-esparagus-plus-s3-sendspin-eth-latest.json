@@ -1,14 +1,14 @@
 {
   "name": "amped-esparagus-plus-s3-sendspin-eth",
-  "version": "2026.11.28-f03c1e0b",
+  "version": "2026.11.28-ceafabd9",
   "builds": [
     {
       "chipFamily": "ESP32-S3",
       "ota": {
-        "md5": "9ddc5e0d7b22c9bc5cdeca37da5f61fc",
+        "md5": "d2ebea7cbf4f5e0629150af50b6b9511",
         "path": "https://sonocotta.github.io/esparagus-media-center/artifacts/binaries/esphome/amped-esparagus-plus-s3-sendspin-eth/firmware.ota.bin",
-        "release_url": "https://github.com/sonocotta/esparagus-media-center/commit/f03c1e0b",
-        "summary": "Amped-Esparagus-Plus-S3 Sendspin Ethernet firmware 2026.11.28-f03c1e0b"
+        "release_url": "https://github.com/sonocotta/esparagus-media-center/commit/ceafabd9",
+        "summary": "Amped-Esparagus-Plus-S3 Sendspin Ethernet firmware 2026.11.28-ceafabd9"
       }
     }
   ],

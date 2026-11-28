@@ -1,14 +1,14 @@
 {
   "name": "amped-esparagus-plus-s3-sendspin-tft",
-  "version": "2026.11.28-f03c1e0b",
+  "version": "2026.11.28-ceafabd9",
   "builds": [
     {
       "chipFamily": "ESP32-S3",
       "ota": {
-        "md5": "eaab06003be1c79b0610a70530224a64",
+        "md5": "0de25f138465cfb89540317a7fad7272",
         "path": "https://sonocotta.github.io/esparagus-media-center/artifacts/binaries/esphome/amped-esparagus-plus-s3-sendspin-tft/firmware.ota.bin",
-        "release_url": "https://github.com/sonocotta/esparagus-media-center/commit/f03c1e0b",
-        "summary": "Amped-Esparagus-Plus-S3 Sendspin firmware (TFT screen) 2026.11.28-f03c1e0b"
+        "release_url": "https://github.com/sonocotta/esparagus-media-center/commit/ceafabd9",
+        "summary": "Amped-Esparagus-Plus-S3 Sendspin firmware (TFT screen) 2026.11.28-ceafabd9"
       }
     }
   ],
