@@ -1,4 +1,6 @@
 substitutions:
+  # Override in your own config with: ota_password: !secret ota_password
+  ota_password: ""
   name: esphome-web-88e0f0
   friendly_name: Audio-Brick-Brazil
   task_stack_in_psram: "false"
@@ -85,7 +87,7 @@ api:
 
 ota:
   platform: esphome
-  password: !secret ota_password
+  password: ${ota_password}
 
 wifi:
   ssid: !secret wifi_ssid
