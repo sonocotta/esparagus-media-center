@@ -1,5 +1,7 @@
 substitutions:
-  # Override in your own config with: ota_password: !secret ota_password
+  # Optional. To use a password, add to your own config:
+  #   substitutions:
+  #     ota_password: !secret ota_password
   ota_password: ""
   name: esphome-web-88e0f0
   friendly_name: Audio-Brick-Brazil

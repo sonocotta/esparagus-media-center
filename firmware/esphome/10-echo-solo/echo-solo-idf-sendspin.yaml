@@ -14,7 +14,9 @@
 # ============================================================
 
 substitutions:
-  # Override in your own config with: ota_password: !secret ota_password
+  # Optional. To use a password, add to your own config:
+  #   substitutions:
+  #     ota_password: !secret ota_password
   ota_password: ""
   name: echo-solo
   friendly_name: Esparagus-Echo-Solo
