@@ -15,6 +15,10 @@
 # ============================================================
 
 substitutions:
+  # Optional. To use a password, add to your own config:
+  #   substitutions:
+  #     ota_password: !secret ota_password
+  ota_password: ""
   name: echo-solo
   friendly_name: Esparagus-Echo-Solo
   task_stack_in_psram: "true"
@@ -94,7 +98,7 @@ logger:
 
 ota:
   platform: esphome
-  password: !secret ota_password
+  password: ${ota_password}
 
 wifi:
   ssid: !secret wifi_ssid

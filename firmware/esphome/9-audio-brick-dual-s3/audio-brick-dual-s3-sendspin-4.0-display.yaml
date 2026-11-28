@@ -10,6 +10,10 @@
 # ============================================================
 
 substitutions:
+  # Optional. To use a password, add to your own config:
+  #   substitutions:
+  #     ota_password: !secret ota_password
+  ota_password: ""
   name: audio-brick-dual-s3-40
   friendly_name: Audio-Brick-Dual-S3
   task_stack_in_psram: "true" 
@@ -110,7 +114,7 @@ api:
 
 ota:
   platform: esphome
-  password: !secret ota_password
+  password: ${ota_password}
 
 wifi:
   ssid: !secret wifi_ssid

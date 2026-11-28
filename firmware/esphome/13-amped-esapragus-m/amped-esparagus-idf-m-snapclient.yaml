@@ -14,6 +14,10 @@
 # ============================================================
 
 substitutions:
+  # Optional. To use a password, add to your own config:
+  #   substitutions:
+  #     ota_password: !secret ota_password
+  ota_password: ""
   name: amped-esparagus-m
   friendly_name: Amped-Esparagus
   task_stack_in_psram: "false"
@@ -102,7 +106,7 @@ api:
 
 ota:
   platform: esphome
-  password: !secret ota_password
+  password: ${ota_password}
 
 wifi:
   ssid: !secret wifi_ssid
